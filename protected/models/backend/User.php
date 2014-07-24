@@ -8,4 +8,10 @@ class User extends CommonUser
     {
 		return parent::model($className);
 	}
-}
+	
+	public function validatePassword($password)
+	{
+		return hash('md5',$this->salt.$password)===$this->password;
+	}
+	
+}	

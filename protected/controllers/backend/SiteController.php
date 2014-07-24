@@ -65,6 +65,7 @@ class SiteController extends SimbController
 
         $model = new FormUserLogin();
         // collect user input data
+        /* @var $model FormUserLogin */
         if (isset($_POST['FormUserLogin'])) {
             $model->attributes = $_POST['FormUserLogin'];
             // validate user input and redirect to previous page if valid
