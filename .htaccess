@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+           	RewriteEngine on
+
+           	<FilesMatch "\.svn/.*">
+                   order deny,allow
+                   deny from all
+           	</FilesMatch>
+
+           	<Files .htaccess>
+                   order deny,allow
+                   deny from all
+           	</Files>
+
+           	RewriteCond %{REQUEST_FILENAME} !-f
+           	RewriteCond %{REQUEST_FILENAME} !-d
+           	RewriteRule ^(.*)$ index.php
+           </IfModule>

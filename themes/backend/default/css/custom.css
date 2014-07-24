@@ -1,0 +1,34 @@
+.login .wrapper { top: 30%; }
+select + p.help-block, textarea + p.help-block, input[type="text"] + p.help-block, input[type="password"] + p.help-block, input[type="datetime"] + p.help-block, input[type="datetime-local"] + p.help-block, input[type="date"] + p.help-block, input[type="month"] + p.help-block, input[type="time"] + p.help-block, input[type="week"] + p.help-block, input[type="number"] + p.help-block, input[type="email"] + p.help-block, input[type="url"] + p.help-block, input[type="search"] + p.help-block, input[type="tel"] + p.help-block, input[type="color"] + p.help-block, .uneditable-input + p.help-block { margin-top: -8px; font-size: 0.9em;}
+select + span.help-inline, textarea + span.help-inline, input[type="text"] + span.help-inline, input[type="password"] + span.help-inline, input[type="datetime"] + span.help-inline, input[type="datetime-local"] + span.help-inline, input[type="date"] + span.help-inline, input[type="month"] + span.help-inline, input[type="time"] + span.help-inline, input[type="week"] + span.help-inline, input[type="number"] + span.help-inline, input[type="email"] + span.help-inline, input[type="url"] + span.help-inline, input[type="search"] + span.help-inline, input[type="tel"] + span.help-inline, input[type="color"] + span.help-inline, .uneditable-input + span.help-inline { margin-top: -21px; font-size: 0.9em; color: #b94a48;}
+
+.breadcrumbs { padding: 6px;}
+.breadcrumbs + .alert { margin-top: 20px; margin-bottom: 0px;}
+.breadcrumbs + form { margin-top: 20px; }
+.form-horizontal .form-actions { padding-left: 172px;}
+.alert + .row-fluid {margin-top: -20px;}
+
+.control-group.success .help-block, .control-group.error .help-block { margin-top: 4px; }
+
+.search-button-title { margin-top: 28px; padding-bottom: 20px;}
+.search-button-title.no-border { border: 0;}
+
+.table-view-details th { width: 20%;}
+.form-search span.required { display: none;}
+.dataTables_wrapper { overflow: auto;}
+.dataTables_wrapper th .sort-link span.caret { margin-top: 9px; margin-left: 6px; display: none;}
+.dataTables_wrapper th .sort-link.desc span.caret { display: inline-block;}
+.dataTables_wrapper th .sort-link.asc span.caret { display: inline-block; border-bottom: 4px solid #000000; border-right: 4px solid transparent; border-left: 4px solid transparent; border-top: 0;}
+.dataTables_wrapper .pagination { margin-top: 0;}
+
+.no-caret > a > span.caret { display: none;}
+
+.posts-per-page { float: right;}
+.form-search-advanced { margin-bottom: 0; border-bottom: 1px solid #dddddd;}
+
+/* Message */
+#ron-message-main { position: absolute; top: 0; left: 0; width: 100%; z-index: 1000;}
+
+@media (max-width: 1200px) {
+    .icon-nav{display:block !important}
+}
