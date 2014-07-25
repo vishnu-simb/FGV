@@ -36,7 +36,7 @@ class m140725_090435_add_grower extends CDbMigration
 		echo "m140725_090435_add_grower migration down.\n";
 		$this->updateTablePrefix();
 		$this->dropTable($this->tableNameGrower);
-		return false;
+		return true;
 	}
 
 	/*

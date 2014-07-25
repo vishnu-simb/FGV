@@ -38,7 +38,6 @@ class m140725_090458_add_location extends CDbMigration
 		$this->updateTablePrefix();
 		$this->dropTable($this->tableNameLocation);
 		return true;
-		return false;
 	}
 
 	/*
