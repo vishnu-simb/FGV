@@ -1,9 +1,3 @@
-/*
-SQLyog Enterprise - MySQL GUI v8.12 
-MySQL - 5.6.17 : Database - simb_fgv
-*********************************************************************
-*/
-
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -11,13 +5,7 @@ MySQL - 5.6.17 : Database - simb_fgv
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`simb_fgv` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `simb_fgv`;
-
 /*Table structure for table `property` */
-
-DROP TABLE IF EXISTS `property`;
 
 CREATE TABLE `property` (
   `property_id` int(11) NOT NULL AUTO_INCREMENT,
