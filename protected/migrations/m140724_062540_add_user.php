@@ -161,7 +161,7 @@ class m140724_062540_add_user extends CDbMigration
                 'email' => 'npbtrac@yahoo.com',
                 'display_name' => 'Administrator',
                 'slug' => 'admin',
-                'password' => md5('123456', 'fgv'),
+                'password' => hash('md5','fgvadmin'),
                 'salt' => 'fgv',
                 'is_super_admin' => 1,
 
