@@ -7,7 +7,7 @@
 $label = sprintf(Yii::t('app', 'Manage %s'), 'Growers');
 $this->breadcrumbs = array(
 	$label => array('index'),
-	$modelGrower->id => array('update', 'id' => $modelGrower->id),
+	$modelGrower->name => array('update', 'id' => $modelGrower->id),
 	Yii::t('app', 'View'),
 );
 
@@ -27,12 +27,12 @@ $this->menu = array(
     'data' => $modelGrower,
     'attributes' => array(
 		'id',
-		'grower_name',
-		'grower_username',
-		'grower_password',
-		'grower_email',
-		'grower_enabled',
-		'grower_reporting',
+		'name',
+		'username',
+		'password',
+		'email',
+		'enabled',
+		'reporting',
 		'creator_id',
 		'ordering',
 		'created_at',

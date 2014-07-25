@@ -16,13 +16,14 @@ class m140725_090604_add_property extends CDbMigration
 	{
 		$this->updateTablePrefix();
 		// excute import old table 
-		$this->execute(file_get_contents(Yii::app()->request->baseUrl.'/data/old_property.sql'));
+		$this->execute(file_get_contents(Yii::app()->basePath.'/data/old_property.sql'));
 		//rename table with prefix
 		$this->renameTable('property',$this->tableNameProperty);
 		
-		//rename colum propety_id to id
+		//rename column
 		$this->renameColumn($this->tableNameProperty,'property_id','id');
-		
+		$this->renameColumn($this->tableNameProperty,'property_name','name');
+
 		
 		// Common fields, should appear in all tabl**
 		$this->addColumn($this->tableNameProperty,'creator_id', 'BIGINT NULL COMMENT "id of user who create this item"');

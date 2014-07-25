@@ -15,15 +15,18 @@ class m140725_092915_add_block extends CDbMigration
 	{
 		$this->updateTablePrefix();
 		// excute import old table 
-		$this->execute(file_get_contents(Yii::app()->request->baseUrl.'/data/old_block.sql'));
+		$this->execute(file_get_contents(Yii::app()->basePath.'/data/old_block.sql'));
 		//rename table with prefix
 		$this->renameTable('block',$this->tableNameBlock);
 		
-		//rename colum propety_id to id
+		
+		//rename column
 		$this->renameColumn($this->tableNameBlock,'block_id','id');
+		$this->renameColumn($this->tableNameBlock,'block_name','name');
+		$this->renameColumn($this->tableNameBlock,'block_tree_spacing','tree_spacing');
+		$this->renameColumn($this->tableNameBlock,'block_row_width','row_width');
 		
-		
-		// Common fields, should appear in all tabl**
+		// Common fields, should appear in all table
 		$this->addColumn($this->tableNameBlock,'creator_id', 'BIGINT NULL COMMENT "id of user who create this item"');
 		$this->addColumn($this->tableNameBlock,'ordering', 'integer NULL COMMENT "sorting weight"');
 		$this->addColumn($this->tableNameBlock,'created_at', 'datetime NULL COMMENT "date, time that the record created"');

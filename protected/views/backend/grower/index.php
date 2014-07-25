@@ -55,13 +55,13 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'grower_name',
-		'grower_username',
-		'grower_password',
-		'grower_email',
-		'grower_enabled',
+		'name',
+		'username',
+		'password',
+		'email',
+		'enabled',
 		/*
-		'grower_reporting',
+		'reporting',
 		'creator_id',
 		'ordering',
 		'created_at',

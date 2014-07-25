@@ -13,15 +13,18 @@ class m140725_090458_add_location extends CDbMigration
 	{
 		$this->updateTablePrefix();
 		// excute import old table 
-		$this->execute(file_get_contents(Yii::app()->request->baseUrl.'/data/old_location.sql'));
+		$this->execute(file_get_contents(Yii::app()->basePath.'/data/old_location.sql'));
 		//rename table with prefix
 		$this->renameTable('location',$this->tableNameLocation);
 		
-		//rename colum propety_id to id
+		//rename column
 		$this->renameColumn($this->tableNameLocation,'location_id','id');
+		$this->renameColumn($this->tableNameLocation,'location_name','name');
+		$this->renameColumn($this->tableNameLocation,'location_observation','observation');
+		$this->renameColumn($this->tableNameLocation,'location_forcast','forcast');
+	
 		
-		
-		// Common fields, should appear in all tabl**
+		// Common fields, should appear in all table
 		$this->addColumn($this->tableNameLocation,'creator_id', 'BIGINT NULL COMMENT "id of user who create this item"');
 		$this->addColumn($this->tableNameLocation,'ordering', 'integer NULL COMMENT "sorting weight"');
 		$this->addColumn($this->tableNameLocation,'created_at', 'datetime NULL COMMENT "date, time that the record created"');

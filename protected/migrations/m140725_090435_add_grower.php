@@ -13,15 +13,20 @@ class m140725_090435_add_grower extends CDbMigration
 	{
 		$this->updateTablePrefix();
 		// excute import old table 
-		$this->execute(file_get_contents(Yii::app()->request->baseUrl.'/data/old_grower.sql'));
+		$this->execute(file_get_contents(Yii::app()->basePath.'/data/old_grower.sql'));
 		//rename table with prefix
 		$this->renameTable('grower',$this->tableNameGrower);
 		
-		//rename colum propety_id to id
+		//rename column
 		$this->renameColumn($this->tableNameGrower,'grower_id','id');
+		$this->renameColumn($this->tableNameGrower,'grower_name','name');
+		$this->renameColumn($this->tableNameGrower,'grower_username','username');
+		$this->renameColumn($this->tableNameGrower,'grower_password','password');
+		$this->renameColumn($this->tableNameGrower,'grower_email','email');
+		$this->renameColumn($this->tableNameGrower,'grower_enabled','enabled');
+		$this->renameColumn($this->tableNameGrower,'grower_reporting','reporting');
 		
-		
-		// Common fields, should appear in all tabl**
+		// Common fields, should appear in all table
 		$this->addColumn($this->tableNameGrower,'creator_id', 'BIGINT NULL COMMENT "id of user who create this item"');
 		$this->addColumn($this->tableNameGrower,'ordering', 'integer NULL COMMENT "sorting weight"');
 		$this->addColumn($this->tableNameGrower,'created_at', 'datetime NULL COMMENT "date, time that the record created"');

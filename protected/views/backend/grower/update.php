@@ -7,7 +7,7 @@
 $label = sprintf(Yii::t('app', 'Manage %s'), 'Growers');
 $this->breadcrumbs = array(
 	$label => array('index'),
-	$modelGrower->id=>array('view', 'id' => $modelGrower->id),
+	$modelGrower->name=>array('view', 'id' => $modelGrower->id),
 	Yii::t('app', 'Update'),
 );
 

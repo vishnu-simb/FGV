@@ -9,28 +9,28 @@
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('grower_name')); ?>:</b>
-	<?php echo CHtml::encode($data->grower_name); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
+	<?php echo CHtml::encode($data->name); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('grower_username')); ?>:</b>
-	<?php echo CHtml::encode($data->grower_username); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
+	<?php echo CHtml::encode($data->username); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('grower_password')); ?>:</b>
-	<?php echo CHtml::encode($data->grower_password); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
+	<?php echo CHtml::encode($data->password); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('grower_email')); ?>:</b>
-	<?php echo CHtml::encode($data->grower_email); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
+	<?php echo CHtml::encode($data->email); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('grower_enabled')); ?>:</b>
-	<?php echo CHtml::encode($data->grower_enabled); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('enabled')); ?>:</b>
+	<?php echo CHtml::encode($data->enabled); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('grower_reporting')); ?>:</b>
-	<?php echo CHtml::encode($data->grower_reporting); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('reporting')); ?>:</b>
+	<?php echo CHtml::encode($data->reporting); ?>
 	<br />
 
 	<?php /*

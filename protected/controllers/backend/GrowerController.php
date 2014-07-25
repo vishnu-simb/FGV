@@ -71,7 +71,7 @@ class GrowerController extends SimbController
 	 */
 	public function actionDelete($id)
 	{
-		if (Yii::app()->request->getParam('get','delete')) {
+		if (Yii::app()->request->isPostRequest) {
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 

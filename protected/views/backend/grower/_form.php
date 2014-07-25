@@ -33,17 +33,17 @@
             </div>
             <div class="box-content nopadding">
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelGrower, 'grower_name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('grower_name'))); ?>
+                            <div class="span6"><?php echo $form->textFieldControlGroup($modelGrower, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('name'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelGrower, 'grower_username', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('grower_username'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelGrower, 'username', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('username'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelGrower, 'grower_password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('grower_password'))); ?>
+                            <?php echo $form->passwordFieldControlGroup($modelGrower, 'password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('password'))); ?>
 
-                            <?php echo $form->textAreaControlGroup($modelGrower, 'grower_email', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('grower_email'))); ?>
+                            <?php echo $form->textAreaControlGroup($modelGrower, 'email', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('email'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelGrower, 'grower_enabled', array('maxlength' => 3, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('grower_enabled'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelGrower, 'enabled', array('maxlength' => 3, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('enabled'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelGrower, 'grower_reporting', array('maxlength' => 7, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('grower_reporting'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelGrower, 'reporting', array('maxlength' => 7, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('reporting'))); ?>
 </div>
 
                             <div class="span6"><?php echo $form->textFieldControlGroup($modelGrower, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('creator_id'))); ?>
