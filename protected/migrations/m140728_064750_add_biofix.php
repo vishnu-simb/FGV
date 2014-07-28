@@ -23,7 +23,6 @@ class m140728_064750_add_biofix extends CDbMigration
 		
 		
 		//rename column
-		$this->renameColumn($this->tableNameBiofix,'pest_id','id');
 		$this->renameColumn($this->tableNameBiofix,'biofix_second_cohort','second_cohort');
 		$this->renameColumn($this->tableNameBiofix,'biofix_date','date');
 		
@@ -41,7 +40,7 @@ class m140728_064750_add_biofix extends CDbMigration
 		$this->dropForeignKey($this->tableNameBiofix.'_ibfk_3',$this->tableNameBiofix);
 		
 		// Added new ForeignKey
-		$this->addForeignKey($this->tableNameBiofix.'_ibfk_3', $this->tableNameBiofix,'id', $this->tableNamePest,'id','NO ACTION','NO ACTION');
+		$this->addForeignKey($this->tableNameBiofix.'_ibfk_3', $this->tableNameBiofix,'pest_id', $this->tableNamePest,'id','NO ACTION','NO ACTION');
 		$this->addForeignKey($this->tableNameBiofix.'_ibfk_2', $this->tableNameBiofix,'block_id', $this->tableNameBlock, 'id','CASCADE','CASCADE');
 		
 		return true;

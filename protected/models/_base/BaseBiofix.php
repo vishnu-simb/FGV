@@ -9,7 +9,7 @@
  * Columns in table "{{biofix}}" available as properties of the model,
  * followed by relations of table "{{biofix}}" available as properties of the model.
  *
- * @property string $id
+ * @property string $pest_id
  * @property integer $block_id
  * @property string $second_cohort
  * @property string $date
@@ -22,7 +22,7 @@
  * @property string $params
  *
  * @property Block $block
- * @property Pest $id0
+ * @property Pest $pest
  */
 abstract class BaseBiofix extends SimbActiveRecord{
     public static function model($className=__CLASS__)
@@ -43,14 +43,14 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('id, block_id', 'required'),
+			array('pest_id, block_id', 'required'),
 			array('block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
-			array('id', 'length', 'max'=>10),
+			array('pest_id', 'length', 'max'=>10),
 			array('second_cohort', 'length', 'max'=>3),
 			array('creator_id', 'length', 'max'=>20),
 			array('date, created_at, updated_at, params', 'safe'),
 			array('second_cohort, date, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, block_id, second_cohort, date, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('pest_id, block_id, second_cohort, date, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,7 +58,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
     {
 		return array(
 			'block' => array(self::BELONGS_TO, 'Block', 'block_id'),
-			'id0' => array(self::BELONGS_TO, 'Pest', 'id'),
+			'pest' => array(self::BELONGS_TO, 'Pest', 'pest_id'),
 		);
 	}
 
@@ -71,7 +71,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function attributeLabels()
     {
 		return array(
-			'id' => Yii::t('app', 'ID'),
+			'pest_id' => Yii::t('app', 'Pest'),
 			'block_id' => Yii::t('app', 'Block'),
 			'second_cohort' => Yii::t('app', 'Second Cohort'),
 			'date' => Yii::t('app', 'Date'),
@@ -89,7 +89,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
     {
 		$criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
+		$criteria->compare('pest_id', $this->pest_id);
 		$criteria->compare('block_id', $this->block_id);
 		$criteria->compare('second_cohort', $this->second_cohort, true);
 		$criteria->compare('date', $this->date, true);
