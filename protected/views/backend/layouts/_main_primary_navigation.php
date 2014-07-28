@@ -36,7 +36,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         		
                             array(
                                 'label' => Yii::t('app', 'Biofix'),
-                                'url' => Yii::app()->baseUrl.'/biofix',
+                                'url' => 'javascript:;',
                             ),
 							array(
 									'label' => Yii::t('app', 'Block'),
@@ -60,16 +60,9 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 							),
 							array(
 									'label' => Yii::t('app', 'PestSpray'),
-									'url' => Yii::app()->baseUrl.'/pestspray',
+									'url' => 'javascript:;',
 							),
-							array(
-									'label' => Yii::t('app', 'PestSpray'),
-									'url' => Yii::app()->baseUrl.'/pestspray',
-							),
-							array(
-									'label' => Yii::t('app', 'PestSpray'),
-									'url' => Yii::app()->baseUrl.'/pestspray',
-							),
+							
 							array(
 									'label' => Yii::t('app', 'Property'),
 									'url' => Yii::app()->baseUrl.'/property',
@@ -88,7 +81,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 							),
 							array(
 									'label' => Yii::t('app', 'TrapCheck'),
-									'url' => Yii::app()->baseUrl.'/trapcheck',
+									'url' => Yii::app()->baseUrl.'/trapCheck',
 							),
 							array(
 									'label' => Yii::t('app', 'Variety'),
