@@ -71,7 +71,7 @@ class VarietyController extends SimbController
 	 */
 	public function actionDelete($id)
 	{
-		if (Yii::app()->request->isPostRequest) {
+		if (Yii::app()->request->getParam('get','delete')) {
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
