@@ -9,7 +9,7 @@ class SimbHtml extends CHtml
         preg_match('/\((.*)\)/',$model->tableSchema->columns[$attr]->dbType,$matches);
         foreach(explode("','", $matches[1]) as $value) {
                 $value=str_replace("'",null,$value);
-                $values[$value]=Yii::t('enumItem',$value);
+                $values[$value]=Yii::t('getEnumItem',$value);
         }
         return $values;
     } 
