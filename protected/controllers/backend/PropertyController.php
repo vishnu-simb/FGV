@@ -2,6 +2,41 @@
 
 class PropertyController extends SimbController
 {
+	
+	
+	/**
+	 * @return array action filters
+	 */
+	public function filters()
+	{
+		return array(
+				'accessControl', // perform access control for CRUD operations
+		);
+	}
+	
+	/**
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
+	public function accessRules()
+	{
+		return array(
+				array(
+						'allow',
+						'actions' => array('index', 'logout'),
+						'users' => array('@'),
+				),
+				array(
+						'deny',
+						'actions' => array('index', 'logout'),
+						'users' => array('*'),
+						'deniedCallback' => array($this, 'redirectLoginNeeded'),
+				),
+	
+		);
+	}
+	
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
