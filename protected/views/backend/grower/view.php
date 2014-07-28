@@ -41,4 +41,5 @@ $this->menu = array(
 		'is_deleted',
 		'params',
 	),
+
 )); ?>

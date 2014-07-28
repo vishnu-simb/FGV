@@ -41,9 +41,9 @@
 
                             <?php echo $form->textAreaControlGroup($modelGrower, 'email', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('email'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelGrower, 'enabled', array('maxlength' => 3, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('enabled'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelGrower, 'reporting', array('maxlength' => 7, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('reporting'))); ?>
+                    		<?php echo $form->dropDownListControlGroup($modelGrower, 'enabled', array('yes'=>'Yes','no'=>'No'))?>
+                            
+                            <?php echo $form->dropDownListControlGroup($modelGrower, 'reporting', SimbHtml::getEnumItem($modelGrower,'reporting'))?>
 </div>
 
                             <div class="span6"><?php echo $form->textFieldControlGroup($modelGrower, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('creator_id'))); ?>
@@ -55,7 +55,7 @@
                             <?php echo $form->textFieldControlGroup($modelGrower, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('updated_at'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelGrower, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('status'))); ?>
-
+						
                             <?php echo $form->textFieldControlGroup($modelGrower, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('is_deleted'))); ?>
 
                             <?php echo $form->textAreaControlGroup($modelGrower, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('params'))); ?>

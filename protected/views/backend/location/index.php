@@ -1,15 +1,15 @@
 <?php
-/* @var $this GrowerController */
-/* @var $modelGrower Grower */
+/* @var $this LocationController */
+/* @var $modelLocation Location */
 
 
 $this->breadcrumbs=array(
-	'Growers' => array('index'),
+	'Locations' => array('index'),
 	Yii::t('app', 'Manage'),
 );
 
 $this->menu = array(
-	array('label' => sprintf(Yii::t('app', 'Create a new %s'), 'Grower'), 'url' => array('create')),
+	array('label' => sprintf(Yii::t('app', 'Create a new %s'), 'Location'), 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -19,7 +19,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form-ext form').submit(function(){
-	$('#grower-grid').yiiGridView('update', {
+	$('#location-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -37,14 +37,14 @@ $('.search-form-ext form').submit(function(){
         <div class="box">
 
             <?php $this->renderPartial('_search',array(
-                'modelGrower' => $modelGrower,
+                'modelLocation' => $modelLocation,
             )); ?>
 
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
-	'id' => 'grower-grid',
-	'dataProvider' => $modelGrower->search(),
-	'filter' => $modelGrower,
+	'id' => 'location-grid',
+	'dataProvider' => $modelLocation->search(),
+	'filter' => $modelLocation,
     'filterCssClass' => 'thefilter',
     'ajaxUpdate' => false,
     'itemsCssClass' => 'table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
@@ -56,14 +56,11 @@ $('.search-form-ext form').submit(function(){
 'columns' => array(
 		'id',
 		'name',
-		'username',
-		'password',
-		'email',
-		'enabled',
-		'reporting',
-		/*
+		'observation',
+		'forcast',
 		'creator_id',
 		'ordering',
+		/*
 		'created_at',
 		'updated_at',
 		'status',
