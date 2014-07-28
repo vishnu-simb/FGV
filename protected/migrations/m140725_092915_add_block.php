@@ -38,7 +38,7 @@ class m140725_092915_add_block extends CDbMigration
 		// Drop old ForeignKey
 		$this->dropForeignKey($this->tableNameBlock.'_ibfk_1',$this->tableNameBlock);
 		// Added new ForeignKey
-		$this->addForeignKey($this->tableNameBlock.'_ibfk_1', $this->tableNameBlock,'property_id', $this->tableNameProperty, 'id');
+		$this->addForeignKey($this->tableNameBlock.'_ibfk_1', $this->tableNameBlock,'property_id', $this->tableNameProperty, 'id','CASCADE','CASCADE');
 		return true;
 	}
 		

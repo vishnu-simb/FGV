@@ -39,8 +39,8 @@ class m140725_090604_add_property extends CDbMigration
 		$this->dropForeignKey($this->tableNameProperty.'_ibfk_2',$this->tableNameProperty);
 		
 		// Added new ForeignKey
-		$this->addForeignKey($this->tableNameProperty.'_ibfk_1', $this->tableNameProperty,'grower_id', $this->tableNameGrower, 'id');
-		$this->addForeignKey($this->tableNameProperty.'_ibfk_2', $this->tableNameProperty,'location_id', $this->tableNameLocation, 'id');
+		$this->addForeignKey($this->tableNameProperty.'_ibfk_1', $this->tableNameProperty,'grower_id', $this->tableNameGrower, 'id','CASCADE','CASCADE');
+		$this->addForeignKey($this->tableNameProperty.'_ibfk_2', $this->tableNameProperty,'location_id', $this->tableNameLocation, 'id','CASCADE','CASCADE');
 
 		return true;
 	}

@@ -23,29 +23,78 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
             array(
                 'items' => array(
                     array('label' => Yii::t('app', 'Dashboard'), 'url' => Yii::app()->getHomeUrl()),
+                	array('label' => Yii::t('app', 'Trapping'), 'url' => 'javascript:;'),
+                	array('label' => Yii::t('app', 'Spraying'), 'url' => 'javascript:;'),
                     array(
-                        'label' => Yii::t('app', 'Site Content'),
+                        'label' => Yii::t('app', 'Administration'),
                         'itemOptions' => array(),
                         'items' => array(
                             array(
-                                'label' => Yii::t('app', 'Old News Management'),
-                                'items' => array(
-                                    array(
-                                        'label' => Yii::t('app', 'List All Old News'),
-                                        'url' => array('oldNews/index')
-                                    ),
-                                ),
+                                'label' => Yii::t('app', 'Admin'),
+                                'url' => Yii::app()->baseUrl.'/user',
                             ),
+                        		
                             array(
-                                'label' => Yii::t('app', 'Old Page Management'),
-                                'items' => array(
-                                    array(
-                                        'label' => Yii::t('app', 'List All Old Pages'),
-                                        'url' => array('oldPage/index')
-                                    ),
-                                ),
+                                'label' => Yii::t('app', 'Biofix'),
+                                'url' => Yii::app()->baseUrl.'/biofix',
                             ),
-                        ),
+							array(
+									'label' => Yii::t('app', 'Block'),
+									'url' => Yii::app()->baseUrl.'/block',
+							),
+							array(
+									'label' => Yii::t('app', 'Chemical'),
+									'url' => Yii::app()->baseUrl.'/chemical',
+							),
+							array(
+									'label' => Yii::t('app', 'Grower'),
+									'url' => Yii::app()->baseUrl.'/grower',
+							),
+							array(
+									'label' => Yii::t('app', 'Location'),
+									'url' => Yii::app()->baseUrl.'/location',
+							),
+							array(
+									'label' => Yii::t('app', 'Pest'),
+									'url' => Yii::app()->baseUrl.'/pest',
+							),
+							array(
+									'label' => Yii::t('app', 'PestSpray'),
+									'url' => Yii::app()->baseUrl.'/pestspray',
+							),
+							array(
+									'label' => Yii::t('app', 'PestSpray'),
+									'url' => Yii::app()->baseUrl.'/pestspray',
+							),
+							array(
+									'label' => Yii::t('app', 'PestSpray'),
+									'url' => Yii::app()->baseUrl.'/pestspray',
+							),
+							array(
+									'label' => Yii::t('app', 'Property'),
+									'url' => Yii::app()->baseUrl.'/property',
+							),
+							array(
+									'label' => Yii::t('app', 'Sizing'),
+									'url' => Yii::app()->baseUrl.'/sizing',
+							),
+							array(
+									'label' => Yii::t('app', 'Spray'),
+									'url' => Yii::app()->baseUrl.'/spray',
+							),
+							array(
+									'label' => Yii::t('app', 'Trap'),
+									'url' => Yii::app()->baseUrl.'/trap',
+							),
+							array(
+									'label' => Yii::t('app', 'TrapCheck'),
+									'url' => Yii::app()->baseUrl.'/trapcheck',
+							),
+							array(
+									'label' => Yii::t('app', 'Variety'),
+									'url' => Yii::app()->baseUrl.'/variety',
+							),
+						),
 
                     ),
                 ),
@@ -63,7 +112,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                 'bootstrap.widgets.TbMenu',
                 array(
                     'items' => array(
-                        array(
+                        /**array(
                             'label' => '<i class="icon-envelope"></i><span class="label label-lightred">4</span>',
                             'submenuOptions' => array('class' => 'pull-right message-ul'),
                             'itemOptions' => array('class' => 'no-caret', 'data-toggle' => 'dropdown'),
@@ -110,7 +159,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                                     'url' => '#'
                                 ),
                             ),
-                        ),
+                        ),*/
                     ),
                     'encodeLabel' => false,
                     'htmlOptions' => array(
