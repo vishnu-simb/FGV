@@ -27,16 +27,17 @@ $this->menu = array(
     'data' => $modelBiofix,
     'attributes' => array(
 		'id',
-		'pest_id',
-		'block_id',
+		'pest',
+		'block',
 		'second_cohort',
 		'date',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params', */
 	),
 )); ?>

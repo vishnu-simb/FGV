@@ -5,15 +5,16 @@
 
 <div class="view">
 
-    	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
+   <b>
+   <?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('pest_id')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('pest')); ?>:</b>
 	<?php echo CHtml::encode($data->pest_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('block_id')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('block')); ?>:</b>
 	<?php echo CHtml::encode($data->block_id); ?>
 	<br />
 
@@ -25,7 +26,7 @@
 	<?php echo CHtml::encode($data->date); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('creator_id')); ?>:</b>
+	<b><?php /* echo CHtml::encode($data->getAttributeLabel('creator_id')); ?>:</b>
 	<?php echo CHtml::encode($data->creator_id); ?>
 	<br />
 
@@ -33,7 +34,7 @@
 	<?php echo CHtml::encode($data->ordering); ?>
 	<br />
 
-	<?php /*
+	<?php 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created_at')); ?>:</b>
 	<?php echo CHtml::encode($data->created_at); ?>
 	<br />

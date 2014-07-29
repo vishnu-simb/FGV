@@ -18,16 +18,19 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
 
-                    <div class="span4">            <?php echo $form->textFieldControlGroup($modelBiofix, 'id', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('id'))); ?>
+                    <div class="span4">     
+                   							<!--  
+                    						<?php echo $form->textFieldControlGroup($modelBiofix, 'id', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('id'))); ?>
+											-->
+                                            <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'),array('empty' => 'Select A Pest'))?>
 
-                                            <?php echo $form->textFieldControlGroup($modelBiofix, 'pest_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('pest_id'))); ?>
-
-                                            <?php echo $form->textFieldControlGroup($modelBiofix, 'block_id', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('block_id'))); ?>
-
-                                            <?php echo $form->textFieldControlGroup($modelBiofix, 'second_cohort', array('maxlength' => 3, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('second_cohort'))); ?>
-
-            </div>
-                    <div class="span4">            <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
+                            				<?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock() ,'id','name'),array('empty' => 'Select A Block'))?>
+                                            
+                                            <?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'),array('empty' => 'Select A Second Cohort'))?>
+                            
+           									<?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
+            </div><!-- 
+                    <div class="span4">          
 
                                             <?php echo $form->textFieldControlGroup($modelBiofix, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('creator_id'))); ?>
 
@@ -44,7 +47,7 @@
 
                                             <?php echo $form->textAreaControlGroup($modelBiofix, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelBiofix->getAttributeLabel('params'))); ?>
 
-            </div>
+            </div> -->
             </div>
     <div class="form-actions">
         <?php echo TbHtml::submitButton(Yii::t('app', 'Search'),  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>

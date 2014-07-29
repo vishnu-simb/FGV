@@ -25,6 +25,7 @@
  * @property Pest $pest
  */
 abstract class BaseBiofix extends SimbActiveRecord{
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -71,10 +72,13 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function attributeLabels()
     {
 		return array(
-			'pest_id' => Yii::t('app', 'Pest'),
-			'block_id' => Yii::t('app', 'Block'),
-			'second_cohort' => Yii::t('app', 'Second Cohort'),
-			'date' => Yii::t('app', 'Date'),
+			'pest_id' => Yii::t('app', 'Pest Id'),
+			'block_id' => Yii::t('app', 'Block Id'),
+			'pest.name' => Yii::t('app', 'Pest'),
+			'block.name' => Yii::t('app', 'Block'),
+			'second_cohort' => Yii::t('app', 'Second Cohort?'),
+			'block.property_id' => Yii::t('app', 'Property'),
+			'date' => Yii::t('app', 'Biofix Date'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),
@@ -91,6 +95,8 @@ abstract class BaseBiofix extends SimbActiveRecord{
 
 		$criteria->compare('pest_id', $this->pest_id);
 		$criteria->compare('block_id', $this->block_id);
+		$criteria->compare('block.name', '');
+		$criteria->compare('pest.name', '');
 		$criteria->compare('second_cohort', $this->second_cohort, true);
 		$criteria->compare('date', $this->date, true);
 		$criteria->compare('creator_id', $this->creator_id, true);

@@ -54,13 +54,16 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		'id',
-		'pest_id',
-		'block_id',
+		//'id',
+		
+		'pest.name',
+		'block.property_id',
+		'block.name',
 		'second_cohort',
 		'date',
-		'creator_id',
+		
 		/*
+		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',

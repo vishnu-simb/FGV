@@ -33,18 +33,22 @@
             </div>
             <div class="box-content nopadding">
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelBiofix, 'pest_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('pest_id'))); ?>
+                            <div class="span6">
+                            <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'))?>
 
-                            <?php echo $form->textFieldControlGroup($modelBiofix, 'block_id', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('block_id'))); ?>
+                            <?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock() ,'id','name'))?>
 
-                            <?php echo $form->textFieldControlGroup($modelBiofix, 'second_cohort', array('maxlength' => 3, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('second_cohort'))); ?>
-
+							<?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'))?>
+                            
                             <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
-
+ 							<!-- 
                             <?php echo $form->textFieldControlGroup($modelBiofix, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('creator_id'))); ?>
-</div>
-
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelBiofix, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('ordering'))); ?>
+							-->
+                            </div>
+							 <!-- 
+                            <div class="span6">
+                            
+                            <?php echo $form->textFieldControlGroup($modelBiofix, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('ordering'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelBiofix, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('created_at'))); ?>
 
@@ -55,7 +59,7 @@
                             <?php echo $form->textFieldControlGroup($modelBiofix, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('is_deleted'))); ?>
 
                             <?php echo $form->textAreaControlGroup($modelBiofix, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelBiofix->getAttributeLabel('params'))); ?>
-</div>
+</div>-->
 
                             <div class="span12">
                     <div class="form-actions">
