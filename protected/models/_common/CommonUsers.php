@@ -8,7 +8,16 @@ class CommonUsers extends BaseUsers
     {
         return parent::model($className);
     }
-        
+    
+    public function rules()
+    {
+    	return array(
+        		//Applies to 'update' scenario
+    			array('username', 'required'),
+    			array('password', 'required' ,'except' => 'update'),
+    	);
+    }
+    
  	public function beforeSave(){
  		
         if (parent::beforeSave()) {
@@ -20,7 +29,8 @@ class CommonUsers extends BaseUsers
                 $this->creator_id = 0;
                 $this->ordering = 0;
             }
-            if($this->password){
+            if(!empty($this->password)){
+            	$this->salt = $this->saltGenerator();
             	$this->password = md5($this->salt.$this->password);
             }
             $this->updated_at = date($format);
@@ -38,7 +48,7 @@ class CommonUsers extends BaseUsers
      */
     public function validatePassword($password)
     {
-    	return $this->hashPassword($password)===$this->password;
+    	return md5($this->salt.$password)===$this->password;
     }
     
     /**

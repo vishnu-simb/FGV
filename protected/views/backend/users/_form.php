@@ -35,8 +35,7 @@
 
                             <div class="span6">
                             <?php echo $form->textFieldControlGroup($modelUsers, 'username', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelUsers->getAttributeLabel('username'))); ?>
-							
-                            <?php echo $form->passwordFieldControlGroup($modelUsers, 'password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelUsers->getAttributeLabel('password'))); ?>
+                            <?php echo $form->passwordFieldControlGroup($modelUsers, 'password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelUsers->getAttributeLabel('password'),'value'=>'')); ?>
 
                             <?php echo $form->dropDownListControlGroup($modelUsers, 'type', SimbHtml::getEnumItem($modelUsers,'type'))?>
                             

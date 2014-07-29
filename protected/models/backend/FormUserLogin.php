@@ -48,7 +48,7 @@ class FormUserLogin extends SimbFormModel
     {
         if (!$this->hasErrors()) { // we only want to authenticate when no input errors
             // we need to make sure that the admin panel is only accessible to admin
-            $hasAccess = User::model()->countByAttributes(
+            $hasAccess = Users::model()->countByAttributes(
                 array(),
                 '(username = :username) AND is_deleted = 0',
                 array(':username' => $this->username)

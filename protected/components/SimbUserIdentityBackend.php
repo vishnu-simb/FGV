@@ -16,7 +16,7 @@ class SimbUserIdentityBackend extends SimbUserIdentity
     public function authenticate()
     {
         /* @var $user WpUser */
-        $user = User::model()->findByAttributes(
+        $user = Users::model()->findByAttributes(
             array(),
             '(username = :username) AND is_deleted = 0',
             array(':username' => $this->username)

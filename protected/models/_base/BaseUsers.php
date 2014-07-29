@@ -43,6 +43,8 @@ abstract class BaseUsers extends SimbActiveRecord{
     {
 		return array(
 			array('username, password', 'required'),
+			//Applies to 'update' scenario
+			array('password', 'required' ,'except' => 'update'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('username, password', 'length', 'max'=>45),
 			array('type', 'length', 'max'=>5),
