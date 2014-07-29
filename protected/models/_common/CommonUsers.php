@@ -14,6 +14,7 @@ class CommonUsers extends BaseUsers
     	return array(
         		//Applies to 'update' scenario
     			array('username', 'required'),
+    			array('type', 'required'),
     			array('password', 'required' ,'except' => 'update'),
     	);
     }
