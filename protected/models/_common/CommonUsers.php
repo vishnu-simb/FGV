@@ -22,6 +22,8 @@ class CommonUsers extends BaseUsers
  		
         if (parent::beforeSave()) {
             $format = Yii::app()->params['dbDateFormat'];
+            $postData = Yii::app()->request->getPost('Users');
+            
             if ($this->isNewRecord) {
                 $this->created_at = date($format);
                 $this->salt = $this->saltGenerator();
@@ -29,9 +31,9 @@ class CommonUsers extends BaseUsers
                 $this->creator_id = 0;
                 $this->ordering = 0;
             }
-            if(!empty($this->password)){
-            	$this->salt = $this->saltGenerator();
-            	$this->password = md5($this->salt.$this->password);
+
+            if(!empty($postData['password'])){
+            	$this->password = md5($this->salt.$postData['password']);
             }
             $this->updated_at = date($format);
             
