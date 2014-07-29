@@ -31,7 +31,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         'items' => array(
                             array(
                                 'label' => Yii::t('app', 'Admin'),
-                                'url' => Yii::app()->baseUrl.'/user',
+                                'url' => Yii::app()->baseUrl.'/users',
                             ),
                         		
                             array(
@@ -60,7 +60,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 							),
 							array(
 									'label' => Yii::t('app', 'PestSpray'),
-									'url' => 'javascript:;',
+									'url' => Yii::app()->baseUrl.'/pestSpray',
 							),
 							
 							array(

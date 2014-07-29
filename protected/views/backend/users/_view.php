@@ -1,6 +1,6 @@
 <?php
-/* @var $this UserController */
-/* @var $data User */
+/* @var $this UsersController */
+/* @var $data Users */
 ?>
 
 <div class="view">
@@ -13,29 +13,16 @@
 	<?php echo CHtml::encode($data->username); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
-	<?php echo CHtml::encode($data->email); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('display_name')); ?>:</b>
-	<?php echo CHtml::encode($data->display_name); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('slug')); ?>:</b>
-	<?php echo CHtml::encode($data->slug); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
 	<?php echo CHtml::encode($data->password); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('salt')); ?>:</b>
-	<?php echo CHtml::encode($data->salt); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
+	<?php echo CHtml::encode($data->type); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('is_super_admin')); ?>:</b>
-	<?php echo CHtml::encode($data->is_super_admin); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('salt')); ?>:</b>
+	<?php echo CHtml::encode($data->salt); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('creator_id')); ?>:</b>
@@ -46,6 +33,7 @@
 	<?php echo CHtml::encode($data->ordering); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created_at')); ?>:</b>
 	<?php echo CHtml::encode($data->created_at); ?>
 	<br />

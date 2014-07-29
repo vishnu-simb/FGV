@@ -1,8 +1,8 @@
 <?php
 
-Yii::import('application.models._common.CommonUser');
+Yii::import('application.models._common.CommonUsers');
 
-class User extends CommonUser
+class Users extends CommonUsers
 {
 	public static function model($className=__CLASS__)
     {

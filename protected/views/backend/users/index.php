@@ -1,14 +1,15 @@
 <?php
-/* @var $this OldNewsController */
-/* @var $modelOldNews OldNews */
+/* @var $this UsersController */
+/* @var $modelUsers Users */
 
 
 $this->breadcrumbs=array(
-	'Old News' => array('index'),
+	'Users' => array('index'),
 	Yii::t('app', 'Manage'),
 );
 
 $this->menu = array(
+	array('label' => sprintf(Yii::t('app', 'Create a new %s'), 'Users'), 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +19,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form-ext form').submit(function(){
-	$('#old-news-grid').yiiGridView('update', {
+	$('#users-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -36,14 +37,14 @@ $('.search-form-ext form').submit(function(){
         <div class="box">
 
             <?php $this->renderPartial('_search',array(
-                'modelOldNews' => $modelOldNews,
+                'modelUsers' => $modelUsers,
             )); ?>
 
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
-	'id' => 'old-news-grid',
-	'dataProvider' => $modelOldNews->search(),
-	'filter' => $modelOldNews,
+	'id' => 'users-grid',
+	'dataProvider' => $modelUsers->search(),
+	'filter' => $modelUsers,
     'filterCssClass' => 'thefilter',
     'ajaxUpdate' => false,
     'itemsCssClass' => 'table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
@@ -54,25 +55,21 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'clubid',
-		'newscategoryid',
-		'lcid',
-		'title',
-		'abstract',
+		'username',
+		'password',
+		'type',
 		/*
-		'body',
-		'copyright',
-		'created',
-		'inlinephotoid',
-		'memberid',
-		'published',
-		'deleted',
-		'lastupdated',
-		'migration_done',
+		'salt',
+		'creator_id',
+		'ordering',
+		'created_at',
+		'updated_at',
+		'status',
+		'is_deleted',
+		'params',
 		*/
 		array(
 			'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{view}',
 		),
 	),
 )); ?>

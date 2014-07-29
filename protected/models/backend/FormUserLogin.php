@@ -50,7 +50,7 @@ class FormUserLogin extends SimbFormModel
             // we need to make sure that the admin panel is only accessible to admin
             $hasAccess = User::model()->countByAttributes(
                 array(),
-                '(username = :username OR email = :username) AND is_deleted = 0',
+                '(username = :username) AND is_deleted = 0',
                 array(':username' => $this->username)
             );
             if (!$hasAccess) {

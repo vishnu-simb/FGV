@@ -1,17 +1,53 @@
 <?php
 
-class OrganizationGroupController extends SimbControllerBackend
+class UsersController extends SimbController
 {
+	
+	
+
+	/**
+	 * @return array action filters
+	 */
+	public function filters()
+	{
+		return array(
+				'accessControl', // perform access control for CRUD operations
+		);
+	}
+	
+	/**
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
+	public function accessRules()
+	{
+		return array(
+				array(
+						'allow',
+						'actions' => array('index', 'logout'),
+						'users' => array('@'),
+				),
+				array(
+						'deny',
+						'actions' => array('index', 'logout'),
+						'users' => array('*'),
+						'deniedCallback' => array($this, 'redirectLoginNeeded'),
+				),
+	
+		);
+	}
+	
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
-		$modelOrganizationGroup = $this->loadModel($id);
-		$this->pageTitle = sprintf(Yii::t('app', 'View %s ID: #%s'), 'OrganizationGroup', $modelOrganizationGroup->id);
+		$modelUsers = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'View %s ID: #%s'), 'Users', $modelUsers->id);
 		$this->render('view', array(
-			'modelOrganizationGroup' => $modelOrganizationGroup,
+			'modelUsers' => $modelUsers,
 		));
 	}
 
@@ -21,21 +57,21 @@ class OrganizationGroupController extends SimbControllerBackend
 	 */
 	public function actionCreate()
 	{
-		$this->pageTitle = sprintf(Yii::t('app', 'Create %s'), 'OrganizationGroup');
-		$modelOrganizationGroup = new OrganizationGroup;
+		$this->pageTitle = sprintf(Yii::t('app', 'Create %s'), 'Users');
+		$modelUsers = new Users;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($modelOrganizationGroup);
+		// $this->performAjaxValidation($modelUsers);
 
-		if (isset($_POST['OrganizationGroup'])) {
-			$modelOrganizationGroup->attributes = $_POST['OrganizationGroup'];
-			if ($modelOrganizationGroup->save()) {
-				$this->redirect(array('view', 'id' => $modelOrganizationGroup->id));
+		if (isset($_POST['Users'])) {
+			$modelUsers->attributes = $_POST['Users'];
+			if ($modelUsers->save()) {
+				$this->redirect(array('view', 'id' => $modelUsers->id));
 			}
 		}
 
 		$this->render('create', array(
-			'modelOrganizationGroup' => $modelOrganizationGroup,
+			'modelUsers' => $modelUsers,
 		));
 	}
 
@@ -46,21 +82,21 @@ class OrganizationGroupController extends SimbControllerBackend
 	 */
 	public function actionUpdate($id)
 	{
-		$modelOrganizationGroup = $this->loadModel($id);
-		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'OrganizationGroup', $modelOrganizationGroup->id);
+		$modelUsers = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Users', $modelUsers->id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($modelOrganizationGroup);
+		// $this->performAjaxValidation($modelUsers);
 
-		if (isset($_POST['OrganizationGroup'])) {
-			$modelOrganizationGroup->attributes=$_POST['OrganizationGroup'];
-			if ($modelOrganizationGroup->save()) {
-				$this->redirect(array('view', 'id' => $modelOrganizationGroup->id));
+		if (isset($_POST['Users'])) {
+			$modelUsers->attributes=$_POST['Users'];
+			if ($modelUsers->save()) {
+				$this->redirect(array('view', 'id' => $modelUsers->id));
 			}
 		}
 
 		$this->render('update', array(
-			'modelOrganizationGroup' => $modelOrganizationGroup,
+			'modelUsers' => $modelUsers,
 		));
 	}
 
@@ -71,7 +107,7 @@ class OrganizationGroupController extends SimbControllerBackend
 	 */
 	public function actionDelete($id)
 	{
-		if (Yii::app()->request->isPostRequest) {
+		if (Yii::app()->request->getParam('get','delete')){
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
@@ -83,7 +119,7 @@ class OrganizationGroupController extends SimbControllerBackend
             $errorText = YII_DEBUG ? sprintf(
                 Yii::t('app', 'The Delete Request for ID %s in %s is not working correctly.'),
                 $id,
-                'OrganizationGroup'
+                'Users'
             ) : Yii::t('app', 'Invalid request. Please do not repeat this request again.');
 			throw new CHttpException(400, $errorText);
 		}
@@ -94,15 +130,15 @@ class OrganizationGroupController extends SimbControllerBackend
 	 */
 	public function actionIndex()
 	{
-		$this->pageTitle = sprintf(Yii::t('app', 'Manage %s'), 'OrganizationGroups');
-		$modelOrganizationGroup = new OrganizationGroup('search');
-		$modelOrganizationGroup->unsetAttributes();  // clear any default values
-		if (isset($_GET['OrganizationGroup'])) {
-			$modelOrganizationGroup->attributes = $_GET['OrganizationGroup'];
+		$this->pageTitle = sprintf(Yii::t('app', 'Manage %s'), 'Users');
+		$modelUsers = new Users('search');
+		$modelUsers->unsetAttributes();  // clear any default values
+		if (isset($_GET['Users'])) {
+			$modelUsers->attributes = $_GET['Users'];
 		}
 
 		$this->render('index', array(
-			'modelOrganizationGroup' => $modelOrganizationGroup,
+			'modelUsers' => $modelUsers,
 		));
 	}
 
@@ -110,31 +146,31 @@ class OrganizationGroupController extends SimbControllerBackend
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return OrganizationGroup the loaded model
+	 * @return Users the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$modelOrganizationGroup = OrganizationGroup::model()->findByPk($id);
-		if ($modelOrganizationGroup === null) {
+		$modelUsers = Users::model()->findByPk($id);
+		if ($modelUsers === null) {
             $errorText = YII_DEBUG ? sprintf(
                 Yii::t('app', 'The ID %s does not exist in %s.'),
                 $id,
-                'OrganizationGroup'
+                'Users'
             ) : Yii::t('app', 'The requested page does not exist.');
 			throw new CHttpException(404, $errorText);
 		}
-		return $modelOrganizationGroup;
+		return $modelUsers;
 	}
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param OrganizationGroup $modelOrganizationGroup the model to be validated
+	 * @param Users $modelUsers the model to be validated
 	 */
-	protected function performAjaxValidation($modelOrganizationGroup)
+	protected function performAjaxValidation($modelUsers)
 	{
-		if (isset($_POST['ajax']) && $_POST['ajax'] === 'organization-group-form') {
-			echo CActiveForm::validate($modelOrganizationGroup);
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'users-form') {
+			echo CActiveForm::validate($modelUsers);
 			Yii::app()->end();
 		}
 	}

@@ -1,8 +1,8 @@
 <?php
 
-Yii::import('application.models._common.CommonUserRole');
+Yii::import('application.models._common.CommonUsers');
 
-class UserRole extends CommonUserRole
+class Users extends CommonUsers
 {
 	public static function model($className=__CLASS__)
     {

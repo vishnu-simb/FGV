@@ -1,13 +1,13 @@
 <?php
-/* @var $this UserController */
-/* @var $modelUser User */
+/* @var $this UsersController */
+/* @var $modelUsers Users */
 ?>
 
 <?php
 $label = sprintf(Yii::t('app', 'Manage %s'), 'Users');
 $this->breadcrumbs = array(
 	$label => array('index'),
-	sprintf(Yii::t('app', 'Create a new %s'), 'User'),
+	sprintf(Yii::t('app', 'Create a new %s'), 'Users'),
 );
 
 $this->menu = array(
@@ -15,4 +15,4 @@ $this->menu = array(
 );
 ?>
 
-<?php $this->renderPartial('_form', array('modelUser' => $modelUser)); ?>
+<?php $this->renderPartial('_form', array('modelUsers' => $modelUsers)); ?>

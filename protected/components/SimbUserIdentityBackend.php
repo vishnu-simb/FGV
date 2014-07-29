@@ -18,7 +18,7 @@ class SimbUserIdentityBackend extends SimbUserIdentity
         /* @var $user WpUser */
         $user = User::model()->findByAttributes(
             array(),
-            '(username = :username OR email = :username) AND is_deleted = 0',
+            '(username = :username) AND is_deleted = 0',
             array(':username' => $this->username)
         );
 

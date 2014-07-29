@@ -17,7 +17,7 @@ class SimbUserIdentityFrontend extends SimbUserIdentity
         /* @var $user WpUser */
         $user = WpUser::model()->findByAttributes(
             array(),
-            '(user_login = :username OR user_email = :username) AND user_status = 0',
+            '(user_login = :username) AND user_status = 0',
             array(':username' => $this->username)
         );
 
