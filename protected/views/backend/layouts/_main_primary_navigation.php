@@ -36,7 +36,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         		
                             array(
                                 'label' => Yii::t('app', 'Biofix'),
-                                'url' => 'javascript:;',
+                                'url' => Yii::app()->baseUrl.'/biofix',
                             ),
 							array(
 									'label' => Yii::t('app', 'Block'),

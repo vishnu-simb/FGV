@@ -19,7 +19,6 @@ public $tableNamePestSpray = 'pest_spray';
 		
 		
 		//rename column
-		$this->renameColumn($this->tableNamePestSpray,'pest_id','id');
 		$this->renameColumn($this->tableNamePestSpray,'ps_number','number');
 		$this->renameColumn($this->tableNamePestSpray,'ps_dd','dd');
 		$this->renameColumn($this->tableNamePestSpray,'ps_every','every');
@@ -36,6 +35,9 @@ public $tableNamePestSpray = 'pest_spray';
 		$this->addColumn($this->tableNamePestSpray,'is_deleted', 'TINYINT(1) NOT NULL DEFAULT 0 COMMENT "item is deleted or not"');
 		$this->addColumn($this->tableNamePestSpray,'params', 'text NULL COMMENT "json string, to store some needed values for this item"');
 
+		// Added {id} column and remove old index
+		$this->EXECUTE('ALTER TABLE '.$this->tableNamePestSpray.' ADD COLUMN id INT(11) NOT NULL AUTO_INCREMENT FIRST,CHANGE pest_id pest_id INT(10) UNSIGNED NOT NULL, CHANGE number number TINYINT(3) UNSIGNED NOT NULL,     CHANGE grower_id grower_id INT(11) NOT NULL,    DROP PRIMARY KEY,     ADD PRIMARY KEY(id)');
+		
 		return true;
 	}
 

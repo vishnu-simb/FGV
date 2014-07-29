@@ -193,7 +193,26 @@ class m140724_062540_add_user extends CDbMigration
                 'is_deleted' => AppConst::DELETED_FALSE,
                 'params' => null,
             ));
-
+        
+        $this->insert($this->tableNameUserRole, array(
+        		'id' => 2,
+        		'name' => 'Scout',
+        		'slug' => 'scout',
+        		'parent_id' => 0,
+        		'level' => 0,
+        		'permission_weight' => 999999999,
+        		'backend_accessible' => 0,
+        
+        		// Common fields, should appear in all tables
+        		'creator_id' => 0,
+        		'ordering' => 0,
+        		'created_at' => gmdate('Y-m-d H:i:s'),
+        		'updated_at' => gmdate('Y-m-d H:i:s'),
+        		'status' => AppConst::STATUS_ACTIVE,
+        		'is_deleted' => AppConst::DELETED_FALSE,
+        		'params' => null,
+        ));
+        
         $this->insert($this->tableNameUserUserRoleMap, array(
                 'user_id' => 1,
                 'user_role_id' => 1,

@@ -43,6 +43,9 @@ class m140728_064750_add_biofix extends CDbMigration
 		$this->addForeignKey($this->tableNameBiofix.'_ibfk_3', $this->tableNameBiofix,'pest_id', $this->tableNamePest,'id','NO ACTION','NO ACTION');
 		$this->addForeignKey($this->tableNameBiofix.'_ibfk_2', $this->tableNameBiofix,'block_id', $this->tableNameBlock, 'id','CASCADE','CASCADE');
 		
+		// Added {id} column and remove old index 
+		$this->EXECUTE('ALTER TABLE '.$this->tableNameBiofix.' ADD COLUMN id INT(11) NOT NULL AUTO_INCREMENT FIRST,    CHANGE pest_id pest_id INT(10) UNSIGNED NOT NULL, CHANGE block_id block_id INT(11) NOT NULL, CHANGE second_cohort second_cohort ENUM("no","yes") CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT "no" NOT NULL, DROP PRIMARY KEY,     ADD PRIMARY KEY(id)');
+		
 		return true;
 	}
 
