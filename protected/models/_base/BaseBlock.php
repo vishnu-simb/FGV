@@ -59,9 +59,7 @@ abstract class BaseBlock extends SimbActiveRecord{
     {
 		return array(
 			'property' => array(self::BELONGS_TO, 'Property', 'property_id'),
-			'grower'=>array(
-						self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
-			 ),
+			
 		);
 	}
 

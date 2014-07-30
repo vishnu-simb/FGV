@@ -27,16 +27,17 @@ $this->menu = array(
     'data' => $modelSpray,
     'attributes' => array(
 		'id',
-		'chemical_id',
+		'chemical.name',
 		'date',
 		'quantity',
-		'block_id',
+		'block.name',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

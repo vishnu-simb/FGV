@@ -33,27 +33,31 @@
             </div>
             <div class="box-content nopadding">
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelTrap, 'pest_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('pest_id'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelTrap, 'block_id', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('block_id'))); ?>
-
+                            <div class="span6">
+                            
+                            <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))?>
+                            
+                            <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+                        
                             <?php echo $form->textFieldControlGroup($modelTrap, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('name'))); ?>
+						
+                            <?php //echo $form->textFieldControlGroup($modelTrap, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('creator_id'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelTrap, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('creator_id'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelTrap, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('ordering'))); ?>
+</div>			
+							<!--  
+                            <div class="span6">
+                            
+                            <?php //echo $form->textFieldControlGroup($modelTrap, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('created_at'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelTrap, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('ordering'))); ?>
-</div>
+                            <?php //echo $form->textFieldControlGroup($modelTrap, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('updated_at'))); ?>
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelTrap, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('created_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelTrap, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('status'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelTrap, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('updated_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelTrap, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('is_deleted'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelTrap, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('status'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelTrap, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php echo $form->textAreaControlGroup($modelTrap, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelTrap->getAttributeLabel('params'))); ?>
-</div>
+                            <?php //echo $form->textAreaControlGroup($modelTrap, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelTrap->getAttributeLabel('params'))); ?>
+</div>-->
 
                             <div class="span12">
                     <div class="form-actions">

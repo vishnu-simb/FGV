@@ -23,6 +23,25 @@ class CommonBiofix extends BaseBiofix
     }
     
     /**
+     * @return array
+     */
+    public function relations()
+    {
+    	// NOTE: you may need to adjust the relation name and the related
+    	// class name for the relations automatically generated below.
+    	$oldValue = parent::relations();
+    	return CMap::mergeArray($oldValue,array(
+    			'property' => array(
+					self::BELONGS_TO,'Property', array('property_id'=>'id'),'through'=>'block'
+					),
+				'grower'=>array(
+					self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
+				 ),
+    	)
+    	);
+    }
+    
+    /**
      * @return Block[]
      */
     public function getBlock(){

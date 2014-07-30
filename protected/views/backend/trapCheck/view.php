@@ -27,16 +27,17 @@ $this->menu = array(
     'data' => $modelTrapCheck,
     'attributes' => array(
 		'id',
-		'trap_id',
+		'trap.name',
 		'date',
 		'value',
 		'comment',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

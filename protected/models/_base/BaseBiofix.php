@@ -60,12 +60,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
 		return array(
 			'pest' => array(self::BELONGS_TO, 'Pest', 'pest_id'),
 			'block' => array(self::BELONGS_TO, 'Block', 'block_id'),
-			'property' => array(
-					self::BELONGS_TO,'Property', array('property_id'=>'id'),'through'=>'block'
-					),
-			'grower'=>array(
-						self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
-			 ),
+			
 		);
 	}
 

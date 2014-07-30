@@ -23,6 +23,22 @@ class CommonBlock extends BaseBlock
     }
     
     /**
+     * @return array
+     */
+    public function relations()
+    {
+    	// NOTE: you may need to adjust the relation name and the related
+    	// class name for the relations automatically generated below.
+    	$oldValue = parent::relations();
+    	return CMap::mergeArray($oldValue,array(
+    			'grower'=>array(
+						self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
+			 ),
+    	)
+    	);
+    }
+    
+    /**
      * @return Property[]
      */
     public function getProperty(){

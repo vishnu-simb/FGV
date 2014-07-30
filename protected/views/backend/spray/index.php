@@ -55,12 +55,19 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'chemical_id',
+		array(
+			'name' => 'chemical.name',
+			'header'=>'Chemical',
+		),
 		'date',
 		'quantity',
-		'block_id',
-		'creator_id',
+		array(
+			'name' => 'block.name',
+			'header'=>'Block',
+		),
 		/*
+		 'creator_id',
+		
 		'ordering',
 		'created_at',
 		'updated_at',

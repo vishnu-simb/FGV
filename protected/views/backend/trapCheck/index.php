@@ -55,12 +55,12 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'trap_id',
+		'trap.name',
 		'date',
 		'value',
 		'comment',
-		'creator_id',
 		/*
+		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',

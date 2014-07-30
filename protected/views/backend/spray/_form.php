@@ -33,29 +33,32 @@
             </div>
             <div class="box-content nopadding">
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelSpray, 'chemical_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('chemical_id'))); ?>
+                            <div class="span6">
+                            
+                            <?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))?>
 
                             <?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'block_id', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('block_id'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('creator_id'))); ?>
+                            <?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+                             
+                            <?php //echo $form->textFieldControlGroup($modelSpray, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('creator_id'))); ?>
 </div>
+							<!-- 
+                            <div class="span6"><?php //echo $form->textFieldControlGroup($modelSpray, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('ordering'))); ?>
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelSpray, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('ordering'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelSpray, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('created_at'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('created_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelSpray, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('updated_at'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('updated_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelSpray, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('status'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('status'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelSpray, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('is_deleted'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php echo $form->textAreaControlGroup($modelSpray, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelSpray->getAttributeLabel('params'))); ?>
-</div>
+                            <?php //echo $form->textAreaControlGroup($modelSpray, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelSpray->getAttributeLabel('params'))); ?>
+							 -->
+                            </div>
 
                             <div class="span12">
                     <div class="form-actions">

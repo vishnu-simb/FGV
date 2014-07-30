@@ -27,15 +27,16 @@ $this->menu = array(
     'data' => $modelTrap,
     'attributes' => array(
 		'id',
-		'pest_id',
-		'block_id',
+		'pest.name',
+		'block.name',
 		'name',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

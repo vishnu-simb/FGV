@@ -55,12 +55,13 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'pest_id',
-		'block_id',
+		'pest.name',
+		'block.name',
 		'name',
-		'creator_id',
-		'ordering',
 		/*
+		 'creator_id',
+		'ordering',
+		
 		'created_at',
 		'updated_at',
 		'status',
