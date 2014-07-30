@@ -5,7 +5,7 @@
 
 <div class="view">
 
-    	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
 
@@ -13,7 +13,7 @@
 	<?php echo CHtml::encode($data->property_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
+	<b><?php  echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
 	<?php echo CHtml::encode($data->name); ?>
 	<br />
 
@@ -25,7 +25,7 @@
 	<?php echo CHtml::encode($data->row_width); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('creator_id')); ?>:</b>
+	<b><?php /* echo CHtml::encode($data->getAttributeLabel('creator_id')); ?>:</b>
 	<?php echo CHtml::encode($data->creator_id); ?>
 	<br />
 

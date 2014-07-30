@@ -27,16 +27,17 @@ $this->menu = array(
     'data' => $modelBlock,
     'attributes' => array(
 		'id',
-		'property_id',
+		'property.name',
 		'name',
 		'tree_spacing',
 		'row_width',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

@@ -55,9 +55,9 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'pest_id',
+		'pest.name',
 		'number',
-		'grower_id',
+		'grower.name',
 		'dd',
 		'every',
 		/*

@@ -55,12 +55,14 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'property_id',
+		'property.name',
+		'grower.name',
 		'name',
 		'tree_spacing',
 		'row_width',
-		'creator_id',
 		/*
+		 'creator_id',
+		
 		'ordering',
 		'created_at',
 		'updated_at',

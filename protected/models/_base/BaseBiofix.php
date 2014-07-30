@@ -58,8 +58,14 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function relations()
     {
 		return array(
-			'block' => array(self::BELONGS_TO, 'Block', 'block_id'),
 			'pest' => array(self::BELONGS_TO, 'Pest', 'pest_id'),
+			'block' => array(self::BELONGS_TO, 'Block', 'block_id'),
+			'property' => array(
+					self::BELONGS_TO,'Property', array('property_id'=>'id'),'through'=>'block'
+					),
+			'grower'=>array(
+						self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
+			 ),
 		);
 	}
 
@@ -76,8 +82,10 @@ abstract class BaseBiofix extends SimbActiveRecord{
 			'block_id' => Yii::t('app', 'Block Id'),
 			'pest.name' => Yii::t('app', 'Pest'),
 			'block.name' => Yii::t('app', 'Block'),
+			'grower.name' => Yii::t('app', 'Grower'),
+			'property.name' => Yii::t('app', 'Property'),
 			'second_cohort' => Yii::t('app', 'Second Cohort?'),
-			'block.property_id' => Yii::t('app', 'Property'),
+			
 			'date' => Yii::t('app', 'Biofix Date'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),

@@ -33,13 +33,14 @@ $this->menu = array(
 		'email',
 		'enabled',
 		'reporting',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 
 )); ?>

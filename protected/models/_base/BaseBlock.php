@@ -59,6 +59,9 @@ abstract class BaseBlock extends SimbActiveRecord{
     {
 		return array(
 			'property' => array(self::BELONGS_TO, 'Property', 'property_id'),
+			'grower'=>array(
+						self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
+			 ),
 		);
 	}
 
@@ -73,7 +76,9 @@ abstract class BaseBlock extends SimbActiveRecord{
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'property_id' => Yii::t('app', 'Property'),
-			'name' => Yii::t('app', 'Name'),
+			'property.name' => Yii::t('app', 'Property'),
+			'grower.name' => Yii::t('app', 'Grower'),
+			'name' => Yii::t('app', 'Block'),
 			'tree_spacing' => Yii::t('app', 'Tree Spacing'),
 			'row_width' => Yii::t('app', 'Row Width'),
 			'creator_id' => Yii::t('app', 'Creator'),

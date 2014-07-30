@@ -74,8 +74,8 @@ abstract class BasePest extends SimbActiveRecord{
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'name' => Yii::t('app', 'Name'),
-			'dd' => Yii::t('app', 'Dd'),
-			'calculate' => Yii::t('app', 'Calculate'),
+			'dd' => Yii::t('app', 'DD(n)'),
+			'calculate' => Yii::t('app', 'Enable Calculations'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),

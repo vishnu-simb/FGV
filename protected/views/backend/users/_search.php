@@ -23,7 +23,8 @@
                     						<?php echo $form->textFieldControlGroup($modelUsers, 'id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelUsers->getAttributeLabel('id'))); ?>
                     						-->
                                             <?php echo $form->textFieldControlGroup($modelUsers, 'username', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelUsers->getAttributeLabel('username'))); ?>
-											<?php echo $form->dropDownListControlGroup($modelUsers, 'type', SimbHtml::getEnumItem($modelUsers,'type'))?>
+											<?php echo $form->dropDownListControlGroup($modelUsers, 'type', SimbHtml::getEnumItem($modelUsers,'type'),array('empty' => 'Select Admin Type'))?>
+										
 											
             </div>	<!-- Hide field not necessary
                     <div class="span4">           

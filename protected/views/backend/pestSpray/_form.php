@@ -33,7 +33,9 @@
             </div>
             <div class="box-content nopadding">
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelPestSpray, 'pest_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('pest_id'))); ?>
+                            <div class="span6">
+                            
+                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'pest_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('pest_id'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelPestSpray, 'number', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('number'))); ?>
 
@@ -47,21 +49,22 @@
 
                             <?php echo $form->textFieldControlGroup($modelPestSpray, 'lowpop_every', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('lowpop_every'))); ?>
 </div>
+							<!--  
+                            <div class="span6">
+                            <?php //echo $form->textFieldControlGroup($modelPestSpray, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('creator_id'))); ?>
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelPestSpray, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('creator_id'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelPestSpray, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('ordering'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('ordering'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelPestSpray, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('created_at'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('created_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelPestSpray, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('updated_at'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('updated_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelPestSpray, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('status'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('status'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelPestSpray, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('is_deleted'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php echo $form->textAreaControlGroup($modelPestSpray, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelPestSpray->getAttributeLabel('params'))); ?>
-</div>
+                            <?php //echo $form->textAreaControlGroup($modelPestSpray, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelPestSpray->getAttributeLabel('params'))); ?>
+</div>-->
 
                             <div class="span12">
                     <div class="form-actions">

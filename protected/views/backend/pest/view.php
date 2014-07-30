@@ -30,12 +30,13 @@ $this->menu = array(
 		'name',
 		'dd',
 		'calculate',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

@@ -58,9 +58,10 @@ $('.search-form-ext form').submit(function(){
 		'name',
 		'observation',
 		'forcast',
+		/*
 		'creator_id',
 		'ordering',
-		/*
+		
 		'created_at',
 		'updated_at',
 		'status',

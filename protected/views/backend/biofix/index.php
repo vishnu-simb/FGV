@@ -57,7 +57,8 @@ $('.search-form-ext form').submit(function(){
 		//'id',
 		
 		'pest.name',
-		'block.property_id',
+		'grower.name',
+		'property.name',
 		'block.name',
 		'second_cohort',
 		'date',

@@ -57,6 +57,9 @@ abstract class BasePestSpray extends SimbActiveRecord{
 	public function relations()
     {
 		return array(
+			'pest' => array(self::BELONGS_TO, 'Pest', 'pest_id'),
+			'grower'=>array(
+						self::BELONGS_TO,'Grower','grower_id'),
 		);
 	}
 
@@ -72,6 +75,8 @@ abstract class BasePestSpray extends SimbActiveRecord{
 			'id' => Yii::t('app', 'ID'),
 			'number' => Yii::t('app', 'Number'),
 			'grower_id' => Yii::t('app', 'Grower'),
+			'grower.name' => Yii::t('app', 'Grower'),
+			'pest.name' => Yii::t('app', 'Pest'),
 			'dd' => Yii::t('app', 'Dd'),
 			'every' => Yii::t('app', 'Every'),
 			'lowpop_dd' => Yii::t('app', 'Lowpop Dd'),

@@ -56,11 +56,12 @@ $('.search-form-ext form').submit(function(){
 'columns' => array(
 		'id',
 		'name',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
-		/*
+		
 		'status',
 		'is_deleted',
 		'params',
