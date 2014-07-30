@@ -76,7 +76,9 @@ abstract class BaseSizing extends SimbActiveRecord{
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'block_id' => Yii::t('app', 'Block'),
+			'block.name' => Yii::t('app', 'Block'),
 			'variety_id' => Yii::t('app', 'Variety'),
+			'variety.name' => Yii::t('app', 'Variety'),
 			'date' => Yii::t('app', 'Date'),
 			'value' => Yii::t('app', 'Value'),
 			'type' => Yii::t('app', 'Type'),

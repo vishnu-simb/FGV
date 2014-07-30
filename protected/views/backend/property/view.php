@@ -30,12 +30,13 @@ $this->menu = array(
 		'grower_id',
 		'location_id',
 		'name',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

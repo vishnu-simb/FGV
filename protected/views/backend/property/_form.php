@@ -35,28 +35,28 @@
 
                             <div class="span6">
                             
-                            <?php echo $form->dropDownListControlGroup($modelProperty, 'grower_id', Grower::model()->findAll(array('order' => 'id'),'id','name')); ?>
-                            
-                         	<?php echo $form->dropDownListControlGroup($modelProperty, 'location_id', Location::model()->findAll(array('order' => 'id'),'id','id')); ?> 
-                          
+                          	<?php echo $form->dropDownListControlGroup($modelProperty, 'grower_id', CHtml::listData( $modelProperty->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))?>
+                    	
+                            <?php echo $form->dropDownListControlGroup($modelProperty, 'location_id', CHtml::listData( $modelProperty->getLocation() ,'id','id'),array('empty'=>'Select A Location'))?>
+                    
                            
                             <?php echo $form->textFieldControlGroup($modelProperty, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('name'))); ?>
+							
+                            <?php //echo $form->textFieldControlGroup($modelProperty, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('creator_id'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelProperty, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('creator_id'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelProperty, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('ordering'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelProperty, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('ordering'))); ?>
 </div>
+							<!--  
+                            <div class="span6"><?php //echo $form->textFieldControlGroup($modelProperty, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('created_at'))); ?>
 
-                            <div class="span6"><?php echo $form->textFieldControlGroup($modelProperty, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('created_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelProperty, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('updated_at'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelProperty, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('updated_at'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelProperty, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('status'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelProperty, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('status'))); ?>
+                            <?php //echo $form->textFieldControlGroup($modelProperty, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('is_deleted'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelProperty, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php echo $form->textAreaControlGroup($modelProperty, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelProperty->getAttributeLabel('params'))); ?>
-</div>
+                            <?php //echo $form->textAreaControlGroup($modelProperty, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelProperty->getAttributeLabel('params'))); ?>
+</div>-->
 
                             <div class="span12">
                     <div class="form-actions">

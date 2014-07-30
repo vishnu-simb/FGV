@@ -27,19 +27,20 @@ $this->menu = array(
     'data' => $modelPestSpray,
     'attributes' => array(
 		'id',
-		'pest_id',
+		'pest.name',
 		'number',
-		'grower_id',
+		'grower.name',
 		'dd',
 		'every',
 		'lowpop_dd',
 		'lowpop_every',
+		/*
 		'creator_id',
 		'ordering',
 		'created_at',
 		'updated_at',
 		'status',
 		'is_deleted',
-		'params',
+		'params',*/
 	),
 )); ?>

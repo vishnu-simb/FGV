@@ -34,13 +34,13 @@
             <div class="box-content nopadding">
 
                             <div class="span6">
+                
+							<?php echo $form->dropDownListControlGroup($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty' => 'Select A Pest'))?>
                             
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'pest_id', array('maxlength' => 10, 'class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('pest_id'))); ?>
-
                             <?php echo $form->textFieldControlGroup($modelPestSpray, 'number', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('number'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelPestSpray, 'grower_id', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('grower_id'))); ?>
-
+							<?php echo $form->dropDownListControlGroup($modelPestSpray, 'grower_id', CHtml::listData( $modelPestSpray->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
+                            
                             <?php echo $form->textFieldControlGroup($modelPestSpray, 'dd', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('dd'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelPestSpray, 'every', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('every'))); ?>

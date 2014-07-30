@@ -23,7 +23,7 @@ class CommonBlock extends BaseBlock
     }
     
     /**
-     * @return Block[]
+     * @return Property[]
      */
     public function getProperty(){
     	$criteria = new CDbCriteria();

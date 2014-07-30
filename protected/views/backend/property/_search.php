@@ -18,31 +18,31 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
 
-                    <div class="span4">            <?php echo $form->textFieldControlGroup($modelProperty, 'id', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('id'))); ?>
-
-                                            <?php echo $form->textFieldControlGroup($modelProperty, 'grower_id', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('grower_id'))); ?>
-
-                                            <?php echo $form->textFieldControlGroup($modelProperty, 'location_id', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('location_id'))); ?>
-
+                    <div class="span4">    
+   
+ 											<?php echo $form->dropDownListControlGroup($modelProperty, 'grower_id', CHtml::listData( $modelProperty->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))?>
+                    
+                                             <?php echo $form->dropDownListControlGroup($modelProperty, 'location_id', CHtml::listData( $modelProperty->getLocation() ,'id','id'),array('empty'=>'Select A Location'))?>
+ 											
                                             <?php echo $form->textFieldControlGroup($modelProperty, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('name'))); ?>
 
-            </div>
-                    <div class="span4">            <?php echo $form->textFieldControlGroup($modelProperty, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('creator_id'))); ?>
+            </div>	<!--  
+                    <div class="span4">      <?php //echo $form->textFieldControlGroup($modelProperty, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('creator_id'))); ?>
 
-                                            <?php echo $form->textFieldControlGroup($modelProperty, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('ordering'))); ?>
+                                            <?php //echo $form->textFieldControlGroup($modelProperty, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('ordering'))); ?>
 
-                                            <?php echo $form->textFieldControlGroup($modelProperty, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('created_at'))); ?>
+                                            <?php //echo $form->textFieldControlGroup($modelProperty, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('created_at'))); ?>
 
-                                            <?php echo $form->textFieldControlGroup($modelProperty, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('updated_at'))); ?>
-
-            </div>
-                    <div class="span4">            <?php echo $form->textFieldControlGroup($modelProperty, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('status'))); ?>
-
-                                            <?php echo $form->textFieldControlGroup($modelProperty, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('is_deleted'))); ?>
-
-                                            <?php echo $form->textAreaControlGroup($modelProperty, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelProperty->getAttributeLabel('params'))); ?>
+                                            <?php //echo $form->textFieldControlGroup($modelProperty, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('updated_at'))); ?>
 
             </div>
+                    <div class="span4">            <?php //echo $form->textFieldControlGroup($modelProperty, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('status'))); ?>
+
+                                            <?php //echo $form->textFieldControlGroup($modelProperty, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelProperty->getAttributeLabel('is_deleted'))); ?>
+
+                                            <?php //echo $form->textAreaControlGroup($modelProperty, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelProperty->getAttributeLabel('params'))); ?>
+
+            </div>-->
             </div>
     <div class="form-actions">
         <?php echo TbHtml::submitButton(Yii::t('app', 'Search'),  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>

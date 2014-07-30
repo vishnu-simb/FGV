@@ -55,8 +55,8 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'block_id',
-		'variety_id',
+		'block.name',
+		'variety.name',
 		'date',
 		'value',
 		'type',
