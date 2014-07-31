@@ -37,7 +37,7 @@
                             
                              <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap() ,'id','name'),array('empty'=>'Select A Trap'))?>
                              
-                            <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelTrapCheck, 'value', array('class' => 'input-xlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('value'))); ?>
 

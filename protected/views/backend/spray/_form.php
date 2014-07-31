@@ -37,7 +37,7 @@
                             
                             <?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
 
                             <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
 

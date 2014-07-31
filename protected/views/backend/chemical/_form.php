@@ -48,7 +48,7 @@
                           
 </div>
  <!--  
-   							<?php echo $form->textFieldControlGroup($modelChemical, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelChemical->getAttributeLabel('creator_id'))); ?>
+   							<?php //echo $form->textFieldControlGroup($modelChemical, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelChemical->getAttributeLabel('creator_id'))); ?>
    
                             <div class="span6">
                             

@@ -40,7 +40,7 @@
                     
 							<?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'))?>
                             
-                            <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
  							<!-- 
                             <?php //echo $form->textFieldControlGroup($modelBiofix, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('creator_id'))); ?>
 							-->

@@ -25,7 +25,7 @@
                                             <?php echo $form->dropDownListControlGroup($modelSizing, 'variety_id', CHtml::listData( $modelSizing->getVariety() ,'id','name'),array('empty'=>'Select A Variety'))?>
                             
 
-                                            <?php echo $form->textFieldControlGroup($modelSizing, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelSizing->getAttributeLabel('date'))); ?>
+                                            <?php echo $form->textFieldControlGroup($modelSizing, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelSizing->getAttributeLabel('date'))); ?>
 
                                             <?php echo $form->textFieldControlGroup($modelSizing, 'value', array('class' => 'input-xlarge', 'placeholder' => $modelSizing->getAttributeLabel('value'))); ?>
 										    
