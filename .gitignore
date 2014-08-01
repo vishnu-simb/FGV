@@ -20,3 +20,4 @@ nbproject
 /protected/configs/frontend/main.php
 /protected/configs/db_connect.php
 /protected/configs/params.php
+/environment.php
