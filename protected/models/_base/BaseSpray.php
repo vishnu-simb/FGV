@@ -110,4 +110,6 @@ abstract class BaseSpray extends SimbActiveRecord{
 			)
 		));
 	}
+	
+	
 }

@@ -49,4 +49,7 @@ class CommonSpray extends BaseSpray
     	$criteria->params = array(':is_deleted'=>'0');
     	return Chemical::model()->findAll($criteria);
     }
+    
+
+    
 }

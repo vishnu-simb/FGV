@@ -10,4 +10,6 @@
 class SimbWebUserFrontend extends SimbWebUser
 {
     public $euid = null;
+    
+
 }

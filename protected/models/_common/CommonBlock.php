@@ -9,6 +9,19 @@ class CommonBlock extends BaseBlock
         return parent::model($className);
     }
     
+      /**
+     * default scope
+     * @return array
+     * @see defaultScope
+     */
+    public function defaultScope(){
+    	return array(
+    			'alias'=>'block',
+    			'condition'=>'block.is_deleted=0',
+    			//'order'=>'artwork.sort ASC'
+    	);
+    }
+    
     /**
      * scope of yii
      * @return array
@@ -16,10 +29,13 @@ class CommonBlock extends BaseBlock
      */
     public function scopes(){
     	return array(
-    			'alias'=>'block',
-    			'condition'=>'block.is_deleted=0',
+    			'latest'=>array(
+    					'order'=>'block.created_at DESC'
+    			),
+    			'sort'=>array(
+    					'order'=>'block.ordering ASC',
+    			)
     	);
-    
     }
     
     /**

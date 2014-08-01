@@ -11,7 +11,12 @@ class SimbWebUser extends CWebUser
 {
     /* @property $params for storing options, settings ... of a user */
     public $params = array();
-
+    
+    /**
+     * User Type Value "Admin"
+     */
+    const USER_TYPE_ADMIN='admin';
+    
     /**
      * Set key => value to the params array
      * @param $key
@@ -28,6 +33,7 @@ class SimbWebUser extends CWebUser
      * @param null $default
      * @return null
      */
+    
     public function getParam($key, $default = null)
     {
         if (isset($this->params[$key])) {
@@ -35,5 +41,14 @@ class SimbWebUser extends CWebUser
         } else {
             return $default;
         }
+    }
+    
+    /**
+     * User Type Value "Admin"
+     */
+    
+    function isAdmin(){
+    	$user = Users::model()->findByPk(Yii::app()->user->id);
+    	return $user->type== self::USER_TYPE_ADMIN;
     }
 } 

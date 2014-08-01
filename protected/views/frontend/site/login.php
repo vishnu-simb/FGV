@@ -15,8 +15,8 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
 $clientScript = Yii::app()->clientScript;
 $bootstrap = Yii::app()->bootstrap;
 ?>
-<h1><a href="index.html"><img src="<?= $themeUrl ?>/img/logo_bwf.jpg" alt="Main Logo" class='retina-ready' width="179" height="55"> BWF </a>
-</h1>
+<!--  <h1><a href="index.html"><img src="<?= $themeUrl ?>/img/logo_bwf.jpg" alt="Main Logo" class='retina-ready' width="179" height="55"> BWF </a>
+</h1>-->
 
 <div class="login-body">
     <h2><?= Yii::t('app', 'LOG IN') ?></h2>

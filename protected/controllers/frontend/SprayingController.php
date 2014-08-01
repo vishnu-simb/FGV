@@ -36,6 +36,9 @@ class SprayingController extends SimbController
 		);
 	}
 
+	
+		
+	
 	/**
 	 * Manages all models.
 	 */
@@ -58,6 +61,31 @@ class SprayingController extends SimbController
 		));
 	}
 
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($id)
+	{
+		if (Yii::app()->request->getParam('get','delete')) {
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if (!isset($_GET['ajax'])) {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+			}
+		} else {
+			$errorText = YII_DEBUG ? sprintf(
+					Yii::t('app', 'The Delete Request for ID %s in %s is not working correctly.'),
+					$id,
+					'Spray'
+			) : Yii::t('app', 'Invalid request. Please do not repeat this request again.');
+			throw new CHttpException(400, $errorText);
+		}
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

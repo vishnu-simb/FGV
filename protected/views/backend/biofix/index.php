@@ -56,10 +56,10 @@ $('.search-form-ext form').submit(function(){
 'columns' => array(
 		//'id',
 		
-		'pest.name',
+		array('name'=>'pest.name','filter'=>CHtml::activeDropDownList($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
 		'grower.name',
 		'property.name',
-		'block.name',
+		 array('name'=>'block.name','filter'=>CHtml::activeDropDownList($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
 		'second_cohort',
 		'date',
 		
