@@ -24,7 +24,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                 'items' => array(
                     array('label' => Yii::t('app', 'Dashboard'), 'url' => Yii::app()->getHomeUrl()),
                 	array('label' => Yii::t('app', 'Trapping'), 'url' => 'javascript:;'),
-                	array('label' => Yii::t('app', 'Spraying'), 'url' => 'javascript:;'),
+                	array('label' => Yii::t('app', 'Spraying'), 'url' => Yii::app()->baseUrl.'/spraying'),
                     array(
                         'label' => Yii::t('app', 'Administration'),
                         'itemOptions' => array(),

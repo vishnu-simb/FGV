@@ -42,7 +42,7 @@
                             <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
 
                             <?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
-                             
+
                             <?php //echo $form->textFieldControlGroup($modelSpray, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('creator_id'))); ?>
 </div>
 							<!-- 

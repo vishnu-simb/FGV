@@ -47,4 +47,5 @@ class CommonBlock extends BaseBlock
     	$criteria->params = array(':is_deleted'=>'0');
     	return Property::model()->findAll($criteria);
     }
+    
 }
