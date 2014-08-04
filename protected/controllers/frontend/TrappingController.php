@@ -43,16 +43,21 @@ class TrappingController extends SimbController
 	{
 		$this->pageTitle = sprintf(Yii::t('app', 'Trapping %s'), '');
 		$modelTrapCheck = new TrapCheck();
-		$modelGrowers = new Grower('search');
-		$modelTrapCheck->unsetAttributes();  // clear any default values
-		if (isset($_GET['TrapCheck'])) {
-			$modelTrapCheck->attributes = $_GET['TrapCheck'];
+		$modelGrower = new Grower();
+		$modelGrower->unsetAttributes();  // clear any default values
+		$filter = "";
+		if (isset($_GET['Grower'])) {
+			$modelGrower->attributes = $_GET['Grower'];
+			if(isset($_GET['Grower']['name'])){
+				// filter by grower name
+				$filter = "t.name like '%".$_GET['Grower']['name']."%'";
+			}
 		}
-	
 		$this->render('index', array(
 				'modelTrapCheck' => $modelTrapCheck,
 				'dataProvider' => $modelTrapCheck->SearchRecentTrapings(),
-				'growers' => $modelGrowers->findAll(),
+				'modelGrower' => $modelGrower,
+				'filter' => $filter,
 		));
 	}
 	

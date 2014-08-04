@@ -87,8 +87,8 @@ class FormUserLogin extends SimbFormModel
             $this->_identity->authenticate();
         }
         if ($this->_identity->errorCode === SimbUserIdentityBackend::ERROR_NONE) {
-            $duration = 3600 * 24 * 30; // 30 days
-            Yii::app()->user->login($this->_identity, $duration);
+            $expires = 60*60*24; // 1day
+            Yii::app()->user->login($this->_identity, $expires);
             return true;
         } else {
             return false;

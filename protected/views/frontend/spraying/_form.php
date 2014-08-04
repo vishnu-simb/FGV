@@ -32,10 +32,11 @@
                           <?php echo $form->numberFieldControlGroup($modelSpray, 'quantity', array('class' => 'input-xxlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
 			  
             		</div>
+
             		<div class="span12">
             		 <div class="form-actions">
      					<?php echo TbHtml::submitButton($modelSpray->isNewRecord ? Yii::t('app', 'Add Spraying') : Yii::t('app', 'Save Changes'),array(
-                            'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+                            'color'=>'','class'=>'input-xxlarge btn btn-large',
                         )); ?>
                         </div>
     </div>

@@ -58,13 +58,13 @@ class FormUserLogin extends SimbFormModel
             } else {
                 // Use a backend UserIdentity that has been derived from CUserIdentity
                 // File in Components
-                $this->_identity = new SimbUserIdentityBackend($this->username, $this->password);
+                $this->_identity = new SimbUserIdentityFrontend($this->username, $this->password);
                 $this->_identity->authenticate();
 
                 switch ($this->_identity->errorCode) {
-                    case SimbUserIdentityBackend::ERROR_NONE:
-                        $duration = 0;
-                        Yii::app()->user->login($this->_identity, $duration);
+                    case SimbUserIdentityFrontend::ERROR_NONE:
+                        $expires = 60*60*24; // 1day
+                        Yii::app()->user->login($this->_identity, $expires);
                         break;
                     default:
                         $this->addError('password', Yii::t('app', 'The details you entered were incorrect. Please try again'));
@@ -87,8 +87,8 @@ class FormUserLogin extends SimbFormModel
             $this->_identity->authenticate();
         }
         if ($this->_identity->errorCode === SimbUserIdentityFrontend::ERROR_NONE) {
-            $duration = 3600 * 24 * 30; // 30 days
-            Yii::app()->user->login($this->_identity, $duration);
+            $expires = 60*60*24; // 1day
+            Yii::app()->user->login($this->_identity, $expires);
             return true;
         } else {
             return false;

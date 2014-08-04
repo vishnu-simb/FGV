@@ -14,7 +14,7 @@ class SimbUserIdentityFrontend extends SimbUserIdentity
      */
  	public function authenticate()
     {
-        /* @var $user WpUser */
+      
         $user = Users::model()->findByAttributes(
             array(),
             '(username = :username) AND is_deleted = 0',
@@ -26,7 +26,7 @@ class SimbUserIdentityFrontend extends SimbUserIdentity
         } else {
             if (!$user->validatePassword($this->password)) {
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            } else {
+            } else {  // Okay!
                 $this->_id = $user->id;
                 $this->username = $user->username;
                 $this->errorCode = self::ERROR_NONE;

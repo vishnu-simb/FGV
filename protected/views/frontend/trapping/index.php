@@ -9,21 +9,25 @@
         <div class="box">
 
  <?php $this->renderPartial('_search',array(
-                'growers' => $growers,
+                'modelGrower' => $modelGrower,
             )); ?>
 
         </div>
     </div>
     	<div class="row-fluid">
 					<div class="span8">
-					
+						<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+							'action' => Yii::app()->createUrl($this->route),
+							'method' => 'post',
+							'htmlOptions' => array('class' => 'form-horizontal form-search-advanced form-validate'),
+						)); ?>
 						<?php 
-						foreach($growers as $grower){
+						foreach($modelGrower->findAll($filter) as $grower){
 							foreach($grower->getProperties() as $property){
 								echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
 								
 								foreach($property->getBlocks() as $block){
-									echo '<div class="box box-color box-bordered">
+									echo '<div class="box box-small box-custom box-bordered">
                 						  <div class="box-title"><h3>'.$block->name.'</h3></div>';
 									echo '
 									<div class="box-content nopadding">
@@ -36,7 +40,7 @@
 									foreach($block->getTraps() as $trap){
 										echo '<tr>';
 										echo '<td>'.$trap->name.' - '.$trap->pest .'</td>';
-										echo '<td><input type="number" name="" class="pest_input" min="0" max="200" style="float: right;width: 30px;" /></td>';
+										echo '<td><input type="number" name="trap_'.$trap->id.'" class="pest_input" min="0" max="200" style="float: right;width: 30px;" /></td>';
 										echo '</tr>';
 									}
 									echo '</tbody>
@@ -48,6 +52,15 @@
 						}
 						
 						?>
+						      
+                    <div class="form-actions">
+                        <?php echo TbHtml::submitButton(Yii::t('app', 'Submit'),array(
+                            'color'=>'','class'=>'input-xxlarge btn btn-large',
+                        )); ?>
+                    </div>
+               
+						 <?php $this->endWidget(); ?>
+						 
 						<div class="box box-color box-bordered">
 							<div class="box-title">
 							<h3>
