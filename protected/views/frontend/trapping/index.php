@@ -40,7 +40,7 @@
 									foreach($block->getTraps() as $trap){
 										echo '<tr>';
 										echo '<td>'.$trap->name.' - '.$trap->pest .'</td>';
-										echo '<td><input type="number" name="trap_'.$trap->id.'" class="pest_input" min="0" max="200" style="float: right;width: 30px;" /></td>';
+										echo '<td><input type="number" name="Traps['.$trap->id.']" class="pest_input" min="0" max="200" style="float: right;width: 30px;" /></td>';
 										echo '</tr>';
 									}
 									echo '</tbody>
@@ -84,8 +84,8 @@
 											</td>
 											
 											<td style="text-align: right;width: 65px">
-											<a href="<?php echo Yii::app()->baseUrl."/spraying/update/".$lastest['trap_check_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['trap_check_name'] ; ?>"><i class="icon-edit"></i></a>
-											<a href="<?php echo Yii::app()->baseUrl."/spraying/delete/".$lastest['trap_check_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['trap_check_name'] ; ?>"><i class="icon-remove"></i></a>
+											<a href="<?php echo Yii::app()->baseUrl."/trapping/update/".$lastest['trap_check_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['trap_check_name'] ; ?>"><i class="icon-edit"></i></a>
+											<a href="<?php echo Yii::app()->baseUrl."/trapping/delete/".$lastest['trap_check_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['trap_check_name'] ; ?>"><i class="icon-remove"></i></a>
 											</td>
 										</tr>
 									<?php endforeach;?>

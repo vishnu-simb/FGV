@@ -35,7 +35,60 @@ class TrappingController extends SimbController
 	
 		);
 	}
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+		$modelTrapCheck = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'TrapCheck', $modelTrapCheck->id);
 
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($modelTrapCheck);
+
+		if (isset($_POST['TrapCheck'])) {
+			$modelTrapCheck->attributes=$_POST['TrapCheck'];
+			if ($modelTrapCheck->save()) {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+			}
+		}
+
+		$this->render('update', array(
+			'modelTrapCheck' => $modelTrapCheck,
+		));
+	}
+	
+	
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($id)
+	{
+	
+		if (Yii::app()->request->getParam('get','delete')) {
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if (!isset($_GET['ajax'])) {
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+			}
+		} else {
+			$errorText = YII_DEBUG ? sprintf(
+					Yii::t('app', 'The Delete Request for ID %s in %s is not working correctly.'),
+					$id,
+					'Spray'
+			) : Yii::t('app', 'Invalid request. Please do not repeat this request again.');
+			throw new CHttpException(400, $errorText);
+		}
+	}
+	
+	
 	/**
 	 * Manages all models.
 	 */
@@ -53,12 +106,56 @@ class TrappingController extends SimbController
 				$filter = "t.name like '%".$_GET['Grower']['name']."%'";
 			}
 		}
+		if(isset($_POST['Traps'])){
+			foreach ($_POST['Traps'] as $key => $value){ // save multiple records
+				if(!empty($value)){
+					$saveTrapCheck = new TrapCheck();
+					$save = array('value'=>$value,'trap_id'=>$key,'date'=>gmdate('Y-m-d'));
+					$saveTrapCheck->attributes = $save;
+					$saveTrapCheck->save();
+				}
+					
+			}
+		}
 		$this->render('index', array(
 				'modelTrapCheck' => $modelTrapCheck,
 				'dataProvider' => $modelTrapCheck->SearchRecentTrapings(),
 				'modelGrower' => $modelGrower,
 				'filter' => $filter,
 		));
+	}
+	
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return TrapCheck the loaded model
+	 * @throws CHttpException
+	 */
+	public function loadModel($id)
+	{
+		$modelTrapCheck = TrapCheck::model()->findByPk($id);
+		if ($modelTrapCheck === null) {
+			$errorText = YII_DEBUG ? sprintf(
+					Yii::t('app', 'The ID %s does not exist in %s.'),
+					$id,
+					'TrapCheck'
+			) : Yii::t('app', 'The requested page does not exist.');
+			throw new CHttpException(404, $errorText);
+		}
+		return $modelTrapCheck;
+	}
+	
+	/**
+	 * Performs the AJAX validation.
+	 * @param TrapCheck $modelTrapCheck the model to be validated
+	 */
+	protected function performAjaxValidation($modelTrapCheck)
+	{
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'trap-check-form') {
+			echo CActiveForm::validate($modelTrapCheck);
+			Yii::app()->end();
+		}
 	}
 	
 }

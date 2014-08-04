@@ -28,7 +28,7 @@ class TrapCheck extends CommonTrapCheck
 		INNER JOIN $pestTb pt ON t.pest_id = pt.id
 		INNER JOIN $blockTb b ON t.block_id = b.id
 		INNER JOIN $propertyTb p ON b.property_id = p.id
-		INNER JOIN $growerTb g ON p.grower_id = g.id  ORDER BY tc.date DESC";
+		INNER JOIN $growerTb g ON p.grower_id = g.id  ORDER BY tc.id DESC";
 		return new CSqlDataProvider($sql, array(
 	
 		));
