@@ -8,4 +8,7 @@ class Grower extends CommonGrower
     {
 		return parent::model($className);
 	}
+	function getProperties(){
+		return Property::model()->findAll('grower_id='.$this->id);
+	}
 }

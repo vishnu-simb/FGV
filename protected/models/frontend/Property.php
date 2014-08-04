@@ -8,4 +8,7 @@ class Property extends CommonProperty
     {
 		return parent::model($className);
 	}
+	function getBlocks(){
+		return Block::model()->findAll('property_id='.$this->id);
+	}
 }

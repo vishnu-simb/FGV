@@ -8,4 +8,5 @@ class Trap extends CommonTrap
     {
 		return parent::model($className);
 	}
+
 }

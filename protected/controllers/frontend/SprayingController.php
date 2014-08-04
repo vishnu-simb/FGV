@@ -39,35 +39,38 @@ class SprayingController extends SimbController
 	
 		
 	
+	
 	/**
-	 * Manages all models.
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionIndex()
+	public function actionUpdate($id)
 	{
-		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Spraying');
-		$modelSpray = new Spray('search');
-		$modelSpray->unsetAttributes();  // clear any default values
-		if (isset($_GET['Spray'])) {
-			$modelSpray->attributes = $_GET['Spray'];
-		}
+	
+		$modelSpray = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Spray', $modelSpray->id);
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($modelSpray);
 		if (isset($_POST['Spray'])) {
-			$modelSpray->attributes = $_POST['Spray'];
+			$modelSpray->attributes=$_POST['Spray'];
 			if ($modelSpray->save()) {
-				
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 			}
 		}
-		$this->render('index', array(
-			'modelSpray' => $modelSpray,
+		$this->render('update', array(
+				'modelSpray' => $modelSpray,
 		));
 	}
-
+	
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
 	public function actionDelete($id)
-	{
+	{	
+
 		if (Yii::app()->request->getParam('get','delete')) {
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
@@ -84,6 +87,26 @@ class SprayingController extends SimbController
 			) : Yii::t('app', 'Invalid request. Please do not repeat this request again.');
 			throw new CHttpException(400, $errorText);
 		}
+	}
+	
+	/**
+	 * Manages all models.
+	 */
+	public function actionIndex()
+	{
+		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Spraying');
+		$modelSpray = new Spray();
+		$modelSpray->unsetAttributes();  // clear any default values
+		if (isset($_POST['Spray'])) {
+			$modelSpray->attributes = $_POST['Spray'];
+			if ($modelSpray->save()) {
+	
+			}
+		}
+		$this->render('index', array(
+				'modelSpray' => $modelSpray,
+				'dataProvider' => $modelSpray->SearchLatestSpray(),
+		));
 	}
 	
 	/**

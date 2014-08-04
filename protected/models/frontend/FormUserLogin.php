@@ -83,11 +83,11 @@ class FormUserLogin extends SimbFormModel
         if ($this->_identity === null) {
             // Use a backend UserIdentity that has been derived from CUserIdentity
             // File in Components
-            $this->_identity = new SimbUserIdentityBackend($this->username, $this->password);
+            $this->_identity = new SimbUserIdentityFrontend($this->username, $this->password);
             $this->_identity->authenticate();
         }
-        if ($this->_identity->errorCode === SimbUserIdentityBackend::ERROR_NONE) {
-            $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
+        if ($this->_identity->errorCode === SimbUserIdentityFrontend::ERROR_NONE) {
+            $duration = 3600 * 24 * 30; // 30 days
             Yii::app()->user->login($this->_identity, $duration);
             return true;
         } else {
