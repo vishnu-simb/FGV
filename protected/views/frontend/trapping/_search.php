@@ -14,8 +14,7 @@
     <div class="box-content nopadding">
 
                     <div class="span4">     
-                    <?php echo $form->textField($modelGrower, 'name', array('class' => 'input-xxlarge', 'placeholder' => $modelGrower->getAttributeLabel('name'),'onchange' => "document.getElementById('".$form->id."').submit();")); ?>
-
+				    <?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAll() ,'name','name'),array('class' => 'select2-me input-xxlarge','placeholder' => $modelGrower->getAttributeLabel('name'),'empty'=>'Please choose a grower','onchange' => "document.getElementById('".$form->id."').submit();"))?>
             </div>
         
             </div>

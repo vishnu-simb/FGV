@@ -55,16 +55,11 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		array(
-			'name' => 'chemical.name',
-			'header'=>'Chemical',
-		),
+		array('name'=>'chemical.name','filter'=>CHtml::activeDropDownList($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))),
 		'date',
 		'quantity',
-		array(
-			'name' => 'block.name',
-			'header'=>'Block',
-		),
+		array('name'=>'block.name','filter'=>CHtml::activeDropDownList($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
+
 		/*
 		 'creator_id',
 		

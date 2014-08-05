@@ -5,7 +5,7 @@
 ?>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	       'id'=>'trapCheck-form',
+	       'id'=>'spray-form',
                 // Please note: When you enable ajax validation, make sure the corresponding
                 // controller action is handling ajax validation correctly.
                 // There is a call to performAjaxValidation() commented in generated controller code.
@@ -22,22 +22,15 @@
 <div class="search-form-ext">
     <div class="box-content nopadding">
 
-                    <div class="span12">    
-                    	  <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap() ,'id','name'), array('class' => 'input-xxlarge'))?>
-    	
-                          <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xxlarge datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
+                    <div class="span12">
+                    	 <div style="float:left;">
+                     	  <?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData( $modelBlock->findAll() ,'id','name','property.name'), array('class' => 'input-xxlarge'))?>
 
-                          <?php echo $form->textFieldControlGroup($modelTrapCheck, 'value', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('value'))); ?>
-			  
+                    	  <?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData( $modelGrower->findAll() ,'id','name'), array('class' => 'input-xlarge'))?>
+                          </div>
+                       
             		</div>
 
-            		<div class="span12">
-            		 <div class="form-actions">
-     					<?php echo TbHtml::submitButton(Yii::t('app', 'Save Changes'),array(
-                            'color'=>'','class'=>'input-xxlarge btn btn-large',
-                        )); ?>
-                        </div>
-    </div>
             </div>
    
 </div><!-- search-form -->

@@ -57,7 +57,7 @@ $('.search-form-ext form').submit(function(){
 		'id',
 		'property.name',
 		'grower.name',
-		'name',
+		 array('name'=>'name','filter'=>CHtml::activeDropDownList($modelBlock, 'name', CHtml::listData( $modelBlock->findAll() ,'name','name'),array('empty'=>'Select A Block'))),
 		'tree_spacing',
 		'row_width',
 		/*

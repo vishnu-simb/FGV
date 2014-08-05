@@ -42,7 +42,15 @@ class SiteController extends SimbControllerFrontend
 	
 	public function actionIndex()
     {
-        $this->render("index");
+    	$this->pageTitle = sprintf(Yii::t('app', 'Dashboard %s'), '');
+    	$modelGrower = new Grower();
+    	$modelBlock = new Block();
+    	$modelGrower->unsetAttributes();  // clear any default values
+    	$modelBlock->unsetAttributes(); 
+        $this->render("index",array(
+        		'modelGrower' => $modelGrower,
+        		'modelBlock' => $modelBlock,
+        		));
     }
     
     /**

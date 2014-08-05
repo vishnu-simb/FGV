@@ -39,7 +39,7 @@
 
                             <?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
 
-                            <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'ispinner nput-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
 
                             <?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
                              

@@ -40,7 +40,7 @@
 									foreach($block->getTraps() as $trap){
 										echo '<tr>';
 										echo '<td>'.$trap->name.' - '.$trap->pest .'</td>';
-										echo '<td><input type="number" name="Traps['.$trap->id.']" class="pest_input" min="0" max="200" style="float: right;width: 30px;" /></td>';
+										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="Traps['.$trap->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
 										echo '</tr>';
 									}
 									echo '</tbody>
