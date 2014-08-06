@@ -18,5 +18,6 @@ nbproject
 /protected/configs/backend/main.php
 /protected/configs/console/main.php
 /protected/configs/frontend/main.php
+/protected/configs/api/main.php
 /protected/configs/db_connect.php
 /protected/configs/params.php
