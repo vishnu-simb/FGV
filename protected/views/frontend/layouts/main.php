@@ -154,7 +154,7 @@ $bootstrap = Yii::app()->bootstrap;
         // theme framework
         $clientScript->registerScriptFile($resourceUrl . '/js/eakroko.js');
         $clientScript->registerScriptFile($resourceUrl . '/js/application.min.js');
-
+        $clientScript->registerScriptFile($resourceUrl . '/js/fgv.js');
         ?>
 
         <!--[if lte IE 9]>
@@ -165,8 +165,6 @@ $bootstrap = Yii::app()->bootstrap;
             });
         </script>
         <![endif]-->
-
-
         <!-- Favicon -->
         <link rel="shortcut icon" href="<?php echo $resourceUrl ?>/img/favicon.ico"/>
         <!-- Apple devices Homescreen icon -->

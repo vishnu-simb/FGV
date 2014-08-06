@@ -94,7 +94,8 @@ $(document).ready(function() {
 		});
 	}
 
-	// Calendar (fullcalendar)
+	/*
+	 * // Calendar (fullcalendar)
 	if($('.calendar').length > 0)
 	{
 		$('.calendar').fullCalendar({
@@ -114,6 +115,7 @@ $(document).ready(function() {
 		$(".fc-button-today").addClass('fc-corner-right');
 		$(".fc-button-prev").addClass('fc-corner-left');
 	}
+	*/
 
 	// Tooltips (only for desktop) (bootstrap tooltips)
 	if(tooltipOnlyForDesktop)
