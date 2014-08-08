@@ -11,4 +11,7 @@ class Property extends CommonProperty
 	function getBlocks(){
 		return Block::model()->findAll('property_id='.$this->id);
 	}
+	function getGrower(){
+		return Grower::model()->findAll('id='.$this->property_id);
+	}
 }

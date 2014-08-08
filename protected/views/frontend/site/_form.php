@@ -25,7 +25,7 @@
 
                     <div class="span12">
                     	 <div style="float:left;">
-                     	  <?php echo $form->dropDownList($modelBlock, 'name', CHtml::listData( $modelBlock->findAll() ,'name','name','grower.name'), array('class' => 'input-xxlarge'))?>
+                     	  <?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData( $modelBlock->findAll() ,'id','name','grower.name'), array('class' => 'input-xxlarge'))?>
                     	  <?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData( $modelGrower->findAll() ,'id','name'), array('class' => 'clickable input-xlarge'))?>
                           </div>
                        

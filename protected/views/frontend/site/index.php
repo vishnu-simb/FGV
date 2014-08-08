@@ -1,4 +1,8 @@
 <?php
+// set default google charts API
+$clientScript = Yii::app()->clientScript;
+$resourceUrl = $clientScript->staticUrl.'/flatapp';
+$clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 ?>
 
 <div class="row-fluid">
@@ -13,7 +17,7 @@
         </div>
     </div>
     	<div class="row-fluid">
-					<div class="span8">
+					<div class="span12">
 						<div class="box">
 							<div class="box-title">
 								<h3><i class="icon-calendar"></i>Month Graph</h3>
@@ -30,6 +34,26 @@
 								<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr></tbody></table>
 							</div>
 							</div>
+				<div id="graph">
+				<?php
+				
+				$this->widget('ext.hzl-googlechart.HzlVisualizationChart', array('visualization' => 'LineChart',
+						'data' => array(),
+						'options' => array(
+                				'height' => 300,
+								'titleTextStyle' => array('color' => '#FF0000'),
+								'vAxis' => array(
+										'title' => '',
+										'gridlines' => array(
+												'color' => 'transparent'  //set grid line transparent
+										)),
+								'hAxis' => array('title' => ''),
+								'curveType' => 'function', //smooth curve or not
+								'legend' => array('position' => 'bottom'),
+						)));
+					?>
+				</div>
+							
 						</div>
 	</div>
 </div>

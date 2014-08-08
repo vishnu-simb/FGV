@@ -11,4 +11,5 @@ class Grower extends CommonGrower
 	function getProperties(){
 		return Property::model()->findAll('grower_id='.$this->id);
 	}
+
 }
