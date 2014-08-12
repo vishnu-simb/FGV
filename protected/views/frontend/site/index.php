@@ -19,6 +19,14 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
     	<div class="row-fluid">
 					<div class="span12">
 						<div class="box">
+						<div class="box-title">
+						<h3><i class="icon-reorder"></i>Spray Dates</h3>	</div>
+						<div class="box-content nopadding">
+							
+						</div>
+					
+						</div>
+						<div class="box">
 							<div class="box-title">
 								<h3><i class="icon-calendar"></i>Month Graph</h3>
 							</div>

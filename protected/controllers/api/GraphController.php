@@ -64,7 +64,8 @@ class GraphController extends SimbApiController {
     }
 
     public function actionGetGraph(){
-    
+    	
+    	$VAR = array();
     	$m = $_GET['date'];
     	$m = strtotime('01-'.str_replace(',','-',$m));
     	$date= date('Y-m',$m);
@@ -90,7 +91,6 @@ class GraphController extends SimbApiController {
     			{
     				$cell = array(0);
     				foreach($data as $val){
-    					
 	    				if($val["tc_date"]==date("Y-m-d", $m) && $val["pest_name"]==$r){
 	    					$cell = array($val["tc_value"]);
 	    				}
@@ -102,13 +102,12 @@ class GraphController extends SimbApiController {
     		}
     		
     		$graph = $rows;
+    		$VAR['status'] = "success";
     	}else{
     		$graph = array();
+    		$VAR['status'] = "false";
     	}
-    	
-    	
-    	$VAR = array();
-    	$VAR['status'] = "false";
+
     	$VAR['axis'] = array();
     	$VAR['graph'] = $graph;
     	echo CJSON::encode($VAR);

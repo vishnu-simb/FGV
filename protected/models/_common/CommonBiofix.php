@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @property Property $property
+ * @property Grower $grower
+ */
+
 Yii::import('application.models._base.BaseBiofix');
 
 class CommonBiofix extends BaseBiofix
@@ -34,7 +39,7 @@ class CommonBiofix extends BaseBiofix
     			),
     			'sort'=>array(
     					'order'=>'biofix.ordering ASC',
-    			)
+    			),
     	);
     }
     
@@ -47,8 +52,7 @@ class CommonBiofix extends BaseBiofix
     	// class name for the relations automatically generated below.
     	$oldValue = parent::relations();
     	return CMap::mergeArray($oldValue,array(
-    		
-    				'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=>'block'),
+    				'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=> 'block'),
 					'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=> 'property'),
     	)
     	);
@@ -75,6 +79,28 @@ class CommonBiofix extends BaseBiofix
     }
     
     /**
+     * @return Grower[]
+     */
+    public function getGrower(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	return Grower::model()->findAll($criteria);
+    }
+    
+    
+    /**
+     * @return Property[]
+     */
+    public function getProperty(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	return Property::model()->findAll($criteria);
+    }
+    
+    
+    /**
      * getter name for block
      * @return  mixed|string
      */
@@ -82,5 +108,4 @@ class CommonBiofix extends BaseBiofix
     public function displayColBiofixName(){
     	 return $this->grower->name ."". $this->property->name ."". $this->block->name;
     }
-    
 }

@@ -51,7 +51,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
 			array('creator_id', 'length', 'max'=>20),
 			array('date, created_at, updated_at, params', 'safe'),
 			array('second_cohort, date, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('pest_id, block_id, second_cohort, date, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('pest_id,block_id, second_cohort, date, creator_id, ordering, created_at, updated_at, status, is_deleted, params, property, grower, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +79,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
 			'block.name' => Yii::t('app', 'Block'),
 			'grower.name' => Yii::t('app', 'Grower'),
 			'property.name' => Yii::t('app', 'Property'),
+			'block.property_id' => Yii::t('app', 'property_id'),
 			'second_cohort' => Yii::t('app', 'Second Cohort?'),
 			
 			'date' => Yii::t('app', 'Biofix Date'),
@@ -95,11 +96,12 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-
+		$criteria->with=array('property');
+		$criteria->with=array('grower');
 		$criteria->compare('pest_id', $this->pest_id);
 		$criteria->compare('block_id', $this->block_id);
-		$criteria->compare('block.name', '');
-		$criteria->compare('pest.name', '');
+		$criteria->compare('property.id',$this->property);
+		$criteria->compare('grower.id',$this->grower);
 		$criteria->compare('second_cohort', $this->second_cohort, true);
 		$criteria->compare('date', $this->date, true);
 		$criteria->compare('creator_id', $this->creator_id, true);

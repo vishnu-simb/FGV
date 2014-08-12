@@ -132,7 +132,9 @@ class BiofixController extends SimbController
 		$this->pageTitle = sprintf(Yii::t('app', 'Manage %s'), 'Biofixes');
 		$modelBiofix = new Biofix('search');
 		$modelBiofix->unsetAttributes();  // clear any default values
+		
 		if (isset($_GET['Biofix'])) {
+			//Yii::app()->session['Biofix'] = json_encode($_GET['Biofix']);
 			$modelBiofix->attributes = $_GET['Biofix'];
 		}
 
