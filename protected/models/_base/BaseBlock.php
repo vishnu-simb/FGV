@@ -51,7 +51,7 @@ abstract class BaseBlock extends SimbActiveRecord{
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
 			array('tree_spacing, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, property_id, name, tree_spacing, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, grower,location, property_id, name, tree_spacing, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,8 +74,6 @@ abstract class BaseBlock extends SimbActiveRecord{
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'property_id' => Yii::t('app', 'Property'),
-			'property.name' => Yii::t('app', 'Property'),
-			'grower.name' => Yii::t('app', 'Grower'),
 			'name' => Yii::t('app', 'Block'),
 			'tree_spacing' => Yii::t('app', 'Tree Spacing'),
 			'row_width' => Yii::t('app', 'Row Width'),
@@ -92,10 +90,13 @@ abstract class BaseBlock extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-
+		$criteria->with=array('grower');
+		$criteria->with=array('location');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('property_id', $this->property_id);
-		$criteria->compare('name', $this->name, true);
+		$criteria->compare('block.name', $this->name);
+		$criteria->compare('location.name', $this->location);
+		$criteria->compare('grower.id', $this->grower);
 		$criteria->compare('tree_spacing', $this->tree_spacing, true);
 		$criteria->compare('row_width', $this->row_width);
 		$criteria->compare('creator_id', $this->creator_id, true);
