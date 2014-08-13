@@ -112,7 +112,7 @@ return array(
                 ),
                 // Handling user session
                 'user' => array(
-                    'class' => 'application.components.SimbWebUserFrontend',
+                    'class' => 'application.components.SimbWebUser',
                     'loginUrl' => array('site/login'),
                     // Handling cleaning flashes automatically
                     'autoUpdateFlash' => false,
