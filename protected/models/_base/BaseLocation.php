@@ -42,7 +42,7 @@ abstract class BaseLocation extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('id', 'required'),
+			array('id', 'required','except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('id, name', 'length', 'max'=>100),
 			array('observation, forcast', 'length', 'max'=>45),

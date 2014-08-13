@@ -44,7 +44,7 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('pest_id, block_id', 'required'),
+			array('pest_id, block_id', 'required','except' => 'search'),
 			array('block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('pest_id', 'length', 'max'=>10),
 			array('second_cohort', 'length', 'max'=>3),
@@ -73,8 +73,8 @@ abstract class BaseBiofix extends SimbActiveRecord{
 	public function attributeLabels()
     {
 		return array(
-			'pest_id' => Yii::t('app', 'Pest Id'),
-			'block_id' => Yii::t('app', 'Block Id'),
+			'pest_id' => Yii::t('app', 'Pest'),
+			'block_id' => Yii::t('app', 'Block'),
 			'pest.name' => Yii::t('app', 'Pest'),
 			'block.name' => Yii::t('app', 'Block'),
 			'grower.name' => Yii::t('app', 'Grower'),

@@ -45,7 +45,7 @@ abstract class BaseSizing extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('block_id, variety_id, date, value, type', 'required'),
+			array('block_id, variety_id, date, value, type', 'required','except' => 'search'),
 			array('block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('value', 'numerical'),
 			array('variety_id', 'length', 'max'=>10),

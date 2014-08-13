@@ -43,7 +43,7 @@ abstract class BasePest extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, dd, calculate', 'required'),
+			array('name, dd, calculate', 'required','except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('dd', 'numerical'),
 			array('name', 'length', 'max'=>100),

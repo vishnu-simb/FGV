@@ -44,7 +44,7 @@ abstract class BaseTrap extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('pest_id, block_id', 'required'),
+			array('pest_id, block_id', 'required','except' => 'search'),
 			array('block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('pest_id', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>100),

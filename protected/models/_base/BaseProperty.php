@@ -44,7 +44,7 @@ abstract class BaseProperty extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('grower_id, location_id', 'required'),
+			array('name, grower_id, location_id', 'required','except' => 'search'),
 			array('grower_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('location_id, name', 'length', 'max'=>100),
 			array('creator_id', 'length', 'max'=>20),

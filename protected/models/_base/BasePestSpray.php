@@ -44,7 +44,7 @@ abstract class BasePestSpray extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('id, number, grower_id, dd, every', 'required'),
+			array('id, number, grower_id, dd, every', 'required','except' => 'search'),
 			array('number, grower_id, dd, every, lowpop_dd, lowpop_every, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('id', 'length', 'max'=>10),
 			array('creator_id', 'length', 'max'=>20),

@@ -44,7 +44,7 @@ abstract class BaseChemical extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, pack_qty, pack_price, dilution_rate, application_rate', 'required'),
+			array('name, pack_qty, pack_price, dilution_rate, application_rate', 'required','except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('pack_qty, pack_price, dilution_rate, application_rate', 'numerical'),
 			array('name', 'length', 'max'=>100),

@@ -43,7 +43,7 @@ abstract class BaseBlock extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('property_id, name', 'required'),
+			array('property_id, name', 'required','except' => 'search'),
 			array('property_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('row_width', 'numerical'),
 			array('name', 'length', 'max'=>45),

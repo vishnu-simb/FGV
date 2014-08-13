@@ -44,7 +44,7 @@ abstract class BaseSpray extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('chemical_id, date, quantity, block_id', 'required'),
+			array('chemical_id, date, quantity, block_id', 'required','except' => 'search'),
 			array('quantity, block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('chemical_id', 'length', 'max'=>10),
 			array('creator_id', 'length', 'max'=>20),

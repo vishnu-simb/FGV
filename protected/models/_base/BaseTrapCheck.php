@@ -43,7 +43,7 @@ abstract class BaseTrapCheck extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('trap_id, date', 'required'),
+			array('trap_id, date', 'required','except' => 'search'),
 			array('trap_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('value', 'numerical'),
 			array('creator_id', 'length', 'max'=>20),

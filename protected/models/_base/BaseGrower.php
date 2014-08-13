@@ -45,7 +45,7 @@ abstract class BaseGrower extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, username, password, email', 'required'),
+			array('name, username, password, email', 'required','except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('username, password', 'length', 'max'=>45),
