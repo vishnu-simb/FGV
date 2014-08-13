@@ -55,9 +55,9 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'grower.name',
-		'location_id',
-		'name',
+		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelProperty,'grower_id', CHtml::listData( $modelProperty->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'location.name','header'=>'Location','filter'=>CHtml::activeDropDownList($modelProperty,'location_id', CHtml::listData( $modelProperty->getLocation() ,'id','name'),array('empty'=>'Select A Location'))),
+		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelProperty,'name', CHtml::listData( $modelProperty->findAll() ,'name','name'),array('empty'=>'Select A Property'))),
 		/*
 		'creator_id',
 		'ordering',

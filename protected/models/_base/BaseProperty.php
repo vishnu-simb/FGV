@@ -75,7 +75,7 @@ abstract class BaseProperty extends SimbActiveRecord{
 			'id' => Yii::t('app', 'ID'),
 			'grower_id' => Yii::t('app', 'Grower'),
 			'location_id' => Yii::t('app', 'Location'),
-			'name' => Yii::t('app', 'Name'),
+			'name' => Yii::t('app', 'Property'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),
