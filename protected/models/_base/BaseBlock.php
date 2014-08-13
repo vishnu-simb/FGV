@@ -95,7 +95,7 @@ abstract class BaseBlock extends SimbActiveRecord{
 		$criteria->compare('id', $this->id);
 		$criteria->compare('property_id', $this->property_id);
 		$criteria->compare('block.name', $this->name);
-		$criteria->compare('location.name', $this->location);
+		$criteria->compare('location.id', $this->location);
 		$criteria->compare('grower.id', $this->grower);
 		$criteria->compare('tree_spacing', $this->tree_spacing, true);
 		$criteria->compare('row_width', $this->row_width);

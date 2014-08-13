@@ -28,17 +28,21 @@
                                             
                                             <?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'),array('empty' => 'Select A Second Cohort'))?>
                             
-           									<?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
-            </div><!-- 
+           									 </div>
                     <div class="span4">          
-
+											<?php echo $form->dropDownListControlGroup($modelBiofix, 'property', CHtml::listData( $modelBiofix->getProperty() ,'id','name'),array('empty'=>'Select A Property'))?>
+											
+											<?php echo $form->dropDownListControlGroup($modelBiofix, 'grower', CHtml::listData( $modelBiofix->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
+											
+											<?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
+           
                                             <?php //echo $form->textFieldControlGroup($modelBiofix, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('creator_id'))); ?>
 
                                             <?php //echo $form->textFieldControlGroup($modelBiofix, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('ordering'))); ?>
 
                                             <?php //echo $form->textFieldControlGroup($modelBiofix, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('created_at'))); ?>
 
-            </div>
+            </div><!-- 
                     <div class="span4">            
                     						<?php //echo $form->textFieldControlGroup($modelBiofix, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('updated_at'))); ?>
 
