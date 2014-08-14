@@ -55,9 +55,9 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelBlock,'property_id', CHtml::listData( $modelBlock->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
-		array('name'=>'location.name','header'=>'Location','filter'=>CHtml::activeDropDownList($modelBlock,'location', CHtml::listData( $modelBlock->getLocation() ,'id','name'),array('empty'=>'Select A Location'))),
-		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelBlock,'grower', CHtml::listData( $modelBlock->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'property','value'=>'$data->property->name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelBlock,'property_id', CHtml::listData( $modelBlock->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
+		array('name'=>'location','value'=>'$data->location->name','header'=>'Location','filter'=>CHtml::activeDropDownList($modelBlock,'location', CHtml::listData( $modelBlock->getLocation() ,'id','name'),array('empty'=>'Select A Location'))),
+		array('name'=>'grower','value'=>'$data->grower->name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelBlock,'grower', CHtml::listData( $modelBlock->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
 		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelBlock, 'name', CHtml::listData($modelBlock->findAll() ,'name','name'),array('empty'=>'Select A Block'))),
 		'tree_spacing',
 		'row_width',

@@ -89,8 +89,7 @@ abstract class BaseSpray extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-		$criteria->with=array('property');
-		$criteria->with=array('grower');
+		$criteria->with=array('property','grower');
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('chemical_id', $this->chemical_id);
 		$criteria->compare('date', $this->date, true);

@@ -55,10 +55,10 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		array('name'=>'chemical.name','filter'=>CHtml::activeDropDownList($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))),
-		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelSpray,'property', CHtml::listData( $modelSpray->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
-		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelSpray,'grower', CHtml::listData( $modelSpray->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
-		array('name'=>'block.name','filter'=>CHtml::activeDropDownList($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
+		array('name'=>'chemical','value'=>'$data->chemical->name','filter'=>CHtml::activeDropDownList($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))),
+		array('name'=>'property','value'=>'$data->property->name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelSpray,'property', CHtml::listData( $modelSpray->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
+		array('name'=>'grower','header'=>'Grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelSpray,'grower', CHtml::listData( $modelSpray->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
 		'date',
 		'quantity',
 	

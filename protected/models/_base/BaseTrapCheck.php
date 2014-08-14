@@ -49,7 +49,7 @@ abstract class BaseTrapCheck extends SimbActiveRecord{
 			array('creator_id', 'length', 'max'=>20),
 			array('comment, created_at, updated_at, params', 'safe'),
 			array('value, comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, trap_id, date, value, comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, trap_id, date, block, property, grower, value, comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,9 +87,13 @@ abstract class BaseTrapCheck extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-
+		
+		$criteria->with=array('block','property','grower');
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('trap_id', $this->trap_id);
+		$criteria->compare('block.id', $this->block);
+		$criteria->compare('property.id', $this->property);
+		$criteria->compare('grower.id', $this->grower);
 		$criteria->compare('date', $this->date, true);
 		$criteria->compare('value', $this->value);
 		$criteria->compare('comment', $this->comment, true);

@@ -72,6 +72,8 @@ class SiteController extends SimbControllerFrontend
     		$model->attributes = $_POST['FormUserLogin'];
     		// validate user input and redirect to previous page if valid
     		if ($model->validate()) {
+    			// reinit session to store flash
+    			Yii::app()->session->open();
     			Yii::app()->user->setFlash('success', Yii::t('app', 'Log in successfully!'));
     			$this->redirect((Yii::app()->user->returnUrl ? Yii::app()->user->returnUrl : array('site/index')));
     		}

@@ -90,8 +90,7 @@ abstract class BaseTrap extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-		$criteria->with=array('property');
-		$criteria->with=array('grower');
+		$criteria->with=array('property','grower');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('pest_id', $this->pest_id);
 		$criteria->compare('block_id', $this->block_id);

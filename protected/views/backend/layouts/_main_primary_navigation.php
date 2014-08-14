@@ -22,8 +22,8 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
             'bootstrap.widgets.TbMenu',
             array(
                 'items' => array(
-                    array('label' => Yii::t('app', 'Dashboard'), 'url' => Yii::app()->getHomeUrl()),
-                	array('label' => Yii::t('app', 'Trapping'), 'url' => 'javascript:;'),
+                    array('label' => Yii::t('app', 'Dashboard'), 'url' => '/'),
+                	array('label' => Yii::t('app', 'Trapping'), 'url' => '/trapping'),
                 	array('label' => Yii::t('app', 'Spraying'), 'url' => '/spraying'),
                     array(
                     	'visible' => Yii::app()->user->isAdmin(),

@@ -55,7 +55,10 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
-		'trap.name',
+		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelTrapCheck,'property', CHtml::listData( $modelTrapCheck->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
+		array('name'=>'block.name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelTrapCheck,'block', CHtml::listData( $modelTrapCheck->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
+		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelTrapCheck,'grower', CHtml::listData( $modelTrapCheck->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'trap.name','header'=>'Trap','filter'=>CHtml::activeDropDownList($modelTrapCheck, 'trap_id', CHtml::listData($modelTrapCheck->getTrap() ,'id','name'),array('empty'=>'Select A Trap'))),
 		'date',
 		'value',
 		'comment',
