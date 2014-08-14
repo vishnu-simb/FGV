@@ -50,7 +50,7 @@ abstract class BaseSpray extends SimbActiveRecord{
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
 			array('creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, chemical_id, date, quantity, block_id, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, property,grower,chemical_id, date, quantity, block_id, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -89,12 +89,15 @@ abstract class BaseSpray extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-
+		$criteria->with=array('property');
+		$criteria->with=array('grower');
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('chemical_id', $this->chemical_id);
 		$criteria->compare('date', $this->date, true);
 		$criteria->compare('quantity', $this->quantity);
 		$criteria->compare('block_id', $this->block_id);
+		$criteria->compare('property.id',$this->property);
+		$criteria->compare('grower.id',$this->grower);
 		$criteria->compare('creator_id', $this->creator_id, true);
 		$criteria->compare('ordering', $this->ordering);
 		$criteria->compare('created_at', $this->created_at, true);

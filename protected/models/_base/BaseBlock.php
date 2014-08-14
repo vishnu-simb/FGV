@@ -90,13 +90,14 @@ abstract class BaseBlock extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
+		$criteria->with=array('property');
 		$criteria->with=array('grower');
 		$criteria->with=array('location');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('property_id', $this->property_id);
 		$criteria->compare('block.name', $this->name);
-		$criteria->compare('location.id', $this->location);
-		$criteria->compare('grower.id', $this->grower);
+		$criteria->compare('property.location_id', $this->location);
+		$criteria->compare('property.grower_id', $this->grower);
 		$criteria->compare('tree_spacing', $this->tree_spacing, true);
 		$criteria->compare('row_width', $this->row_width);
 		$criteria->compare('creator_id', $this->creator_id, true);
