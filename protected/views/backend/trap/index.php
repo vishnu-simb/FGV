@@ -53,11 +53,14 @@ $('.search-form-ext form').submit(function(){
     ),
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
-'columns' => array(
-		'id',
-		'pest.name',
-		'block.name',
-		'name',
+	'columns' => array(
+		array('name'=>'ordering','filter'=>false),
+		array('name'=>'pest.name','filter'=>CHtml::activeDropDownList($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
+		array('name'=>'block.name','filter'=>CHtml::activeDropDownList($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
+		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelTrap,'property', CHtml::listData( $modelTrap->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
+		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelTrap,'grower', CHtml::listData( $modelTrap->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelTrap,'name', CHtml::listData( $modelTrap->findAll() ,'name','name'),array('empty'=>'Select A Trap'))),
+		
 		/*
 		 'creator_id',
 		'ordering',

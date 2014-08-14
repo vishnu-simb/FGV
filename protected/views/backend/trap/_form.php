@@ -43,7 +43,7 @@
 						
                             <?php //echo $form->textFieldControlGroup($modelTrap, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('creator_id'))); ?>
 
-                            <?php //echo $form->textFieldControlGroup($modelTrap, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('ordering'))); ?>
+                            <?php echo $form->textFieldControlGroup($modelTrap, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('ordering'))); ?>
 </div>			
 							<!--  
                             <div class="span6">

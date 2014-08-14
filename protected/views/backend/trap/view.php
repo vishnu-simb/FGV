@@ -30,9 +30,9 @@ $this->menu = array(
 		'pest.name',
 		'block.name',
 		'name',
+		'ordering',
 		/*
 		'creator_id',
-		'ordering',
 		'created_at',
 		'updated_at',
 		'status',

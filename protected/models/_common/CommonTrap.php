@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @property Property $property
+ * @property Grower $grower
+ */
+
 Yii::import('application.models._base.BaseTrap');
 
 class CommonTrap extends BaseTrap
@@ -31,6 +36,21 @@ class CommonTrap extends BaseTrap
     }
     
     /**
+     * @return array
+     */
+    public function relations()
+    {
+    	// NOTE: you may need to adjust the relation name and the related
+    	// class name for the relations automatically generated below.
+    	$oldValue = parent::relations();
+    	return CMap::mergeArray($oldValue,array(
+    			'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=> 'block'),
+    			'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=> 'property'),
+    	)
+    	);
+    }
+    
+    /**
      * @return Block[]
      */
     public function getBlock(){
@@ -48,5 +68,25 @@ class CommonTrap extends BaseTrap
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
     	return Pest::model()->findAll($criteria);
+    }
+    
+    /**
+     * @return Property[]
+     */
+    public function getProperty(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	return Property::model()->findAll($criteria);
+    }
+    
+    /**
+     * @return Grower[]
+     */
+    public function getGrower(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	return Grower::model()->findAll($criteria);
     }
 }

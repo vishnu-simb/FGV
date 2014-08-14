@@ -44,14 +44,14 @@ abstract class BaseTrap extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('pest_id, block_id', 'required','except' => 'search'),
+			array('pest_id, block_id, name, ordering','required','except' => 'search'),
 			array('block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('pest_id', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>100),
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
 			array('name, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, pest_id, block_id, name, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id,pest_id, block_id,  property, grower, name, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,7 +76,7 @@ abstract class BaseTrap extends SimbActiveRecord{
 			'id' => Yii::t('app', 'ID'),
 			'pest_id' => Yii::t('app', 'Pest'),
 			'block_id' => Yii::t('app', 'Block'),
-			'name' => Yii::t('app', 'Name'),
+			'name' => Yii::t('app', 'Trap'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),
@@ -90,11 +90,14 @@ abstract class BaseTrap extends SimbActiveRecord{
 	public function search()
     {
 		$criteria = new CDbCriteria;
-
+		$criteria->with=array('property');
+		$criteria->with=array('grower');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('pest_id', $this->pest_id);
 		$criteria->compare('block_id', $this->block_id);
-		$criteria->compare('name', $this->name, true);
+		$criteria->compare('property.id', $this->property);
+		$criteria->compare('grower.id', $this->grower);
+		$criteria->compare('t.name', $this->name, true);
 		$criteria->compare('creator_id', $this->creator_id, true);
 		$criteria->compare('ordering', $this->ordering);
 		$criteria->compare('created_at', $this->created_at, true);
