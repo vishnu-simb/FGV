@@ -13,6 +13,7 @@
 <div class="search-button-title">
     <?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button btn')); ?>    <?php
             echo $form->dropDownList($modelTrapCheck, 'rowsPerPage', $modelTrapCheck->rowsPerPageData, array('class'=> 'posts-per-page', 'onclick' => "document.getElementById('".$form->id."').submit();"));
+            echo $form->dropDownList($modelTrapCheck, 'rowsPerPage', $modelTrapCheck->rowsPerPageData, array('class'=> 'posts-per-page', 'onclick' => "document.getElementById('".$form->id."').submit();"));
             ?></div>
 
 <div class="search-form-ext" style="display:none">
