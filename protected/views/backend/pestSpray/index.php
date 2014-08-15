@@ -55,12 +55,14 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		'id',
+		//array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
 		'pest.name',
-		'number',
 		'grower.name',
+		'number',
 		'dd',
 		'every',
 		/*
+		array('name'=>'grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'grower_id', CHtml::listData( $modelPestSpray->getGrower(),'id','name'),array('empty'=>'Select A Grower'))),
 		'lowpop_dd',
 		'lowpop_every',
 		'creator_id',

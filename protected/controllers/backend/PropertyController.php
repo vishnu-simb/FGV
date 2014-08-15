@@ -26,6 +26,7 @@ class PropertyController extends SimbController
 						'allow',
 						'actions' => array('index', 'logout'),
 						'users' => array('@'),
+						'expression'=>'Yii::app()->user->isAdmin()',
 				),
 				array(
 						'deny',

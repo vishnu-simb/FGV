@@ -30,6 +30,7 @@ class SimbUserIdentityBackend extends SimbUserIdentity
             } else {
                 $this->_id = $user->id;
                 $this->username = $user->username;
+                $this->setState('role', $user->type);
                 $this->errorCode = self::ERROR_NONE;
             }
         }

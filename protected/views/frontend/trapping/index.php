@@ -22,7 +22,12 @@
 							'htmlOptions' => array('class' => 'form-horizontal form-search-advanced form-validate'),
 						)); ?>
 						<?php 
-						foreach($modelGrower->findAll($filter) as $grower){
+						if(Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
+							$growers = $modelGrower->findAllByAttributes(array('id'=>Yii::app()->user->id));
+						}else{
+							$growers = $modelGrower->findAll($filter);
+						}
+						foreach($growers as $grower){
 							foreach($grower->getProperties() as $property){
 								echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
 								

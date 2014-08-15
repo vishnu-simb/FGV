@@ -26,7 +26,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                 	array('label' => Yii::t('app', 'Trapping'), 'url' => '/trapping'),
                 	array('label' => Yii::t('app', 'Spraying'), 'url' => '/spraying'),
                     array(
-                    	'visible' => Yii::app()->user->isAdmin(),
+                    	'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
                         'label' => Yii::t('app', 'Administration'),
                         'itemOptions' => array(),
                         'items' => array(

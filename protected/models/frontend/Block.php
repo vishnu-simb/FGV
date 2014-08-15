@@ -8,7 +8,9 @@ class Block extends CommonBlock
     {
 		return parent::model($className);
 	}
+	
 	function getTraps(){
 		return Trap::model()->findAll('block_id='.$this->id);
 	}
+
 }

@@ -11,7 +11,9 @@ class FormUserLogin extends SimbFormModel
 {
     public $username;
     public $password;
-
+    
+    public $type;
+    
     private $_identity;
 
     /**
@@ -54,13 +56,20 @@ class FormUserLogin extends SimbFormModel
                 array(':username' => $this->username)
             );
             if (!$hasAccess) {
-                $this->addError('password', Yii::t('app', 'The details you entered were incorrect. Please try again'));
-            } else {
+            	$hasAccess = Grower::model()->countByAttributes(
+            			array(),
+            			'(username = :username) AND is_deleted = 0',
+            			array(':username' => $this->username)
+            	);
+            	if(!$hasAccess){
+            		$this->addError('password', Yii::t('app', 'The details you entered were incorrect. Please try again'));
+            		break;
+            	}
+             } 
                 // Use a backend UserIdentity that has been derived from CUserIdentity
                 // File in Components
-                $this->_identity = new SimbUserIdentityFrontend($this->username, $this->password);
+                $this->_identity = new SimbUserIdentityFrontend($this->username,$this->password);
                 $this->_identity->authenticate();
-
                 switch ($this->_identity->errorCode) {
                     case SimbUserIdentityFrontend::ERROR_NONE:
                         $expires = 60*60*24; // 1day
@@ -69,7 +78,7 @@ class FormUserLogin extends SimbFormModel
                     default:
                         $this->addError('password', Yii::t('app', 'The details you entered were incorrect. Please try again'));
                 }
-            }
+            
         }
 
     }

@@ -108,7 +108,7 @@ class TrappingController extends SimbController
 		}
 		if(isset($_POST['Traps'])){
 			foreach ($_POST['Traps'] as $key => $value){ // save multiple records
-				if(!empty($value)){
+				if($value != ""){
 					$saveTrapCheck = new TrapCheck();
 					$save = array('value'=>$value,'trap_id'=>$key,'date'=>gmdate('Y-m-d'));
 					$saveTrapCheck->attributes = $save;

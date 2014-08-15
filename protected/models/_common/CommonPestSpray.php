@@ -10,6 +10,18 @@ class CommonPestSpray extends BasePestSpray
     }
     
     /**
+     * default scope
+     * @return array
+     * @see defaultScope
+     */
+    public function defaultScope(){
+    	return array(
+    			'alias'=>'pest_spray',
+    			'condition'=>'pest_spray.is_deleted=0',
+    			//'order'=>'artwork.sort ASC'
+    	);
+    }
+    /**
      * scope of yii
      * @return array
      * @see scope of yii

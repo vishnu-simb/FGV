@@ -23,7 +23,8 @@
  * @property integer $status
  * @property integer $is_deleted
  * @property string $params
- *
+ * @property Pest $pest
+ * @property Grower $grower
  */
 abstract class BasePestSpray extends SimbActiveRecord{
     public static function model($className=__CLASS__)
@@ -44,13 +45,13 @@ abstract class BasePestSpray extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('id, number, grower_id, dd, every', 'required','except' => 'search'),
+			array('number,pest_id, grower_id, dd, every', 'required','except' => 'search'),
 			array('number, grower_id, dd, every, lowpop_dd, lowpop_every, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('id', 'length', 'max'=>10),
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
 			array('lowpop_dd, lowpop_every, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, number, grower_id, dd, every, lowpop_dd, lowpop_every, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, number,pest_id,grower_id, dd, every, lowpop_dd, lowpop_every, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,8 +59,7 @@ abstract class BasePestSpray extends SimbActiveRecord{
     {
 		return array(
 			'pest' => array(self::BELONGS_TO, 'Pest', 'pest_id'),
-			'grower'=>array(
-						self::BELONGS_TO,'Grower','grower_id'),
+			'grower'=>array(self::BELONGS_TO, 'Grower','grower_id'),
 		);
 	}
 
@@ -75,8 +75,8 @@ abstract class BasePestSpray extends SimbActiveRecord{
 			'id' => Yii::t('app', 'ID'),
 			'number' => Yii::t('app', 'Number'),
 			'grower_id' => Yii::t('app', 'Grower'),
-			'grower.name' => Yii::t('app', 'Grower'),
-			'pest.name' => Yii::t('app', 'Pest'),
+			'grower' => Yii::t('app', 'Grower'),
+			'pest' => Yii::t('app', 'Pest'),
 			'dd' => Yii::t('app', 'Dd'),
 			'every' => Yii::t('app', 'Every'),
 			'lowpop_dd' => Yii::t('app', 'Lowpop Dd'),

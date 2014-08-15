@@ -8,4 +8,24 @@ class CommonGrower extends BaseGrower
     {
         return parent::model($className);
     }
+    
+    public function rules()
+    {
+    	return array(
+    			//Applies to 'update' scenario
+    			array('username', 'required'),
+    			array('password', 'required' ,'except' => 'update'),
+    	);
+    }
+    
+    
+    /**
+     * Checks if the given password is correct.
+     * @param string the password to be validated
+     * @return boolean whether the password is valid
+     */
+    public function validatePassword($password)
+    {
+    	return $password === $this->password;
+    }
 }
