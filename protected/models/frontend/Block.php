@@ -10,7 +10,7 @@ class Block extends CommonBlock
 	}
 	
 	function getTraps(){
-		return Trap::model()->findAll('block_id='.$this->id);
+		return Trap::model()->findAllByAttributes(array('block_id'=>$this->id),array('order'=>'ordering DESC'));
 	}
 
 }

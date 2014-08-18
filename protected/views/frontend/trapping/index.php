@@ -37,7 +37,7 @@
 										<tr>
 										</tr>
 									</thead>
-									<tbody>';
+									<tbody id="tbl_'.$block->id.'">';
 									foreach($block->getTraps() as $trap){
 										echo '<tr>';
 										echo '<td>'.$trap->name.' - '.$trap->pest .'</td>';
