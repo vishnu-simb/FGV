@@ -25,6 +25,9 @@
  * @property Trap $trap
  */
 abstract class BaseTrapCheck extends SimbActiveRecord{
+	
+	public $date_range;
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -49,7 +52,7 @@ abstract class BaseTrapCheck extends SimbActiveRecord{
 			array('creator_id', 'length', 'max'=>20),
 			array('comment, created_at, updated_at, params', 'safe'),
 			array('value, comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, trap_id, date, block, property, grower, value, comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, trap_id, date, block, property, grower, value, comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage, date_range','safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,6 +84,7 @@ abstract class BaseTrapCheck extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'date_range' => Yii::t('app', 'Date Range'),
 		);
 	}
 
@@ -95,6 +99,21 @@ abstract class BaseTrapCheck extends SimbActiveRecord{
 		$criteria->compare('property.id', $this->property);
 		$criteria->compare('grower.id', $this->grower);
 		$criteria->compare('date', $this->date, true);
+		
+		switch ($this->date_range){
+				
+			case 1:	$criteria->addCondition('date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND NOW()');
+				break;
+			case 2: $criteria->addCondition('date BETWEEN DATE_SUB(CURDATE(), INTERVAL 3 MONTH) AND NOW()');
+				break;
+			case 3:	$criteria->addCondition('date BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 MONTH) AND NOW()');
+				break;
+			case 4: 
+				break;
+			default : $criteria->addCondition('date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND NOW()');
+				break;
+		};
+		
 		$criteria->compare('value', $this->value);
 		$criteria->compare('comment', $this->comment, true);
 		$criteria->compare('creator_id', $this->creator_id, true);

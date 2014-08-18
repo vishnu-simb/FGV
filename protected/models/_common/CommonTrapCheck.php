@@ -25,7 +25,7 @@ class CommonTrapCheck extends BaseTrapCheck
 
     	return array(
     			'alias'=>'trap_check',
-    			'condition'=> !empty($_GET['TrapCheck']['date'])?'trap_check.is_deleted=0':'trap_check.is_deleted=0 AND trap_check.date BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()',
+    			'condition'=> 'trap_check.is_deleted=0',
     			'order'=>'trap_check.id DESC'
     	);
     }

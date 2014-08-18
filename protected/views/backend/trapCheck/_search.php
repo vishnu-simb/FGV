@@ -12,8 +12,8 @@
 
 <div class="search-button-title">
     <?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button btn')); ?>    <?php
-            echo $form->dropDownList($modelTrapCheck, 'rowsPerPage', $modelTrapCheck->rowsPerPageData, array('class'=> 'posts-per-page', 'onclick' => "document.getElementById('".$form->id."').submit();"));
-            echo $form->dropDownList($modelTrapCheck, 'rowsPerPage', $modelTrapCheck->rowsPerPageData, array('class'=> 'posts-per-page', 'onclick' => "document.getElementById('".$form->id."').submit();"));
+            echo $form->dropDownList($modelTrapCheck, 'rowsPerPage', $modelTrapCheck->rowsPerPageData, array('class'=> 'posts-per-page', 'onchange' => "document.getElementById('".$form->id."').submit();"));
+            echo $form->dropDownList($modelTrapCheck, 'date_range', array('1'=>'From last month','2'=>'From last 3 month','3'=>'From last 6 month','4'=>'Show All'), array('class'=> 'posts-per-page', 'onchange' => "document.getElementById('".$form->id."').submit();"));
             ?></div>
 
 <div class="search-form-ext" style="display:none">
