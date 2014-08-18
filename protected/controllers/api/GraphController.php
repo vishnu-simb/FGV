@@ -62,9 +62,10 @@ class GraphController extends SimbApiController {
     	}
     	return $sprayDates;
     }
+	
 
     public function actionGetGraph(){
-    	
+    	 
     	$VAR = array();
     	$m = $_GET['date'];
     	$m = strtotime('01-'.str_replace(',','-',$m));
@@ -72,48 +73,57 @@ class GraphController extends SimbApiController {
     	$model = new TrapCheck('search');
     	$model->unsetAttributes();
     	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
-    	$dataProvider = $model->getSqlDataProvider();	
-
+    	$dataProvider = $model->getSqlDataProvider();
     	$data = $dataProvider->getData();
     	$pest= array();
     	for($i = 0 ; $i < count($data)  ; $i++ )
     	{
     		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
     	}
-    	
+    	$serial = array();
     	if(!empty(array_keys($pest))){
-    		$rows = array();
-    		$rows[] =array_merge(array(""),array_keys($pest));
+    		
     		$e = strtotime('+1 month',$m);
-    		while($m < $e)
-    		{	$value = array();
-    			foreach(array_keys($pest) as $r)
+    		foreach(array_keys($pest) as $r){
+    			$mm = $m;
+    			$sedat = array();
+    			while($mm < $e)
     			{
-    				$cell = array(0);
+    				$dd = 0;
     				foreach($data as $val){
-	    				if($val["tc_date"]==date("Y-m-d", $m) && $val["pest_name"]==$r){
-	    					$cell = array($val["tc_value"]);
-	    				}
-	      			}
-	      			$value = array_merge($value,$cell);
+    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+    						$dd = intval($val["tc_value"]);
+    					}
+    				}
+					$sedat[] = $dd;
+    				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$rows[] = array_merge(array(date("d", $m)),$value);
-    			$m = strtotime('+1 day', $m); // increment for loop
+    			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
     		}
     		
-    		$graph = $rows;
-    		$VAR['status'] = "success";
-    	}else{
-    		$graph = array();
-    		$VAR['status'] = "false";
     	}
-
-    	$VAR['axis'] = array();
-    	$VAR['graph'] = $graph;
+    	$VAR['chart'] = array('renderTo'=>'yw0');
+    	$VAR['title'] = array('text'=>'');
+    	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''));
+    	$VAR['series'] = $serial;
     	echo CJSON::encode($VAR);
-        Yii::app()->end();
-    	
+    	Yii::app()->end();
+    	 
     }
+    
+    private function getxAxis($m){
+    	$xAxis = array();
+    	$e = strtotime('+1 month',$m);
+    	while($m < $e)
+    	{
+    		$xAxis[date("d", $m)] = array_merge(array(date("d", $m)),$xAxis);
+    		$m = strtotime('+1 day', $m); // increment for loop
+    	
+    	}
+    	return $xAxis;
+    }
+  
     /**
      * This is the action to handle external exceptions.
      */

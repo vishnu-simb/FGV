@@ -45,7 +45,7 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 				<div id="graph">
 				<?php
 				
-				$this->widget('ext.hzl-googlechart.HzlVisualizationChart', array('visualization' => 'LineChart',
+				/*$this->widget('ext.hzl-googlechart.HzlVisualizationChart', array('visualization' => 'LineChart',
 						'data' => array(),
 						'options' => array(
                 				'height' => 300,
@@ -58,8 +58,25 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 								'hAxis' => array('title' => ''),
 								'curveType' => 'function', //smooth curve or not
 								'legend' => array('position' => 'bottom'),
-						)));
+						)));*/
+
+
+						$this->Widget('ext.highcharts.HighchartsWidget', array(
+								'options'=>array(
+										'title' => array('text' => ''),
+										'xAxis' => array(
+												'categories' => array()
+										),
+										'yAxis' => array(
+												'title' => array('text' => '')
+										),
+										'series' => array(
+												array(),
+											)
+								)
+						));
 					?>
+					
 				</div>
 							
 						</div>

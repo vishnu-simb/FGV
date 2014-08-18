@@ -30,7 +30,7 @@ $(document).ready(function () {
 		var t = $(this).find('option[value="'+$(this).val()+'"]');
 		if(typeof t.parent().attr('label') != 'undefined')
 		$('h1').html(t.parent().attr('label')+': '+t.html());
-		$("#div-chartyw0").html('');
+		$("#yw0").html('');
 		drawVisualizationChart();
 	});
 	
@@ -43,13 +43,13 @@ $(document).ready(function () {
 	$('.fc-button-prev').click(function(){
 		var prev = actualDate.setMonth(actualDate.getMonth() -1);
 		$("#datePicker").html(months[actualDate.getMonth()]+','+actualDate.getFullYear());
-		$("#div-chartyw0").html('');
+		$("#yw0").html('');
 		drawVisualizationChart();
 	});
 	$('.fc-button-next').click(function(){
 		var next = actualDate.setMonth(actualDate.getMonth() +1);
 		$("#datePicker").html(months[actualDate.getMonth()]+','+actualDate.getFullYear());
-		$("#div-chartyw0").html('');
+		$("#yw0").html('');
 		drawVisualizationChart();
 		
 	});
@@ -61,16 +61,9 @@ $(document).ready(function () {
 					  url: siteUrl + "api/graph/getGraph?block="+block_id+"&date="+$("#datePicker").html(),
 					  success: function (data)
 					   {
-						  var jgraph = JSON.parse(data);
-							google.load("visualization", "1", {packages:["corechart"],callback: drawChartyw0});
-							google.setOnLoadCallback(drawChartyw0);
-							var yw0=null;
-							function drawChartyw0() {
-								var data = google.visualization.arrayToDataTable(jgraph.graph);
-								var options = {"height":300,"titleTextStyle":{"color":"#FF0000"},"vAxis":{"title":"","gridlines":{"color":"transparent"}},"hAxis":{"title":""},"curveType":"function","legend":{"position":"bottom"}};
-								yw0 = new google.visualization.LineChart(document.getElementById("div-chartyw0"));
-								yw0.draw(data, options);
-							}
+						  		var jgraph = JSON.parse(data);
+						  		Highcharts.setOptions([]); 
+						  		var chart = new Highcharts.Chart(jgraph);
 					   }
 			});
 	}
