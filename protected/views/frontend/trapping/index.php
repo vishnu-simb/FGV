@@ -21,8 +21,8 @@
 							'method' => 'post',
 							'htmlOptions' => array('class' => 'form-horizontal form-search-advanced form-validate'),
 						)); ?>
+						<?php if($filter):?>
 						<?php
-						if($filter){
 						 foreach($modelGrower->findAll($filter) as $grower){
 							 foreach($grower->getProperties() as $property){
 								echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
@@ -51,16 +51,17 @@
 								}
 							
 							}
-						}
+					
 						
 						?>
 						      
-                    <div class="form-actions">
+                    	<div class="form-actions">
                         <?php echo TbHtml::submitButton(Yii::t('app', 'Submit'),array(
                             'color'=>'','class'=>'input-xxlarge btn btn-large',
                         )); ?>
-                    </div>
-               
+                    	</div>
+               			<?php endif;?>
+               			
 						 <?php $this->endWidget(); ?>
 						 
 						<div class="box box-color box-bordered">
