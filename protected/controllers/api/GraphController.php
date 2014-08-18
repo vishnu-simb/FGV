@@ -104,6 +104,8 @@ class GraphController extends SimbApiController {
     	}
     	$VAR['chart'] = array('renderTo'=>'yw0');
     	$VAR['title'] = array('text'=>'');
+    	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
     	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
     	$VAR['yAxis'] = array('title'=>array('text'=>''));
     	$VAR['series'] = $serial;
