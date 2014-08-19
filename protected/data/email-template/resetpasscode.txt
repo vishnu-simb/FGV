@@ -1,0 +1,12 @@
+Dear {name}<br />
+<br />
+You have requested for your FGV password to be reset, probably because you have forgotten your password.<br />
+<br />
+To complete the process simply visit <a href="{link}">{link}</a> and enter the following password reset code:
+<br />
+{code}<br />
+<br />
+<br />
+If the request was not made by you, simply ignore your email, and your password will not change.<br />
+Thank You!<br />
+{signature}
