@@ -57,7 +57,6 @@ $('.search-form-ext form').submit(function(){
 		'id',
 		'name',
 		'username',
-		'password',
 		'email',
 		'enabled',
 		'reporting',

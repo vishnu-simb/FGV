@@ -50,22 +50,26 @@ class FormUserLogin extends SimbFormModel
     {
         if (!$this->hasErrors()) { // we only want to authenticate when no input errors
             // we need to make sure that the admin panel is only accessible to admin
-            $hasAccess = Users::model()->countByAttributes(
-                array(),
-                '(username = :username) AND is_deleted = 0',
-                array(':username' => $this->username)
-            );
-            if (!$hasAccess) {
-            	$hasAccess = Grower::model()->countByAttributes(
-            			array(),
-            			'(username = :username) AND is_deleted = 0',
-            			array(':username' => $this->username)
-            	);
-            	if(!$hasAccess){
-            		$this->addError('password', Yii::t('app', 'The details you entered were incorrect. Please try again'));
-            		break;
-            	}
-             } 
+	            try{
+		            $adminAccess = Users::model()->countByAttributes(
+		                array(),
+		                '(username = :username) AND is_deleted = 0',
+		                array(':username' => $this->username)
+		            );
+		            if(!$adminAccess) {
+		            	$growerAccess = Grower::model()->countByAttributes(
+		            			array(),
+		            			'(username = :username) AND is_deleted = 0',
+		            			array(':username' => $this->username)
+		            	);
+		            	if(!$growerAccess){
+							throw new Exception('The details you entered were incorrect. Please try again');
+		            	}
+		             }
+	               }catch (Exception $e) {
+	    			$this->addError('password', Yii::t('app', $e->getMessage()));
+	    			return false;
+	    		}
                 // Use a backend UserIdentity that has been derived from CUserIdentity
                 // File in Components
                 $this->_identity = new SimbUserIdentityFrontend($this->username,$this->password);
