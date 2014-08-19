@@ -14,7 +14,7 @@
     <div class="box-content nopadding">
 
                     <div class="span4">     
-				    <?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData((Yii::app()->user->getState('role') === Users::USER_TYPE_ADMIN)?$modelGrower->findAll():$modelGrower->findAllByAttributes(array('id'=>Yii::app()->user->id)) ,'name','name'),array('class' => 'select2-me input-xxlarge','placeholder' => $modelGrower->getAttributeLabel('name'),'empty'=>'Please choose a grower','onchange' => "document.getElementById('".$form->id."').submit();"))?>
+				    <?php echo $form->dropDownList($modelGrower,'username', CHtml::listData((Yii::app()->user->getState('role') === Users::USER_TYPE_ADMIN)?$modelGrower->findAll():$modelGrower->findAllByAttributes(array('id'=>Yii::app()->user->id)),'username','name'),array('class' => 'select2-me input-xxlarge','placeholder' => $modelGrower->getAttributeLabel('name'),'empty'=>'Please choose a grower','onchange' => "document.getElementById('".$form->id."').submit();"))?>
             </div>
         
             </div>

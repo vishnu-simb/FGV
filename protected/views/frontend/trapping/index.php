@@ -21,9 +21,9 @@
 							'method' => 'post',
 							'htmlOptions' => array('class' => 'form-horizontal form-search-advanced form-validate'),
 						)); ?>
-						<?php if($filter):?>
+						<?php if($search):?>
 						<?php
-						 foreach($modelGrower->findAll($filter) as $grower){
+						 foreach($modelGrower->search()->getData() as $grower){
 							 foreach($grower->getProperties() as $property){
 								echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
 								

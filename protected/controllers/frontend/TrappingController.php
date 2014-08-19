@@ -98,13 +98,10 @@ class TrappingController extends SimbController
 		$modelTrapCheck = new TrapCheck();
 		$modelGrower = new Grower();
 		$modelGrower->unsetAttributes();  // clear any default values
-		$filter = "";
+		$search = false;
 		if (isset($_GET['Grower'])) {
 			$modelGrower->attributes = $_GET['Grower'];
-			if(isset($_GET['Grower']['name'])){
-				// filter by grower name
-				$filter = "t.name like '%".$_GET['Grower']['name']."%'";
-			}
+			$search = true;
 		}
 		if(isset($_POST['Traps'])){
 			foreach ($_POST['Traps'] as $key => $value){ // save multiple records
@@ -121,7 +118,7 @@ class TrappingController extends SimbController
 				'modelTrapCheck' => $modelTrapCheck,
 				'dataProvider' => $modelTrapCheck->SearchRecentTrapings(),
 				'modelGrower' => $modelGrower,
-				'filter' => $filter,
+				'search' => $search,
 		));
 	}
 	

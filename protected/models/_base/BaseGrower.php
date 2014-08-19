@@ -99,7 +99,7 @@ abstract class BaseGrower extends SimbActiveRecord{
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('name', $this->name, true);
-		$criteria->compare('username', $this->username, true);
+		$criteria->compare('username', $this->username);
 		$criteria->compare('password', $this->password, true);
 		$criteria->compare('email', $this->email, true);
 		$criteria->compare('enabled', $this->enabled, true);
