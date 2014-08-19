@@ -13,10 +13,11 @@ class CommonUsers extends BaseUsers
     public function rules()
     {
     	return array(
-        		//Applies to 'update' scenario
-    			array('username', 'required'),
-    			array('type', 'required'),
+    			//Applies to 'update' scenario
+    			array('username,type','required','except' => 'search'),
+    			array('username','unique'),
     			array('password', 'required' ,'except' => 'update'),
+    			
     	);
     }
     

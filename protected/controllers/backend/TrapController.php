@@ -59,6 +59,10 @@ class TrapController extends SimbController
 		$this->pageTitle = sprintf(Yii::t('app', 'Create %s'), 'Trap');
 		$modelTrap = new Trap;
 
+		if (isset($_GET['Trap'])) {
+			$modelTrap->attributes = $_GET['Trap'];
+		}
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($modelTrap);
 

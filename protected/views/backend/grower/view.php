@@ -29,7 +29,6 @@ $this->menu = array(
 		'id',
 		'name',
 		'username',
-		'password',
 		'email',
 		'enabled',
 		'reporting',

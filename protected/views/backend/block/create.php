@@ -15,4 +15,4 @@ $this->menu = array(
 );
 ?>
 
-<?php $this->renderPartial('_form', array('modelBlock' => $modelBlock)); ?>
+<?php $this->renderPartial(' _create', array('modelBlock' => $modelBlock)); ?>

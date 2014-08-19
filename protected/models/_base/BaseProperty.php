@@ -26,6 +26,9 @@
  * @property Grower $grower
  */
 abstract class BaseProperty extends SimbActiveRecord{
+	
+	public $_addBlock = 'no';
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -83,6 +86,7 @@ abstract class BaseProperty extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'_addBlock' => Yii::t('app', 'Wish To Add Block'),
 		);
 	}
 

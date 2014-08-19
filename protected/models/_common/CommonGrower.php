@@ -4,6 +4,7 @@ Yii::import('application.models._base.BaseGrower');
 
 class CommonGrower extends BaseGrower
 {
+	
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -12,18 +13,18 @@ class CommonGrower extends BaseGrower
     public function rules()
     {
     	return array(
-    			//Applies to 'update' scenario
-    			array('username', 'required'),
-    			array('password', 'required' ,'except' => 'update'),
+    	
+			array('name, email, username', 'required', 'except' => 'search'),
+    		array('username','unique'),
+    		array('password','required', 'except' => 'update'),
     	);
     }
-    
     public function beforeSave(){
     		
     	if (parent::beforeSave()) {
     		$format = Yii::app()->params['dbDateFormat'];
     		$postData = Yii::app()->request->getPost('Grower');
-    
+    		
     		if ($this->isNewRecord) {
     			$this->created_at = date($format);
     			$this->salt = $this->saltGenerator();

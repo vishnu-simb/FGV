@@ -58,15 +58,25 @@ class PropertyController extends SimbController
 	public function actionCreate()
 	{
 		$this->pageTitle = sprintf(Yii::t('app', 'Create %s'), 'Property');
+		
 		$modelProperty = new Property;
-
+		
+		if (isset($_GET['Property'])) {
+			$modelProperty->attributes = $_GET['Property'];
+		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($modelProperty);
 
 		if (isset($_POST['Property'])) {
 			$modelProperty->attributes = $_POST['Property'];
 			if ($modelProperty->save()) {
-				$this->redirect(array('view', 'id' => $modelProperty->id));
+				
+				if($_POST['Property']['_addBlock'] == 'yes'){ // _addBlock enabled
+					$this->redirect(array('block/create', 'Block[property_id]' => $modelProperty->id));
+				}else{
+					$this->redirect(array('view', 'id' => $modelProperty->id));
+				}
+				
 			}
 		}
 

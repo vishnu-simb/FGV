@@ -46,7 +46,8 @@
                     		<?php echo $form->dropDownListControlGroup($modelGrower, 'enabled', array('yes'=>'Yes','no'=>'No'))?>
                             
                             <?php echo $form->dropDownListControlGroup($modelGrower, 'reporting', SimbHtml::getEnumItem($modelGrower,'reporting'))?>
-
+                            
+                            <?php echo $form->inlineRadioButtonListControlGroup($modelGrower,'_addProperty', array('yes'=>'Yes','no'=>'No'))?>
 </div>
 							<!--  
                             <div class="span6">

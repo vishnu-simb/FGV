@@ -25,6 +25,9 @@
  * @property Property $property
  */
 abstract class BaseBlock extends SimbActiveRecord{
+	
+	public $_addTrap;
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -84,6 +87,7 @@ abstract class BaseBlock extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'_addTrap' => Yii::t('app', 'Wish To Add Trap'),
 		);
 	}
 

@@ -65,8 +65,13 @@ class GrowerController extends SimbController
 
 		if (isset($_POST['Grower'])) {
 			$modelGrower->attributes = $_POST['Grower'];
-			if ($modelGrower->save()) {
-				$this->redirect(array('view', 'id' => $modelGrower->id));
+			if ($modelGrower->save()){
+				if($_POST['Grower']['_addProperty'] == 'yes'){ // _addProperty enabled 
+					$this->redirect(array('property/create', 'Property[grower_id]' => $modelGrower->id));
+				}else{
+					$this->redirect(array('view', 'id' => $modelGrower->id));
+				}
+				
 			}
 		}
 

@@ -29,6 +29,9 @@
  * @property Property[] $properties
  */
 abstract class BaseGrower extends SimbActiveRecord{
+	
+	public $_addProperty = 'no';
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -47,10 +50,11 @@ abstract class BaseGrower extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, username, password, email', 'required','except' => 'search'),
+			array('name, email, username, password', 'required', 'except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('username, password', 'length', 'max'=>45),
+			array('salt', 'length', 'max'=>8),
 			array('enabled', 'length', 'max'=>3),
 			array('reporting', 'length', 'max'=>7),
 			array('creator_id', 'length', 'max'=>20),
@@ -90,6 +94,7 @@ abstract class BaseGrower extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'_addProperty' => Yii::t('app', 'Wish To Add Property'),
 		);
 	}
 

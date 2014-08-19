@@ -59,14 +59,22 @@ class BlockController extends SimbController
 	{
 		$this->pageTitle = sprintf(Yii::t('app', 'Create %s'), 'Block');
 		$modelBlock = new Block;
-
+		
+		if (isset($_GET['Block'])) {
+			$modelBlock->attributes = $_GET['Block'];
+		}
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($modelBlock);
 
 		if (isset($_POST['Block'])) {
 			$modelBlock->attributes = $_POST['Block'];
 			if ($modelBlock->save()) {
-				$this->redirect(array('view', 'id' => $modelBlock->id));
+				if($_POST['Block']['_addTrap'] == 'yes'){ // _addTrap enabled
+					$this->redirect(array('trap/create', 'Trap[block_id]' => $modelBlock->id));
+				}else{
+					$this->redirect(array('view', 'id' => $modelBlock->id));
+				}
 			}
 		}
 
