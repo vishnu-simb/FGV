@@ -36,7 +36,6 @@ class SimbUserIdentity extends CUserIdentity
     	);
     
     	if ($user === null) {
-    
     		$grower = Grower::model()->findByAttributes(
     				array(),
     				'(username = :username) AND is_deleted = 0 AND enabled = "yes"',

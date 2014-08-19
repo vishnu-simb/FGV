@@ -11,8 +11,33 @@ return array(
     'uploadsFolder' => 'uploads',
 
     // url of the app, should be changed if environment changed
-    'absUrl' => '/simb/1402_fgv',
-    'absUrlApi' => '/simb/1402_fgv/api',
-    'absUrlBackend' => '/simb/1402_fgv/backend',
-    'absUrlStatic' => '/simb/1402_fgv/static',
+    'absUrl' => '',
+    'absUrlApi' => '/api',
+    'absUrlBackend' => '/backend',
+    'absUrlStatic' => '/static',
+		
+	// application settings params
+	'dbDateFormat'=>'Y-m-d H:i:s',
+		
+	// email
+	'noreplyEmail'=>'noreply@fgv.com.au',
+	'noreplyDisplayEmail'=>'FGV Team',
+	'adminEmail'=>'admin@fgv.com.au',
+	'contactEmail'=>'admin@fgv.com.au',
+	'sendEmailWithSMTP'=>true,
+	'userSMTP' => array( // using smtp gmail
+				'host'=>'smtp.gmail.com',
+				'username'=>'user',
+				'password'=>'password',
+				'encryption'=>'ssl',
+				'port'=>'465',
+	),
+	'adminSMTP' => array(
+				'host'=>'mail.host',
+				'username'=>'user',
+				'password'=>'password',
+				'port'=>'26',
+	),
+	'emailSignature' => 'The FGV Team - Development',
+
 );

@@ -87,6 +87,79 @@ class SiteController extends SimbControllerFrontend
     	);
     }
     
+    
+    /**
+     * Password reset
+     */
+    public function actionForgot()
+    {
+    	$this->layout = 'login';
+    	$this->pageTitle = Yii::t('app', 'Forgot Password');
+    
+    	if (!Yii::app()->user->isGuest) {
+    		$this->redirect(Yii::app()->homeUrl);
+    	}
+    
+    	$model = new FormUserForgot();
+    	// collect user input data
+    	/* @var $model FormUserForgot */
+    	if (isset($_POST['FormUserForgot'])) {
+    		$model->attributes = $_POST['FormUserForgot'];
+    		// validate user input and redirect to previous page if valid
+    		if ($model->validate()) {
+    			if($model->sendPasswordCode()){
+    				// reinit session to store flash
+    				Yii::app()->session->open();
+    				Yii::app()->user->setFlash('success', Yii::t('app', 'Password reset in successfully!'));
+    				$this->redirect((Yii::app()->user->returnUrl ? Yii::app()->user->returnUrl : array('site/forgot')));
+    			}
+    		}
+    	}
+    
+    	$this->render(
+    			'forgot',
+    			array(
+    					'model' => $model,
+    			)
+    	);
+    }
+    
+    
+    /**
+     * reset password with 3 different scenario
+     * case 1 enter username
+     * case 2 enter code got from email
+     * case 3 enter a new password based on code
+     */
+    public function actionResetpassword(){
+    	
+    	$this->layout = 'login';
+    	$this->pageTitle = Yii::t('app', 'Reset Password');
+    	
+    	if (!Yii::app()->user->isGuest) {
+    		$this->redirect(Yii::app()->homeUrl);
+    	}
+    	
+    	if (isset($_GET['is_code'])){
+    		if (isset($_GET['is_code'])){
+    			$model = new UserPasswordReset();
+    			$model->code = isset($_GET['code']) ? $_GET['code'] : null;
+    		}
+    	}
+    
+    	if (isset($_POST['UserPasswordReset'])){
+    		$model->attributes = $_POST['UserPasswordReset'];
+    		if ($model->validate()){
+    			$model->changePassword();
+    			$this->redirect(Yii::app()->user->loginUrl);
+    		}
+    	}
+    	
+    	$this->render('resetpassword',array(
+    					'model' => $model,
+    	));
+     }
+    
     /**
      * Logout the backend, redirect to login page
      */

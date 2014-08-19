@@ -39,7 +39,7 @@
 
                             <?php echo $form->textFieldControlGroup($modelGrower, 'username', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('username'))); ?>
 
-                            <?php echo $form->passwordFieldControlGroup($modelGrower, 'password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('password'))); ?>
+                            <?php echo $form->passwordFieldControlGroup($modelGrower, 'password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('password'),'value'=>'')); ?>
 
                             <?php echo $form->textAreaControlGroup($modelGrower, 'email', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('email'))); ?>
 

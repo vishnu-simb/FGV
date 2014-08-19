@@ -13,6 +13,8 @@
  * @property string $name
  * @property string $username
  * @property string $password
+ * @property string $salt
+ * @property string $resetpassword_key
  * @property string $email
  * @property string $enabled
  * @property string $reporting

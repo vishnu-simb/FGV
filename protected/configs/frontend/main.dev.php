@@ -17,6 +17,9 @@ return array(
         'application.models.frontend.*',
         'application.models.service.*',
         'application.components.*',
+    	'application.helper.*',
+    	'ext.yii-mail.YiiMailMessage',
+    		
         // For bootstrap
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
@@ -120,6 +123,22 @@ return array(
                     'allowAutoLogin'=>true,
 	   
                 ),
+                
+                'mail' => array(
+					'class' => 'ext.yii-mail.YiiMail',
+		            'transportType' => 'php',
+		            /*
+					'transportType' => 'smtp',
+		            'transportOptions'=>array(
+		                'host'=>'mail.host',
+		                'username'=>'',
+		                'password'=>'',
+		                'port'=>'26',
+		            ),*/
+					'viewPath' => 'application.views.mail',
+					'logging' => true,
+					'dryRun' => false,
+				),
                 // Url Manager
                 'urlManager' => array(
                     'class' => 'SimbUrlManagerFrontend',
