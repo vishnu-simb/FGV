@@ -102,6 +102,6 @@ class CommonSpray extends BaseSpray
     
         
     function getCoverRequired($block,$secondCohort = false){
-    	return $block->id;
+    	return null;
     }
 }

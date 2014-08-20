@@ -13,7 +13,7 @@ function dateOutputp($date){
 		echo '<span>&nbsp;</span>';
 		$second_cohort = false;
 		foreach($VAR['spray_data'] as $pest=>$vv){
-			if($VAR['pests'][$pest]->hasSecondCohort($VAR['block'])){
+			if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
 				$second_cohort = true;
 			}
 		}
@@ -24,8 +24,8 @@ function dateOutputp($date){
 			}
 			echo '>';
 			echo $pest.'</span>';
-			if($VAR['pests'][$pest]->hasSecondCohort($VAR['block'])){
-				echo '<span><span class="hide portrait">(2nd Cohort)</span>&nbsp;</span>';
+			if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
+				echo '<span><span class="doublewidth portrait">(2nd Cohort)</span>&nbsp;</span>';
 			}
 		}
 		?>
@@ -65,7 +65,7 @@ function dateOutputp($date){
 					}
 					echo '</span>';
 					
-					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block'])){
+					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
 						/*if($spray->hasLowPopulation()){
 							$lowPop = clone $spray;
 							$lowPop->swapPopulationValues();
@@ -102,7 +102,7 @@ function dateOutputp($date){
 					}
 					echo '>';
 					echo ' - </span>';
-					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block'])){
+					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
 						echo '<span';
 						if(!$second_cohort && $pest == 'Codling Moth'){
 							echo ' class="doublewidth"';
@@ -114,7 +114,7 @@ function dateOutputp($date){
 			}
 			echo '</div>';
 			
-			echo '<div class="th"><span><span class="hide portrait">Cover until:</span>&nbsp;</span>	';
+			echo '<div class="th"><span><span class="portrait">Cover until:</span>&nbsp;</span>	';
 			foreach($vv as $pest=>$spray){
 				echo '<span';
 				if(!$second_cohort && $pest == 'Codling Moth'){
@@ -128,7 +128,7 @@ function dateOutputp($date){
 					}else{
 						echo ' - ';
 					}
-					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block'])){
+					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
 						$d = dateOutputp($spray->getCoverRequired($VAR['block'],true));
 						echo '</span><span>';
 						if($d){
