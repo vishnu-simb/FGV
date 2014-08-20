@@ -24,6 +24,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 .no-caret > a > span.caret { display: none;}
 
 .posts-per-page { float: right;}
+.posts-date-range { float: right; margin-right: 10px;}
 .form-search-advanced { margin-bottom: 0; border-bottom: 1px solid #dddddd;}
 
 /* Message */
