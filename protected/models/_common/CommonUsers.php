@@ -17,6 +17,14 @@ class CommonUsers extends BaseUsers
     			array('username,type','required','except' => 'search'),
     			array('username','unique'),
     			array('password', 'required' ,'except' => 'update'),
+    			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
+    			array('username', 'length', 'max'=>45),
+    			array('type', 'length', 'max'=>5),
+    			array('salt', 'length', 'max'=>8),
+    			array('creator_id', 'length', 'max'=>20),
+    			array('created_at, updated_at, params', 'safe'),
+    			array('type, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+    			array('id, username, password, type, salt, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
     			
     	);
     }

@@ -17,6 +17,16 @@ class CommonGrower extends BaseGrower
 			array('name, email, username', 'required', 'except' => 'search'),
     		array('username','unique'),
     		array('password','required', 'except' => 'update'),
+    		array('username', 'length', 'max'=>45),
+    		array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
+    		array('name', 'length', 'max'=>100),
+    		array('salt', 'length', 'max'=>8),
+    		array('enabled', 'length', 'max'=>3),
+    		array('reporting', 'length', 'max'=>7),
+    		array('creator_id', 'length', 'max'=>20),
+    		array('created_at, updated_at, params', 'safe'),
+    		array('enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+    		array('id, name, username, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
     	);
     }
     public function beforeSave(){

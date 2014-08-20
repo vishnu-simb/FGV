@@ -30,7 +30,7 @@ $this->menu = array(
 		'pest.name',
 		'block.name',
 		'name',
-		'ordering',
+		array('name'=>'ordering','header'=>'Sequence Number','filter'=>false),
 		/*
 		'creator_id',
 		'created_at',

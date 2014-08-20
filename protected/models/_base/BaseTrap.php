@@ -78,7 +78,7 @@ abstract class BaseTrap extends SimbActiveRecord{
 			'block_id' => Yii::t('app', 'Block'),
 			'name' => Yii::t('app', 'Trap'),
 			'creator_id' => Yii::t('app', 'Creator'),
-			'ordering' => Yii::t('app', 'Ordering'),
+			'ordering' => Yii::t('app', 'Sequence Number'),
 			'created_at' => Yii::t('app', 'Created At'),
 			'updated_at' => Yii::t('app', 'Updated At'),
 			'status' => Yii::t('app', 'Status'),
