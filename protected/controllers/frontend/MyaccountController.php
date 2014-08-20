@@ -42,13 +42,40 @@ class MyaccountController extends SimbController
 	 */
 	public function actionIndex()
 	{
-	    $modelGrower = $this->loadModel(Yii::app()->user->id);
+	    $user_id = Yii::app()->user->id;
+	    $modelGrower = $this->loadModel($user_id);
 		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'My Account');
 		if (isset($_POST['Grower'])) {
-			$modelGrower->attributes = $_POST['Grower'];
-			if ($modelGrower->save()) {
-	
-			}
+            $modelGrower->attributes = $_POST['Grower'];
+            $uploadedFile = CUploadedFile::getInstance($modelGrower, 'avatar');
+            
+            $filename = '';
+            if (!empty($uploadedFile)) // check if uploaded file is set or not
+            {
+                $filename = $user_id. '.'. $uploadedFile->getExtensionName();
+                $modelGrower->avatar = $filename;
+            }
+            
+            if($modelGrower->save())
+            {
+                $avatars_path = Yii::app()->basePath.'/../avatars/';
+                if($filename)
+                {
+                    if (!file_exists($avatars_path))
+                    {
+                        mkdir($avatars_path);
+                        chmod($avatars_path, 777);
+                    }
+                    $full_path = $avatars_path.$filename;
+                    if (file_exists($full_path))
+                    {
+                        @unlink($full_path);
+                        @unlink($full_path.'_27x27.jpg');
+                    }
+                    $uploadedFile->saveAs($full_path);
+                    Yii::app()->image->create_square_thumbnail($full_path, $full_path.'_27x27.jpg', 27);
+                }
+            }
 		}
 		$this->render('index', array(
 				'modelGrower' => $modelGrower

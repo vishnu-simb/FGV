@@ -49,4 +49,8 @@ class SimbWebUser extends CWebUser
     	}else return false;
     	
     }
+    
+    function isGrower(){
+        return Grower::model()->find('username = ?', array(Yii::app()->user->name));
+    }
 } 

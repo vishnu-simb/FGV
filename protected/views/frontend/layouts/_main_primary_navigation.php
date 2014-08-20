@@ -167,8 +167,15 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
             ?>
 
             <div class="dropdown">
-                <a href="#" class='dropdown-toggle' data-toggle="dropdown"><?php echo Yii::app()->user->name ?> <img
-                        src="<?php echo $resourceUrl ?>/img/demo/user-avatar.jpg" alt=""></a>
+                <a href="#" class='dropdown-toggle' data-toggle="dropdown"><?php echo Yii::app()->user->name ?>
+                <?php
+                    $avatar_url = $resourceUrl. '/img/demo/user-avatar.jpg';
+                    $user = Yii::app()->user->isGrower();
+                    if ($user && !empty($user->avatar) && file_exists(Yii::app()->basePath.'/../avatars/'.$user->avatar.'_27x27.jpg'))
+                        $avatar_url = '/avatars/'.$user->avatar.'_27x27.jpg';
+                ?>
+                    <img src="<?php echo $avatar_url ?>" alt=""/>
+                </a>
                 <?php
                 $this->widget(
                     'bootstrap.widgets.TbMenu',

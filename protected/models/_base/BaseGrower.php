@@ -104,6 +104,7 @@ abstract class BaseGrower extends SimbActiveRecord{
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
 			'_addProperty' => Yii::t('app', 'Wish To Add Property'),
+            'avatar' => Yii::t('app', 'Avatar'),
 		);
 	}
 

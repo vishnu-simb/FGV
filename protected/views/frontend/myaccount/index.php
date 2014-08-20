@@ -21,7 +21,7 @@ $this->breadcrumbs = array(
                 // There is a call to performAjaxValidation() commented in generated controller code.
                 // See class documentation of CActiveForm for details on this.
                 'enableAjaxValidation'=>false,
-                'htmlOptions' => array('class' => 'form-horizontal form-column form-bordered form-validate'),
+                'htmlOptions' => array('class' => 'form-horizontal form-column form-bordered form-validate', 'enctype' => 'multipart/form-data',),
                 // for enabling client validation
                 'enableClientValidation' => true,
                 'clientOptions'=>array(
@@ -44,6 +44,15 @@ $this->breadcrumbs = array(
                     <?php echo $form->passwordFieldControlGroup($modelGrower, 'password', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('password'),'value'=>'')); ?>
                     <?php echo $form->textAreaControlGroup($modelGrower, 'email', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('email'))); ?>
             		<?php echo $form->dropDownListControlGroup($modelGrower, 'reporting', SimbHtml::getEnumItem($modelGrower,'reporting'), array('class' => 'input-xlarge'))?>
+                    <?php echo $form->fileFieldControlGroup($modelGrower, 'avatar', array('class' => 'input-xlarge'))?>
+                    <?php if($modelGrower->avatar && file_exists(Yii::app()->basePath.'/../avatars/'.$modelGrower->avatar.'_27x27.jpg')): ?>
+                    <div class="control-group">
+                        <label class="control-label">&nbsp;</label>
+                        <div class="controls">
+                            <?php echo CHtml::image('/avatars/'.$modelGrower->avatar.'_27x27.jpg',"image"); ?>
+                        </div>
+                    </div>
+                    <?php endif;?>
                 </div>
             </div>
             <div class="box-title" style="margin-top: 0;border-top: none;">
