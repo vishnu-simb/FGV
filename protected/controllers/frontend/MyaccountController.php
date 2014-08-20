@@ -1,6 +1,6 @@
 <?php
 
-class MyAccountController extends SimbController
+class MyaccountController extends SimbController
 {
 	
 	/**
