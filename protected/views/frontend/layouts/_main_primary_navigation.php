@@ -91,6 +91,10 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 						),
 
                     ),
+                    array(
+                        'label' => Yii::t('app', 'My Account'), 
+                        'url' => Yii::app()->baseUrl.'/myaccount'),
+                        'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER
                 ),
                 'encodeLabel' => false,
                 'htmlOptions' => array(
@@ -170,10 +174,6 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                     'bootstrap.widgets.TbMenu',
                     array(
                         'items' => array(
-                            array(
-                                'label' => 'Edit profile',
-                                'url' => '#',
-                            ),
                             array(
                                 'label' => Yii::t('app', 'Log out'),
                                 'url' => array('site/logout'),
