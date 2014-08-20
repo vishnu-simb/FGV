@@ -93,8 +93,8 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                     ),
                     array(
                         'label' => Yii::t('app', 'My Account'), 
-                        'url' => Yii::app()->baseUrl.'/myaccount'),
-                        'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER
+                        'url' => Yii::app()->baseUrl.'/myaccount',
+                        'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER)
                 ),
                 'encodeLabel' => false,
                 'htmlOptions' => array(
