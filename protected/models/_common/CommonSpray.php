@@ -99,4 +99,9 @@ class CommonSpray extends BaseSpray
     	$criteria->params = array(':is_deleted'=>'0');
     	return Grower::model()->findAll($criteria);
     }
+    
+        
+    function getCoverRequired($block,$secondCohort = false){
+    	return $block->id;
+    }
 }

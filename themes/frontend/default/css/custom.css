@@ -29,3 +29,44 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 @media (max-width: 1200px) {
     .icon-nav{display:block !important}
 }
+
+.spraytable .th {
+    clear: both;
+    display: block;
+}
+.spraytable .tablebody {
+    padding: 0.6em 10px;
+}
+.spraytable .tablebody .th {
+    color: #444;
+    font-size: 16px;
+    font-weight: bold;
+    height: 20px;
+    padding: 5px;
+    text-shadow: none;
+}
+.spraytable .th > span {
+    display: block;
+    float: left;
+    width: 20%;
+}
+.spraytable .tablebody > div:nth-child(2n), .labelrow {
+    color: #aaa;
+    font-weight: normal;
+}
+.spraytable .tablebody > div:nth-child(2n) {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
+.spraytable .tablebody > div:last-child {
+    border-bottom: medium none;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.spraytable .ui-btn-inner, .graph .ui-btn-inner {
+    padding: 0.6em 15px;
+}
+.doublewidth {
+    width: 40% !important;
+}

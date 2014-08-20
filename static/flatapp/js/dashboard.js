@@ -14,6 +14,7 @@ $(document).ready(function () {
 	var months = new Array( "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 	var actualDate = new Date("01 "+_date); // convert to actual date
 	
+	loadSprayTable();
 	/* load current BlockID */
 	drawVisualizationChart() 
 	
@@ -32,6 +33,7 @@ $(document).ready(function () {
 		$('h1').html(t.parent().attr('label')+': '+t.html());
 		$("#yw0").html('');
 		drawVisualizationChart();
+		loadSprayTable();
 	});
 	
 
@@ -62,9 +64,27 @@ $(document).ready(function () {
 					  success: function (data)
 					   {
 						  		var jgraph = JSON.parse(data);
-						  		Highcharts.setOptions([]); 
-						  		var chart = new Highcharts.Chart(jgraph);
+						  		if(jgraph.chart == 'failed'){
+						  			$("#yw0").html('');
+						  		}else{
+						  			Highcharts.setOptions([]); 
+							  		var chart = new Highcharts.Chart(jgraph);
+						  		}
+						  		
 					   }
 			});
 	}
+	
+	function loadSprayTable(){
+		var block_id = $("#Block_id").val();
+		$.ajax({
+				  type: "GET",
+				  url: siteUrl + "api/graph/HTML?block="+block_id+"&date="+$("#datePicker").html(),
+				  success: function (data)
+				   {
+					  $(".spraytable").html(data);
+		
+				   }
+		});
+}
 });

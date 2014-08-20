@@ -18,6 +18,7 @@ class GraphController extends SimbApiController {
      */
     public function actionHTML()
     {
+    	$this->layout = 'main';
   		$arrResult = array();
   		$data = $this->getSprayData();
   		$VAR = array();
@@ -35,8 +36,14 @@ class GraphController extends SimbApiController {
   		foreach(Pest::model()->findAll() as $pest){
   			$VAR['pests'][$pest->name] = $pest;
   		}
-		echo CJSON::encode($VAR);
-        Yii::app()->end();
+  		
+  		$this->render(
+  				'spray',
+  				array(
+  						'VAR' => $VAR,
+  				)
+  		);
+
     }
     
     private function getSprayData(){
@@ -102,13 +109,17 @@ class GraphController extends SimbApiController {
     		}
     		
     	}
-    	$VAR['chart'] = array('renderTo'=>'yw0');
-    	$VAR['title'] = array('text'=>'');
-    	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
-    	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>''));
-    	$VAR['series'] = $serial;
+		if(!empty($serial)){
+			$VAR['chart'] = array('renderTo'=>'yw0');
+			$VAR['title'] = array('text'=>'');
+			$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+			$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
+			$VAR['yAxis'] = array('title'=>array('text'=>''));
+			$VAR['series'] = $serial;
+		}else{
+			$VAR['chart']= 'failed';
+		}
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
     	 

@@ -21,7 +21,7 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 						<div class="box">
 						<div class="box-title">
 						<h3><i class="icon-reorder"></i>Spray Dates</h3>	</div>
-						<div class="box-content nopadding">
+						<div class="spraytable box-content nopadding">
 							
 						</div>
 					

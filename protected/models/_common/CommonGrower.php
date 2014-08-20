@@ -90,5 +90,15 @@ class CommonGrower extends BaseGrower
     	return strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
     }
     
+    /**
+     * @return Grower[]
+     */
+    public function findAllPk($grower_id){
+    	  $this->getDbCriteria()->mergeWith(array(
+            'condition'=>$this->getTableAlias().'.id=:grower_id',
+            'params'=>array(':grower_id'=>$grower_id),
+        ));
+        return $this->findAll();
+    }
  
 }
