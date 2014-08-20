@@ -75,7 +75,7 @@ class FormUserForgot extends SimbFormModel
     		);
     		
     		$mail = new Message();
-    		$mail->recipient_email = $model->email;
+    		$mail->recipient_email = explode(',',$model->email);
     		$mail->subject = Yii::t('app','Reset Password');
     		$mail->sender_name = Yii::t('app', 'FGV Forgot');
     		$mail->sender_email = Yii::app()->params['noreplyEmail'];

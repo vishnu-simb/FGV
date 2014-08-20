@@ -28,7 +28,7 @@ class MailService
         };
         $message->setBody($this->body, 'text/html');
         $message->subject = $this->subject;
-        $message->addTo($this->addTo);
+        $message->setTo((array)$this->addTo);
         $message->setFrom($this->from);
         return Yii::app()->mail->send($message);
     }

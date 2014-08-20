@@ -28,8 +28,8 @@
                     	 
                     	 <?php if(Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER):?>
                     	 	<?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->getBlockByGrowerId(Yii::app()->user->id),'id','name','property.name'), array('class' => 'input-xxlarge'))?>
-                    	 	<?php echo CHtml::link('<i class="icon-cog"></i> View Full Report',array('report/grower/',
-                                         'grower_id'=>Yii::app()->user->id),array('class'=>'btn btn-primary','target'=>'_blank')); ?>
+                    	 	<?php echo CHtml::link('<i class="icon-cog"></i> View Full Report',array('report/',
+                                         'grower'=>Yii::app()->user->id),array('class'=>'btn btn-primary','target'=>'_blank')); ?>
                     	 <?php else:?>
                      	  	<?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData( $modelBlock->findAll() ,'id','name','grower.name'), array('class' => 'input-xxlarge'))?>
                      	  	<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData( $modelGrower->findAll() ,'id','name'), array('prompt'=>'Reports','class' => 'clickable input-xlarge'))?>
