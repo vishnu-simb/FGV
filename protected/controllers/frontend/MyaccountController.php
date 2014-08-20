@@ -73,6 +73,7 @@ class MyaccountController extends SimbController
                         @unlink($full_path.'_27x27.jpg');
                     }
                     $uploadedFile->saveAs($full_path);
+                    chmod($full_path, 777);
                     Yii::app()->image->create_square_thumbnail($full_path, $full_path.'_27x27.jpg', 27);
                 }
             }
