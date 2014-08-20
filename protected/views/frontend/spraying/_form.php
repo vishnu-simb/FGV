@@ -22,8 +22,18 @@
 <div class="search-form-ext">
     <div class="box-content nopadding">
 
-                    <div class="span12">    
-                    	  <?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name','property.name'), array('class' => 'input-xxlarge'))?>
+                    <div class="span12">
+                    
+                    	 <?php 
+                    		if(Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
+
+                    			echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData($modelSpray->getBlockByAttributes(Yii::app()->user->id),'id','name','property.name'), array('class' => 'input-xxlarge'));
+                    		
+							}else{
+
+                    			echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData($modelSpray->getBlock() ,'id','name','property.name'), array('class' => 'input-xxlarge'));
+                    		}
+                    	  ?>
                              
                           <?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('class' => 'input-xxlarge'))?>
                     						

@@ -45,11 +45,11 @@ class SiteController extends SimbControllerFrontend
     	$this->pageTitle = sprintf(Yii::t('app', 'Dashboard'), '');
     	$modelGrower = new Grower();
     	$modelBlock = new Block();
-    	$modelGrower->unsetAttributes();  // clear any default values
-    	$modelBlock->unsetAttributes(); 
+    	$modelTrapCheck = new TrapCheck();
         $this->render("index",array(
         		'modelGrower' => $modelGrower,
         		'modelBlock' => $modelBlock,
+        		'modelTrapCheck' => $modelTrapCheck,
         		));
     }
     

@@ -55,6 +55,9 @@ class SprayingController extends SimbController
 		if (isset($_POST['Spray'])) {
 			$modelSpray->attributes=$_POST['Spray'];
 			if ($modelSpray->save()) {
+				// reinit session to store flash
+				Yii::app()->session->open();
+				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$id.' update successfully!'));
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 			}
 		}
@@ -77,6 +80,9 @@ class SprayingController extends SimbController
 	
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if (!isset($_GET['ajax'])) {
+				// reinit session to store flash
+				Yii::app()->session->open();
+				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$id.' delete successfully!'));
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 			}
 		} else {
@@ -100,7 +106,9 @@ class SprayingController extends SimbController
 		if (isset($_POST['Spray'])) {
 			$modelSpray->attributes = $_POST['Spray'];
 			if ($modelSpray->save()) {
-	
+				// reinit session to store flash
+				Yii::app()->session->open();
+				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$modelSpray->id.' create successfully!'));
 			}
 		}
 		$this->render('index', array(

@@ -76,7 +76,7 @@ class CommonTrapCheck extends BaseTrapCheck
     	$criteria->params = array(':is_deleted'=>'0');
     	return Trap::model()->findAll($criteria);
     }
-    
+
     /**
      * @return Block[]
      */

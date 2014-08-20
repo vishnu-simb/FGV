@@ -64,8 +64,12 @@ class TrapCheckController extends SimbController
 
 		if (isset($_POST['TrapCheck'])) {
 			$modelTrapCheck->attributes = $_POST['TrapCheck'];
-			if ($modelTrapCheck->save()) {
-				$this->redirect(array('view', 'id' => $modelTrapCheck->id));
+			try{
+				if ($modelTrapCheck->save()) {
+					$this->redirect(array('view', 'id' => $modelTrapCheck->id));
+				}
+			}catch(Exception $e) {
+				$modelTrapCheck->addError(null, Yii::t('app', 'Trap has already been taken same block'));
 			}
 		}
 
@@ -88,9 +92,14 @@ class TrapCheckController extends SimbController
 		// $this->performAjaxValidation($modelTrapCheck);
 
 		if (isset($_POST['TrapCheck'])) {
+			
 			$modelTrapCheck->attributes=$_POST['TrapCheck'];
-			if ($modelTrapCheck->save()) {
-				$this->redirect(array('view', 'id' => $modelTrapCheck->id));
+			try{
+				if ($modelTrapCheck->save()) {
+					$this->redirect(array('view', 'id' => $modelTrapCheck->id));
+				}
+			}catch(Exception $e) {
+				$modelTrapCheck->addError(null, Yii::t('app', 'Trap has already been taken same block'));
 			}
 		}
 

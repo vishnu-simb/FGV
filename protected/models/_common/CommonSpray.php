@@ -63,6 +63,14 @@ class CommonSpray extends BaseSpray
     }
     
     /**
+     * @return Block[]
+     */
+    public function getBlockByAttributes($grower_id){
+    	return Block::model()->with(array('property'=>array('condition'=>'property.grower_id='.$grower_id)))->findAll();
+    }
+    
+    
+    /**
      * @return Chemical[]
      */
     public function getChemical(){

@@ -51,8 +51,12 @@ class TrappingController extends SimbController
 
 		if (isset($_POST['TrapCheck'])) {
 			$modelTrapCheck->attributes=$_POST['TrapCheck'];
-			if ($modelTrapCheck->save()) {
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+			try{
+				if ($modelTrapCheck->save()) {
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+				}
+			}catch(Exception $e) {
+				$modelTrapCheck->addError(null, Yii::t('app', 'Trap has already been taken same block'));
 			}
 		}
 
@@ -104,15 +108,23 @@ class TrappingController extends SimbController
 			$search = true;
 		}
 		if(isset($_POST['Traps'])){
-			foreach ($_POST['Traps'] as $key => $value){ // save multiple records
-				if($value != ""){
-					$saveTrapCheck = new TrapCheck();
-					$save = array('value'=>$value,'trap_id'=>$key,'date'=>gmdate('Y-m-d'));
-					$saveTrapCheck->attributes = $save;
-					$saveTrapCheck->save();
+			try{
+				foreach ($_POST['Traps'] as $key => $value){ // save multiple records
+					if($value != ""){
+						$saveTrapCheck = new TrapCheck();
+						$save = array('value'=>$value,'trap_id'=>$key,'date'=>gmdate('Y-m-d'));
+						$saveTrapCheck->attributes = $save;
+						if($saveTrapCheck->save()){
+						}
+					}
 				}
-					
-			}
+			}catch (Exception $e) {
+					Yii::app()->session->open();
+					Yii::app()->user->setFlash('error', Yii::t('app', 'Trap has already been taken same block !'));
+	    	}
+	    	// reinit session to store flash
+	    	
+	    		
 		}
 		$this->render('index', array(
 				'modelTrapCheck' => $modelTrapCheck,

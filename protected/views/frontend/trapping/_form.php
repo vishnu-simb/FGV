@@ -18,6 +18,7 @@
                     'validateOnSubmit'=>true,
                 ),
 )); ?>
+<?php echo $form->errorSummary($modelTrapCheck); ?>
 
 <div class="search-form-ext">
     <div class="box-content nopadding">
