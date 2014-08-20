@@ -18,7 +18,7 @@ class CommonGrower extends BaseGrower
     		array('username','unique'),
     		array('password','required', 'except' => 'update'),
     		array('username', 'length', 'max'=>45),
-    		array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
+    		array('ordering, status, is_deleted, postcode', 'numerical', 'integerOnly'=>true),
     		array('name, contact_name', 'length', 'max'=>100),
     		array('salt', 'length', 'max'=>8),
     		array('enabled', 'length', 'max'=>3),
@@ -27,7 +27,7 @@ class CommonGrower extends BaseGrower
             array('suburb', 'length', 'max'=>50),
 			array('creator_id, phone, mobile', 'length', 'max'=>20),
     		array('created_at, updated_at, params', 'safe'),
-    		array('enabled, reporting, contact_name, address, suburb, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+    		array('enabled, reporting, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
     		array('id, name, username, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
     	);
     }

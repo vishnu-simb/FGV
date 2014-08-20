@@ -61,7 +61,7 @@ abstract class BaseGrower extends SimbActiveRecord{
             array('suburb', 'length', 'max'=>50),
 			array('creator_id, phone, mobile', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
-			array('enabled, reporting, contact_name, address, suburb, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('enabled, reporting, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, name, username, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
