@@ -27,7 +27,7 @@ class TrapCheck extends CommonTrapCheck
 				$condition = "WHERE g.id =".Yii::app()->user->id."";
 		}
 		$sql="SELECT tc.id as trap_check_id,tc.date,tc.value as trap_check_number,CONCAT (g.name,' : ',pt.name,' - ',t.name) AS trap_check_name
-		FROM fgv_trap_check tc
+		FROM ".$this->tableName()." tc
 		INNER JOIN $trapTb t ON tc.trap_id = t.id
 		INNER JOIN $pestTb pt ON t.pest_id = pt.id
 		INNER JOIN $blockTb b ON t.block_id = b.id
