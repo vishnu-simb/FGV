@@ -25,6 +25,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                     array('label' => Yii::t('app', 'Dashboard'), 'url' => Yii::app()->getHomeUrl()),
                 	array('label' => Yii::t('app', 'Trapping'), 'url' => Yii::app()->baseUrl.'/trapping'),
                 	array('label' => Yii::t('app', 'Spraying'), 'url' => Yii::app()->baseUrl.'/spraying'),
+                	array('label' => Yii::t('app', 'Mite Monitoring'), 'url' => Yii::app()->baseUrl.'/monitoring'),
                     array(
                     	'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
                         'label' => Yii::t('app', 'Administration'),

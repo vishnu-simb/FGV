@@ -1,18 +1,37 @@
 <?php
 
 /**
+ * @property Block $block
  * @property Property $property
  * @property Grower $grower
+ * @property Mite $mite
  */
 
-Yii::import('application.models._base.BaseSpray');
+Yii::import('application.models._base.BaseMonitorCheck');
 
-class CommonSpray extends BaseSpray
+
+class CommonMonitorCheck extends BaseMonitorCheck
 {
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
+    
+    
+    /**
+     * default scope
+     * @return array
+     * @see defaultScope
+     */
+    public function defaultScope(){
+    
+    	return array(
+    			'alias'=>'monitor_check',
+    			'condition'=> 'monitor_check.is_deleted=0',
+    			'order'=>'monitor_check.id DESC'
+    	);
+    }
+    
     
     /**
      * scope of yii
@@ -21,13 +40,11 @@ class CommonSpray extends BaseSpray
      */
     public function scopes(){
     	return array(
-    			'alias'=>'spray',
-    			'condition'=>'spray.is_deleted=0',
+    			'alias'=>'monitor_check',
+    			'condition'=>'monitor_check.is_deleted=0',
     	);
     
     }
-    
-    
     /**
      * @return array
      */
@@ -37,19 +54,22 @@ class CommonSpray extends BaseSpray
     	// class name for the relations automatically generated below.
     	$oldValue = parent::relations();
     	return CMap::mergeArray($oldValue,array(
+    			'mite' => array(self::BELONGS_TO,'Mite',array('mite_id'=>'id'),'through'=> 'monitor'),
+    			'block' => array(self::BELONGS_TO,'Block',array('block_id'=>'id'),'through'=> 'monitor'),
     			'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=> 'block'),
     			'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=> 'property'),
     	)
     	);
     }
     
-    
-    public function attributeLabels(){
-    	$oldValue = parent::attributeLabels();
-    	return CMap::mergeArray($oldValue,array(
-    			'block.name' => Yii::t('app', 'Block'),
-    			'chemical.name' => Yii::t('app', 'Chemical'),
-    	));
+    /**
+     * @return Mite[]
+     */
+    public function getMite(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	return Mite::model()->findAll($criteria);
     }
     
     /**
@@ -63,22 +83,15 @@ class CommonSpray extends BaseSpray
     }
     
     /**
-     * @return Block[]
+     * @return Grower[]
      */
-    public function getBlockByAttributes($grower_id){
-    	return Block::model()->with(array('property'=>array('condition'=>'property.grower_id='.$grower_id)))->findAll();
-    }
-    
-    
-    /**
-     * @return Chemical[]
-     */
-    public function getChemical(){
+    public function getGrower(){
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
-    	return Chemical::model()->findAll($criteria);
+    	return Grower::model()->findAll($criteria);
     }
+    
     
     /**
      * @return Property[]
@@ -89,35 +102,4 @@ class CommonSpray extends BaseSpray
     	$criteria->params = array(':is_deleted'=>'0');
     	return Property::model()->findAll($criteria);
     }
-
-    /**
-     * @return Grower[]
-     */
-    public function getGrower(){
-    	$criteria = new CDbCriteria();
-    	$criteria->condition = 'is_deleted=:is_deleted';
-    	$criteria->params = array(':is_deleted'=>'0');
-    	return Grower::model()->findAll($criteria);
-    }
-
-    private $_date;
-    
-    function getDate($block_id,$secondCohort = false){
-    	 
-    	$k = $block_id.'|'.(int)$secondCohort;
-    	if(isset($this->_date[$k])){
-    		return $this->_date[$k];
-    	}
-    	return '06-Nov-2013';
-    }
-    
-    
-    function getCoverRequired($block_id,$secondCohort = false){
-    	$date = $this->getDate($block_id,$secondCohort);
-    	if(!$date){
-    		return null;
-    	}
-    	return $date;
-    }
-    
 }

@@ -38,10 +38,11 @@ function dateOutputp($date){
 	foreach($VAR['spray_inverse'] as $sprayNo=>$vv){
 		if($vv){
 			echo '<div class="th"><span>'.$sprayNo.'st</span>	';
+			
 			foreach($vv as $pest=>$spray){
 				
 				if($spray){
-					$date = $spray->getDate($VAR['block']);
+					$date = $spray->getDate($VAR['block']->id);
 					$ds = strtotime($date);
 					if($ds >= time() && !isset($pm[$pest])){
 						echo '<span class="new';
@@ -122,14 +123,14 @@ function dateOutputp($date){
 				}
 				echo '>';
 				if($spray){
-					$d = dateOutputp($spray->getCoverRequired($VAR['block']));
+					$d = dateOutputp($spray->getCoverRequired($VAR['block']->id));
 					if($d){
 						echo $d;
 					}else{
 						echo ' - ';
 					}
 					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
-						$d = dateOutputp($spray->getCoverRequired($VAR['block'],true));
+						$d = dateOutputp($spray->getCoverRequired($VAR['block']->id,true));
 						echo '</span><span>';
 						if($d){
 							echo $d;

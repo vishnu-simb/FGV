@@ -1,6 +1,6 @@
 <?php
 
-class TrappingController extends SimbController
+class MonitoringController extends SimbController
 {
 	
 	/**
@@ -43,25 +43,25 @@ class TrappingController extends SimbController
 	 */
 	public function actionUpdate($id)
 	{
-		$modelTrapCheck = $this->loadModel($id);
-		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'TrapCheck', $modelTrapCheck->id);
+		$modelMonitorCheck = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Mite Monitoring', $modelMonitorCheck->id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($modelTrapCheck);
 
-		if (isset($_POST['TrapCheck'])) {
-			$modelTrapCheck->attributes=$_POST['TrapCheck'];
+		if (isset($_POST['MonitorCheck'])) {
+			$modelMonitorCheck->attributes=$_POST['MonitorCheck'];
 			try{
-				if ($modelTrapCheck->save()) {
+				if ($modelMonitorCheck->save()) {
 					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 				}
 			}catch(Exception $e) {
-				$modelTrapCheck->addError(null, Yii::t('app', 'Trap has already been taken same block'));
+				$modelMonitorCheck->addError(null, Yii::t('app', 'Mite Monitor has already been taken same block'));
 			}
 		}
 
 		$this->render('update', array(
-			'modelTrapCheck' => $modelTrapCheck,
+			'modelMonitorCheck' => $modelMonitorCheck,
 		));
 	}
 	
@@ -98,8 +98,8 @@ class TrappingController extends SimbController
 	 */
 	public function actionIndex()
 	{
-		$this->pageTitle = sprintf(Yii::t('app', 'Trapping %s'), '');
-		$modelTrapCheck = new TrapCheck();
+		$this->pageTitle = sprintf(Yii::t('app', 'Mite Monitoring %s'), '');
+		$modelMonitorCheck = new MonitorCheck();
 		$modelGrower = new Grower();
 		$modelGrower->unsetAttributes();  // clear any default values
 		$search = false;
@@ -107,30 +107,32 @@ class TrappingController extends SimbController
 			$modelGrower->attributes = $_GET['Grower'];
 			$search = true;
 		}
-		if(isset($_POST['Traps'])){
+		if(isset($_POST['MonitorPercentage'])){
 			try{
-				foreach ($_POST['Traps'] as $key => $value){ // save multiple records
+				foreach ($_POST['MonitorPercentage'] as $key => $value){ // save multiple records
 					if($value != ""){
-						$saveTrapCheck = new TrapCheck();
-						$save = array('value'=>$value,'trap_id'=>$key,'date'=>gmdate('Y-m-d'));
-						$saveTrapCheck->attributes = $save;
-						if($saveTrapCheck->save()){
-							Yii::app()->session->open();
-							Yii::app()->user->setFlash('error', Yii::t('app', 'Trap added successfully !'));
+						if($_POST['MonitorAverage'][$key] != ""){
+							$saveMonitorCheck = new MonitorCheck();
+							$save = array('percentage'=>$value,'average_number'=>$_POST['MonitorAverage'][$key],'monitor_id'=>$key,'date'=>gmdate('Y-m-d'));
+							$saveMonitorCheck->attributes = $save;
+							if($saveMonitorCheck->save()){
+								Yii::app()->session->open();
+								Yii::app()->user->setFlash('success', Yii::t('app', 'Mite Monitor added successfully !'));
+							}
 						}
 					}
 				}
 			}catch (Exception $e) {
 					Yii::app()->session->open();
-					Yii::app()->user->setFlash('error', Yii::t('app', 'Trap has already been taken same block !'));
+					Yii::app()->user->setFlash('error', Yii::t('app', 'Mite Monitor has already been taken same block !'));
 	    	}
 	    	// reinit session to store flash
 	    	
 	    		
 		}
 		$this->render('index', array(
-				'modelTrapCheck' => $modelTrapCheck,
-				'dataProvider' => $modelTrapCheck->SearchRecentTrapings(),
+				'modelMonitorCheck' => $modelMonitorCheck,
+				'dataProvider' => $modelMonitorCheck->SearchRecentMontoring(),
 				'modelGrower' => $modelGrower,
 				'search' => $search,
 		));
@@ -145,8 +147,8 @@ class TrappingController extends SimbController
 	 */
 	public function loadModel($id)
 	{
-		$modelTrapCheck = TrapCheck::model()->findByPk($id);
-		if ($modelTrapCheck === null) {
+		$modelMonitorCheck = MonitorCheck::model()->findByPk($id);
+		if ($modelMonitorCheck === null) {
 			$errorText = YII_DEBUG ? sprintf(
 					Yii::t('app', 'The ID %s does not exist in %s.'),
 					$id,
@@ -154,7 +156,7 @@ class TrappingController extends SimbController
 			) : Yii::t('app', 'The requested page does not exist.');
 			throw new CHttpException(404, $errorText);
 		}
-		return $modelTrapCheck;
+		return $modelMonitorCheck;
 	}
 	
 	/**

@@ -18,19 +18,21 @@
                     'validateOnSubmit'=>true,
                 ),
 )); ?>
-<?php echo $form->errorSummary($modelTrapCheck); ?>
+<?php echo $form->errorSummary($modelMonitorCheck); ?>
 
 <div class="search-form-ext">
     <div class="box-content nopadding">
 
-                    <div class="span12">  
-                      
-                    	  <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap() ,'id','name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
+                    <div class="span12">    
+              
+                    	  <?php echo $form->dropDownListControlGroup($modelMonitorCheck, 'monitor', CHtml::listData($modelMonitorCheck->getMite() ,'id','name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
     					  
-                          <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xxlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'),'readonly'=>'true')); ?>
+                          <?php echo $form->textFieldControlGroup($modelMonitorCheck, 'date', array('class' => 'input-xxlarge', 'placeholder' => $modelMonitorCheck->getAttributeLabel('date'),'readonly'=>'true')); ?>
 
-                          <?php echo $form->textFieldControlGroup($modelTrapCheck, 'value', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('value'))); ?>
-			  
+                          <?php echo $form->textFieldControlGroup($modelMonitorCheck, 'percentage', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitorCheck->getAttributeLabel('percentage'))); ?>
+			  				
+			  			  <?php echo $form->textFieldControlGroup($modelMonitorCheck, 'average_number', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitorCheck->getAttributeLabel('average_number'))); ?>
+	
             		</div>
 
             		<div class="span12">
