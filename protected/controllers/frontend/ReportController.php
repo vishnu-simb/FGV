@@ -2,7 +2,7 @@
 
 class ReportController extends SimbController
 {
-    public function beforeRender(){
+    public function beforeRender($view){
         $this->layout = '//layouts/report';
         return true;
     }
