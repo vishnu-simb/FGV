@@ -55,7 +55,7 @@ class DateHelper
      * @param string $date
      * @return string
      */
-    function dateOutput($date){
+    static function dateOutput($date){
     	if(empty($date) || $date == '0000-00-00'){
     		return;
     	}
