@@ -1,8 +1,8 @@
 <?php
 
-Yii::import('application.models._common.CommonPest');
+Yii::import('application.models._common.CommonWeather');
 
-class Pest extends CommonPest
+class Weather extends CommonWeather
 {
 	public static function model($className=__CLASS__)
     {

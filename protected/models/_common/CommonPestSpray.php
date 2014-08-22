@@ -1,9 +1,21 @@
 <?php
 
 Yii::import('application.models._base.BasePestSpray');
+Yii::import('application.models._common.CommonWeather');
+Yii::import('application.models._common.CommonDegreeDay');
 
 class CommonPestSpray extends BasePestSpray
 {
+    private $_date = null;
+    private $_location = array();
+    protected $dd;
+	protected $every;
+    
+    /* Low Pop */
+	protected $lowpopDd;
+	protected $lowpopEvery;
+	private $isLowPop = false;
+    
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -53,4 +65,120 @@ class CommonPestSpray extends BasePestSpray
     	$criteria->params = array(':is_deleted'=>'0');
     	return Pest::model()->findAll($criteria);
     }
+    
+    
+    function getDate($block, $secondCohort = false){
+		$k = $block->id.'|'.(int)$secondCohort;
+		if(isset($this->_date[$k])){
+			return $this->_date[$k];
+		}
+        $pest = $this->pest;
+		$biofix = $pest->getBiofix($block->id, $secondCohort);
+		if($biofix){
+			//Pre Setup
+			$biofix_date = $biofix->date;
+			
+			$location = $block->property->location;
+			$locationId = $location->id;
+			
+			if(!isset($this->_location[$locationId])){
+			    $criteria = new CDbCriteria();
+            	$criteria->condition = 'location_id=:location_id AND date >= :weather_date';
+            	$criteria->params = array(':location_id'=>$locationId,':weather_date'=>$biofix_date);
+                $criteria->order = 'date ASC';
+                $criteria->limit = '400';
+            	$all = CommonWeather::model()->findAll($criteria); 
+				//$all = WeatherAverage::getAll(new Where('location_id='.\DB::E($locationId).' AND weather_date>='.\DB::E($biofix_date).' ORDER BY weather_date ASC LIMIT 400'));
+				
+				if(!count($all)){
+					//throw new \Exception('No weather data (all)');
+					return null;
+				}
+				
+				//Build location weather cache
+				$a = array();
+				foreach($all as $v){
+					$a[strtotime($v->date)] = $v;
+				}
+				$this->_location[$locationId] = $a;
+			}
+			$all = $this->_location[$locationId];
+			
+			//Start
+			$lastDD = $lastBio = $DDsinceBiofix = 0;
+            
+            $weather = CommonWeather::getWeatherAverage(array('location_id'=>$locationId,'date'=>$biofix_date));
+			//$weather = WeatherAverage::fromId(array('location_id'=>$locationId,'weather_date'=>$biofix_date));
+			//Loop until one is found
+			$i = 0;
+			while($weather){
+				
+				//Get DD
+				$DD = CommonDegreeDay::cachedCreate($weather, $pest);
+				$DDsinceBiofix = $DD->SinceBiofix($block, $secondCohort);
+				//echo $weather->date,': '.$weather->min.','.$weather->max.' = <b>',$DDsinceBiofix,'</b><br />';
+				
+				if($lastDD === 0){
+					//set LastDD early
+					$lastBio = $DDsinceBiofix;
+					$lastDD = $DD;
+				}
+				//Check
+				//$this->dd > $lastBio &&
+				if($this->dd < $DDsinceBiofix) { //Is $lastDD < NUMBER < $DDsinceBiofix
+					//exit;
+					return $this->_date[$k] = $lastDD->getDate();
+				}
+				
+				//increment and sanity check
+				++$i;
+				if($i>=365){
+					//throw new \Exception('1000 days: '.$DDsinceBiofix.' < '.$this->dd.' (change: '.($DDsinceBiofix - $lastBio).')');
+					return null;
+				}
+				
+				//set LastDD
+				$lastBio = $DDsinceBiofix;
+				$lastDD = $DD;
+				
+				//Get next day
+				$nextDate = strtotime('+1 day',strtotime($weather->date));
+				if(isset($all[$nextDate])){
+					$weather = $all[$nextDate];//In memory
+				}else{
+					$weather = $weather->nextDay();//Or from DB
+				}
+				
+				if($weather == null){
+					//throw new \Exception('Next day null');
+					return null;
+				}
+			}
+			
+			return null;
+		}
+	}
+    
+    function getCoverRequired($block, $secondCohort = false){
+		$date = $this->getDate($block, $secondCohort);
+		if(!$date){
+			return;
+		}
+		
+		$date = new DateTime($date);
+		$date = $date->add(date_interval_create_from_date_string($this->every.' day'));
+		$result = $date->format('Y-m-d');
+		
+		return $result;
+	}
+    
+    function swapPopulationValues(){
+		$a = $this->dd;
+		$this->dd = $this->lowpopDd;
+		$this->lowpopdd = $a;
+		$a = $this->every;
+		$this->every = $this->lowpopEvery;
+		$this->lowpopEvery = $a;
+		$this->isLowPop = !$this->isLowPop;
+	}
 }

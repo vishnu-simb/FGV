@@ -99,25 +99,5 @@ class CommonSpray extends BaseSpray
     	$criteria->params = array(':is_deleted'=>'0');
     	return Grower::model()->findAll($criteria);
     }
-
-    private $_date;
-    
-    function getDate($block_id,$secondCohort = false){
-    	 
-    	$k = $block_id.'|'.(int)$secondCohort;
-    	if(isset($this->_date[$k])){
-    		return $this->_date[$k];
-    	}
-    	return '06-Nov-2013';
-    }
-    
-    
-    function getCoverRequired($block_id,$secondCohort = false){
-    	$date = $this->getDate($block_id,$secondCohort);
-    	if(!$date){
-    		return null;
-    	}
-    	return $date;
-    }
     
 }

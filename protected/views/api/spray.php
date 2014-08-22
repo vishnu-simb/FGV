@@ -1,7 +1,10 @@
 <?php 
 function dateOutputp($date){
-	$date = dateOutput($date);
-	return preg_replace('#(\-[0-9]+)$#','<span class="hide portrait">$1</span>',$date);
+	//$date = dateOutput($date);
+    if (empty($date) || $date == '0000-00-00')
+        return '';
+    $date = date('d-M-Y', strtotime($date));
+	//return preg_replace('#(\-[0-9]+)$#','<span class="hide portrait">$1</span>',$date);
 	return $date;
 }
 ?>
@@ -42,7 +45,7 @@ function dateOutputp($date){
 			foreach($vv as $pest=>$spray){
 				
 				if($spray){
-					$date = $spray->getDate($VAR['block']->id);
+					$date = $spray->getDate($VAR['block']);
 					$ds = strtotime($date);
 					if($ds >= time() && !isset($pm[$pest])){
 						echo '<span class="new';
@@ -123,14 +126,14 @@ function dateOutputp($date){
 				}
 				echo '>';
 				if($spray){
-					$d = dateOutputp($spray->getCoverRequired($VAR['block']->id));
+					$d = dateOutputp($spray->getCoverRequired($VAR['block']));
 					if($d){
 						echo $d;
 					}else{
 						echo ' - ';
 					}
 					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
-						$d = dateOutputp($spray->getCoverRequired($VAR['block']->id,true));
+						$d = dateOutputp($spray->getCoverRequired($VAR['block'],true));
 						echo '</span><span>';
 						if($d){
 							echo $d;

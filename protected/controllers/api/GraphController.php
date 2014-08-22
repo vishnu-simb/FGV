@@ -88,10 +88,11 @@ class GraphController extends SimbApiController {
     		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
     	}
     	$serial = array();
-    	if(!empty(array_keys($pest))){
+        $keys_arr = array_keys($pest);
+    	if(!empty($keys_arr)){
     		
     		$e = strtotime('+1 month',$m);
-    		foreach(array_keys($pest) as $r){
+    		foreach($keys_arr as $r){
     			$mm = $m;
     			$sedat = array();
     			while($mm < $e)
