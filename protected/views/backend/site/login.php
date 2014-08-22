@@ -74,7 +74,7 @@ $bootstrap = Yii::app()->bootstrap;
     <?php $this->endWidget(); ?>
 
     <div class="forget">
-        <a href="#"><span><?= Yii::t('app', 'Forgot Password?') ?></span></a>
+        <a href="/site/forgot"><span><?= Yii::t('app', 'Forgot Password?') ?></span></a>
     </div>
 </div>
  

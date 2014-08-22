@@ -54,10 +54,11 @@ class CommonMonitorCheck extends BaseMonitorCheck
     	// class name for the relations automatically generated below.
     	$oldValue = parent::relations();
     	return CMap::mergeArray($oldValue,array(
+
+				'block' => array(self::BELONGS_TO,'Block',array('block_id'=>'id'),'through'=> 'monitor'),
+				'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=> 'block'),
+				'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=> 'property'),
     			'mite' => array(self::BELONGS_TO,'Mite',array('mite_id'=>'id'),'through'=> 'monitor'),
-    			'block' => array(self::BELONGS_TO,'Block',array('block_id'=>'id'),'through'=> 'monitor'),
-    			'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=> 'block'),
-    			'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=> 'property'),
     	)
     	);
     }

@@ -15,8 +15,9 @@ $(document).ready(function () {
 	var actualDate = new Date("01 "+_date); // convert to actual date
 	
 	loadSprayTable();
-	/* load current BlockID */
-	drawVisualizationChart() 
+	/* load current graph block */
+	drawTrapCheckChart() 
+	drawMiteMonitoringChart();
 	
 	/* handle report by GrowerID */
 	$('.clickable').change(function(){ 
@@ -32,8 +33,9 @@ $(document).ready(function () {
 		if(typeof t.parent().attr('label') != 'undefined')
 		$('h1').html(t.parent().attr('label')+': '+t.html());
 		$("#yw0").html('');
-		drawVisualizationChart();
+		drawTrapCheckChart();
 		loadSprayTable();
+		drawMiteMonitoringChart();
 	});
 	
 
@@ -46,25 +48,27 @@ $(document).ready(function () {
 		var prev = actualDate.setMonth(actualDate.getMonth() -1);
 		$("#datePicker").html(months[actualDate.getMonth()]+','+actualDate.getFullYear());
 		$("#yw0").html('');
-		drawVisualizationChart();
+		drawTrapCheckChart();
+		drawMiteMonitoringChart();
 	});
 	$('.fc-button-next').click(function(){
 		var next = actualDate.setMonth(actualDate.getMonth() +1);
 		$("#datePicker").html(months[actualDate.getMonth()]+','+actualDate.getFullYear());
 		$("#yw0").html('');
-		drawVisualizationChart();
+		drawTrapCheckChart();
+		drawMiteMonitoringChart();
 		
 	});
 	
-	function drawVisualizationChart(){
+	function drawTrapCheckChart(){
 			var block_id = $("#Block_id").val();
 			$.ajax({
 					  type: "GET",
-					  url: siteUrl + "api/graph/getGraph?block="+block_id+"&date="+$("#datePicker").html(),
+					  url: siteUrl + "api/graph/getBlockTrap?block="+block_id+"&date="+$("#datePicker").html(),
 					  success: function (data)
 					   {
 						  		var jgraph = JSON.parse(data);
-						  		if(jgraph.chart == 'failed'){
+						  		if(jgraph.chart == false){
 						  			$("#yw0").html('');
 						  		}else{
 						  			Highcharts.setOptions([]); 
@@ -74,6 +78,22 @@ $(document).ready(function () {
 					   }
 			});
 	}
+	
+	function drawMiteMonitoringChart(){
+		var block_id = $("#Block_id").val();
+		$.ajax({
+				  type: "GET",
+				  url: siteUrl + "api/graph/getBlockMite?block="+block_id+"&date="+$("#datePicker").html(),
+				  success: function (data)
+				   {
+					  		var jgraph = JSON.parse(data);
+					  		Highcharts.setOptions([]); 
+						  	var chart = new Highcharts.Chart(jgraph);
+					  		
+				   }
+		});
+}
+	
 	
 	function loadSprayTable(){
 		var block_id = $("#Block_id").val();

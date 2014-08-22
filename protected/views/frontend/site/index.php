@@ -4,7 +4,6 @@ $clientScript = Yii::app()->clientScript;
 $resourceUrl = $clientScript->staticUrl.'/flatapp';
 $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 ?>
-
 <div class="row-fluid">
     <div class="span12">
         <div class="box">
@@ -44,23 +43,6 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 							</div>
 				<div id="graph">
 				<?php
-				
-				/*$this->widget('ext.hzl-googlechart.HzlVisualizationChart', array('visualization' => 'LineChart',
-						'data' => array(),
-						'options' => array(
-                				'height' => 300,
-								'titleTextStyle' => array('color' => '#FF0000'),
-								'vAxis' => array(
-										'title' => '',
-										'gridlines' => array(
-												'color' => 'transparent'  //set grid line transparent
-										)),
-								'hAxis' => array('title' => ''),
-								'curveType' => 'function', //smooth curve or not
-								'legend' => array('position' => 'bottom'),
-						)));*/
-
-
 						$this->Widget('ext.highcharts.HighchartsWidget', array(
 								'options'=>array(
 										'title' => array('text' => ''),
@@ -69,6 +51,38 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 										),
 										'yAxis' => array(
 												'title' => array('text' => '')
+										),
+										'series' => array(
+												array(),
+											)
+								)
+						));
+					?>
+					
+				</div>
+							
+						</div>
+						
+						<div class="box">
+							<div class="box-title">
+								
+							</div>
+
+				<div id="graph">
+				<?php
+						$this->Widget('ext.highcharts.HighchartsWidget', array(
+								'options'=>array(
+
+										'title' => array('text' => ''),
+										'xAxis' => array(
+												'categories' => array()
+										),
+										'yAxis' => array(
+												'title' => array('text' => '')
+										),
+										'plotOptions' => array(
+
+												'column'=>array('stacking'=>'percent')
 										),
 										'series' => array(
 												array(),

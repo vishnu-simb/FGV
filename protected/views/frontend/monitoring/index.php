@@ -35,7 +35,7 @@
 								    <table class="table table-hover table-nomargin table-bordered">
 									<thead>
 										<tr>
-											<th>Pest Mites</th>
+											<th>Mite</th>
 											<th style="text-align: right;border-left: 0 none;">Percentage</th>
 											<th style="text-align: right;border-left: 0 none;">Average Number</th>
 										</tr>
@@ -81,7 +81,7 @@
 								<table class="table table-hover table-nomargin table-bordered">
 									<thead>
 										<tr>
-										<th>Mite Name</th>
+										<th>Mite</th>
 										<th style="text-align: right;">Percentage</th>
 										<th style="text-align: right;">Average Number</th>
 										<th></th>
@@ -97,7 +97,7 @@
 											<td style="text-align: right;">
 												<?php echo $lastest['average_number'] ;?>
 											</td>
-											<td style="text-align: right;">
+											<td style="text-align: right;width: 65px">
 											<a href="<?php echo Yii::app()->baseUrl."/monitoring/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>
 											<a href="<?php echo Yii::app()->baseUrl."/monitoring/delete/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-remove"></i></a>
 											</td>

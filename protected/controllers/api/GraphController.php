@@ -71,8 +71,8 @@ class GraphController extends SimbApiController {
     }
 	
 
-    public function actionGetGraph(){
-    	 
+    public function actionGetBlockTrap(){
+    
     	$VAR = array();
     	$m = $_GET['date'];
     	$m = strtotime('01-'.str_replace(',','-',$m));
@@ -88,9 +88,9 @@ class GraphController extends SimbApiController {
     		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
     	}
     	$serial = array();
-        $keys_arr = array_keys($pest);
+    	$keys_arr = array_keys($pest);
     	if(!empty($keys_arr)){
-    		
+    
     		$e = strtotime('+1 month',$m);
     		foreach($keys_arr as $r){
     			$mm = $m;
@@ -103,27 +103,75 @@ class GraphController extends SimbApiController {
     						$dd = intval($val["tc_value"]);
     					}
     				}
-					$sedat[] = $dd;
+    				$sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
     		}
-    		
+    
     	}
-		if(!empty($serial)){
-			$VAR['chart'] = array('renderTo'=>'yw0');
-			$VAR['title'] = array('text'=>'');
-			$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
-			$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-			$VAR['yAxis'] = array('title'=>array('text'=>''));
-			$VAR['series'] = $serial;
-		}else{
-			$VAR['chart']= 'failed';
-		}
+    	if(!empty($serial)){
+    		$VAR['chart'] = array('renderTo'=>'yw0');
+    		$VAR['title'] = array('text'=>'');
+    		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+    		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+    		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
+    		$VAR['yAxis'] = array('title'=>array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m)));
+    		$VAR['series'] = $serial;
+    	}else{
+    		$VAR['chart']= $serial;
+    	}
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
-    	 
+    
+    }
+    
+    public function actionGetBlockMite(){
+    
+    	$VAR = array();
+    	$m = $_GET['date'];
+    	$m = strtotime('01-'.str_replace(',','-',$m));
+    	$date= date('Y-m',$m);
+    	$model = new MonitorCheck('search');
+    	$model->unsetAttributes();
+    	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
+    	$dataProvider = $model->getSqlDataProvider();
+    	$data = $dataProvider->getData();
+    	$mite = Mite::model()->findAllByAttributes(array('type'=>'pest'));
+    	$keys_arr = array();
+    	foreach($mite as $v){
+    		$keys_arr[] = $v->name;
+    	}
+    	$serial = array();
+    	$e = strtotime('+1 month',$m);
+    	foreach($keys_arr as $r){
+    		$mm = $m;
+    		$sedat = array();
+    		while($mm < $e)
+    		{
+    			$dd = 0;
+    			foreach($data as $val){
+    				if($val["mc_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
+    					$dd = intval($val["mc_average_number"]);
+    				}
+    			}
+    			$sedat[] = $dd;
+    			$mm = strtotime('+1 day', $mm); // increment for loop
+    		}
+    		$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
+    	}
+    
+    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'column');
+    	$VAR['title'] = array('text'=>'');
+    	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true, 'pointFormat' =>'<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',);
+    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+    	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
+    	$VAR['yAxis'] = array('title'=>array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m)));
+    	$VAR['plotOptions'] = array('column'=>array('stacking'=>'percent'));
+    	$VAR['series'] = $serial;
+    	echo CJSON::encode($VAR);
+    	Yii::app()->end();
+    
     }
     
     public function actionGetGraphInRange(){

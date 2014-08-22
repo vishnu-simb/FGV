@@ -26,6 +26,7 @@
  * @property MiteMonitor $monitor
  */
 abstract class BaseMonitorCheck extends SimbActiveRecord{
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -50,7 +51,7 @@ abstract class BaseMonitorCheck extends SimbActiveRecord{
 			array('monitor_id, creator_id', 'length', 'max'=>20),
 			array('tc_comment, created_at, updated_at, params', 'safe'),
 			array('percentage, average_number, tc_comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, monitor_id, block, property, grower, date, percentage, average_number, tc_comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, monitor_id, block, property,mite, grower, date, percentage, average_number, tc_comment, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,6 +59,7 @@ abstract class BaseMonitorCheck extends SimbActiveRecord{
     {
 		return array(
 			'monitor' => array(self::BELONGS_TO, 'MiteMonitor', 'monitor_id'),
+				
 		);
 	}
 
@@ -90,16 +92,14 @@ abstract class BaseMonitorCheck extends SimbActiveRecord{
     {
 		$criteria = new CDbCriteria;
 	
-		$criteria->with=array('mite','block','property','grower');
-
+		$criteria->with=array('block','property','grower');
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('monitor_id', $this->monitor_id);
-		$criteria->compare('date', $this->date, true);
-		$criteria->compare('mite.id', $this->mite);
 		$criteria->compare('block.id', $this->block);
 		$criteria->compare('property.id', $this->property);
 		$criteria->compare('grower.id', $this->grower);
-
+		$criteria->compare('date', $this->date, true);
+		
 		$criteria->compare('percentage', $this->percentage);
 		$criteria->compare('average_number', $this->average_number);
 		$criteria->compare('tc_comment', $this->tc_comment, true);
