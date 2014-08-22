@@ -1,14 +1,3 @@
-<?php 
-function dateOutputp($date){
-	//$date = dateOutput($date);
-    if (empty($date) || $date == '0000-00-00')
-        return '';
-    $date = date('d-M-Y', strtotime($date));
-	//return preg_replace('#(\-[0-9]+)$#','<span class="hide portrait">$1</span>',$date);
-	return $date;
-}
-?>
-
 <div class="ui-collapsible-heading">
 	<span class="ui-btn ui-corner-top ui-btn-up-b tableheading">
 		<span class="ui-btn-inner ui-corner-top ui-corner-bottom th">
@@ -61,7 +50,7 @@ function dateOutputp($date){
 						}
 						echo '>';
 					}
-					$d = dateOutputp($date);
+					$d = DateHelper::dateOutput($date);
 					if($d){
 						echo $d;
 					}else{
@@ -91,7 +80,7 @@ function dateOutputp($date){
 							}
 							echo '>';
 						}
-						$d = dateOutputp($date);
+						$d = DateHelper::dateOutput($date);
 						if($d){
 							echo $d;
 						}else{
@@ -126,14 +115,14 @@ function dateOutputp($date){
 				}
 				echo '>';
 				if($spray){
-					$d = dateOutputp($spray->getCoverRequired($VAR['block']));
+					$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block']));
 					if($d){
 						echo $d;
 					}else{
 						echo ' - ';
 					}
 					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
-						$d = dateOutputp($spray->getCoverRequired($VAR['block'],true));
+						$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],true));
 						echo '</span><span>';
 						if($d){
 							echo $d;

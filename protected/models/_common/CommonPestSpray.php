@@ -8,12 +8,6 @@ class CommonPestSpray extends BasePestSpray
 {
     private $_date = null;
     private $_location = array();
-    protected $dd;
-	protected $every;
-    
-    /* Low Pop */
-	protected $lowpopDd;
-	protected $lowpopEvery;
 	private $isLowPop = false;
     
     public static function model($className=__CLASS__)
@@ -66,6 +60,21 @@ class CommonPestSpray extends BasePestSpray
     	return Pest::model()->findAll($criteria);
     }
     
+    function haslowpopulation(){
+		return ($this->lowpop_dd !== null);
+	}
+    
+    /**
+	 * @return the $isLowPop
+	 */
+	public function isLowPop() {
+		return $this->isLowPop;
+	}
+    
+    function __clone()
+	{
+		$this->_date = null;
+	}
     
     function getDate($block, $secondCohort = false){
 		$k = $block->id.'|'.(int)$secondCohort;
@@ -174,11 +183,11 @@ class CommonPestSpray extends BasePestSpray
     
     function swapPopulationValues(){
 		$a = $this->dd;
-		$this->dd = $this->lowpopDd;
-		$this->lowpopdd = $a;
+		$this->dd = $this->lowpop_dd;
+		$this->lowpop_dd = $a;
 		$a = $this->every;
-		$this->every = $this->lowpopEvery;
-		$this->lowpopEvery = $a;
+		$this->every = $this->lowpop_every;
+		$this->lowpop_every = $a;
 		$this->isLowPop = !$this->isLowPop;
 	}
 }

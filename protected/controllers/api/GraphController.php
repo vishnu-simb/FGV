@@ -126,6 +126,64 @@ class GraphController extends SimbApiController {
     	 
     }
     
+    public function actionGetGraphInRange(){
+    	$VAR = array();
+    	$min_date = $_GET['min_date'];
+        $max_date = $_GET['max_date'];
+        $index = $_GET['index'];
+        $m = 'August,2014';
+        $m = strtotime('01-'.str_replace(',','-',$m));
+    	$date= date('Y-m',$m);
+    	
+    	$model = new TrapCheck('search');
+    	$model->unsetAttributes();
+    	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
+    	$dataProvider = $model->getSqlDataProvider();
+    	$data = $dataProvider->getData();
+    	$pest= array();
+    	for($i = 0 ; $i < count($data)  ; $i++ )
+    	{
+    		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
+    	}
+    	$serial = array();
+        $keys_arr = array_keys($pest);
+    	if(!empty($keys_arr)){
+    		
+    		$e = strtotime('+1 month',$m);
+    		foreach($keys_arr as $r){
+    			$mm = $m;
+    			$sedat = array();
+    			while($mm < $e)
+    			{
+    				$dd = 0;
+    				foreach($data as $val){
+    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+    						$dd = intval($val["tc_value"]);
+    					}
+    				}
+					$sedat[] = $dd;
+    				$mm = strtotime('+1 day', $mm); // increment for loop
+    			}
+    			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
+    		}
+    		
+    	}
+		if(!empty($serial)){
+			$VAR['chart'] = array('renderTo'=>'yw'.$index);
+			$VAR['title'] = array('text'=>'');
+			$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+			$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
+			$VAR['yAxis'] = array('title'=>array('text'=>''));
+			$VAR['series'] = $serial;
+		}else{
+			$VAR['chart']= 'failed';
+		}
+    	echo CJSON::encode($VAR);
+    	Yii::app()->end();
+    	 
+    }
+    
     private function getxAxis($m){
     	$xAxis = array();
     	$e = strtotime('+1 month',$m);

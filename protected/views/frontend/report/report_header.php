@@ -1,0 +1,1 @@
+<title><?=$VARS['pageTitle'];?></title>

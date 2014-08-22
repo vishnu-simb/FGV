@@ -102,7 +102,6 @@ class CommonWeather extends BaseWeather
 		
 		$res = Yii::app()->db->createCommand($sql)->query();
         $row = $res?$res->read():0;
-        echo var_dump($row);die;
 		if($row) {
 			$weather = self::fromAVG($row);
 			return $weather;
