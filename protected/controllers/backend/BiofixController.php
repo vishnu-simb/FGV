@@ -135,10 +135,10 @@ class BiofixController extends SimbController
 		$modelBiofix->unsetAttributes();  // clear any default values
 		
 		if (isset($_GET['Biofix'])) {
-			//Yii::app()->session['Biofix'] = json_encode($_GET['Biofix']);
-			$modelBiofix->attributes = $_GET['Biofix'];
+			$criteria = $_GET['Biofix'];
+			Yii::app()->session['Biofix'] = $criteria;
 		}
-
+		$modelBiofix->attributes = Yii::app()->session['Biofix'];
 		$this->render('index', array(
 			'modelBiofix' => $modelBiofix,
 		));

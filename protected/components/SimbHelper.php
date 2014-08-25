@@ -1,4 +1,5 @@
 <?php
+
 class PestResult {
 	public $sprays = array();
 	public $pest;

@@ -133,9 +133,10 @@ class SizingController extends SimbController
 		$modelSizing = new Sizing('search');
 		$modelSizing->unsetAttributes();  // clear any default values
 		if (isset($_GET['Sizing'])) {
-			$modelSizing->attributes = $_GET['Sizing'];
+			$criteria = $_GET['Sizing'];
+			Yii::app()->session['Sizing'] = $criteria;
 		}
-
+		$modelSizing->attributes = Yii::app()->session['Sizing'];
 		$this->render('index', array(
 			'modelSizing' => $modelSizing,
 		));

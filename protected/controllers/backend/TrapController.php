@@ -137,9 +137,10 @@ class TrapController extends SimbController
 		$modelTrap = new Trap('search');
 		$modelTrap->unsetAttributes();  // clear any default values
 		if (isset($_GET['Trap'])) {
-			$modelTrap->attributes = $_GET['Trap'];
+			$criteria = $_GET['Trap'];
+			Yii::app()->session['Trap'] = $criteria;
 		}
-
+		$modelTrap->attributes = Yii::app()->session['Trap'];
 		$this->render('index', array(
 			'modelTrap' => $modelTrap,
 		));

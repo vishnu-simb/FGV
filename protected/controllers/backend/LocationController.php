@@ -134,9 +134,11 @@ class LocationController extends SimbController
 		$modelLocation = new Location('search');
 		$modelLocation->unsetAttributes();  // clear any default values
 		if (isset($_GET['Location'])) {
-			$modelLocation->attributes = $_GET['Location'];
+			$criteria = $_GET['Location'];
+			Yii::app()->session['Location'] = $criteria;
+			;
 		}
-
+		$modelLocation->attributes = Yii::app()->session['Location'];
 		$this->render('index', array(
 			'modelLocation' => $modelLocation,
 		));

@@ -139,9 +139,10 @@ class GrowerController extends SimbController
 		$modelGrower = new Grower('search');
 		$modelGrower->unsetAttributes();  // clear any default values
 		if (isset($_GET['Grower'])) {
-			$modelGrower->attributes = $_GET['Grower'];
+			$criteria = $_GET['Grower'];
+			Yii::app()->session['Grower'] = $criteria;
 		}
-
+		$modelGrower->attributes = Yii::app()->session['Grower'];
 		$this->render('index', array(
 			'modelGrower' => $modelGrower,
 		));

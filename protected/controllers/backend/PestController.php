@@ -133,9 +133,10 @@ class PestController extends SimbController
 		$modelPest = new Pest('search');
 		$modelPest->unsetAttributes();  // clear any default values
 		if (isset($_GET['Pest'])) {
-			$modelPest->attributes = $_GET['Pest'];
+			$criteria = $_GET['Pest'];
+			Yii::app()->session['Pest'] = $criteria;
 		}
-
+		$modelPest->attributes = Yii::app()->session['Pest'];
 		$this->render('index', array(
 			'modelPest' => $modelPest,
 		));

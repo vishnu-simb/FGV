@@ -142,9 +142,10 @@ class BlockController extends SimbController
 		$modelBlock = new Block('search');
 		$modelBlock->unsetAttributes();  // clear any default values
 		if (isset($_GET['Block'])) {
-			$modelBlock->attributes = $_GET['Block'];
+			$criteria = $_GET['Block'];
+			Yii::app()->session['Block'] = $criteria;
 		}
-
+		$modelBlock->attributes = Yii::app()->session['Block'];
 		$this->render('index', array(
 			'modelBlock' => $modelBlock,
 		));

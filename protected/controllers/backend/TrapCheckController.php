@@ -142,9 +142,10 @@ class TrapCheckController extends SimbController
 		$modelTrapCheck = new TrapCheck('search');
 		$modelTrapCheck->unsetAttributes();  // clear any default values
 		if (isset($_GET['TrapCheck'])) {
-			$modelTrapCheck->attributes = $_GET['TrapCheck'];
+			$criteria = $_GET['TrapCheck'];
+			Yii::app()->session['TrapCheck'] = $criteria;
 		}
-
+		$modelTrapCheck->attributes = Yii::app()->session['TrapCheck'];
 		$this->render('index', array(
 			'modelTrapCheck' => $modelTrapCheck,
 		));

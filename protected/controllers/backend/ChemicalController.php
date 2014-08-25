@@ -133,9 +133,10 @@ class ChemicalController extends SimbController
 		$modelChemical = new Chemical('search');
 		$modelChemical->unsetAttributes();  // clear any default values
 		if (isset($_GET['Chemical'])) {
-			$modelChemical->attributes = $_GET['Chemical'];
+			$criteria = $_GET['Chemical'];
+			Yii::app()->session['Chemical'] = $criteria;
 		}
-
+		$modelChemical->attributes = Yii::app()->session['Chemical'];
 		$this->render('index', array(
 			'modelChemical' => $modelChemical,
 		));

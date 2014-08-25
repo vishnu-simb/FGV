@@ -135,9 +135,10 @@ class UsersController extends SimbController
 		$modelUsers = new Users('search');
 		$modelUsers->unsetAttributes();  // clear any default values
 		if (isset($_GET['Users'])) {
-			$modelUsers->attributes = $_GET['Users'];
+			$criteria = $_GET['Users'];
+			Yii::app()->session['Users'] = $criteria;
 		}
-
+		$modelUsers->attributes = Yii::app()->session['Users'];
 		$this->render('index', array(
 			'modelUsers' => $modelUsers,
 		));

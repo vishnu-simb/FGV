@@ -133,9 +133,10 @@ class VarietyController extends SimbController
 		$modelVariety = new Variety('search');
 		$modelVariety->unsetAttributes();  // clear any default values
 		if (isset($_GET['Variety'])) {
-			$modelVariety->attributes = $_GET['Variety'];
+			$criteria = $_GET['Variety'];
+			Yii::app()->session['Variety'] = $criteria;
 		}
-
+		$modelVariety->attributes = Yii::app()->session['Variety'];
 		$this->render('index', array(
 			'modelVariety' => $modelVariety,
 		));

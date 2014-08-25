@@ -132,9 +132,10 @@ class PestSprayController extends SimbController
 		$modelPestSpray = new PestSpray('search');
 		$modelPestSpray->unsetAttributes();  // clear any default values
 		if (isset($_GET['PestSpray'])) {
-			$modelPestSpray->attributes = $_GET['PestSpray'];
+			$criteria = $_GET['PestSpray'];
+			Yii::app()->session['PestSpray'] = $criteria;
 		}
-
+		$modelPestSpray->attributes = Yii::app()->session['PestSpray'];
 		$this->render('index', array(
 			'modelPestSpray' => $modelPestSpray,
 		));

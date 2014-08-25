@@ -133,9 +133,10 @@ class SprayController extends SimbController
 		$modelSpray = new Spray('search');
 		$modelSpray->unsetAttributes();  // clear any default values
 		if (isset($_GET['Spray'])) {
-			$modelSpray->attributes = $_GET['Spray'];
+			$criteria = $_GET['Spray'];
+			Yii::app()->session['Spray'] = $criteria;
 		}
-
+		$modelSpray->attributes = Yii::app()->session['Spray'];
 		$this->render('index', array(
 			'modelSpray' => $modelSpray,
 		));

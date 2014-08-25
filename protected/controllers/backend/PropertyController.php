@@ -144,9 +144,10 @@ class PropertyController extends SimbController
 		$modelProperty = new Property('search');
 		$modelProperty->unsetAttributes();  // clear any default values
 		if (isset($_GET['Property'])) {
-			$modelProperty->attributes = $_GET['Property'];
+			$criteria = $_GET['Property'];
+			Yii::app()->session['Property'] = $criteria;
 		}
-
+		$modelProperty->attributes = Yii::app()->session['Property'];
 		$this->render('index', array(
 			'modelProperty' => $modelProperty,
 		));
