@@ -25,9 +25,9 @@ class m140821_072025_add_mite_monitor extends CDbMigration
 						'mite_id' => 'int(11) NOT NULL',
 						'block_id' => 'int(11) NOT NULL' ,
 						'date' => 'DATE NOT NULL' ,
-						'percent_li' => 'float unsigned DEFAULT NULL',
-						'average_li' => 'float unsigned DEFAULT NULL',
-						'no_days' => 'float unsigned DEFAULT NULL',
+						'percent_li' => 'float unsigned DEFAULT 0',
+						'average_li' => 'float unsigned DEFAULT 0',
+						'no_days' => 'float unsigned DEFAULT 0',
 						// Common fields, should appear in all tables
 						'creator_id' => 'BIGINT NULL COMMENT "id of user who create this item"',
 						'ordering' => 'integer NULL COMMENT "sorting weight"',

@@ -20,7 +20,7 @@ class m140821_035603_add_mite extends CDbMigration
 				array(
 						'id' => 'int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT',
 						'name' => 'varchar(100) NOT NULL COMMENT "name of pest mites and predators mites"',
-						'type' => 'ENUM(\'predatory\',\'pest\') NOT NULL COMMENT "type of mites"',
+						'type' => 'ENUM(\'Predatory\',\'Pest\') NOT NULL COMMENT "type of mites"',
 						// Common fields, should appear in all tables
 						'creator_id' => 'BIGINT NULL COMMENT "id of user who create this item"',
 						'ordering' => 'integer NULL COMMENT "sorting weight"',

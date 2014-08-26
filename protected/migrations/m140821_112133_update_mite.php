@@ -22,7 +22,7 @@ class m140821_112133_update_mite extends CDbMigration
 		$this->insert($this->tableNameMite, array(
 				'id' => 1,
 				'name' => 'Bryobya Mite',
-				'type' => 'pest',
+				'type' => 'Pest',
 		
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
@@ -37,7 +37,7 @@ class m140821_112133_update_mite extends CDbMigration
 		$this->insert($this->tableNameMite, array(
 				'id' => 2,
 				'name' => 'Twospotted Mite',
-				'type' => 'pest',
+				'type' => 'Pest',
 		
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
@@ -52,7 +52,7 @@ class m140821_112133_update_mite extends CDbMigration
 		$this->insert($this->tableNameMite, array(
 				'id' => 3,
 				'name' => 'European Red Mite',
-				'type' => 'pest',
+				'type' => 'Pest',
 		
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
@@ -63,13 +63,29 @@ class m140821_112133_update_mite extends CDbMigration
 				'is_deleted' => AppConst::DELETED_FALSE,
 				'params' => null,
 		));
-
+		
+		$this->insert($this->tableNameMite, array(
+				'id' => 4,
+				'name' => 'Typhlodromus',
+				'type' => 'Predatory',
+		
+				// Common fields, should appear in all tables
+				'creator_id' => 0,
+				'ordering' => 0,
+				'created_at' => gmdate('Y-m-d H:i:s'),
+				'updated_at' => gmdate('Y-m-d H:i:s'),
+				'status' => AppConst::USER_ACTIVE,
+				'is_deleted' => AppConst::DELETED_FALSE,
+				'params' => null,
+		));
+		
 		return true;
 	}
 
 	public function down()
 	{
-		echo "m140821_112133_update_mite does not support migration down.\n";
+		echo "m140821_112133_update_mite migration down.\n";
+		$this->updateTablePrefix();
 		return true;
 	}
 
