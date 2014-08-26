@@ -47,7 +47,7 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('mite_id, block_id, date, percent_li, average_li', 'required','except' => 'search'),
+			array('mite_id, block_id, date, percent_li, average_li, no_days', 'required','except' => 'search'),
 			array('mite_id, block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('percent_li, average_li, no_days', 'numerical'),
 			array('creator_id', 'length', 'max'=>20),
@@ -80,7 +80,7 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 			'date' => Yii::t('app', 'Date'),
 			'percent_li' => Yii::t('app', 'Percent Li'),
 			'average_li' => Yii::t('app', 'Average Li'),
-			'no_days' => Yii::t('app', 'No days'),
+			'no_days' => Yii::t('app', 'No days B/N'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),

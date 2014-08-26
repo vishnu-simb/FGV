@@ -32,6 +32,8 @@
                           <?php echo $form->textFieldControlGroup($modelMonitor, 'percent_li', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitor->getAttributeLabel('percentage'))); ?>
 			  				
 			  			  <?php echo $form->textFieldControlGroup($modelMonitor, 'average_li', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitor->getAttributeLabel('average_number'))); ?>
+							
+						  <?php echo $form->textFieldControlGroup($modelMonitor, 'no_days', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitor->getAttributeLabel('no_days'))); ?>
 	
             		</div>
 
