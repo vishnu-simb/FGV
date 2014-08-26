@@ -117,7 +117,10 @@ foreach($VARS['blocks'] as $block){
 	<h4>Population Graph</h4>
     <div class="graph">
         <?php
-            $this->Widget('ext.highcharts.HighchartsWidget', array(
+            if (empty($VARS['graphData'][$block->id]))
+                echo 'There is no data for Graph.';
+            else
+                $this->Widget('ext.highcharts.HighchartsWidget', array(
 								'options'=>$VARS['graphData'][$block->id]
 						));
         ?>
