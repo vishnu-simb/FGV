@@ -59,59 +59,66 @@ class ReportController extends SimbController
         return $data;
     }
     
-    private function getGraph($block){
+    private function getGraph($block, $grower){
         $data = $this->getDateRange();
-		$data['id'] = $block->id;
-
-		$graph = Block::graphReport($data);
-		$graph->Setup(911, 300);
-		if($short){
-			$graph->schema->axis['X']->dateFormat = function($x){
-				static $m;
-				$day = (int)gmdate ('d',$x);
-				if($day == 1 || $day == 5 || $day == 10 || $day == 15  || $day == 20 || $day == 25){
-					$month = gmdate ('m',$x);
-					if($month != $m){
-						$m = $month;
-						return gmdate ('d/m',$x);
-					}
-			
-					return $day;
-				}
-			
-			};
-		}else{
-			$graph->schema->axis['X']->dateFormat = function($x){
-				static $m;
-				$day = (int)gmdate ('d',$x);
-				if($day == 1 || $day == 15){
-					$month = gmdate ('m',$x);
-					if($month != $m){
-						$m = $month;
-						return gmdate ('d/m',$x);
-					}
-				
-					return $day;
-				}
-				
-			};
+        $VAR = array();
+        $filter = array(
+                        'block_id' => $block->id,
+                        'date_from' => $data['date_from'],
+                        'date_to' => $data['date_to']
+                    );
+    	$model = new TrapCheck('search');
+    	$model->unsetAttributes();
+    	$dataProvider = $model->getTrapCheckInRange($filter);
+    	$data = $dataProvider->getData();
+        $pest= array();
+    	for($i = 0 ; $i < count($data)  ; $i++ )
+    	{
+    		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
+    	}
+    	$serial = array();
+        $keys_arr = array_keys($pest);
+        $min_time = strtotime($filter['date_from']);
+   		$max_time = strtotime($filter['date_to']);
+        $max_value = 0;
+    	if(!empty($keys_arr)){
+    		foreach($keys_arr as $r){
+    			$mm = $min_time;
+    			$sedat = array();
+    			while($mm <= $max_time)
+    			{
+    				$dd = 0;
+    				foreach($data as $val){
+    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+    						$dd = intval($val["tc_value"]);
+                            if ($max_value < $dd)
+                                $max_value = $dd;
+    					}
+    				}
+					$sedat[] = $dd;
+    				$mm = strtotime('+1 day', $mm); // increment for loop
+    			}
+    			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat));
+    		}
+    		
+    	}
+		if(!empty($serial)){
+		    $yAxis = array();
+            for($i = 1; $i <= $max_value+1; $i++)
+                $yAxis[] = $i;
+			$VAR['chart'] = array('zoomType' => 'x');
+			$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
+			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
+            $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+			$VAR['xAxis'] = array(
+                                'type' => 'datetime',
+                                'minRange' => 14 * 24 * 3600000 // fourteen days
+                            );
+			$VAR['yAxis'] = array('type' => 'category','title' => '');
+			$VAR['series'] = $serial;
 		}
-		/*
-		if($this->email){
-			global $BASEPATH;
-			$path = $BASEPATH.'/static';
-			$url = '/graphs/'.md5(serialize($data)).'.'.time().'.png';
-			$path .= $url;
-			
-			$graphData = $graph->Draw(new String());
-			file_put_contents($path, $graphData);
-			
-			return 'http://fruitgrowers.simb/'.$url;
-		}else{
-			$graphData = $graph->Draw(new Base64String());
-			return 'data:image/png;base64,'.$graphData;
-		}
-        */
+        return $VAR;
 	}
 	
 	/**
@@ -208,7 +215,8 @@ class ReportController extends SimbController
 				}
 				$VARS['sprayDates'][$block->id] = $sprayData;
 				
-				$VARS['graphData'][$block->id] = $block->id;//$this->getGraph($block);
+                if (empty($VARS['graphData'][$block->id]))
+				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower);
 				
 				$pests = array();
 				foreach($block->getTraps() as $trap){

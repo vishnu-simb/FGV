@@ -176,53 +176,70 @@ class GraphController extends SimbApiController {
     
     public function actionGetGraphInRange(){
     	$VAR = array();
-    	$min_date = $_GET['min_date'];
-        $max_date = $_GET['max_date'];
+        
+        $filter = array(
+                        'block_id' => $_GET['block'],
+                        'date_from' => $_GET['date_from'],
+                        'date_to' => $_GET['date_to']
+                    );
         $index = $_GET['index'];
-        $m = 'August,2014';
-        $m = strtotime('01-'.str_replace(',','-',$m));
-    	$date= date('Y-m',$m);
-    	
+        $grower_id = $_GET['grower'];
+        $grower = Grower::model()->findByPk($grower_id);
+        if (!$grower)
+        {
+            echo CJSON::encode(array('error' => 'Invalid grower ID.'));
+	        Yii::app()->end();
+            exit;
+        }
     	$model = new TrapCheck('search');
     	$model->unsetAttributes();
-    	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
-    	$dataProvider = $model->getSqlDataProvider();
+    	$dataProvider = $model->getTrapCheckInRange($filter);
     	$data = $dataProvider->getData();
-    	$pest= array();
+        $pest= array();
     	for($i = 0 ; $i < count($data)  ; $i++ )
     	{
     		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
     	}
     	$serial = array();
         $keys_arr = array_keys($pest);
+        $min_time = strtotime($filter['date_from']);
+   		$max_time = strtotime($filter['date_to']);
+        $max_value = 0;
     	if(!empty($keys_arr)){
-    		
-    		$e = strtotime('+1 month',$m);
     		foreach($keys_arr as $r){
-    			$mm = $m;
+    			$mm = $min_time;
     			$sedat = array();
-    			while($mm < $e)
+    			while($mm <= $max_time)
     			{
     				$dd = 0;
     				foreach($data as $val){
     					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
     						$dd = intval($val["tc_value"]);
+                            if ($max_value < $dd)
+                                $max_value = $dd;
     					}
     				}
 					$sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
+    			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat));
     		}
     		
     	}
 		if(!empty($serial)){
-			$VAR['chart'] = array('renderTo'=>'yw'.$index);
-			$VAR['title'] = array('text'=>'');
-			$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+		    $yAxis = array();
+            for($i = 1; $i <= $max_value+1; $i++)
+                $yAxis[] = $i;
+			$VAR['chart'] = array('renderTo'=>'yw'.$index, 'zoomType' => 'x');
+			$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
+			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
+            $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
 			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
-			$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-			$VAR['yAxis'] = array('title'=>array('text'=>''));
+			$VAR['xAxis'] = array(
+                                'type' => 'datetime',
+                                'minRange' => 14 * 24 * 3600000 // fourteen days
+                            );
+			$VAR['yAxis'] = array('type' => 'category','title' => '');
 			$VAR['series'] = $serial;
 		}else{
 			$VAR['chart']= 'failed';

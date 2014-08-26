@@ -1,52 +1,6 @@
 <?php
 	if(!empty($VARS['email'])){
 		echo '<a href="',$VARS['link'],'">If this email doesnt load correctly, goto: ',$VARS['link'],'</a>';
-	}else{
-?>
-<script>
-    $(document).ready(function () {
-        var min_date = $('#min_date').val();
-        var max_date = $('#max_date').val();
-        
-        $('div.graph').each(function(index){
-            var block_id = $(this).attr('id');
-            $.ajax({
-				  type: "GET",
-				  url: "/api/graph/getGraphInRange?block="+block_id+"&min_date="+min_date+"&max_date="+max_date+"&index="+index,
-				  success: function (data)
-				   {
-				  		var jgraph = JSON.parse(data);
-				  		if(jgraph.chart == 'failed'){
-				  			$("#yw" + index).html('');
-				  		}else{
-				  			Highcharts.setOptions([]); 
-					  		var chart = new Highcharts.Chart(jgraph);
-				  		}
-				   }
-			});
-        });
-        /*
-        $('#yw0').click(function(){
-            $.ajax({
-				  type: "GET",
-				  url: "/api/graph/getGraphInRange?block=4&min_date="+min_date+"&max_date="+max_date+"&index=0",
-				  success: function (data)
-				   {
-				  		var jgraph = JSON.parse(data);
-				  		if(jgraph.chart == 'failed'){
-				  			$("#yw0").html('');
-				  		}else{
-				  			Highcharts.setOptions([]); 
-					  		var chart = new Highcharts.Chart(jgraph);
-				  		}
-					  		
-				   }
-			});
-        });
-        */
-    });
-</script>
-<?php
 	}
 ?>
 <table class="header">
@@ -161,21 +115,10 @@ foreach($VARS['blocks'] as $block){
 </table>
 		
 	<h4>Population Graph</h4>
-    <div class="graph" id="<?=$VARS['graphData'][$block->id]?>">
+    <div class="graph">
         <?php
             $this->Widget('ext.highcharts.HighchartsWidget', array(
-								'options'=>array(
-										'title' => array('text' => ''),
-										'xAxis' => array(
-												'categories' => array()
-										),
-										'yAxis' => array(
-												'title' => array('text' => '')
-										),
-										'series' => array(
-												array(),
-											)
-								)
+								'options'=>$VARS['graphData'][$block->id]
 						));
         ?>
     </div>
@@ -217,7 +160,8 @@ foreach($VARS['blocks'] as $block){
 <?php 
 }
 ?>
-<input type="hidden" id="min_date" value="<?=$VARS['dateRange']['date_from']?>" />
-<input type="hidden" id="max_date" value="<?=$VARS['dateRange']['date_to']?>" />
+<input type="hidden" id="grower_id" value="<?=$VARS['grower']->id?>" />
+<input type="hidden" id="date_from" value="<?=$VARS['dateRange']['date_from']?>" />
+<input type="hidden" id="date_to" value="<?=$VARS['dateRange']['date_to']?>" />
 <div id="print-footer">Created by Fruit Growers Victoria. Report problems to <b>fido@fgv.com.au</b></div>
 </body>

@@ -25,19 +25,11 @@ class TrapCheck extends CommonTrapCheck
 	 * @return CActiveDataProvider
 	 */
 	public function getSqlDataProvider(){
-		
-		$condition = !empty($this->block_id) ? 'WHERE t.block_id ='. $this->block_id : ' ';
-		$condition .= !empty($this->date) ? ' AND (tc.date BETWEEN "'. $this->date .'-01" AND "'. $this->date.'-30")' : '';
-		$sql="SELECT tc.date AS tc_date,tc.value as tc_value,pt.name AS pest_name
-		FROM ".$this->tableName()." tc
-		INNER JOIN ".Trap::model()->tableName()." t ON tc.trap_id = t.id
-		INNER JOIN ".Pest::model()->tableName()." pt ON t.pest_id = pt.id
-		INNER JOIN ".Block::model()->tableName()." b ON t.block_id = b.id
-		".$condition." 
-		ORDER BY tc.date DESC";
-		return new CSqlDataProvider($sql, array(
-			'pagination'=>false,
-		));
-	
+	    $filter = array(
+                    'block_id' => $this->block_id,
+                    'date_from' => $this->date .'-01',
+                    'date_to' => date('Y-m-t',strtotime($this->date))
+                    );
+		return $this->getTrapCheckInRange($filter);
 	}
 }
