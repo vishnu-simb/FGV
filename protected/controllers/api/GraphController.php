@@ -256,8 +256,9 @@ class GraphController extends SimbApiController {
     	$xAxis = array();
     	$e = strtotime('+1 month',$m);
     	while($m < $e)
-    	{
-    		$xAxis[date("d", $m)] = array_merge(array(date("d", $m)),$xAxis);
+    	{	if(date($m) < date(time())){
+    			$xAxis[date("d", $m)] = array_merge(array(date("d", $m)),$xAxis);
+    		}
     		$m = strtotime('+1 day', $m); // increment for loop
     	
     	}
