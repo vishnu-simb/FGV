@@ -24,6 +24,10 @@ class m140821_072025_add_mite_monitor extends CDbMigration
 						'id' => 'BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT',
 						'mite_id' => 'int(11) NOT NULL',
 						'block_id' => 'int(11) NOT NULL' ,
+						'date' => 'DATE NOT NULL' ,
+						'percent_li' => 'float unsigned DEFAULT NULL',
+						'average_li' => 'float unsigned DEFAULT NULL',
+						'no_days' => 'float unsigned DEFAULT NULL',
 						// Common fields, should appear in all tables
 						'creator_id' => 'BIGINT NULL COMMENT "id of user who create this item"',
 						'ordering' => 'integer NULL COMMENT "sorting weight"',
@@ -38,20 +42,19 @@ class m140821_072025_add_mite_monitor extends CDbMigration
 		
 		// Mite Monitoring Pk
 		$this->createIndex(
-				$this->tableNameMiteMonitor.'_mite_idx',
+				$this->tableNameMiteMonitor.'_mite_monitoring_idx',
 				$this->tableNameMiteMonitor,
-				'mite_id', false
+				'mite_id,block_id,date', true
 		);
 		
 		$this->createIndex(
-				$this->tableNameMiteMonitor.'_block_idx',
+				$this->tableNameMiteMonitor.'_mite_idx',
 				$this->tableNameMiteMonitor,
-				'block_id', false
+				'id', false
 		);
 		// Added new ForeignKey
 		$this->addForeignKey($this->tableNameMiteMonitor.'_ibfk_1', $this->tableNameMiteMonitor,'mite_id', $this->tableNameMites, 'id','CASCADE','CASCADE');
 		$this->addForeignKey($this->tableNameMiteMonitor.'_ibfk_2', $this->tableNameMiteMonitor,'block_id', $this->tableNameBlock, 'id','CASCADE','CASCADE');
-		
 		true;
 	}
 

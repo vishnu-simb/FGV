@@ -13,6 +13,10 @@
  * @property integer $mite_id
  * @property integer $block_id
  * @property string $creator_id
+ * @property double $percent_li
+ * @property double $average_li
+ * @property string $date
+ * @property double $no_days
  * @property integer $ordering
  * @property string $created_at
  * @property string $updated_at
@@ -22,9 +26,9 @@
  *
  * @property Block $block
  * @property Mite $mite
- * @property MonitorCheck[] $monitorChecks
  */
 abstract class BaseMiteMonitor extends SimbActiveRecord{
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -43,12 +47,13 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('mite_id, block_id', 'required'),
+			array('mite_id, block_id, date, percent_li, average_li', 'required','except' => 'search'),
 			array('mite_id, block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
+			array('percent_li, average_li, no_days', 'numerical'),
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
-			array('creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, mite_id, block_id, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('percent_li, average_li, no_days, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, mite_id, block, property, mite, grower, block_id, date, percent_li, average_li, no_days, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +62,6 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 		return array(
 			'block' => array(self::BELONGS_TO, 'Block', 'block_id'),
 			'mite' => array(self::BELONGS_TO, 'Mite', 'mite_id'),
-			'monitorChecks' => array(self::HAS_MANY, 'MonitorCheck', 'monitor_id'),
 		);
 	}
 
@@ -73,6 +77,10 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 			'id' => Yii::t('app', 'ID'),
 			'mite_id' => Yii::t('app', 'Mite'),
 			'block_id' => Yii::t('app', 'Block'),
+			'date' => Yii::t('app', 'Date'),
+			'percent_li' => Yii::t('app', 'Percent Li'),
+			'average_li' => Yii::t('app', 'Average Li'),
+			'no_days' => Yii::t('app', 'No days'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),
@@ -87,9 +95,17 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
     {
 		$criteria = new CDbCriteria;
 		
+		$criteria->with=array('block','property','grower');
+		
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('mite_id', $this->mite_id);
 		$criteria->compare('block_id', $this->block_id);
+		$criteria->compare('property.id', $this->property);
+		$criteria->compare('grower.id', $this->grower);
+		$criteria->compare('date', $this->date, true);
+		$criteria->compare('percent_li', $this->percent_li);
+		$criteria->compare('average_li', $this->average_li);
+		$criteria->compare('no_days', $this->no_days, true);
 		$criteria->compare('creator_id', $this->creator_id, true);
 		$criteria->compare('ordering', $this->ordering);
 		$criteria->compare('created_at', $this->created_at, true);

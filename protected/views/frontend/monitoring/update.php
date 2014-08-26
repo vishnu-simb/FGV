@@ -12,4 +12,4 @@ $this->breadcrumbs = array(
 
 ?>
 
-<?php $this->renderPartial('_form', array('modelMonitorCheck'=>$modelMonitorCheck)); ?>
+<?php $this->renderPartial('_form', array('modelMonitor'=>$modelMonitor)); ?>

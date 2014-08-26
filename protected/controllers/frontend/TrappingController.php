@@ -116,7 +116,7 @@ class TrappingController extends SimbController
 						$saveTrapCheck->attributes = $save;
 						if($saveTrapCheck->save()){
 							Yii::app()->session->open();
-							Yii::app()->user->setFlash('error', Yii::t('app', 'Trap added successfully !'));
+							Yii::app()->user->setFlash('success', Yii::t('app', 'Trap added successfully !'));
 						}
 					}
 				}

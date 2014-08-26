@@ -80,10 +80,6 @@ $clientScript->registerScriptFile($resourceUrl . '/js/dashboard.js');
 										'yAxis' => array(
 												'title' => array('text' => '')
 										),
-										'plotOptions' => array(
-
-												'column'=>array('stacking'=>'percent')
-										),
 										'series' => array(
 												array(),
 											)

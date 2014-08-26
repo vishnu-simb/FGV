@@ -1,6 +1,6 @@
 <?php
 
-class m140821_112133_add_triggers extends CDbMigration
+class m140821_112133_update_mite extends CDbMigration
 {
 	
 	public $tableNameMite = 'mite';
@@ -18,8 +18,7 @@ class m140821_112133_add_triggers extends CDbMigration
 	public function up()
 	{
 		$this->updateTablePrefix();
-		//$this->execute(file_get_contents(Yii::app()->basePath.'/data/triggers_update.sql'));
-      
+     
 		$this->insert($this->tableNameMite, array(
 				'id' => 1,
 				'name' => 'Bryobya Mite',
@@ -70,7 +69,7 @@ class m140821_112133_add_triggers extends CDbMigration
 
 	public function down()
 	{
-		echo "m140821_112133_add_triggers does not support migration down.\n";
+		echo "m140821_112133_update_mite does not support migration down.\n";
 		return true;
 	}
 

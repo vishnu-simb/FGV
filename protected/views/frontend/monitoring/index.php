@@ -36,16 +36,16 @@
 									<thead>
 										<tr>
 											<th>Mite</th>
-											<th style="text-align: right;border-left: 0 none;">Percentage</th>
-											<th style="text-align: right;border-left: 0 none;">Average Number</th>
+											<th style="text-align: right;border-left: 0 none;">% Li</th>
+											<th style="text-align: right;border-left: 0 none;">Average Li</th>
 										</tr>
 									</thead>
 									<tbody id="tbl_'.$block->id.'">';
-									foreach($block->getMiteMonitor() as $monitor){
+									foreach($block->getMites() as $monitor){
 										echo '<tr>';
-										echo '<td>'.$monitor->mite->name.'</td>';
-										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="MonitorPercentage['.$monitor->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
-										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="MonitorAverage['.$monitor->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
+										echo '<td>'.$monitor->name.'</td>';
+										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="PercentLi['.$block->id.','.$monitor->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
+										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="AverageLi['.$block->id.','.$monitor->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
 										
 										echo '</tr>';
 									}
@@ -82,8 +82,8 @@
 									<thead>
 										<tr>
 										<th>Mite</th>
-										<th style="text-align: right;">Percentage</th>
-										<th style="text-align: right;">Average Number</th>
+										<th style="text-align: right;">% Li</th>
+										<th style="text-align: right;">Average Li</th>
 										<th></th>
 										</tr>
 									</thead>
@@ -92,10 +92,10 @@
 										<tr>
 											<td><?php echo $lastest['monitoring_name'] ; ?></td>
 											<td style="text-align: right;">
-												<?php echo $lastest['percentage'] ;?>%
+												<?php echo $lastest['percent_li'] ;?>%
 											</td>
 											<td style="text-align: right;">
-												<?php echo $lastest['average_number'] ;?>
+												<?php echo $lastest['average_li'] ;?>
 											</td>
 											<td style="text-align: right;width: 65px">
 											<a href="<?php echo Yii::app()->baseUrl."/monitoring/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>

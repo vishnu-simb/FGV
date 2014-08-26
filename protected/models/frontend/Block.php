@@ -12,8 +12,8 @@ class Block extends CommonBlock
 	function getTraps(){
 		return Trap::model()->findAllByAttributes(array('block_id'=>$this->id),array('order'=>'ordering DESC'));
 	}
-	function getMiteMonitor(){
-		return MiteMonitor::model()->findAllByAttributes(array('block_id'=>$this->id),array('order'=>'ordering DESC'));
+	function getMites(){
+		return Mite::model()->findAll();
 	}
 	public function getBlockByGrowerId($grower_id){
 		return Block::model()->with(array('property'=>array('condition'=>'property.grower_id='.$grower_id)))->findAll();

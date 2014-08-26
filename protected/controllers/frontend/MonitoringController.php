@@ -43,25 +43,25 @@ class MonitoringController extends SimbController
 	 */
 	public function actionUpdate($id)
 	{
-		$modelMonitorCheck = $this->loadModel($id);
-		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Mite Monitoring', $modelMonitorCheck->id);
+		$modelMonitor = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Mite Monitoring', $modelMonitor->id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($modelTrapCheck);
 
-		if (isset($_POST['MonitorCheck'])) {
-			$modelMonitorCheck->attributes=$_POST['MonitorCheck'];
+		if (isset($_POST['MiteMonitor'])) {
+			$modelMonitor->attributes=$_POST['MiteMonitor'];
 			try{
-				if ($modelMonitorCheck->save()) {
+				if ($modelMonitor->save()) {
 					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 				}
 			}catch(Exception $e) {
-				$modelMonitorCheck->addError(null, Yii::t('app', 'Mite Monitor has already been taken same block'));
+				$modelMonitor->addError(null, Yii::t('app', 'Mite Monitor has already been taken same block'));
 			}
 		}
 
 		$this->render('update', array(
-			'modelMonitorCheck' => $modelMonitorCheck,
+			'modelMonitor' => $modelMonitor,
 		));
 	}
 	
@@ -99,7 +99,7 @@ class MonitoringController extends SimbController
 	public function actionIndex()
 	{
 		$this->pageTitle = sprintf(Yii::t('app', 'Mite Monitoring %s'), '');
-		$modelMonitorCheck = new MonitorCheck();
+		$modelMonitor = new MiteMonitor();
 		$modelGrower = new Grower();
 		$modelGrower->unsetAttributes();  // clear any default values
 		$search = false;
@@ -107,15 +107,16 @@ class MonitoringController extends SimbController
 			$modelGrower->attributes = $_GET['Grower'];
 			$search = true;
 		}
-		if(isset($_POST['MonitorPercentage'])){
+		if(isset($_POST['PercentLi']) && isset($_POST['AverageLi'])){
 			try{
-				foreach ($_POST['MonitorPercentage'] as $key => $value){ // save multiple records
+				foreach ($_POST['PercentLi'] as $key => $value){ // save multiple records
 					if($value != ""){
-						if($_POST['MonitorAverage'][$key] != ""){
-							$saveMonitorCheck = new MonitorCheck();
-							$save = array('percentage'=>$value,'average_number'=>$_POST['MonitorAverage'][$key],'monitor_id'=>$key,'date'=>gmdate('Y-m-d'));
-							$saveMonitorCheck->attributes = $save;
-							if($saveMonitorCheck->save()){
+						if($_POST['AverageLi'][$key] != ""){
+							$saveMonitor = new MiteMonitor();
+							$data = explode(',',$key);
+							$save = array('percent_li'=>$value,'average_li'=>$_POST['AverageLi'][$key],'block_id'=>$data[0],'mite_id'=>$data[1],'date'=>gmdate('Y-m-d'));
+							$saveMonitor->attributes = $save;
+							if($saveMonitor->save()){
 								Yii::app()->session->open();
 								Yii::app()->user->setFlash('success', Yii::t('app', 'Mite Monitor added successfully !'));
 							}
@@ -131,8 +132,8 @@ class MonitoringController extends SimbController
 	    		
 		}
 		$this->render('index', array(
-				'modelMonitorCheck' => $modelMonitorCheck,
-				'dataProvider' => $modelMonitorCheck->SearchRecentMontoring(),
+				'modelMonitor' => $modelMonitor,
+				'dataProvider' => $modelMonitor->SearchRecentMontoring(),
 				'modelGrower' => $modelGrower,
 				'search' => $search,
 		));
@@ -147,8 +148,8 @@ class MonitoringController extends SimbController
 	 */
 	public function loadModel($id)
 	{
-		$modelMonitorCheck = MonitorCheck::model()->findByPk($id);
-		if ($modelMonitorCheck === null) {
+		$modelMonitor = MiteMonitor::model()->findByPk($id);
+		if ($modelMonitor === null) {
 			$errorText = YII_DEBUG ? sprintf(
 					Yii::t('app', 'The ID %s does not exist in %s.'),
 					$id,
@@ -156,17 +157,17 @@ class MonitoringController extends SimbController
 			) : Yii::t('app', 'The requested page does not exist.');
 			throw new CHttpException(404, $errorText);
 		}
-		return $modelMonitorCheck;
+		return $modelMonitor;
 	}
 	
 	/**
 	 * Performs the AJAX validation.
 	 * @param TrapCheck $modelTrapCheck the model to be validated
 	 */
-	protected function performAjaxValidation($modelTrapCheck)
+	protected function performAjaxValidation($modelMonitor)
 	{
-		if (isset($_POST['ajax']) && $_POST['ajax'] === 'trap-check-form') {
-			echo CActiveForm::validate($modelTrapCheck);
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'mite-monitor-form') {
+			echo CActiveForm::validate($modelMonitor);
 			Yii::app()->end();
 		}
 	}

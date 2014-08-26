@@ -18,20 +18,20 @@
                     'validateOnSubmit'=>true,
                 ),
 )); ?>
-<?php echo $form->errorSummary($modelMonitorCheck); ?>
+<?php echo $form->errorSummary($modelMonitor); ?>
 
 <div class="search-form-ext">
     <div class="box-content nopadding">
 
                     <div class="span12">    
               
-                    	  <?php echo $form->dropDownListControlGroup($modelMonitorCheck, 'monitor', CHtml::listData($modelMonitorCheck->getMite() ,'id','name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
+                    	  <?php echo $form->dropDownListControlGroup($modelMonitor, 'mite_id', CHtml::listData($modelMonitor->getMite() ,'id','name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
     					  
-                          <?php echo $form->textFieldControlGroup($modelMonitorCheck, 'date', array('class' => 'input-xxlarge', 'placeholder' => $modelMonitorCheck->getAttributeLabel('date'),'readonly'=>'true')); ?>
+                          <?php echo $form->textFieldControlGroup($modelMonitor, 'date', array('class' => 'input-xxlarge', 'placeholder' => $modelMonitor->getAttributeLabel('date'),'readonly'=>'true')); ?>
 
-                          <?php echo $form->textFieldControlGroup($modelMonitorCheck, 'percentage', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitorCheck->getAttributeLabel('percentage'))); ?>
+                          <?php echo $form->textFieldControlGroup($modelMonitor, 'percent_li', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitor->getAttributeLabel('percentage'))); ?>
 			  				
-			  			  <?php echo $form->textFieldControlGroup($modelMonitorCheck, 'average_number', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitorCheck->getAttributeLabel('average_number'))); ?>
+			  			  <?php echo $form->textFieldControlGroup($modelMonitor, 'average_li', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelMonitor->getAttributeLabel('average_number'))); ?>
 	
             		</div>
 
