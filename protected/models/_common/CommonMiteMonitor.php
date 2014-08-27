@@ -17,9 +17,9 @@ class CommonMiteMonitor extends BaseMiteMonitor
     public function defaultScope(){
     
     	return array(
-    			'alias'=>'monitor_check',
-    			'condition'=> 'monitor_check.is_deleted=0',
-    			'order'=>'monitor_check.id DESC'
+    			'alias'=>'mite_monitor',
+    			'condition'=> 'mite_monitor.is_deleted=0',
+    			'order'=>'mite_monitor.id DESC'
     	);
     }
     
@@ -31,8 +31,8 @@ class CommonMiteMonitor extends BaseMiteMonitor
      */
     public function scopes(){
     	return array(
-    			'alias'=>'monitor_check',
-    			'condition'=>'monitor_check.is_deleted=0',
+    			'alias'=>'mite_monitor',
+    			'condition'=>'mite_monitor.is_deleted=0',
     	);
     
     }

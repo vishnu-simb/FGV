@@ -8,4 +8,9 @@ class Mite extends CommonMite
     {
 		return parent::model($className);
 	}
+	
+
+	public static function MiteColor($m){
+		return Mite::model()->findByAttributes(array('name'=>$m))->color;
+	}
 }

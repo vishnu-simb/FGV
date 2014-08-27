@@ -8,4 +8,5 @@ class Mite extends CommonMite
     {
 		return parent::model($className);
 	}
+
 }

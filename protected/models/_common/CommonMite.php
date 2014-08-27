@@ -8,4 +8,32 @@ class CommonMite extends BaseMite
     {
         return parent::model($className);
     }
+    
+    /**
+     * default scope
+     * @return array
+     * @see defaultScope
+     */
+    public function defaultScope(){
+    
+    	return array(
+    			'alias'=>'mite',
+    			'condition'=> 'mite.is_deleted=0',
+    			'order'=>'mite.id DESC'
+    	);
+    }
+    
+    
+    /**
+     * scope of yii
+     * @return array
+     * @see scope of yii
+     */
+    public function scopes(){
+    	return array(
+    			'alias'=>'mite',
+    			'condition'=>'mite.is_deleted=0',
+    	);
+    
+    }
 }

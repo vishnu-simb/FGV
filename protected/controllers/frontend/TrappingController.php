@@ -53,6 +53,8 @@ class TrappingController extends SimbController
 			$modelTrapCheck->attributes=$_POST['TrapCheck'];
 			try{
 				if ($modelTrapCheck->save()) {
+					Yii::app()->session->open();
+					Yii::app()->user->setFlash('success', Yii::t('app', 'The system has saved your data successfully !'));
 					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 				}
 			}catch(Exception $e) {

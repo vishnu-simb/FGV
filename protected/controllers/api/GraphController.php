@@ -162,7 +162,7 @@ class GraphController extends SimbApiController {
     			}
     			$mm = strtotime('+1 day', $mm); // increment for loop
     		}
-    		$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
+    		$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
     	}
     	
     	$VAR['chart'] = array('renderTo'=>'yw1');

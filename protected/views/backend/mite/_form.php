@@ -38,7 +38,9 @@
                             <?php echo $form->textFieldControlGroup($modelMite, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelMite->getAttributeLabel('name'))); ?>
 							
 							<?php echo $form->dropDownListControlGroup($modelMite, 'type', SimbHtml::getEnumItem($modelMite,'type'),array('empty' => 'Select Mite Type'))?>
-                           
+                            
+                            <?php echo $form->textFieldControlGroup($modelMite, 'color', array('maxlength' => 100, 'class' => 'input-medium colorpick', 'placeholder' => $modelMite->getAttributeLabel('color'))); ?>
+
                             <?php //echo $form->textFieldControlGroup($modelMite, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelMite->getAttributeLabel('creator_id'))); ?>
 
                             <?php //echo $form->textFieldControlGroup($modelMite, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelMite->getAttributeLabel('ordering'))); ?>

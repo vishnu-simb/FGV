@@ -12,6 +12,7 @@
  * @property integer $id
  * @property string $name
  * @property string $type
+ * @property string $color
  * @property string $creator_id
  * @property integer $ordering
  * @property string $created_at
@@ -41,7 +42,7 @@ abstract class BaseMite extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, type', 'required'),
+			array('name, type, color', 'required','except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('type', 'length', 'max'=>9),
@@ -71,6 +72,7 @@ abstract class BaseMite extends SimbActiveRecord{
 			'id' => Yii::t('app', 'ID'),
 			'name' => Yii::t('app', 'Name'),
 			'type' => Yii::t('app', 'Type'),
+			'color' => Yii::t('app', 'Color'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),

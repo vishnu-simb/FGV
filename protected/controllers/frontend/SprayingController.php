@@ -57,7 +57,7 @@ class SprayingController extends SimbController
 			if ($modelSpray->save()) {
 				// reinit session to store flash
 				Yii::app()->session->open();
-				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$id.' update successfully!'));
+				Yii::app()->user->setFlash('success', Yii::t('app', 'The system has saved your data successfully'));
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 			}
 		}

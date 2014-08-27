@@ -29,6 +29,7 @@ $this->menu = array(
 		'id',
 		'name',
 		'type',
+		'color',
 		/*'creator_id',
 		'ordering',
 		'created_at',

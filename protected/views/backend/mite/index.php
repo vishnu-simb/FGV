@@ -57,6 +57,7 @@ $('.search-form-ext form').submit(function(){
 		'id',
 		'name',
 		'type',
+		array('name'=>'color' ,'value'=>'$data->color','filter'=>false,),
 		/*
 		'creator_id',
 		'ordering',
