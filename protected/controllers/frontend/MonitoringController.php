@@ -140,6 +140,143 @@ class MonitoringController extends SimbController
 				'search' => $search,
 		));
 	}
+    
+    /**
+	 * Import a csv file for mite monitoring.
+	 */
+	public function actionImport()
+	{
+		$this->pageTitle = sprintf(Yii::t('app', 'Mite Monitoring %s'), ' - Import');
+        if(!empty($_FILES['import_file']) && !empty($_FILES['import_file']['name']))
+        {
+            $filename = $_FILES['import_file']['name'];
+            $type = $_FILES['import_file']['type'];
+            $name_without_ext = pathinfo($filename, PATHINFO_FILENAME);
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if ($ext == 'csv' && $type == 'text/csv')
+            {
+                if ($_FILES["import_file"]["error"] > 0)
+                {
+                    Yii::app()->session->open();
+					Yii::app()->user->setFlash('error', Yii::t('app', $_FILES["file"]["error"]));
+                }
+                else
+                {
+                    $import_path = Yii::app()->basePath.'/../uploads/import/';
+                    if (!file_exists($import_path))
+                    {
+                        mkdir($import_path);
+                        chmod($import_path, 777);
+                    }
+                    //save import file
+                    $new_fn = $name_without_ext.date('_Ymd_His').'.csv';
+                    $file_path = $import_path. $new_fn;
+                    move_uploaded_file($_FILES["import_file"]["tmp_name"], $file_path);
+                    if (!file_exists($file_path))
+                    {
+                        Yii::app()->session->open();
+					    Yii::app()->user->setFlash('error', Yii::t('app', 'File cannot be uploaded! Please try again.'));
+                    }
+                    
+                    
+                    $f = fopen($file_path, "r");
+                    $row = -1;
+                    $current_property_name = $current_block_name = $current_mite_name = '';
+                    $property_id = $block_id = $mite_id = '';
+                    $previous_percent_li = 0;
+                    $success = 1;
+                    while(($filedata = fgetcsv($f)) !== FALSE) 
+                    {
+                        $row ++;
+                        if ($row == 0) // skip the header
+                            continue;
+                        
+                        //Get property name
+                        if (!empty($filedata[0]) && $filedata[0] != $current_property_name)
+                        {
+                            $current_property_name = $filedata[0];
+                            $property = Property::model()->getByName($current_property_name);
+                            
+                            if (!$property)
+                            {
+                                $success = 0;
+                                Yii::app()->session->open();
+					            Yii::app()->user->setFlash('error', Yii::t('app', "Invalid property name at line: ".$row));
+                                break;
+                            }
+                            else
+                            {
+                                $property_id = $property->id;
+                            }
+                        }
+                        
+                        //Get block name
+                        if (!empty($filedata[1]) && $filedata[1] != $current_block_name && $property_id)
+                        {
+                            $current_block_name = $filedata[1];
+                            $block = Block::model()->getByNameLike($current_block_name, $property_id);
+                            if (!$block)
+                            {
+                                $success = 0;
+                                Yii::app()->session->open();
+					            Yii::app()->user->setFlash('error', Yii::t('app', "Invalid block name at line: ".$row));
+                                break;
+                            }
+                            else
+                            {
+                                $block_id = $block->id;
+                            }
+                        }
+                        
+                        //Get mite name
+                        if (!empty($filedata[2]) && $filedata[2] != $current_mite_name)
+                        {
+                            $current_mite_name = $filedata[2];
+                            $mite = Mite::model()->getByNameLike($current_mite_name);
+                            if (!$mite)
+                            {
+                                $success = 0;
+                                Yii::app()->session->open();
+					            Yii::app()->user->setFlash('error', Yii::t('app', "Invalid mite name at line: ".$row));
+                                break;
+                            }
+                            else
+                            {
+                                $mite_id = $mite->id;
+                            }
+                        }
+                        
+                       
+                        if ($block_id && $mite_id)
+                        {
+                            $modelMonitor = new MiteMonitor();
+                            $modelMonitor->mite_id = $mite_id;
+                            $modelMonitor->block_id = $block_id;
+                            $modelMonitor->date = date('Y-m-d', strtotime($filedata[3]));
+                            $modelMonitor->percent_li = $filedata[4];
+                            $modelMonitor->average_li = ($previous_percent_li + $modelMonitor->percent_li)/2;
+                            $modelMonitor->no_days = $filedata[5];
+                            if (!$modelMonitor->save())
+                            {
+                                $success = 0;
+                                Yii::app()->session->open();
+					            Yii::app()->user->setFlash('error', Yii::t('app', "Cannot save data at line: ".$row));
+                                break;
+                            }
+                            $previous_percent_li = $modelMonitor->percent_li;
+                        }
+                    }
+                    
+                    if ($success)
+                    {
+                        Yii::app()->session->open();
+					    Yii::app()->user->setFlash('success', Yii::t('app', 'Data is imported successfully.'));
+                    }
+                }
+            }
+        }
+		$this->render('import');
+	}
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

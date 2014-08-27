@@ -41,6 +41,12 @@ class CommonProperty extends BaseProperty
     	$criteria->params = array(':is_deleted'=>'0');
     	return Location::model()->findAll($criteria);
     }
-
+    
+    /**
+     * @return Property
+     */
+    public function getByName($name){
+    	return self::model()->find('LOWER(name) = :name', array('name' => strtolower($name)));
+    }
 }
 

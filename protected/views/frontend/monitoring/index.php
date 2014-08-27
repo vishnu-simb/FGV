@@ -7,11 +7,11 @@
 <div class="row-fluid">
     <div class="span12">
         <div class="box">
-
+            <a class="btn" style="float: right;" href="<?=Yii::app()->createUrl($this->getId())?>/import">Import Data</a>
  <?php $this->renderPartial('_search',array(
                 'modelGrower' => $modelGrower,
             )); ?>
-
+            
         </div>
     </div>
     	<div class="row-fluid">

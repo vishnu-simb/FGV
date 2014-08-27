@@ -97,4 +97,14 @@ class CommonBlock extends BaseBlock
     	$criteria->params = array(':is_deleted'=>'0');
     	return Location::model()->findAll($criteria);
     }
+    
+    /**
+     * @return Block
+     */
+    public function getByNameLike($name, $property_id = ''){
+        if ($property_id && is_numeric($property_id))
+            return self::model()->find("LOWER(name) LIKE '".strtolower($name)."%' AND property_id = :property_id", array('property_id' => $property_id));
+        else
+    	   return self::model()->find("LOWER(name) LIKE '".strtolower($name)."%'");
+    }
 }

@@ -36,4 +36,11 @@ class CommonMite extends BaseMite
     	);
     
     }
+    
+    /**
+     * @return Mite
+     */
+    public function getByNameLike($name){
+    	return self::model()->find("LOWER(name) LIKE '". strtolower($name) ."%'");
+    }
 }
