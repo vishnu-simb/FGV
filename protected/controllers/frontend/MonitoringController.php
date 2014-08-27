@@ -249,10 +249,14 @@ class MonitoringController extends SimbController
                        
                         if ($block_id && $mite_id)
                         {
+                            $date = date('Y-m-d', strtotime($filedata[3]));
                             $modelMonitor = new MiteMonitor();
+                            $monitor = MiteMonitor::model()->findByAttributes(array('mite_id'=>$mite_id,'block_id'=>$block_id,'date'=>$date));
+                            if ($monitor) //update existed record
+                                $modelMonitor = $this->loadModel($monitor->id);
                             $modelMonitor->mite_id = $mite_id;
                             $modelMonitor->block_id = $block_id;
-                            $modelMonitor->date = date('Y-m-d', strtotime($filedata[3]));
+                            $modelMonitor->date = $date;
                             $modelMonitor->percent_li = $filedata[4];
                             $modelMonitor->average_li = ($previous_percent_li + $modelMonitor->percent_li)/2;
                             $modelMonitor->no_days = $filedata[5];
