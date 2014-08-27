@@ -32,7 +32,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         'itemOptions' => array(),
                         'items' => array(
                             array(
-                                'label' => Yii::t('app', 'Admin'),
+                                'label' => Yii::t('app', 'Users'),
                                 'url' => Yii::app()->baseUrl.'/users',
                             ),
                         		

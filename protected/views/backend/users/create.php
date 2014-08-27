@@ -7,7 +7,7 @@
 $label = sprintf(Yii::t('app', 'Manage %s'), 'Users');
 $this->breadcrumbs = array(
 	$label => array('index'),
-	sprintf(Yii::t('app', 'Create a new %s'), 'Users'),
+	sprintf(Yii::t('app', 'Create a new %s'), 'User'),
 );
 
 $this->menu = array(

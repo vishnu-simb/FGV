@@ -32,7 +32,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         'itemOptions' => array(),
                         'items' => array(
                             array(
-                                'label' => Yii::t('app', 'Admin'),
+                                'label' => Yii::t('app', 'Users'),
                                 'url' => Yii::app()->baseUrl.'/backend/users',
                             ),
                         		
@@ -64,7 +64,10 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 									'label' => Yii::t('app', 'PestSpray'),
 									'url' => Yii::app()->baseUrl.'/backend/pestSpray',
 							),
-							
+                        	array(
+                        			'label' => Yii::t('app', 'Mite'),
+                        			'url' => Yii::app()->baseUrl.'/backend/mite',
+                        	),
 							array(
 									'label' => Yii::t('app', 'Property'),
 									'url' => Yii::app()->baseUrl.'/backend/property',
@@ -182,7 +185,12 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                     'bootstrap.widgets.TbMenu',
                     array(
                         'items' => array(
-                            array(
+							array(
+								'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
+								'label' => 'Edit profile',
+								'url' => '#',
+							),
+							array(
                                 'label' => Yii::t('app', 'Log out'),
                                 'url' => array('site/logout'),
                             ),
