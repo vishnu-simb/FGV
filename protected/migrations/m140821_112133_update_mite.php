@@ -23,7 +23,7 @@ class m140821_112133_update_mite extends CDbMigration
 				'id' => 1,
 				'name' => 'Bryobya Mite',
 				'type' => 'Pest',
-		
+				'color' => '#75e112',
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
 				'ordering' => 0,
@@ -38,7 +38,7 @@ class m140821_112133_update_mite extends CDbMigration
 				'id' => 2,
 				'name' => 'Twospotted Mite',
 				'type' => 'Pest',
-		
+				'color' => '#ff780d',
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
 				'ordering' => 0,
@@ -53,7 +53,7 @@ class m140821_112133_update_mite extends CDbMigration
 				'id' => 3,
 				'name' => 'European Red Mite',
 				'type' => 'Pest',
-		
+				'color' => '#e90040',
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
 				'ordering' => 0,
@@ -68,7 +68,7 @@ class m140821_112133_update_mite extends CDbMigration
 				'id' => 4,
 				'name' => 'Typhlodromus',
 				'type' => 'Predatory',
-		
+				'color' => '#041b5f',
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
 				'ordering' => 0,
