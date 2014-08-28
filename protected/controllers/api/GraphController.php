@@ -98,7 +98,7 @@ class GraphController extends SimbApiController {
     			while($mm < $e)
     			{
     				if(date($mm) < date(time())){
-	    				$dd = 0;
+	    				$dd = null;
 	    				foreach($data as $val){
 	    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
 	    						$dd = intval($val["tc_value"]);
@@ -113,12 +113,13 @@ class GraphController extends SimbApiController {
     
     	}
     	if(!empty($serial)){
-    		$VAR['chart'] = array('renderTo'=>'yw0');
-    		$VAR['title'] = array('text'=>'');
+    		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'area',);
+    		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+    		$VAR['plotOptions'] = array('area'=>array('connectNulls'=>true));
+    		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'1');
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    		$VAR['yAxis'] = array('title'=>array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m)));
+    		$VAR['yAxis'] = array('title'=>array('text'=>''));
     		$VAR['series'] = $serial;
     	}else{
     		$VAR['chart']= $serial;
@@ -149,13 +150,14 @@ class GraphController extends SimbApiController {
     	foreach($keys_arr as $r){
     		$mm = $m;
     		$sedat = array();
+    		$dd = 0;
     		while($mm < $e)
     		{
     			if(date($mm) < date(time())){
-    				$dd = 0;
+    				
     				foreach($data as $val){
     					if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
-    						$dd = intval($val["prev_averge_percent"]+$val["average_percent"]);
+    						$dd = ($this->CLID($val))+$dd;
     					}
     				}
     				$sedat[] = $dd;
@@ -166,15 +168,21 @@ class GraphController extends SimbApiController {
     	}
     	
     	$VAR['chart'] = array('renderTo'=>'yw1');
-    	$VAR['title'] = array('text'=>'');
+    	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'1');
     	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m)));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''));
     	$VAR['series'] = $serial;
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
     
+    }
+    
+    private function CLID($val){
+    	$average_li = intval($val["prev_percent_li"]+$val["percent_li"])/2;
+    	$CLID = ($average_li*$val['mm_no_days']);
+		return $CLID;
     }
     
     public function actionGetGraphInRange(){
