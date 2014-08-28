@@ -138,15 +138,13 @@ class ReportController extends SimbController
 		$VARS['grower'] = $grower;
 		$VARS['dateRange'] = $this->getDateRange();
         
-		$max_spray_count = 0;
+        $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
 		}
-		
 		$properties = $grower->getProperties();
 		foreach($properties as $property){
 			//Get Data
-			$location = $property->location;
 			$blocks = $property->getBlocks();
 
 			foreach($blocks as $block){
@@ -225,7 +223,7 @@ class ReportController extends SimbController
 				}
 			}
 		}
-		//$VARS['email'] = $this->email;
+        //$VARS['email'] = $this->email;
         $VARS['link'] = Yii::app()->baseUrl. '/report/?grower='.$grower->id;
 		$this->render('grower', array(
                 'VARS' => $VARS

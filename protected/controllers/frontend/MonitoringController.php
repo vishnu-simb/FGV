@@ -26,13 +26,23 @@ class MonitoringController extends SimbController
 						'actions' => array('index', 'logout'),
 						'users' => array('@'),
 				),
+                array(
+						'allow',
+						'actions' => array('import'),
+						'expression' => 'Yii::app()->user->isAdmin()',
+				),
 				array(
 						'deny',
 						'actions' => array('index', 'logout'),
 						'users' => array('*'),
 						'deniedCallback' => array($this, 'redirectLoginNeeded'),
 				),
-	
+	           array(
+						'deny',
+						'actions' => array('import'),
+						'users' => array('*'),
+						'deniedCallback' => array($this, 'redirectPermissionNeeded'),
+				),
 		);
 	}
 	

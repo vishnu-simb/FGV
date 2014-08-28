@@ -114,13 +114,9 @@ class CommonDegreeDay extends BaseDegreeDay
 		return $this->_value;
 	}
 	
-	private $_sinceBio = array();
-	function SinceBiofix($block, $secondCohort = false){	
-		$_k = $block->id.'|'.(int)$secondCohort;
-        
-		if(isset($this->_sinceBio[$_k])){
-			return $this->_sinceBio[$_k];
-		}
+	private static $_sinceBio = array();
+	function SinceBiofix($block, $secondCohort = false, $previousBio = 0){	
+		
 		
 		$biofixDate = $this->pest->getBiofix($block->id, $secondCohort);
 		if(!$biofixDate){
@@ -128,9 +124,13 @@ class CommonDegreeDay extends BaseDegreeDay
 			return null;
 		}
 		$biofixDate = $biofixDate->date;
+        $_k = $block->id.'|'.$this->weather->date.'|'.$this->weather->location_id.'|'.$biofixDate.(int)$secondCohort;
+		if(isset(static::$_sinceBio[$_k])){
+		    return static::$_sinceBio[$_k];
+		}
 		//date is less than biofix date
 		if(strtotime($this->weather->date) < strtotime($biofixDate)){
-			$this->_sinceBio[$_k] = 0;
+			static::$_sinceBio[$_k] = 0;
 			return 0;
 		}
 		
@@ -139,19 +139,23 @@ class CommonDegreeDay extends BaseDegreeDay
 			$degreeDays = 0;
 		}
 		
-		$date = $this->weather->previousDay();
-		if($date === null){//We are lacking data
-			$this->_sinceBio[$_k] = null;
-			//throw new Exception('no data');
-			return null;
-		}
-
-		//Get Previous Day
-		$previousDD = static::cachedCreate($date,$this->pest);
-		
 		//Calculate and Store
-        $ret = $degreeDays + $previousDD->SinceBiofix($block,$secondCohort);
-		$this->_sinceBio[$_k] = $ret;
+        if ($previousBio)
+            $ret = $degreeDays + $previousBio;
+        else
+        {
+    		$date = $this->weather->previousDay();
+    		if($date === null){//We are lacking data
+    			static::$_sinceBio[$_k] = null;
+    			//throw new Exception('no data');
+    			return null;
+    		}
+            //Get Previous Day
+		    $previousDD = static::cachedCreate($date,$this->pest);
+            $ret = $degreeDays + $previousDD->SinceBiofix($block,$secondCohort);
+        }
+            
+		static::$_sinceBio[$_k] = $ret;
 		//if( $this->weather->getDate() == '2010-11-26' ) die(var_dump($this->weather->getDate(),$degreeDays,$ret));
 		return $ret;
 	}    

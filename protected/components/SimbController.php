@@ -49,4 +49,13 @@ class SimbController extends CController
         Yii::app()->user->setFlash('info', Yii::t('app', 'You need to login to perform this action!'));
         $this->redirect(Yii::app()->user->loginUrl);
     }
+    
+    /**
+     * Actions to do in case permission required
+     */
+    public function redirectPermissionNeeded()
+    {
+        Yii::app()->user->setFlash('info', Yii::t('app', 'You have no permissions to perform this action!'));
+        $this->redirect('/');
+    }
 }

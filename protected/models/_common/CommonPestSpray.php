@@ -124,7 +124,7 @@ class CommonPestSpray extends BasePestSpray
 				
 				//Get DD
 				$DD = CommonDegreeDay::cachedCreate($weather, $pest);
-				$DDsinceBiofix = $DD->SinceBiofix($block, $secondCohort);
+				$DDsinceBiofix = $DD->SinceBiofix($block, $secondCohort, $lastBio);
 				//echo $weather->date,': '.$weather->min.','.$weather->max.' = <b>',$DDsinceBiofix,'</b><br />';
 				
 				if($lastDD === 0){

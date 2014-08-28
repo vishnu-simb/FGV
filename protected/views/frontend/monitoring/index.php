@@ -7,7 +7,9 @@
 <div class="row-fluid">
     <div class="span12">
         <div class="box">
+            <?php if (Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN):?>
             <a class="btn" style="float: right;" href="<?=Yii::app()->createUrl($this->getId())?>/import">Import Data</a>
+            <?php endif;?>
  <?php $this->renderPartial('_search',array(
                 'modelGrower' => $modelGrower,
             )); ?>
