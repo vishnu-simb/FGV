@@ -157,7 +157,7 @@ class GraphController extends SimbApiController {
     				
     				foreach($data as $val){
     					if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
-    						$dd = ($this->CLID($val))+$dd;
+    						$dd = ($this->CLIDData($val))+$dd;
     					}
     				}
     				$sedat[] = $dd;
@@ -179,7 +179,7 @@ class GraphController extends SimbApiController {
     
     }
     
-    private function CLID($val){
+    private function CLIDData($val){
     	$average_li = intval($val["prev_percent_li"]+$val["percent_li"])/2;
     	$CLID = ($average_li*$val['mm_no_days']);
 		return $CLID;

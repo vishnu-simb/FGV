@@ -25,7 +25,8 @@ class MiteMonitor extends CommonMiteMonitor
 		if( Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
 			$condition = "WHERE g.id =".Yii::app()->user->id."";
 		}
-		$sql="SELECT mm.id as monitoring_id,mm.date,mm.percent_li,mm.average_li,CONCAT (g.name,' : ',b.name,' - ',m.name) AS monitoring_name
+		$sql="SELECT mm.id as monitoring_id,mm.date,mm.percent_li,mm.no_days,CONCAT (g.name,' : ',b.name,' - ',m.name) AS monitoring_name,
+		((SELECT pr.percent_li FROM ".$this->tableName()." pr WHERE pr.date < mm.date AND pr.mite_id = mm.mite_id AND pr.block_id = mm.block_id ORDER BY DATE DESC LIMIT 1) + mm.percent_li)/2 AS mm_average_li
 		FROM ".$this->tableName()." mm
 			INNER JOIN $miteTb m ON mm.mite_id = m.id
 			INNER JOIN $blockTb b ON mm.block_id = b.id

@@ -7,9 +7,7 @@
 <div class="row-fluid">
     <div class="span12">
         <div class="box">
-            <?php if (Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN):?>
-            <a class="btn" style="float: right;" href="<?=Yii::app()->createUrl($this->getId())?>/import">Import Data</a>
-            <?php endif;?>
+            
  <?php $this->renderPartial('_search',array(
                 'modelGrower' => $modelGrower,
             )); ?>
@@ -39,15 +37,15 @@
 										<tr>
 											<th>Mite</th>
 											<th style="text-align: right;border-left: 0 none;">% Li</th>
-											<th style="text-align: right;border-left: 0 none;">Average Li</th>
+											<th style="text-align: right;border-left: 0 none;">No days b/n</th>
 										</tr>
 									</thead>
 									<tbody id="tbl_'.$block->id.'">';
 									foreach($block->getMites() as $monitor){
 										echo '<tr>';
 										echo '<td>'.$monitor->name.'</td>';
-										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="PercentLi['.$block->id.','.$monitor->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
-										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="AverageLi['.$block->id.','.$monitor->id.']" class="spinner" min="0" max="200" style="width: 20px;" /></td>';
+										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="PercentLi['.$block->id.','.$monitor->id.']" class="spinner" value="" max="100" style="width: 30px;" /></td>';
+										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="NoDays['.$block->id.','.$monitor->id.']" class="spinner" value="" style="width: 30px;" /></td>';
 										
 										echo '</tr>';
 									}
@@ -85,6 +83,7 @@
 										<tr>
 										<th>Mite</th>
 										<th style="text-align: right;">% Li</th>
+										<th style="text-align: right;">No days b/n</th>
 										<th style="text-align: right;">Average Li</th>
 										<th></th>
 										</tr>
@@ -97,7 +96,10 @@
 												<?php echo $lastest['percent_li'] ;?>%
 											</td>
 											<td style="text-align: right;">
-												<?php echo $lastest['average_li'] ;?>
+												<?php echo $lastest['no_days'] ;?>
+											</td>
+											<td style="text-align: right;">
+												<?php echo $lastest['mm_average_li'] ;?>
 											</td>
 											<td style="text-align: right;width: 65px">
 											<a href="<?php echo Yii::app()->baseUrl."/monitoring/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>
@@ -107,8 +109,12 @@
 									<?php endforeach;?>
 									</tbody>
 								</table>
+								
 								</div>
 						</div>
+						<br/><?php if (Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN):?>
+					            <a class="btn btn-primary" style="float: right;" href="<?=Yii::app()->createUrl($this->getId())?>/import"><i class="glyphicon-file_import"></i> Import Data</a>
+					            <?php endif;?>
 					</div>
 				</div>
 </div>

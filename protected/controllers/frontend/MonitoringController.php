@@ -119,14 +119,14 @@ class MonitoringController extends SimbController
 			$modelGrower->attributes = $_GET['Grower'];
 			$search = true;
 		}
-		if(isset($_POST['PercentLi']) && isset($_POST['AverageLi'])){
+		if(isset($_POST['PercentLi']) && isset($_POST['NoDays'])){
 			try{
 				foreach ($_POST['PercentLi'] as $key => $value){ // save multiple records
 					if($value != ""){
-						if($_POST['AverageLi'][$key] != ""){
+						if($_POST['NoDays'][$key] != ""){
 							$saveMonitor = new MiteMonitor();
 							$data = explode(',',$key);
-							$save = array('percent_li'=>$value,'average_li'=>$_POST['AverageLi'][$key],'block_id'=>$data[0],'mite_id'=>$data[1],'date'=>gmdate('Y-m-d'));
+							$save = array('percent_li'=>$value,'no_days'=>$_POST['NoDays'][$key],'block_id'=>$data[0],'mite_id'=>$data[1],'date'=>gmdate('Y-m-d'));
 							$saveMonitor->attributes = $save;
 							if($saveMonitor->save()){
 								Yii::app()->session->open();
@@ -163,7 +163,7 @@ class MonitoringController extends SimbController
             $type = $_FILES['import_file']['type'];
             $name_without_ext = pathinfo($filename, PATHINFO_FILENAME);
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            if ($ext == 'csv' && $type == 'text/csv')
+            if ($ext == 'csv')
             {
                 if ($_FILES["import_file"]["error"] > 0)
                 {
@@ -193,7 +193,6 @@ class MonitoringController extends SimbController
                     $row = -1;
                     $current_property_name = $current_block_name = $current_mite_name = '';
                     $property_id = $block_id = $mite_id = '';
-                    $previous_percent_li = 0;
                     $success = 1;
                     while(($filedata = fgetcsv($f)) !== FALSE) 
                     {
@@ -263,13 +262,12 @@ class MonitoringController extends SimbController
                             $modelMonitor = new MiteMonitor();
                             $monitor = MiteMonitor::model()->findByAttributes(array('mite_id'=>$mite_id,'block_id'=>$block_id,'date'=>$date));
                             if ($monitor) //update existed record
-                                $modelMonitor = $this->loadModel($monitor->id);
-                            $modelMonitor->mite_id = $mite_id;
-                            $modelMonitor->block_id = $block_id;
-                            $modelMonitor->date = $date;
-                            $modelMonitor->percent_li = $filedata[4];
-                            $modelMonitor->average_li = ($previous_percent_li + $modelMonitor->percent_li)/2;
-                            $modelMonitor->no_days = $filedata[5];
+                              	$modelMonitor = $this->loadModel($monitor->id);
+	                            $modelMonitor->mite_id = $mite_id;
+	                            $modelMonitor->block_id = $block_id;
+	                            $modelMonitor->date = $date;
+	                            $modelMonitor->percent_li = $filedata[4];
+	                            $modelMonitor->no_days = $filedata[5];
                             if (!$modelMonitor->save())
                             {
                                 $success = 0;
@@ -277,7 +275,6 @@ class MonitoringController extends SimbController
 					            Yii::app()->user->setFlash('error', Yii::t('app', "Cannot save data at line: ".$row));
                                 break;
                             }
-                            $previous_percent_li = $modelMonitor->percent_li;
                         }
                     }
                     
