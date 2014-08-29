@@ -261,9 +261,10 @@ class MonitoringController extends SimbController
 		$modelMiteMonitor = new MiteMonitor('search');
 		$modelMiteMonitor->unsetAttributes();  // clear any default values
 		if (isset($_GET['MiteMonitor'])) {
-			$modelMiteMonitor->attributes = $_GET['MiteMonitor'];
+			$criteria = $_GET['MiteMonitor'];
+			Yii::app()->session['MiteMonitor'] = $criteria;
 		}
-
+		$modelMiteMonitor->attributes = Yii::app()->session['MiteMonitor'];
 		$this->render('index', array(
 			'modelMiteMonitor' => $modelMiteMonitor,
 		));
