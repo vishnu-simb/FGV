@@ -4,6 +4,8 @@ class GraphController extends SimbApiController {
 
 	protected $block;
 	
+	private $Pest_CLID = array();
+	
 	function __construct(){
 		$this->block = Block::model()->findByPk($_GET['block']);
 		if ($this->block === null) {
@@ -165,8 +167,9 @@ class GraphController extends SimbApiController {
     			$mm = strtotime('+1 day', $mm); // increment for loop
     		}
     		$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
+    		$this->getPestCLIDData($sedat,$r);
     	}
-    	
+    	$serial[] = $this->Pest_CLID;
     	$VAR['chart'] = array('renderTo'=>'yw1');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
@@ -178,7 +181,25 @@ class GraphController extends SimbApiController {
     	Yii::app()->end();
     
     }
-
+    
+	private function getPestCLIDData($sedat,$mite){
+		
+		if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Checking Pest 
+			 $data = array_merge(array('name'=>'PESTS'),array('data'=>$sedat),array('color'=>'#ff0000'));
+			 $pest = $this->Pest_CLID;
+			 if(!empty($pest)){
+			 	$merge = array();
+				 foreach($data['data'] as $key=>&$val){ // Loop though one array
+				 	$pp = $pest['data'][$key]; // Get the values from the other array
+				 	$merge[$key]= $pp+$val;
+				 }
+				 $this->Pest_CLID = array_merge(array('name'=>'PESTS'),array('data'=>$merge),array('color'=>'#ff0000'));
+			 }else{
+			 	$this->Pest_CLID =  $data;
+			 }
+		}
+	}
+	
     public function actionGetGraphInRange(){
     	$VAR = array();
         
