@@ -17,6 +17,7 @@ return array(
         'application.models.backend.*',
         'application.models.service.*',
         'application.components.*',
+    	'application.helpers.*',
         // For bootstrap
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',

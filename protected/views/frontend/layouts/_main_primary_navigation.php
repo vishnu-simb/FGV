@@ -68,6 +68,11 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         			'label' => Yii::t('app', 'Mite'),
                         			'url' => Yii::app()->baseUrl.'/backend/mite',
                         	),
+                        		
+                        	array(
+                        			'label' => Yii::t('app', 'Mite Monitor'),
+                        			'url' => Yii::app()->baseUrl.'/backend/monitoring',
+                        	),
 							array(
 									'label' => Yii::t('app', 'Property'),
 									'url' => Yii::app()->baseUrl.'/backend/property',

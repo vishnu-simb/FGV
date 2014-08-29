@@ -17,7 +17,7 @@ return array(
         'application.models.frontend.*',
         'application.models.service.*',
         'application.components.*',
-    	'application.helper.*',
+    	'application.helpers.*',
     	'ext.yii-mail.YiiMailMessage',
     		
         // For bootstrap

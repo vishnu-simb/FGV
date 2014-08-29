@@ -29,7 +29,10 @@
  */
 abstract class BaseMiteMonitor extends SimbActiveRecord{
 	
-    public static function model($className=__CLASS__)
+    public $import_file;
+	
+    
+	public static function model($className=__CLASS__)
     {
 		return parent::model($className);
 	}
@@ -47,8 +50,10 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
+			array('mite_id, block_id, date, percent_li, no_days', 'required','except' => 'search'),
+			array('import_file', 'file','allowEmpty'=>true,'types'=>'csv','on'=>'import'),
+			array('import_file', 'required','on'=>'import'),
 			array('mite_id, block_id, date, percent_li, average_li, no_days', 'required','except' => 'search'),
-			array('mite_id, block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('percent_li, average_li, no_days', 'numerical'),
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
@@ -78,7 +83,7 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 			'mite_id' => Yii::t('app', 'Mite'),
 			'block_id' => Yii::t('app', 'Block'),
 			'date' => Yii::t('app', 'Date'),
-			'percent_li' => Yii::t('app', 'Percent Li'),
+			'percent_li' => Yii::t('app', '% Li'),
 			'average_li' => Yii::t('app', 'Average Li'),
 			'no_days' => Yii::t('app', 'No days B/N'),
 			'creator_id' => Yii::t('app', 'Creator'),
@@ -88,6 +93,7 @@ abstract class BaseMiteMonitor extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'import_file' => Yii::t('app', 'File to import (*.csv)'),
 		);
 	}
 

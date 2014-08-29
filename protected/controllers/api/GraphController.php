@@ -157,7 +157,7 @@ class GraphController extends SimbApiController {
     				
     				foreach($data as $val){
     					if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
-    						$dd = ($this->CLIDData($val))+$dd;
+    						$dd = ($val['mm_average_li']*$val['mm_no_days'])+$dd;
     					}
     				}
     				$sedat[] = $dd;
@@ -178,13 +178,7 @@ class GraphController extends SimbApiController {
     	Yii::app()->end();
     
     }
-    
-    private function CLIDData($val){
-    	$average_li = intval($val["prev_percent_li"]+$val["percent_li"])/2;
-    	$CLID = ($average_li*$val['mm_no_days']);
-		return $CLID;
-    }
-    
+
     public function actionGetGraphInRange(){
     	$VAR = array();
         

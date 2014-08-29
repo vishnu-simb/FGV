@@ -29,7 +29,7 @@ class MiteMonitor extends CommonMiteMonitor
 		$condition = !empty($this->block_id) ? 'WHERE mm.block_id ='. $this->block_id : ' ';
 		$condition .= !empty($this->date) ? ' AND (mm.date BETWEEN "'. $this->date .'-01" AND "'. $this->date.'-30")' : '';
 		$sql="SELECT mm.date AS mm_date,mm.no_days AS mm_no_days,mm.percent_li ,mm.average_li ,m.name AS mite_name ,
-				(SELECT pr.percent_li FROM ".$this->tableName()." pr WHERE pr.date < mm.date AND pr.mite_id = mm.mite_id AND pr.block_id = mm.block_id ORDER BY DATE DESC LIMIT 1) AS prev_percent_li
+			((SELECT pr.percent_li FROM ".$this->tableName()." pr WHERE pr.date < mm.date AND pr.mite_id = mm.mite_id AND pr.block_id = mm.block_id ORDER BY DATE DESC LIMIT 1) + mm.percent_li)/2 AS mm_average_li
 		FROM ".$this->tableName()." mm
 		INNER JOIN ".Mite::model()->tableName()." m ON mm.mite_id = m.id
 		INNER JOIN ".Block::model()->tableName()." b ON mm.block_id = b.id

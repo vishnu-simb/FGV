@@ -112,9 +112,6 @@
 								
 								</div>
 						</div>
-						<br/><?php if (Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN):?>
-					            <a class="btn btn-primary" style="float: right;" href="<?=Yii::app()->createUrl($this->getId())?>/import"><i class="glyphicon-file_import"></i> Import Data</a>
-					            <?php endif;?>
 					</div>
 				</div>
 </div>
