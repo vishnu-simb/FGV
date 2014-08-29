@@ -74,7 +74,6 @@ class GraphController extends SimbApiController {
 	
 
     public function actionGetBlockTrap(){
-    
     	$VAR = array();
     	$m = $_GET['date'];
     	$m = strtotime('01-'.str_replace(',','-',$m));
@@ -132,7 +131,6 @@ class GraphController extends SimbApiController {
     }
     
     public function actionGetBlockMite(){
-    
     	$VAR = array();
     	$m = $_GET['date'];
     	$m = strtotime('01-'.str_replace(',','-',$m));
@@ -143,6 +141,22 @@ class GraphController extends SimbApiController {
     	$dataProvider = $model->getSqlDataProvider();
     	$data = $dataProvider->getData();
     	$mite = Mite::model()->findAll();
+    	$PEST = function ($sedat,$mite){ // Method to calculate PEST CLID data
+    		if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Merge value only with Type = Pest
+    			$data = array_merge(array('name'=>'PESTS'),array('data'=>$sedat),array('color'=>'#ff0000'));
+    			$pest = $this->Pest_CLID;
+    			if(!empty($pest)){
+    				$merge = array();
+    				foreach($data['data'] as $key=>&$val){ // Loop though current pest
+    					$pp = $pest['data'][$key]; // Get the values from the last Pest_CLID data
+    					$merge[$key]= $pp+$val;
+    				}
+    				$this->Pest_CLID = array_merge(array('name'=>'PESTS'),array('data'=>$merge),array('color'=>'#ff0000'));
+    			}else{
+    				$this->Pest_CLID =  $data;
+    			}
+    		}
+    	};
     	$keys_arr = array();
     	foreach($mite as $v){
     		$keys_arr[] = $v->name;
@@ -166,8 +180,9 @@ class GraphController extends SimbApiController {
     			}
     			$mm = strtotime('+1 day', $mm); // increment for loop
     		}
+    		$PEST($sedat,$r); // Merge CLID data on PESTS
     		$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
-    		$this->getPestCLIDData($sedat,$r);
+    		
     	}
     	$serial[] = $this->Pest_CLID;
     	$VAR['chart'] = array('renderTo'=>'yw1');
@@ -181,24 +196,6 @@ class GraphController extends SimbApiController {
     	Yii::app()->end();
     
     }
-    
-	private function getPestCLIDData($sedat,$mite){
-		
-		if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Checking Pest 
-			 $data = array_merge(array('name'=>'PESTS'),array('data'=>$sedat),array('color'=>'#ff0000'));
-			 $pest = $this->Pest_CLID;
-			 if(!empty($pest)){
-			 	$merge = array();
-				 foreach($data['data'] as $key=>&$val){ // Loop though one array
-				 	$pp = $pest['data'][$key]; // Get the values from the other array
-				 	$merge[$key]= $pp+$val;
-				 }
-				 $this->Pest_CLID = array_merge(array('name'=>'PESTS'),array('data'=>$merge),array('color'=>'#ff0000'));
-			 }else{
-			 	$this->Pest_CLID =  $data;
-			 }
-		}
-	}
 	
     public function actionGetGraphInRange(){
     	$VAR = array();
