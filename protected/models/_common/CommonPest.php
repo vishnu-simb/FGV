@@ -4,6 +4,7 @@ Yii::import('application.models._base.BasePest');
 
 class CommonPest extends BasePest
 {
+    protected static $_block;
     private $sprayCount;
     public static function model($className=__CLASS__)
     {
@@ -30,6 +31,10 @@ class CommonPest extends BasePest
 	}
     
     function getBiofix($block_id, $hasSecondCohort){
-        return Biofix::model()->findByAttributes(array('block_id'=>$block_id,'pest_id'=>$this->id,'second_cohort'=>$hasSecondCohort?'yes':'no'));
+        $_k = $block_id. '|'. $this->id. '|'. $hasSecondCohort?'1':'0';
+        if (isset(static::$_block[$_k]))
+            return static::$_block[$_k];
+        else
+            return static::$_block[$_k] = Biofix::model()->findByAttributes(array('block_id'=>$block_id,'pest_id'=>$this->id,'second_cohort'=>$hasSecondCohort?'yes':'no'));
     }
 }

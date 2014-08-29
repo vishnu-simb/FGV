@@ -7,7 +7,7 @@ Yii::import('application.models._common.CommonDegreeDay');
 class CommonPestSpray extends BasePestSpray
 {
     private $_date = null;
-    private $_location = array();
+    protected static $_location = array();
 	private $isLowPop = false;
     
     public static function model($className=__CLASS__)
@@ -90,7 +90,8 @@ class CommonPestSpray extends BasePestSpray
 			$location = $block->property->location;
 			$locationId = $location->id;
 			
-			if(!isset($this->_location[$locationId])){
+            $_k = $locationId.'|'.$biofix_date;
+			if(!isset(static::$_location[$_k])){
 			    $criteria = new CDbCriteria();
             	$criteria->condition = 'location_id=:location_id AND date >= :weather_date';
             	$criteria->params = array(':location_id'=>$locationId,':weather_date'=>$biofix_date);
@@ -109,9 +110,9 @@ class CommonPestSpray extends BasePestSpray
 				foreach($all as $v){
 					$a[strtotime($v->date)] = $v;
 				}
-				$this->_location[$locationId] = $a;
+				static::$_location[$_k] = $a;
 			}
-			$all = $this->_location[$locationId];
+			$all = static::$_location[$_k];
 			
 			//Start
 			$lastDD = $lastBio = $DDsinceBiofix = 0;

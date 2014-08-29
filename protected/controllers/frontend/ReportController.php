@@ -142,6 +142,28 @@ class ReportController extends SimbController
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
 		}
+        $sprayDates = $pests = array();
+		foreach(Pest::model()->findAll() as $pest){
+			$pests[$pest->name] = $pest;
+			if($pest->calculate == 'yes'){
+				for($i=1,$f=$pest->getSprayCount();$i<=$f;++$i){
+					$spray = $pest->getSpray($i,$grower);
+					$sprayDates[$pest->name][$i] = $spray;
+					if($spray->hasLowPopulation()){
+						$lowPop = clone $spray;
+						$lowPop->swapPopulationValues();
+						$sprayDates[$pest->name.'<br/>Low Population'][$i] = $lowPop;
+					}
+				}
+				for($f++;$f<=$max_spray_count;++$f){
+					$sprayDates[$pest->name][$f] = null;
+					if($spray->hasLowPopulation()){
+						$sprayDates[$pest->name.'<br/>Low Population'][$f] = null;
+					}
+				}
+			}
+		}
+		$VARS['pests'] = $pests;
 		$properties = $grower->getProperties();
 		foreach($properties as $property){
 			//Get Data
@@ -149,28 +171,6 @@ class ReportController extends SimbController
 
 			foreach($blocks as $block){
 				$VARS['blocks'][] = $block;
-				$sprayDates = $pests = array();
-				foreach(Pest::model()->findAll() as $pest){
-					$pests[$pest->name] = $pest;
-					if($pest->calculate == 'yes'){
-						for($i=1,$f=$pest->getSprayCount();$i<=$f;++$i){
-							$spray = $pest->getSpray($i,$grower);
-							$sprayDates[$pest->name][$i] = $spray;
-							if($spray->hasLowPopulation()){
-								$lowPop = clone $spray;
-								$lowPop->swapPopulationValues();
-								$sprayDates[$pest->name.'<br/>Low Population'][$i] = $lowPop;
-							}
-						}
-						for($f++;$f<=$max_spray_count;++$f){
-							$sprayDates[$pest->name][$f] = null;
-							if($spray->hasLowPopulation()){
-								$sprayDates[$pest->name.'<br/>Low Population'][$f] = null;
-							}
-						}
-					}
-				}
-				$VARS['pests'] = $pests;
 				//$VARS['sprayDates'][$block->getId()] = $sprayDates;
 				
 				$sprayData = array();
@@ -216,11 +216,6 @@ class ReportController extends SimbController
                 if (empty($VARS['graphData'][$block->id]))
 				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower);
 				
-				$pests = array();
-				foreach($block->getTraps() as $trap){
-					$pest = $trap->pest;
-					$pests[$pest->name] = $pest;
-				}
 			}
 		}
         //$VARS['email'] = $this->email;
