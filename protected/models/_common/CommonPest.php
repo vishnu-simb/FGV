@@ -31,7 +31,7 @@ class CommonPest extends BasePest
 	}
     
     function getBiofix($block_id, $hasSecondCohort){
-        $_k = $block_id. '|'. $this->id. '|'. $hasSecondCohort?'1':'0';
+        $_k = $block_id. '|'. $this->id. '|'. ($hasSecondCohort?'1':'0');
         if (isset(static::$_block[$_k]))
             return static::$_block[$_k];
         else

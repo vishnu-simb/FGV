@@ -29,7 +29,7 @@
 	$pm = array();
 	foreach($VAR['spray_inverse'] as $sprayNo=>$vv){
 		if($vv){
-			echo '<div class="th"><span>'.$sprayNo.'st</span>	';
+			echo '<div class="th"><span>'.Number::Ordinal($sprayNo).'</span>	';
 			
 			foreach($vv as $pest=>$spray){
 				
