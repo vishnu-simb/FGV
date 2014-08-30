@@ -36,28 +36,9 @@
                             <div class="span6">
                             
                             <?php echo $form->textFieldControlGroup($modelVariety, 'name', array('maxlength' => 255, 'class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('name'))); ?>
-							<!--  
-                            <?php //echo $form->textFieldControlGroup($modelVariety, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('creator_id'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelVariety, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('ordering'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelVariety, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('created_at'))); ?>
-
-                            -->
+		
                             </div>
 
-                            <!-- 
-                            <div class="span6">
-                            
-                            <?php //echo $form->textFieldControlGroup($modelVariety, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('updated_at'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelVariety, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('status'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelVariety, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php //echo $form->textAreaControlGroup($modelVariety, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelVariety->getAttributeLabel('params'))); ?>
-
-                            </div>  -->
 
                             <div class="span12">
                     <div class="form-actions">

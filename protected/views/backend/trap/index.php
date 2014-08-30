@@ -59,7 +59,7 @@ $('.search-form-ext form').submit(function(){
 		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
 		array('name'=>'property','header'=>'Property','value'=>'$data->property->name','filter'=>CHtml::activeDropDownList($modelTrap,'property', CHtml::listData( $modelTrap->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'grower','header'=>'Grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelTrap,'grower', CHtml::listData( $modelTrap->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
-		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelTrap,'name', CHtml::listData( $modelTrap->findAll() ,'name','name'),array('empty'=>'Select A Trap'))),
+		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelTrap,'name', CHtml::listData($modelTrap->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap'))),
 		
 		/*
 		 'creator_id',
@@ -75,7 +75,7 @@ $('.search-form-ext form').submit(function(){
 			'class' => 'bootstrap.widgets.TbButtonColumn',
 		),
 	),
-)); ?>
+));?>
         </div>
     </div>
 </div>

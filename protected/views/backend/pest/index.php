@@ -54,7 +54,7 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		'id',
+		//'id',
 		'name',
 		'dd',
 		'calculate',

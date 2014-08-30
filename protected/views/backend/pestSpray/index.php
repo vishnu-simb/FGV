@@ -54,10 +54,9 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		'id',
-		//array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
-		'pest.name',
-		'grower.name',
+		//'id',
+		 array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
+		 array('name'=>'grower'),
 		'number',
 		'dd',
 		'every',

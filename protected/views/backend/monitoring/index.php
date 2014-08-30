@@ -54,7 +54,7 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		'id',
+		//'id',
 		array('name'=>'mite.name','header'=>'Mite','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'mite', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite'))),
 		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'property', CHtml::listData( $modelMiteMonitor->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'block.name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'block', CHtml::listData( $modelMiteMonitor->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),

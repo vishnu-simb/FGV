@@ -27,9 +27,9 @@ $this->menu = array(
     'data' => $modelPestSpray,
     'attributes' => array(
 		'id',
-		'pest.name',
+		'pest',
 		'number',
-		'grower.name',
+		'grower',
 		'dd',
 		'every',
 		'lowpop_dd',

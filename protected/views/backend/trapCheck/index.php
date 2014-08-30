@@ -54,7 +54,7 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		'id',
+		//'id',
 		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelTrapCheck,'property', CHtml::listData( $modelTrapCheck->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'block.name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelTrapCheck,'block', CHtml::listData( $modelTrapCheck->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
 		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelTrapCheck,'grower', CHtml::listData( $modelTrapCheck->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),

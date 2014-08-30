@@ -42,7 +42,7 @@ $('.search-form-ext form').submit(function(){
 
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
-	'id' => 'mite-grid',
+	//'id' => 'mite-grid',
 	'dataProvider' => $modelMite->search(),
 	'filter' => $modelMite,
     'filterCssClass' => 'thefilter',

@@ -8,4 +8,12 @@ class Trap extends CommonTrap
     {
 		return parent::model($className);
 	}
+	
+	function getTrapByBlock(){
+		if(isset($this->block->id)){
+			return $this->findAllByAttributes(array('block_id'=>$this->block->id),array('order'=>'ordering DESC'));
+		}else{
+			return $this->findAll(array('order'=>'ordering DESC'));
+		}
+	}
 }
