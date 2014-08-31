@@ -8,4 +8,13 @@ class TrapCheck extends CommonTrapCheck
     {
 		return parent::model($className);
 	}
+
+	function getTrapByBlock(){
+		
+		if(isset($this->block)){
+			return Trap::model()->findAllByAttributes(array('block_id'=>$this->block),array('order'=>'name'));
+		}else{
+			return $this->getTrap();
+		}
+	}
 }

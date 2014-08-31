@@ -29,6 +29,7 @@ class CommonProperty extends BaseProperty
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
     	return Grower::model()->findAll($criteria);
     }
     
@@ -39,6 +40,7 @@ class CommonProperty extends BaseProperty
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
     	return Location::model()->findAll($criteria);
     }
     

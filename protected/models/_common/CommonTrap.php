@@ -57,6 +57,7 @@ class CommonTrap extends BaseTrap
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
     	return Block::model()->findAll($criteria);
     }
     
@@ -67,9 +68,10 @@ class CommonTrap extends BaseTrap
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
     	return Pest::model()->findAll($criteria);
     }
-    
+
     /**
      * @return Property[]
      */
@@ -77,6 +79,7 @@ class CommonTrap extends BaseTrap
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
     	return Property::model()->findAll($criteria);
     }
     
@@ -87,6 +90,7 @@ class CommonTrap extends BaseTrap
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';
     	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
     	return Grower::model()->findAll($criteria);
     }
 }

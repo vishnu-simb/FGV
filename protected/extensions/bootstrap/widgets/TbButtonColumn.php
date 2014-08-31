@@ -22,11 +22,11 @@ class TbButtonColumn extends CButtonColumn
     /**
      * @var string the update button icon (defaults to TbHtml::ICON_PENCIL).
      */
-    public $updateButtonIcon = TbHtml::ICON_PENCIL;
+    public $updateButtonIcon = TbHtml::ICON_EDIT;
     /**
      * @var string the delete button icon (defaults to TbHtml::ICON_TRASH).
      */
-    public $deleteButtonIcon = TbHtml::ICON_TRASH;
+    public $deleteButtonIcon = TbHtml::ICON_REMOVE;
 
     /**
      * Initializes the default buttons (view, update and delete).
