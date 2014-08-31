@@ -13,6 +13,7 @@
  * @property integer $property_id
  * @property string $name
  * @property string $tree_spacing
+ * @property string $tree_variety
  * @property double $row_width
  * @property string $creator_id
  * @property integer $ordering
@@ -53,8 +54,8 @@ abstract class BaseBlock extends SimbActiveRecord{
 			array('tree_spacing', 'length', 'max'=>11),
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
-			array('tree_spacing, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, grower,location, property_id, name, tree_spacing, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('tree_spacing, tree_variety, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, grower,location, property_id, name, tree_spacing, tree_variety, row_width, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +80,7 @@ abstract class BaseBlock extends SimbActiveRecord{
 			'property_id' => Yii::t('app', 'Property'),
 			'name' => Yii::t('app', 'Block'),
 			'tree_spacing' => Yii::t('app', 'Tree Spacing'),
+			'tree_variety' => Yii::t('app', 'Tree Variety'),
 			'row_width' => Yii::t('app', 'Row Width'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
@@ -101,6 +103,7 @@ abstract class BaseBlock extends SimbActiveRecord{
 		$criteria->compare('property.location_id', $this->location);
 		$criteria->compare('property.grower_id', $this->grower);
 		$criteria->compare('tree_spacing', $this->tree_spacing, true);
+		$criteria->compare('tree_variety', $this->tree_variety, true);
 		$criteria->compare('row_width', $this->row_width);
 		$criteria->compare('creator_id', $this->creator_id, true);
 		$criteria->compare('ordering', $this->ordering);

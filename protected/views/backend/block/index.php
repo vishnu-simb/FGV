@@ -60,6 +60,7 @@ $('.search-form-ext form').submit(function(){
 		array('name'=>'grower','value'=>'$data->grower->name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelBlock,'grower', CHtml::listData( $modelBlock->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
 		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelBlock, 'name', CHtml::listData($modelBlock->findAll() ,'name','name'),array('empty'=>'Select A Block'))),
 		'tree_spacing',
+		'tree_variety',
 		'row_width',
 		/*
 		'creator_id',

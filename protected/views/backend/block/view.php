@@ -30,6 +30,7 @@ $this->menu = array(
 		'property.name',
 		'name',
 		'tree_spacing',
+		'tree_variety',
 		'row_width',
 		/*
 		'creator_id',

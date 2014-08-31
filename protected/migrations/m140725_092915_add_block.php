@@ -25,6 +25,7 @@ class m140725_092915_add_block extends CDbMigration
 		$this->renameColumn($this->tableNameBlock,'block_name','name');
 		$this->renameColumn($this->tableNameBlock,'block_tree_spacing','tree_spacing');
 		$this->renameColumn($this->tableNameBlock,'block_row_width','row_width');
+		$this->addColumn($this->tableNameBlock,'tree_variety', 'varchar(200) NULL COMMENT "Tree Variety"');
 		
 		// Common fields, should appear in all table
 		$this->addColumn($this->tableNameBlock,'creator_id', 'BIGINT NULL COMMENT "id of user who create this item"');
