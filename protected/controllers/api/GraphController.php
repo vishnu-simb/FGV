@@ -118,7 +118,7 @@ class GraphController extends SimbApiController {
     		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		$VAR['plotOptions'] = array('area'=>array('connectNulls'=>true));
-    		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'1');
+    		$VAR['legend'] = array('layout'=>'vertical','align'=>'left','verticalAlign'=>'middle','borderWidth'=>'0');
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
     		$VAR['yAxis'] = array('title'=>array('text'=>''));
     		$VAR['series'] = $serial;
@@ -141,7 +141,7 @@ class GraphController extends SimbApiController {
     	$dataProvider = $model->getSqlDataProvider();
     	$data = $dataProvider->getData();
     	$mite = Mite::model()->findAll();
-    	$PEST = function ($sedat,$mite){ // Method to calculate PEST CLID data
+    	$PEST = function ($sedat,$mite){ // The method to calculate PEST CLID data
     		if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Merge value only with Type = Pest
     			$data = array_merge(array('name'=>'PESTS'),array('data'=>$sedat),array('color'=>'#ff0000'));
     			$pest = $this->Pest_CLID;
@@ -188,7 +188,7 @@ class GraphController extends SimbApiController {
     	$VAR['chart'] = array('renderTo'=>'yw1');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'1');
+    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
     	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
     	$VAR['yAxis'] = array('title'=>array('text'=>''));
     	$VAR['series'] = $serial;

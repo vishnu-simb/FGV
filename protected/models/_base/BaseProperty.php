@@ -27,7 +27,7 @@
  */
 abstract class BaseProperty extends SimbActiveRecord{
 	
-	public $_addBlock = 'no';
+	public $_addBlock = 'yes';
 	
     public static function model($className=__CLASS__)
     {

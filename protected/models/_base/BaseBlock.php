@@ -26,7 +26,7 @@
  */
 abstract class BaseBlock extends SimbActiveRecord{
 	
-	public $_addTrap;
+	public $_addTrap ='yes';
 	
     public static function model($className=__CLASS__)
     {

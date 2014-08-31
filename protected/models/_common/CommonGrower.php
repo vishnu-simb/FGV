@@ -16,10 +16,12 @@ class CommonGrower extends BaseGrower
     	
 			array('name, email, username', 'required', 'except' => 'search'),
     		array('username','unique'),
-    		array('password','required', 'except' => 'update'),
+    		array('password,_repassword','required', 'except' => 'update'),
+    		array('_repassword','compare','compareAttribute'=>'password'),
     		array('username', 'length', 'max'=>45),
     		array('ordering, status, is_deleted, postcode', 'numerical', 'integerOnly'=>true),
     		array('name, contact_name', 'length', 'max'=>100),
+    		array('password,_repassword', 'length', 'max'=>32),
     		array('salt', 'length', 'max'=>8),
     		array('enabled', 'length', 'max'=>3),
     		array('reporting', 'length', 'max'=>7),

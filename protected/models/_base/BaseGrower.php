@@ -30,7 +30,9 @@
  */
 abstract class BaseGrower extends SimbActiveRecord{
 	
-	public $_addProperty = 'no';
+	public $_addProperty = 'yes';
+	
+	public $_repassword ;
 	
     public static function model($className=__CLASS__)
     {
@@ -105,6 +107,7 @@ abstract class BaseGrower extends SimbActiveRecord{
 			'params' => Yii::t('app', 'Params'),
 			'_addProperty' => Yii::t('app', 'Wish To Add Property'),
             'avatar' => Yii::t('app', 'Avatar'),
+			'_repassword' => Yii::t('app','Password Repeat')
 		);
 	}
 
