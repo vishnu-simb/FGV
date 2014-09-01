@@ -71,7 +71,9 @@ class TbButtonColumn extends CButtonColumn
         $imageUrl = TbArray::popValue('imageUrl', $button, false);
         $label = TbArray::popValue('label', $button, $id);
         $options = TbArray::popValue('options', $button, array());
-
+        
+        TbArray::removeValue('class',$options); // remove default class
+        TbArray::defaultValue('class', 'btn', $options); // add new class
         TbArray::defaultValue('title', $label, $options);
         TbArray::defaultValue('rel', 'tooltip', $options);
 
