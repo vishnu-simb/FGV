@@ -15,4 +15,4 @@ $this->menu = array(
 );
 ?>
 
-<?php $this->renderPartial('_form', array('modelTrap' => $modelTrap)); ?>
+<?php $this->renderPartial('_create', array('modelTrap' => $modelTrap)); ?>

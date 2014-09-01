@@ -26,6 +26,9 @@
  * @property TrapCheck[] $trapChecks
  */
 abstract class BaseTrap extends SimbActiveRecord{
+	
+	public $_addMoreTrap = 'yes';
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -84,6 +87,7 @@ abstract class BaseTrap extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'_addMoreTrap' => Yii::t('app','Add another trap in this block'),
 		);
 	}
 

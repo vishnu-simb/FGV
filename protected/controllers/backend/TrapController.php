@@ -69,7 +69,12 @@ class TrapController extends SimbController
 		if (isset($_POST['Trap'])) {
 			$modelTrap->attributes = $_POST['Trap'];
 			if ($modelTrap->save()) {
-				$this->redirect(array('view', 'id' => $modelTrap->id));
+				
+				if($_POST['Trap']['_addMoreTrap'] == 'yes'){ // _addBlock enabled
+					$this->redirect(array('trap/create', 'Trap[block_id]' => $modelTrap->block_id));
+				}else{
+					$this->redirect(array('view', 'id' => $modelTrap->id));
+				}
 			}
 		}
 
