@@ -155,8 +155,7 @@ $bootstrap = Yii::app()->bootstrap;
         $clientScript->registerScriptFile($resourceUrl . '/js/eakroko.js');
         $clientScript->registerScriptFile($resourceUrl . '/js/application.min.js');
         
-        // Grower Admin
-        $clientScript->registerScriptFile($resourceUrl . '/js/grower.js');
+       
      
         ?>
 

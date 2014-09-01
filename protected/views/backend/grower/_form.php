@@ -2,6 +2,20 @@
 /* @var $this GrowerController */
 /* @var $modelGrower Grower */
 /* @var $form TbActiveForm */
+
+Yii::app()->clientScript->registerScript('update',"
+	weekly(); // load default 
+	$('#Grower_reporting' ).change(function(){
+		weekly();
+	});
+	function weekly(){
+		if($('#Grower_reporting').val() == 'weekly'){
+			$('.weekly-interval').show();
+		}else{
+			$('.weekly-interval').hide();
+		}
+	}
+");
 ?>
 
 <div class="alert alert-info">
