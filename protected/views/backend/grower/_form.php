@@ -48,7 +48,9 @@
                     		<?php echo $form->dropDownListControlGroup($modelGrower, 'enabled', array('yes'=>'Yes','no'=>'No'))?>
                             
                             <?php echo $form->dropDownListControlGroup($modelGrower, 'reporting', SimbHtml::getEnumItem($modelGrower,'reporting'))?>
-
+							<div class="weekly-interval">
+                            <?php echo $form->dropDownListControlGroup($modelGrower, 'weekly_interval', SimbHtml::getEnumItem($modelGrower,'weekly_interval'))?>
+							</div>
 </div>
 							<!--  
                             <div class="span6">

@@ -49,26 +49,15 @@
                             
                             <?php echo $form->dropDownListControlGroup($modelGrower, 'reporting', SimbHtml::getEnumItem($modelGrower,'reporting'))?>
                             
+                            <div class="weekly-interval">
+                            <?php echo $form->dropDownListControlGroup($modelGrower, 'weekly_interval', SimbHtml::getEnumItem($modelGrower,'weekly_interval'))?>
+							</div>
+							
                             <?php echo $form->inlineRadioButtonListControlGroup($modelGrower,'_addProperty', array('yes'=>'Yes','no'=>'No'))?>
-</div>
-							<!--  
-                            <div class="span6">
-                            
-                            <?php //echo $form->textFieldControlGroup($modelGrower, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('creator_id'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelGrower, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('ordering'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelGrower, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('created_at'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelGrower, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('updated_at'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelGrower, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('status'))); ?>
-						
-                            <?php //echo $form->textFieldControlGroup($modelGrower, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelGrower->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php //echo $form->textAreaControlGroup($modelGrower, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelGrower->getAttributeLabel('params'))); ?>
-</div>-->
-
+							
+							
+                            </div>
+							
                             <div class="span12">
                     <div class="form-actions">
                         <?php echo TbHtml::submitButton($modelGrower->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'),array(

@@ -33,3 +33,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 @media (max-width: 1200px) {
     .icon-nav{display:block !important}
 }
+
+.weekly-interval{
+	display:none;
+}

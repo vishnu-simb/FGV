@@ -154,7 +154,10 @@ $bootstrap = Yii::app()->bootstrap;
         // theme framework
         $clientScript->registerScriptFile($resourceUrl . '/js/eakroko.js');
         $clientScript->registerScriptFile($resourceUrl . '/js/application.min.js');
-
+        
+        // Grower Admin
+        $clientScript->registerScriptFile($resourceUrl . '/js/grower.js');
+     
         ?>
 
         <!--[if lte IE 9]>

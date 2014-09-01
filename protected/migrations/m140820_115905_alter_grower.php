@@ -22,6 +22,7 @@ class m140820_115905_alter_grower extends CDbMigration
 		$this->addColumn($this->tableNameGrower,'phone', 'VARCHAR(20) AFTER state');
 		$this->addColumn($this->tableNameGrower,'mobile', 'VARCHAR(20) AFTER state');
 		$this->addColumn($this->tableNameGrower,'avatar', 'varchar(255) NULL AFTER mobile');
+		$this->addColumn($this->tableNameGrower,'weekly_interval',"ENUM('monday','tuesday','wednesday','thursday','friday','saturday','sunday') NULL AFTER reporting");
 		
 		return true;
 	}

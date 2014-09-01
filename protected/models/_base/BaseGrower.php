@@ -18,6 +18,7 @@
  * @property string $email
  * @property string $enabled
  * @property string $reporting
+ * @property string $weekly_interval
  * @property string $creator_id
  * @property integer $ordering
  * @property string $created_at
@@ -63,8 +64,8 @@ abstract class BaseGrower extends SimbActiveRecord{
             array('suburb', 'length', 'max'=>50),
 			array('creator_id, phone, mobile', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
-			array('enabled, reporting, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, username, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('enabled, reporting, weekly_interval, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, username, weekly_interval, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -91,6 +92,7 @@ abstract class BaseGrower extends SimbActiveRecord{
 			'email' => Yii::t('app', 'Email'),
 			'enabled' => Yii::t('app', 'Grower Enabled'),
 			'reporting' => Yii::t('app', 'Reporting Interval'),
+			'weekly_interval' => Yii::t('app', 'Day Reporting Interval'),
             'contact_name' => Yii::t('app', 'Contact Name'),
             'address' => Yii::t('app', 'Address'),
             'suburb' => Yii::t('app', 'Suburb'),
