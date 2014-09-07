@@ -14,7 +14,8 @@ class MailService
     public $addTo=null;
     public $from=null;
     public $body=null;
-
+    public $attachment=null;
+    
     public function __construct(){
         $this->from = array(Yii::app()->params['noreplyEmail'] => Yii::app()->params['noreplyDisplayEmail']);
     }
@@ -27,6 +28,15 @@ class MailService
             Yii::app()->mail->transportOptions = $arrOptions;
         };
         $message->setBody($this->body, 'text/html');
+        if(is_array($this->attachment)){
+        	$message->attach(
+        			Swift_Attachment::newInstance(
+	        			$this->attachment['content'],
+	        			$this->attachment['name'],
+	        			$this->attachment['type']
+        			)
+        	);
+        }
         $message->subject = $this->subject;
         $message->setTo((array)$this->addTo);
         $message->setFrom($this->from);

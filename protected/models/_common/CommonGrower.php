@@ -102,5 +102,22 @@ class CommonGrower extends BaseGrower
         ));
         return $this->findAll();
     }
+    
+    function getProperties(){
+    	return Property::model()->findAll('grower_id='.$this->id);
+    }
+    
+    /**
+     * @return Block[]
+     */
+    public function getBlock(){
+    	$a = array();
+    	foreach($this->getProperties() as $p){
+    		$a = array_merge($a,$p->getBlocks());
+    	}
+    	return $a;
+    	
+    }
+    
  
 }

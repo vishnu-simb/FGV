@@ -1,0 +1,1 @@
+*/1 * * * * php D://workspace//fruit-growers-v2//cron//yiicmd.php reportemail

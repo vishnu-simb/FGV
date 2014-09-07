@@ -44,6 +44,10 @@ class CommonProperty extends BaseProperty
     	return Location::model()->findAll($criteria);
     }
     
+    function getBlocks(){
+    	return Property::model()->findAll('property_id='.$this->id);
+    }
+    
     /**
      * @return Property
      */

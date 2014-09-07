@@ -10,7 +10,7 @@ Yii::import('application.models.service.EmailTemplate');
 
 class Message extends SimbFormModel
 {
-    public $recipient_email, $subject, $message, $sender_name, $sender_email;
+    public $recipient_email, $subject, $message, $sender_name, $sender_email , $attachment;
 
     /**
      * Send email using info from it's properties
@@ -22,6 +22,7 @@ class Message extends SimbFormModel
     		$mail = new MailService();
     		$mail->from = array($this->sender_email => $this->sender_name);
     		$mail->addTo = $this->recipient_email;
+    		$mail->attachment = $this->attachment;
     		$mail->subject = $this->subject;
     		$mail->body = $this->message;
     		$useToAdminSmtp = false;
@@ -44,6 +45,21 @@ class Message extends SimbFormModel
     {
     	$template = new EmailTemplate();
     	$this->message = $template->resetPassCode($params);
+    	// Send message via email
+    	$boolSuccess = $this->sendEmail();
+    	return $boolSuccess;
+    }
+    
+    /**
+     * Send Grower Report email to user
+     * @param $params
+     * @return boolean, email is sent successfully or not
+     */
+    
+    public function sendGrowerReport($params)
+    {
+    	$template = new EmailTemplate();
+    	$this->message = $template->growerReport($params);
     	// Send message via email
     	$boolSuccess = $this->sendEmail();
     	return $boolSuccess;

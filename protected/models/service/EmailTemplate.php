@@ -11,7 +11,8 @@ class EmailTemplate
 {
 
     const RESETPASSCODE='resetpasscode.txt';
-
+    const GROWERREPORT='growerreport.txt';
+    
     public static function resourcePath(){
     	return dirname(__FILE__).'/../../data/email-template';
     }
@@ -29,6 +30,17 @@ class EmailTemplate
     public static function resetPassCode($params=array()){
         $template = self::getContents(self::RESETPASSCODE);
         return strtr($template,$params);
+    }
+    
+    /**
+     * Send grower report email template
+     * @static
+     * @param array $params
+     * @return string
+     */
+    public static function growerReport($params=array()){
+    	$template = self::getContents(self::GROWERREPORT);
+    	return strtr($template,$params);
     }
 
 }
