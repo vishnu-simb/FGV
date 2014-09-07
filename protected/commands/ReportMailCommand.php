@@ -4,7 +4,7 @@ class ReportMailCommand extends SimbConsoleCommand{
             
 			public function run($args)
             {
-            	echo "Fetching ReportMail: .... \n";
+            	echo "Sending ReportMail: .... \n";
             	
             	foreach(Grower::model()->findAll() as $key=>$grower){
             		$do_report = false;
@@ -24,14 +24,19 @@ class ReportMailCommand extends SimbConsoleCommand{
             				break;
             		}
             		if($do_report && count($grower->getBlock())){
-            			// sent email
+            			
             			$pdf = Yii::app()->ePdf->HTML2PDF();
-            			$pdf->WriteHTML(file_get_contents('http://fruitgrowersvictory.simb/report/grower/'.$grower->id));
+            			$pdf->AddFont('helvetica','B','helvetica.php');
+            			$pdf->WriteHTML("<style>".file_get_contents(Yii::app()->request->baseUrl.'/static/flatapp/css/pdf_report.css')."</style>");
+            			$pdf->WriteHTML(file_get_contents(Yii::app()->request->baseUrl.'/report/grower/'.$grower->id));
             			$pdf_as_string = $pdf->Output('', 'S'); // $pdf is a TCPDF instance
             			// Get basic info for sending email
             			$arrParams = array(
-            					
+            					'{name}'=>$grower->name ,
+            					'{interval}'=>$grower->reporting,
+            					'{signature}'=>Yii::app()->params['emailSignature'],
             			);
+            			// sent email
             			$mail = new Message();
 			    		$mail->recipient_email = explode(',',$grower->email);
 			    		$mail->subject = Yii::t('app','Spray Report '.date('Y-M-d'));
@@ -40,7 +45,7 @@ class ReportMailCommand extends SimbConsoleCommand{
 			    		$attachment = array('content'=>$pdf_as_string,'name'=>'Spray Report '.date('Y-M-d'),'type'=>'application/pdf') ; 
 			    		$mail->attachment = $attachment;
 			    		$mail->sendGrowerReport($arrParams);
-			    		echo $grower->email." Sent ReportMail";
+			    		echo $grower->email." has been sent \n";
             		}
             		
             	}

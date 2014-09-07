@@ -1,1 +1,7 @@
+Dear {name}<br />
+<br />
+This is generated PDF file of {interval} reports <br />
+<br />
+Thank You!<br />
+{signature}
 

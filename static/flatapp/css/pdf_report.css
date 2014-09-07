@@ -1,0 +1,149 @@
+/*** Begin custom styles ***/
+
+body {
+	font-family: helvetica;	
+	font-size: 10pt;
+	background: white;
+	color: #333;
+}
+
+img {
+	max-width: 100%;
+	border: 1px solid #777;
+}
+
+table {
+	width: 100%;
+}
+
+table.header {
+	text-align: center;
+	color: #444;
+	font-size: 12pt;
+	
+	vertical-align: center;
+}
+
+tr.total {
+	border-top: 2px double #666;
+}
+
+table.header span {
+	color: #666;
+	font-size: 18pt;
+}
+
+table.header h1 {
+	color: #222;
+	display: inline;
+}
+
+h1 {
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 20pt;
+	color: #333;
+}
+
+h3 {
+	font-size: 16pt;
+	color: #666;
+}
+
+h4 {
+	font-size: 14pt;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+h1, h2, h3, h4, table.header {
+	font-family: helvetica;
+	
+}
+
+h2, h3 {
+	margin: 0;
+}
+
+td, th  {
+	padding: 5px;
+	text-align: left;
+    font-size: 16px;
+}
+
+.block {
+	border-top: 2px solid #333;
+	border-right: 1px dotted #aaa;
+	padding-right: 10px;
+	page-break-after:always;
+}
+
+.block table {
+	margin-bottom: 20px;
+	border: 1px solid #777 !important;
+}
+
+.prediction tr:last-child {
+	border-bottom: 1px solid #777 !important;
+}
+
+.prediction tr:nth-child(even) {
+	border-bottom: 1px solid #ddd;
+}
+
+.prediction tr:nth-child(even) td {
+	padding-bottom: 15px;
+}
+
+.prediction tr:nth-child(odd) td {
+	padding-top: 15px;
+}
+
+tr.head {
+	background: #eee;	
+	border-bottom: 3px solid #444 !important;
+}
+
+tr.head th {
+	padding: 10px 5px;
+}
+
+tr.light {
+	color: #777;
+}
+
+b {
+	border-bottom: 1px dotted #aaa;
+}
+
+tr.single td {
+	padding-bottom: 5px !important;
+}
+
+div#print-footer {
+	display: block; 
+	position: fixed; 
+	bottom: 0; 
+	width: 100%; 
+	text-align: center;
+}
+
+html {
+	background: #efefef;
+}
+
+body {
+	width: 920px;
+	margin: 50px auto;
+	border: 1px solid #bbb;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+}
+
+div#print-footer {
+	position: static; 
+	text-align: center;
+}
