@@ -61,6 +61,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
     $kPathMain = dirname($kPathMain).'/'; // remove the current directory
     $kPathMain.= '_tcpdf_'.HTML2PDF_USED_TCPDF_VERSION.'/';
     define('K_PATH_MAIN', $kPathMain);
+    $kPathUrl = 'http://';
     // Automatic calculation for the following K_PATH_URL constant
     if (isset($_SERVER['HTTP_HOST']) AND (!empty($_SERVER['HTTP_HOST']))) {
         if (isset($_SERVER['HTTPS']) AND (!empty($_SERVER['HTTPS'])) AND strtolower($_SERVER['HTTPS'])!='off') {
