@@ -53,18 +53,23 @@ abstract class BaseGrower extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, email, username, password', 'required', 'except' => 'search'),
-			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
-			array('name, contact_name', 'length', 'max'=>100),
-			array('username, password', 'length', 'max'=>45),
-			array('salt', 'length', 'max'=>8),
-			array('enabled', 'length', 'max'=>3),
-			array('reporting', 'length', 'max'=>7),
-            array('address', 'length', 'max'=>255),
+			array('name, email, username', 'required', 'except' => 'search'),
+    		array('username','unique'),
+    		array('password,_repassword','required', 'except' => 'update'),
+    		array('_repassword','compare','compareAttribute'=>'password'),
+    		array('username', 'length', 'max'=>45),
+    		array('ordering, status, is_deleted, postcode', 'numerical', 'integerOnly'=>true),
+    		array('name, contact_name', 'length', 'max'=>100),
+    		array('password,_repassword', 'length', 'max'=>32),
+    		array('salt', 'length', 'max'=>8),
+    		array('enabled', 'length', 'max'=>3),
+    		array('reporting', 'length', 'max'=>7),
+    		array('address', 'length', 'max'=>255),
             array('suburb', 'length', 'max'=>50),
 			array('creator_id, phone, mobile', 'length', 'max'=>20),
-			array('created_at, updated_at, params', 'safe'),
-			array('enabled, reporting, weekly_interval, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
+    		array('created_at, updated_at, params', 'safe'),
+            array('avatar', 'file','types'=>'jpg, gif, png', 'allowEmpty'=>true, 'on'=>'update'),
+    		array('enabled, reporting, weekly_interval, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, name, username, weekly_interval, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
