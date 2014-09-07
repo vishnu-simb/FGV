@@ -32,6 +32,7 @@ $this->menu = array(
 		'email',
 		'enabled',
 		'reporting',
+		'weekly_interval',
 		/*
 		'creator_id',
 		'ordering',
