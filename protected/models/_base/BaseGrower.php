@@ -53,8 +53,14 @@ abstract class BaseGrower extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-    		array('ordering, status, is_deleted, postcode', 'numerical', 'integerOnly'=>true),
-    		array('name, contact_name', 'length', 'max'=>100),
+			array('name, email, username', 'required', 'except' => 'search'),
+    		array('username','unique'),
+    		array('password','required', 'except' => 'update'),
+    		array('_repassword','compare','compareAttribute'=>'password'),
+			array('password,_repassword', 'length', 'max'=>32),
+    		array('username', 'length', 'max'=>45),
+    		array('name,contact_name', 'length', 'max'=>100),
+			array('ordering, status, is_deleted, postcode', 'numerical', 'integerOnly'=>true),
     		array('salt', 'length', 'max'=>8),
     		array('enabled', 'length', 'max'=>3),
     		array('reporting', 'length', 'max'=>7),
@@ -64,7 +70,7 @@ abstract class BaseGrower extends SimbActiveRecord{
     		array('created_at, updated_at, params', 'safe'),
             array('avatar', 'file','types'=>'jpg, gif, png', 'allowEmpty'=>true, 'on'=>'update'),
     		array('enabled, reporting, weekly_interval, contact_name, address, suburb, postcode, state, phone, mobile, creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, username, weekly_interval, password, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, name, username, weekly_interval, email, enabled, reporting, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 

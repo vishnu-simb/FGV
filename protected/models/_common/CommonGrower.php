@@ -18,24 +18,23 @@ class CommonGrower extends BaseGrower
     }
     
     public function beforeSave(){
-    
     	if (parent::beforeSave()) {
     		$format = Yii::app()->params['dbDateFormat'];
     		$postData = Yii::app()->request->getPost('Grower');
-
     		if ($this->isNewRecord) {
     			$this->created_at = date($format);
     			$this->salt = $this->saltGenerator();
     			$this->password = md5($this->salt.$this->password);
     			$this->creator_id = 0;
     			$this->ordering = 0;
-    		}
-    
-    		if(!empty($postData['password'])){
-    			$this->password = $this->hashPassword($postData['password']);
+    		}else{
+    			if(!empty($postData['password'])){
+    				$this->password = $this->hashPassword($postData['password']);
+    			}else{
+    				unset($this->password);
+    			}
     		}
     		$this->updated_at = date($format);
-    
     		return true;
     	} else {
     		return false;

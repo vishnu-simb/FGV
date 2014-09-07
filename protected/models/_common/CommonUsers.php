@@ -30,9 +30,12 @@ class CommonUsers extends BaseUsers
                 $this->creator_id = 0;
                 $this->ordering = 0;
             }
-
-            if(!empty($postData['password'])){
-            	$this->password = md5($this->salt.$postData['password']);
+            else{
+            	if(!empty($postData['password'])){
+            		$this->password = md5($this->salt.$postData['password']);
+            	}else{
+            		unset($this->password);
+            	}
             }
             $this->updated_at = date($format);
             
