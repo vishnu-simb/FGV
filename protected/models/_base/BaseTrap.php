@@ -111,6 +111,9 @@ abstract class BaseTrap extends SimbActiveRecord{
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
+			'sort' => array(
+						'defaultOrder' => 't.ordering asc',
+			),
 			'pagination' => array(
 				'pageSize' => $this->rowsPerPage,
 			)

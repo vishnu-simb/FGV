@@ -37,6 +37,16 @@ class TrapController extends SimbController
 		);
 	}
 	
+	public function actions()
+	{
+		return array(
+				'order' => array(
+						'class' => 'ext.yii-ordering-column.action',
+						'modelClass' => 'Trap',
+						'pkName'  => 'ordering',
+				),
+		);
+	}
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
