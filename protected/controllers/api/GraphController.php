@@ -118,7 +118,7 @@ class GraphController extends SimbApiController {
     		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		$VAR['plotOptions'] = array('area'=>array('connectNulls'=>true));
-    		$VAR['legend'] = array('layout'=>'vertical','align'=>'left','verticalAlign'=>'middle','borderWidth'=>'0');
+    		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
     		$VAR['yAxis'] = array('title'=>array('text'=>''));
     		$VAR['series'] = $serial;
