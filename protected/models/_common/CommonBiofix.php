@@ -62,11 +62,14 @@ class CommonBiofix extends BaseBiofix
      * @return Block[]
      */
     public function getBlock(){
-    	$criteria = new CDbCriteria();
-    	$criteria->condition = 'is_deleted=:is_deleted';
-    	$criteria->params = array(':is_deleted'=>'0');
-    	$criteria->order = 'name';
-    	return Block::model()->findAll($criteria);
+    	$sql="SELECT b.id as id,b.name as name,CONCAT (g.name,' - ',p.name,' - ',b.name) AS block_name
+		FROM ".Block::model()->tableName()." b
+    			INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+    			INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
+    	ORDER BY g.name";
+    	return new CSqlDataProvider($sql, array(
+    			'pagination'=>false,
+		));
     }
     
     /**

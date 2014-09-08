@@ -54,11 +54,11 @@ class CommonTrap extends BaseTrap
      * @return Block[]
      */
     public function getBlock(){
-    	$sql="SELECT b.id as id,b.name as name,CONCAT (b.name,' - ',p.name,' - ',g.name) AS block_name
+    	$sql="SELECT b.id as id,b.name as name,CONCAT (g.name,' - ',p.name,' - ',b.name) AS block_name
 		FROM ".Block::model()->tableName()." b
     			INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
     			INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
-    	ORDER BY b.name";
+    	ORDER BY g.name";
     	return new CSqlDataProvider($sql, array(
     			'pagination'=>false,
 		));

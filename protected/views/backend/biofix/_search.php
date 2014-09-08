@@ -24,7 +24,7 @@
 											-->
                                             <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'),array('empty' => 'Select A Pest'))?>
 
-                            				<?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock() ,'id','name'),array('empty' => 'Select A Block'))?>
+                            				<?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock()->getData() ,'id','name'),array('empty' => 'Select A Block'))?>
                                             
                                             <?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'),array('empty' => 'Select A Second Cohort'))?>
                             
