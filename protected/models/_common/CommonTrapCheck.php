@@ -66,18 +66,21 @@ class CommonTrapCheck extends BaseTrapCheck
     	)
     	);
     }
-    
+
     /**
      * @return Trap[]
      */
     public function getTrap(){
-    	$criteria = new CDbCriteria();
-    	$criteria->condition = 'is_deleted=:is_deleted';
-    	$criteria->params = array(':is_deleted'=>'0');
-    	$criteria->order = 'name';
-    	return Trap::model()->findAll($criteria);
+    	$sql="SELECT t.id as id,t.name as name,CONCAT (t.name,' - ',b.name,' - ',p.name,' - ',g.name) AS trap_name
+		FROM ".Trap::model()->tableName()." t
+				INNER JOIN ".Block::model()->tableName()." b ON t.block_id = b.id
+    			INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+    			INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id
+    	ORDER BY t.name";
+    	return new CSqlDataProvider($sql, array(
+    			'pagination'=>false,
+    	));
     }
-
     /**
      * @return Block[]
      */

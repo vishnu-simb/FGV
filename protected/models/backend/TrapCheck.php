@@ -11,10 +11,10 @@ class TrapCheck extends CommonTrapCheck
 
 	function getTrapByBlock(){
 		
-		if(isset($this->block)){
+		if(isset($this->block) && !empty($this->block)){
 			return Trap::model()->findAllByAttributes(array('block_id'=>$this->block),array('order'=>'name'));
 		}else{
-			return $this->getTrap();
+			return $this->getTrap()->getData();
 		}
 	}
 }

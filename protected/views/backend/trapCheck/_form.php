@@ -35,7 +35,7 @@
 
                             <div class="span6">
                             
-                             <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap() ,'id','name'),array('empty'=>'Select A Trap'))?>
+                             <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'),array('empty'=>'Select A Trap'))?>
                              
                             <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
 

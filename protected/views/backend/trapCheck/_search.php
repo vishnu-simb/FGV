@@ -29,7 +29,7 @@
 				                         
 				                            <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'block', CHtml::listData( $modelTrapCheck->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
 				                          
-				                          	<?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap() ,'id','name'),array('empty'=>'Select A Trap'))?>
+				                          	<?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'name','name'),array('empty'=>'Select A Trap'))?>
 				                            
 				                        
                                             
