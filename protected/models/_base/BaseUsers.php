@@ -24,6 +24,9 @@
  *
  */
 abstract class BaseUsers extends SimbActiveRecord{
+	
+	public $_repassword ;
+	
     public static function model($className=__CLASS__)
     {
 		return parent::model($className);
@@ -46,6 +49,8 @@ abstract class BaseUsers extends SimbActiveRecord{
     			array('username,type','required','except' => 'search'),
     			array('username','unique'),
     			array('password', 'required' ,'except' => 'update'),
+				array('_repassword','compare','compareAttribute'=>'password'),
+				array('password,_repassword', 'length', 'max'=>32),
     			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
     			array('username', 'length', 'max'=>45),
     			array('type', 'length', 'max'=>5),
@@ -84,6 +89,7 @@ abstract class BaseUsers extends SimbActiveRecord{
 			'status' => Yii::t('app', 'Status'),
 			'is_deleted' => Yii::t('app', 'Is Deleted'),
 			'params' => Yii::t('app', 'Params'),
+			'_repassword' => Yii::t('app','Password Repeat')
 		);
 	}
 
