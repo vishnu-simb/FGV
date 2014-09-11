@@ -46,7 +46,7 @@ SCRIPT;
 
     public function renderDataCellContent($row, $data) {
         $value = CHtml::value($data, $this->name);
-        $this->ajaxUrl['pk'] = $data->primaryKey;
+        $this->ajaxUrl['pk'] = isset($data->primaryKey)?$data->primaryKey:$data['id'];
         $this->ajaxUrl['name'] = $this->name;
         $this->ajaxUrl['value'] = $value;
         $this->ajaxUrl['move'] = 'up';

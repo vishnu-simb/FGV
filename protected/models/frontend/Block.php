@@ -8,9 +8,15 @@ class Block extends CommonBlock
     {
 		return parent::model($className);
 	}
-	
 	function getTraps(){
 		return Trap::model()->findAllByAttributes(array('block_id'=>$this->id),array('order'=>'name'));
+	}
+	function getTrapsGrower(){
+		$sql="SELECT t.id,t.block_id, t.ordering AS ordering,CONCAT (t.name,' : ',pt.name) AS trap_name
+		FROM ".Trap::model()->tableName()." t
+				INNER JOIN ".Pest::model()->tableName()." pt ON t.pest_id = pt.id 
+				INNER JOIN ".$this->tableName()." b ON t.block_id = b.id WHERE t.block_id =".$this->id." ORDER BY t.ordering";
+		return new CSqlDataProvider($sql, array());
 	}
 	function getMites(){
 		return Mite::model()->findAll();

@@ -15,24 +15,17 @@ class TrapCheck extends CommonTrapCheck
 	 * @return CActiveDataProvider
 	 */
 	public function SearchRecentTrapings(){
-	
-
-		$pestTb=Pest::model()->tableName();
-		$trapTb=Trap::model()->tableName();
-		$blockTb=Block::model()->tableName();
-		$propertyTb=Property::model()->tableName();
-		$growerTb=Grower::model()->tableName();
 		$condition="";
 		if( Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
 				$condition = "WHERE g.id =".Yii::app()->user->id."";
 		}
 		$sql="SELECT tc.id as trap_check_id,tc.date,tc.value as trap_check_number,CONCAT (g.name,' : ',pt.name,' - ',t.name) AS trap_check_name
 		FROM ".$this->tableName()." tc
-		INNER JOIN $trapTb t ON tc.trap_id = t.id
-		INNER JOIN $pestTb pt ON t.pest_id = pt.id
-		INNER JOIN $blockTb b ON t.block_id = b.id
-		INNER JOIN $propertyTb p ON b.property_id = p.id
-		INNER JOIN $growerTb g ON p.grower_id = g.id  $condition ORDER BY tc.id DESC";
+		INNER JOIN ".Trap::model()->tableName()." t ON tc.trap_id = t.id
+		INNER JOIN ".Pest::model()->tableName()." pt ON t.pest_id = pt.id
+		INNER JOIN ".Block::model()->tableName()." b ON t.block_id = b.id
+		INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+		INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  $condition ORDER BY tc.id DESC";
 		return new CSqlDataProvider($sql, array(
 	
 		));

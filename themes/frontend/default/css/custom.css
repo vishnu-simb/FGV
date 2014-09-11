@@ -70,3 +70,4 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 .doublewidth {
     width: 40% !important;
 }
+.right-cell{text-align: right!important;}

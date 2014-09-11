@@ -171,4 +171,15 @@ class TrappingController extends SimbController
 		}
 	}
 	
+	public function actions()
+	{
+		return array(
+				'order' => array(
+						'class' => 'ext.yii-ordering-column.action',
+						'modelClass' => 'Trap',
+						'pkName'  => 'ordering',
+				),
+		);
+	}
+	
 }

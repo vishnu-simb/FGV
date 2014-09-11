@@ -8,9 +8,9 @@
     <div class="span12">
         <div class="box">
 
- <?php $this->renderPartial('_search',array(
+ 	<?php $this->renderPartial('_search',array(
                 'modelGrower' => $modelGrower,
-            )); ?>
+     )); ?>
 
         </div>
     </div>
@@ -28,25 +28,27 @@
 								echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
 								
 								foreach($property->getBlocks() as $block){
-									echo '<div class="box box-small box-custom box-bordered">
-                						  <div class="box-title"><h3>'.$block->name.'</h3></div>';
-									echo '
-									<div class="box-content nopadding">
-								    <table class="table table-hover table-nomargin table-bordered">
-									<thead>
-										<tr>
-										</tr>
-									</thead>
-									<tbody id="tbl_'.$block->id.'">';
-									foreach($block->getTraps() as $trap){
-										echo '<tr>';
-										echo '<td>'.$trap->name.' - '.$trap->pest .'</td>';
-										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="Traps['.$trap->id.']" class="spinner" max="200" style="width: 30px;" /></td>';
-										echo '</tr>';
-									}
-									echo '</tbody>
-								</table>
-								</div>	</div>';
+								echo '<div class="box box-small box-custom box-bordered">
+                						  <div class="box-title"><h3>'.$block->name.'</h3></div>';							
+									$this->widget('bootstrap.widgets.TbGridView', array(
+											'id' => 'trap-grid',
+											'dataProvider' =>  $block->getTrapsGrower(),
+											//'filter' => false,
+											'ajaxUpdate' => false,
+											'enablePagination'=>true,
+											'itemsCssClass' => 'table-hover table-nomargin table-striped',
+											'summaryText' => false,
+											'columns' => array(
+													array('name'=>'ordering','header'=>'','class' =>'ext.yii-ordering-column.column','filter'=>false),
+													array('name'=>'trap_name','header'=>''),
+													array('name'=>'','value'=>function($data){
+															echo '<input type="text" name="Traps['.$data['id'].']" class="spinner" max="200" style="width: 30px;" />';
+														},'header'=>'','htmlOptions' => array('class' => 'right-cell')), 
+
+													
+											),
+									));
+									echo '</div>';
 								}
 								}
 							
