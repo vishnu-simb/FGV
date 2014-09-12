@@ -46,7 +46,6 @@ SCRIPT;
     }
 
     public function renderDataCellContent($row,$data) {
-
         $value = CHtml::value($data, $this->name);
         $this->ajaxUrl['pk'] = $data['id'];
         $this->ajaxUrl['name'] = $this->name;
