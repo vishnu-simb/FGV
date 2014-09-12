@@ -8,7 +8,8 @@ class ColumnBlock extends TbDataColumn {
     public $name;
     private $_upIcon;
     private $_downIcon;
-
+    private $last_ordering;
+    
     public function init() {
         $assetsDir = dirname(__FILE__) . "/assets";
         $gridId = $this->grid->getId();
@@ -45,12 +46,14 @@ SCRIPT;
     }
 
     public function renderDataCellContent($row,$data) {
+
         $value = CHtml::value($data, $this->name);
-        $this->ajaxUrl['pk'] = isset($data->primaryKey)?$data->primaryKey:$data['id'];
+        $this->ajaxUrl['pk'] = $data['id'];
         $this->ajaxUrl['name'] = $this->name;
         $this->ajaxUrl['value'] = $value;
         $this->ajaxUrl['move'] = 'up';
         $this->ajaxUrl['block'] = $data['block_id'];
+        $this->last_ordering = count($this->grid->dataProvider->getData());
         $up = CHtml::link(CHtml::image($this->_upIcon), $this->ajaxUrl, array('class' => $this->cssClass));
 
         $this->ajaxUrl['move'] = 'down';
@@ -60,9 +63,10 @@ SCRIPT;
             	'style' => 'margin-bottom:3px',
              ), $up);
 		}
-        	echo CHtml::tag('span', array(
+		if($data['ordering'] < $this->last_ordering)
+        echo CHtml::tag('span', array(
             	'style' => 'float: left;',
-             ), $down);
+        ), $down);
     }
 
 }
