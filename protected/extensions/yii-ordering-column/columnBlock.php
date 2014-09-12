@@ -1,6 +1,6 @@
 <?php
 
-class Column extends TbDataColumn {
+class ColumnBlock extends TbDataColumn {
 
     public $ajaxUrl;
     public $pk;
@@ -46,10 +46,11 @@ SCRIPT;
 
     public function renderDataCellContent($row,$data) {
         $value = CHtml::value($data, $this->name);
-        $this->ajaxUrl['pk'] = $data->primaryKey;
+        $this->ajaxUrl['pk'] = isset($data->primaryKey)?$data->primaryKey:$data['id'];
         $this->ajaxUrl['name'] = $this->name;
         $this->ajaxUrl['value'] = $value;
         $this->ajaxUrl['move'] = 'up';
+        $this->ajaxUrl['block'] = $data['block_id'];
         $up = CHtml::link(CHtml::image($this->_upIcon), $this->ajaxUrl, array('class' => $this->cssClass));
 
         $this->ajaxUrl['move'] = 'down';

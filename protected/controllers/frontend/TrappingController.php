@@ -175,7 +175,7 @@ class TrappingController extends SimbController
 	{
 		return array(
 				'order' => array(
-						'class' => 'ext.yii-ordering-column.action',
+						'class' => 'ext.yii-ordering-column.actionBlock', // sort by group block_id
 						'modelClass' => 'Trap',
 						'pkName'  => 'ordering',
 				),

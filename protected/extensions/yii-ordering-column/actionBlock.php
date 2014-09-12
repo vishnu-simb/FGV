@@ -6,12 +6,12 @@
  * @author Tom Doan
  * @copyright Nr Aziz
  */
-class Action extends CAction {
+class ActionBlock extends CAction {
 
     public $modelClass;
     public $pkName;
 
-    public function run($pk, $name, $value, $move, $data = '') {
+    public function run($pk, $name, $value, $move, $block = '') {
 
         $model = CActiveRecord::model($this->modelClass)->findByPk($pk);
         $table = $model->tableName();
@@ -20,7 +20,7 @@ class Action extends CAction {
         else if ($move === 'down')
         	$change = 1;
         
-        $sql = "SELECT * FROM $table ORDER BY $this->pkName";
+        $sql = "SELECT * FROM $table WHERE block_id=$block ORDER BY $this->pkName";
         $order = Yii::app()->db->createCommand($sql)->queryAll();
         $arr_ordering = array();
         
