@@ -37,7 +37,7 @@
                             
                             <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))?>
                             
-                            <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+                               <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block'))?>
                         
                             <?php echo $form->textFieldControlGroup($modelTrap, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('name'))); ?>
 						
