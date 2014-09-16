@@ -29,7 +29,7 @@
                     	 	<?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->getBlockByGrowerId(Yii::app()->user->id),'id','name','property.name'), array('class' => 'input-xxlarge'))?>
                     	 	<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Reports','class' => 'clickable input-xlarge'))?>
                     	 <?php else:?>
-                     	  	<?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->findAll() ,'id','name','grower.name'), array('class' => 'input-xxlarge'))?>
+                     	  	<?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->findAll() ,'id','name','grower.name'), array('class' => 'select2-me input-xxlarge'))?>
                      	  	<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAll() ,'id','name'), array('prompt'=>'Reports','class' => 'clickable input-xlarge'))?>
                     	  <?php endif;?>
                     	 

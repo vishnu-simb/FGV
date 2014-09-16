@@ -5,7 +5,7 @@
 ?>
 <table class="header">
 	<tr>
-		<td width="25%" ><?=date('d-m-Y')?></td>
+		<td width="25%" ><h1><?=$VARS['yearReport']?></h1></td>
 		<td width="50%" style="text-align: center"><h1>CropWatch Report</h1> </td>
 		<td width="25%" style="text-align: right"><?=$VARS['grower']->name?></td>
 	</tr>
@@ -49,8 +49,9 @@ foreach($VARS['blocks'] as $block){
 		<?php 
 		$h = array();
 		foreach($sprayDates as $pest=>$v){
-			$h[] = '<td>'.DateHelper::dateOutput($v->biofix).'</td>'.$next;
-			$next = '';
+			$biofix = (date('Y',strtotime($v->biofix)) == $VARS['yearReport'])?DateHelper::dateOutput($v->biofix):"";
+			$h[] = '<td>'.DateHelper::dateOutput($biofix).'</td>'.$next;
+			$next = ' ';
 			
 			if($v->secondCohortSprays){
 				$next = '<td>'.DateHelper::dateOutput($v->secondCohortBiofix).'</td>';

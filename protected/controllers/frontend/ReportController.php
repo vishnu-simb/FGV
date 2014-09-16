@@ -106,10 +106,11 @@ class ReportController extends SimbController
 		    $yAxis = array();
             for($i = 1; $i <= $max_value+1; $i++)
                 $yAxis[] = $i;
-			$VAR['chart'] = array('zoomType' => 'x');
+			$VAR['chart'] = array('zoomType' => 'x','type'=>'area',);
 			$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+            $VAR['plotOptions'] = array('area'=>array('connectNulls'=>true));
 			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
 			$VAR['xAxis'] = array(
                                 'type' => 'datetime',
@@ -134,10 +135,11 @@ class ReportController extends SimbController
 		if(!($grower instanceof Grower)){
 			throw new Exception('Invalid Request (Grower)');
 		}
-
+		
 		$VARS['grower'] = $grower;
 		$VARS['dateRange'] = $this->getDateRange();
-        
+		$VARS['yearReport'] = isset($_GET['year'])?$_GET['year']:date('Y',time());// Set default report
+		
         $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
@@ -188,12 +190,11 @@ class ReportController extends SimbController
 						$pd->pest = $pp;
 						$pd->isLowPop = true;
 					}
-
 					//&& $date->isLowPop()
                     $ss = (int)(!$pd->isLowPop && $pd->pest->hasSecondCohort($block->id));
 					for($second=0;$second<=$ss;$second++){
 						foreach($sprays as $k=>$spray){
-							if($spray){
+							if($spray && date('Y',strtotime($pd->biofix)) == $VARS['yearReport']){ 
 								$sd = new SprayResult();
 								$secondBool = (bool)$second;
 								$sd->sprayDate = $spray->getDate($block,$secondBool);
