@@ -34,7 +34,7 @@
 			foreach($vv as $pest=>$spray){
 				
 				if($spray){
-					$date = $spray->getDate($VAR['block']);
+					$date = $spray->getDate($VAR['block'],false,$VAR['year']);
 					$ds = strtotime($date);
 					if($ds >= time() && !isset($pm[$pest])){
 						echo '<span class="new';
@@ -64,7 +64,7 @@
 							$lowPop->swapPopulationValues();
 						}*/
 						
-						$date = $spray->getDate($VAR['block'],true);
+						$date = $spray->getDate($VAR['block'],true,$VAR['year']);
 						$ds = strtotime($date);
 						if($ds >= time() && !isset($pm[$pest.'|2'])){
 							echo '<span class="new"';
@@ -115,14 +115,14 @@
 				}
 				echo '>';
 				if($spray){
-					$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block']));
+					$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],false,$VAR['year']));
 					if($d){
 						echo $d;
 					}else{
 						echo ' - ';
 					}
 					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
-						$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],true));
+						$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],true,$VAR['year']));
 						echo '</span><span>';
 						if($d){
 							echo $d;

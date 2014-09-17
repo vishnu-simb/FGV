@@ -25,6 +25,7 @@ class GraphController extends SimbApiController {
   		$data = $this->getSprayData();
   		$VAR = array();
   		$VAR['spray_data'] = $data;
+  		$VAR['year'] = isset($_GET['year'])?$_GET['year']:date('Y',time());// Set default report
   		$inverse = array();
   		foreach($data as $pest=>$vv){
   			foreach($vv as $spray=>$date){

@@ -78,7 +78,7 @@ class CommonPestSpray extends BasePestSpray
 		$this->_date = null;
 	}
     
-    function getDate($block, $secondCohort = false){
+    function getDate($block, $secondCohort = false,$year = false){
 		$k = $block->id.'|'.(int)$secondCohort;
 		if(isset($this->_date[$k])){
 			return $this->_date[$k];
@@ -88,10 +88,11 @@ class CommonPestSpray extends BasePestSpray
 		if($biofix){
 			//Pre Setup
 			$biofix_date = $biofix->date;
-			
+			if(($year) && date('Y',strtotime($biofix_date)) != $year){
+				return null;
+			}
 			$location = $block->property->location;
 			$locationId = $location->id;
-			
             $_k = $locationId.'|'.$biofix_date;
 			if(!isset(static::$_location[$_k])){
 			    $criteria = new CDbCriteria();
@@ -171,8 +172,8 @@ class CommonPestSpray extends BasePestSpray
 		}
 	}
     
-    function getCoverRequired($block, $secondCohort = false){
-		$date = $this->getDate($block, $secondCohort);
+    function getCoverRequired($block, $secondCohort = false, $year = false){
+		$date = $this->getDate($block, $secondCohort,$year);
 		if(!$date){
 			return;
 		}

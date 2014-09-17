@@ -81,12 +81,14 @@ Yii::app()->clientScript->registerScript('index',"
 	$('.yr-button-prev').click(function(){
 		var prev = actualDate.setYear(actualDate.getFullYear() -1);
 		$('#yearPicker').html(actualDate.getFullYear());
+		loadSprayTable();
 	});
 	$('.yr-button-next').click(function(){
 		var cur = new Date();
 		if(actualDate.getFullYear() <= cur.getFullYear()-1){
 			var next = actualDate.setYear(actualDate.getFullYear() +1);
 			$('#yearPicker').html(actualDate.getFullYear());
+			loadSprayTable();
 		}
 	});
 		
@@ -144,7 +146,7 @@ Yii::app()->clientScript->registerScript('index',"
 		var block_id = $('#Block_id').val();
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/HTML?block='+block_id+'&date='+$('#datePicker').html(),
+				  url: siteUrl + 'api/graph/HTML?block='+block_id+'&year='+$('#yearPicker').html(),
 				  success: function (data)
 				   {
 					  $('.spraytable').html(data);
