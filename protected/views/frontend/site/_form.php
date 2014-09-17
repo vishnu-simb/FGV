@@ -29,7 +29,7 @@
 								<table class="fc-header">
 								<tbody><tr>
 								<td class="fc-header-left">
-								<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
+								<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
 								</td>
 								<td class="fc-header-center" style="text-align: left;">
 								<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
@@ -46,7 +46,7 @@
 								<table class="fc-header">
 								<tbody><tr>
 								<td class="fc-header-left">
-								<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
+								<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
 								</td>
 								<td class="fc-header-center" style="text-align: left;">
 								<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
