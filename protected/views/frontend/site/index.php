@@ -12,8 +12,10 @@ Yii::app()->clientScript->registerScript('index',"
 	var months = new Array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 	var actualDate = new Date('01 '+_date); // convert to actual date
 	
-	loadSprayTable();
+	loadBlock(); // load default block by grower
 		
+	loadSprayTable();
+	
 	/* load current graph block */
 		
 	drawTrapCheckChart() 
@@ -29,7 +31,19 @@ Yii::app()->clientScript->registerScript('index',"
 		}
 	});
 	
-	$('#Block_id').change(function(){
+		
+	$('.blockable').change(function(){
+		var t = $('#Block_id').find('option[value=\"'+$('#Block_id').val()+'\"]');
+		var g = $('#Grower_id').find('option[value=\"'+$('#Grower_id').val()+'\"]');
+		if(typeof g.html() != 'undefined')
+		$('h1').html(g.html()+': '+t.html());
+		$('#yw0').html('');
+		drawTrapCheckChart();
+		loadSprayTable();
+		drawMiteMonitoringChart();
+	});
+
+	$('.growerable').change(function(){
 		var t = $(this).find('option[value=\"'+$(this).val()+'\"]');
 		if(typeof t.parent().attr('label') != 'undefined')
 		$('h1').html(t.parent().attr('label')+': '+t.html());
@@ -38,7 +52,6 @@ Yii::app()->clientScript->registerScript('index',"
 		loadSprayTable();
 		drawMiteMonitoringChart();
 	});
-	
 
 	
 	/*
@@ -61,6 +74,21 @@ Yii::app()->clientScript->registerScript('index',"
 		
 	});
 	
+	function loadBlock(){
+		$.ajax({
+					  type : 'POST',
+					  url : siteUrl +'api/web/block',
+					  update : '#Block_id',
+					  data : {grower_id:$('#Grower_id').val()},
+					  success : function(data) {
+									$('#Block_id').empty();
+									$('#Block_id').append(data);
+									$('#Block_id').trigger('liszt:updated');
+								
+
+						}
+		});
+	}
 	function drawTrapCheckChart(){
 			var block_id = $('#Block_id').val();
 			$.ajax({
