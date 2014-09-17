@@ -24,7 +24,7 @@ Yii::app()->clientScript->registerScript('index',"
 	/* handle report by GrowerID */
 		
 	$('.clickable').change(function(){ 
-		var url = 'report/grower/'+$(this).val();
+		var url = 'report/grower/?id='+$(this).val()+'&year='+$('#yearPicker').html();
 		if(url.length){
 		window.open(url,'_blank');
 		$('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
@@ -73,7 +73,23 @@ Yii::app()->clientScript->registerScript('index',"
 		drawMiteMonitoringChart();
 		
 	});
+		
+	/*
+	 * year select reports
+	 */
 	
+	$('.yr-button-prev').click(function(){
+		var prev = actualDate.setYear(actualDate.getFullYear() -1);
+		$('#yearPicker').html(actualDate.getFullYear());
+	});
+	$('.yr-button-next').click(function(){
+		var cur = new Date();
+		if(actualDate.getFullYear() <= cur.getFullYear()-1){
+			var next = actualDate.setYear(actualDate.getFullYear() +1);
+			$('#yearPicker').html(actualDate.getFullYear());
+		}
+	});
+		
 	function loadBlock(){
 		$.ajax({
 					  type : 'POST',
