@@ -24,7 +24,7 @@ class ColumnBlock extends TbDataColumn {
         $script = <<<SCRIPT
             $(document).ready(function() {
                 $('.{$this->cssClass}').live('click', function(e) {
-                    var link    = $(this).attr('href');
+                    var link    = $(this).attr('link-data');
                     $.ajax({
                         cache: false,
                         dataType: 'json',
@@ -53,10 +53,10 @@ SCRIPT;
         $this->ajaxUrl['move'] = 'up';
         $this->ajaxUrl['block'] = $data['block_id'];
         $this->last_ordering = count($this->grid->dataProvider->getData());
-        $up = CHtml::link(CHtml::image($this->_upIcon), $this->ajaxUrl, array('class' => $this->cssClass));
+        $up = CHtml::link(CHtml::image($this->_upIcon),'#', array('class' => $this->cssClass,'link-data'=>CHtml::normalizeUrl($this->ajaxUrl)));
 
         $this->ajaxUrl['move'] = 'down';
-        $down = CHtml::link(CHtml::image($this->_downIcon), $this->ajaxUrl, array('class' => $this->cssClass));
+        $down = CHtml::link(CHtml::image($this->_downIcon),'#', array('class' => $this->cssClass,'link-data'=>CHtml::normalizeUrl($this->ajaxUrl)));
         if($value > 1){
        		 echo CHtml::tag('span', array(
             	'style' => 'margin-bottom:3px',
