@@ -18,7 +18,7 @@ class BOM {
 		$url = 'http://www.bom.gov.au/products/'.$id.'/'.$this->station.'.shtml';
 		$http = new Fetch($url);
 		$data = $http->Get();
-	die;
+
 		if($data->getCode() != 200){
 			throw new Exception('Invalid Observation Station: '.$this->observation);
 		}

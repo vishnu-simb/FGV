@@ -2,7 +2,7 @@
 
 Yii::import('application.models._base.BaseLocation');
 Yii::import('application.extensions.BOM.BOM');
-
+Yii::import('application.extensions.BOM.Pessl');
 class CommonLocation extends BaseLocation
 {
     protected $observation;
@@ -31,5 +31,21 @@ class CommonLocation extends BaseLocation
 		if($forcast{0} == '*')
 			$forcast = null;
 		return new BOM($observation, $forcast);
+    }
+    
+    function isSpecial(){
+    	return ($this->observation{0} == '*');
+    }
+    
+    function getWeather($date = null){
+    	if($date)
+    		return Weather::model()->getWeatherAverage(array('location_id'=>$this->id,'weather_date'=>$date));
+    
+    	return Weather::model()->findAll('location_id="'.$this->id.'"');
+    }
+    
+    function getSpecialData(){
+    	$weather = new Pessl('Fankhauser Apples', 'Alvina', '00001840');
+    	return $weather->getData(10);
     }
 }
