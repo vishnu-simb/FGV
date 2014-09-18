@@ -5,8 +5,6 @@ Yii::import('application.extensions.BOM.BOM');
 Yii::import('application.extensions.BOM.Pessl');
 class CommonLocation extends BaseLocation
 {
-    protected $observation;
-	protected $forcast;
     
     public static function model($className=__CLASS__)
     {
