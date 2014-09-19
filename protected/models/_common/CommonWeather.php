@@ -29,15 +29,24 @@ class CommonWeather extends BaseWeather
 		$date = new DateTime($this->date);
 		$date = $date->sub(date_interval_create_from_date_string('1 day'));
 		$p_date = $date->format('Y-m-d');
-		return self::model()->findByAttributes(array('date' => $p_date, 'location_id' => $this->location_id));
-	}
+        //try to get from database
+		$return_date = self::model()->findByAttributes(array('date' => $p_date, 'location_id' => $this->location_id));
+	    //if fail, calculate it
+        if (!$return_date)
+            $return_date = self::getWeatherAverage(array('location_id'=>$this->location_id,'date'=>$p_date));
+        return $return_date;
+    }
 	
 	function nextDay(){
         $date = new DateTime($this->date);
 		$date = $date->add(date_interval_create_from_date_string('1 day'));
 		$n_date = $date->format('Y-m-d');
-		return self::model()->findByAttributes(array('date' => $n_date, 'location_id' => $this->location_id));
-	}
+        //try to get from database
+		$return_date = self::model()->findByAttributes(array('date' => $n_date, 'location_id' => $this->location_id));
+	    if (!$return_date)
+            $return_date = self::getWeatherAverage(array('location_id'=>$this->location_id,'date'=>$n_date));
+        return $return_date;
+    }
     
     private static function _key($id){
 		ksort($id);
@@ -89,7 +98,7 @@ class CommonWeather extends BaseWeather
 		//Attempt multiple year average		
 		unset($id['date']);
         
-		$sql = "SELECT $date as date, location_id, AVG(min) as min, AVG(max) as max FROM ". Weather::model()->tableName();
+		$sql = "SELECT '$date' as date, location_id, AVG(min) as min, AVG(max) as max FROM ". Weather::model()->tableName();
 		$where = '';
         foreach ($id as $k => $v)
         {
@@ -100,8 +109,9 @@ class CommonWeather extends BaseWeather
             $sql .= " WHERE" . $where;
 		$sql .= " AND MONTH('$date')=MONTH(date) AND DAY('$date')=DAY(date) HAVING location_id='{$id['location_id']}'";
 		
-		$res = Yii::app()->db->createCommand($sql)->query();
+        $res = Yii::app()->db->createCommand($sql)->query();
         $row = $res?$res->read():0;
+        
 		if($row) {
 			$weather = self::fromAVG($row);
 			return $weather;
@@ -131,7 +141,7 @@ class CommonWeather extends BaseWeather
         $weather = new CommonWeather;
         foreach($row as $k => $v)
             $weather->$k = $v;
-        $weather->save();
+        //$weather->save();
 		return $weather;
 	}        
 
