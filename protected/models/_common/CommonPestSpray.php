@@ -103,12 +103,12 @@ class CommonPestSpray extends BasePestSpray
             	$all = CommonWeather::model()->findAll($criteria); 
 				//$all = WeatherAverage::getAll(new Where('location_id='.\DB::E($locationId).' AND weather_date>='.\DB::E($biofix_date).' ORDER BY weather_date ASC LIMIT 400'));
 				
-                /*
+                
 				if(!count($all)){
 					//throw new \Exception('No weather data (all)');
-					//return null;
+					return null;
 				}
-                */
+               
 				
 				//Build location weather cache
 				$a = array();

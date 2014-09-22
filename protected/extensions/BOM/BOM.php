@@ -13,41 +13,6 @@ class BOM {
 	
 	function _parseObservation(){
 		return $this->_longRange();
-		
-		//Make url
-		$url = 'http://www.bom.gov.au/products/'.$id.'/'.$this->station.'.shtml';
-		$http = new Fetch($url);
-		$data = $http->Get();
-
-		if($data->getCode() != 200){
-			throw new Exception('Invalid Observation Station: '.$this->observation);
-		}
-		$data = $data->getResponse();
-	
-		Simple_HTML_DOM::LoadS();
-		$dom = str_get_dom($data);
-	
-		$data = array();
-	
-		foreach($dom->find('table.obs_table') as $day){
-			$temps = array();
-			foreach($day->find('td[headers$="-temp"]') as $temp){
-				$temps[] = (float)trim($temp->plaintext);
-			}
-			
-			$header = $day->find('td[headers$="-datetime"]',0);
-			$header = explode('/',$header->plaintext);
-			$header = trim($header[0].'-'.date('M-Y'));
-			$time = self::parseTime($header);
-			
-			if($time){
-				$data[$time] = array(min($temps),max($temps));
-			}
-		}
-
-		$this->data = $data;
-	
-		$dom->clear();
 	}
 	
 	function _parseForcast(){
@@ -111,6 +76,7 @@ class BOM {
 	}
 	
 	private static $_longRangeCache = array();
+	
 	function _longRange($date = null){
 		if($date === null) $date = time();
 		
