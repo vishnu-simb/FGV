@@ -74,7 +74,7 @@ class CommonPestSpray extends BasePestSpray
 		return $this->isLowPop;
 	}
     
-    function getDate($block, $secondCohort = false, $hasFollowyear = false){
+    function getDate($block, $secondCohort = false, $hasFollowyear = false,$hasUpdate= false){
 		$k = $block->id.'|'.$this->pest_id.'|'.(int)$secondCohort;
         
         if (empty(self::$_date[$k]))
@@ -87,6 +87,10 @@ class CommonPestSpray extends BasePestSpray
 		$biofix = $pest->getBiofix($block->id, $secondCohort, $hasFollowyear);
 		if($biofix){
 			//Pre Setup
+			if(!empty($biofix->params) && !$hasUpdate){
+				$params = CJSON::decode($biofix->params);
+				return ($params[$this->id])?$params[$this->id]:null; // Return from DB
+			}
 			$biofix_date = $biofix->date;
             
             //If this is the first spray, use the biofix date, otherwise use the previous spray date for init

@@ -67,6 +67,8 @@
                             'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
                         )); ?>
                     </div>
+                    
+                    
                 </div>
 
                 <?php $this->endWidget(); ?>
