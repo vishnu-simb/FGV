@@ -46,7 +46,7 @@ class CommonDegreeDay extends BaseDegreeDay
 	private static $_cache;
 	static private function _key($weather, $pest){
 		$key = array();
-		$key[] = $weather->location->id;
+		$key[] = $weather->location_id;
 		$key[] = $weather->date;
 		$key[] = $pest->id;
 		return implode('|',$key);

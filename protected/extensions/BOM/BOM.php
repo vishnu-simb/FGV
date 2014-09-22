@@ -11,14 +11,16 @@ class BOM {
 		$this->forcast = $forcast;
 	}
 	
-	function _parseObservation(){
-		return $this->_longRange();
-	}
-	
+    private static $_forcastCache = array();
 	function _parseForcast(){
-		$url = 'http://www.bom.gov.au/vic/forecasts/'.$this->forcast.'.shtml';
-		$http = new Fetch($url);
-		$data = $http->Get();
+		$url = 'http://www.bom.gov.au/vic/forecasts/'.$this->forcast.'.shtml';  
+        $k = $this->forcast.'|'.date('Ymd');
+        if(!isset(self::$_forcastCache[$k])){
+			$http = new Fetch($url);
+			self::$_forcastCache[$k] = $data = $http->Get();
+		}else{
+			$data = self::$_forcastCache[$k];
+		}
 		
 		if($data->getCode() != 200){
 			throw new Exception('Invalid Forcast Station: '.$this->forcast);
@@ -65,9 +67,6 @@ class BOM {
 	public function getData() {
 		if($this->data === null){
 			$this->data = array();
-			if($this->observation != null){
-				$this->_parseObservation();
-			}
 			if($this->forcast != null){
 				$this->_parseForcast();
 			}
@@ -76,7 +75,6 @@ class BOM {
 	}
 	
 	private static $_longRangeCache = array();
-	
 	function _longRange($date = null){
 		if($date === null) $date = time();
 		
@@ -115,22 +113,28 @@ class BOM {
 	}
 
 	function getSpecific($time){
-		$data = $this->getData();
 		if(!is_numeric($time)) 
 			$time = strtotime($time);
 		$date = date('c',$time);
 		
+        //The forcast will only get data in 7 next days
+        if (strtotime('+7 days') < strtotime($date))
+            $data = $this->getData();
+            
 		//Check recent
 		if(isset($data[$date])){
 			return $data[$date];
 		}
-		
-		//Check long range
-		$data = $this->_longRange($time);
-		if($data === null) return null;
-		if(isset($data[$date])){
-			return $data[$date];
-		}
+		if ($this->observation)
+        {
+            //Check long range
+    		$data = $this->_longRange($time);
+    		if($data === null) return null;
+    		if(isset($data[$date])){
+    			return $data[$date];
+    		}
+        }
+		return null;
 	}
 	
 }
