@@ -78,19 +78,16 @@ class CommonPestSpray extends BasePestSpray
 		$this->_date = null;
 	}
     
-    function getDate($block, $secondCohort = false,$year = false){
+    function getDate($block,$secondCohort = false,$hasFollowyear = false){
 		$k = $block->id.'|'.(int)$secondCohort;
 		if(isset($this->_date[$k])){
 			return $this->_date[$k];
 		}
         $pest = $this->pest;
-		$biofix = $pest->getBiofix($block->id, $secondCohort);
+		$biofix = $pest->getBiofix($block->id, $secondCohort,$hasFollowyear);
 		if($biofix){
 			//Pre Setup
 			$biofix_date = $biofix->date;
-			if(($year) && date('Y',strtotime($biofix_date)) != $year){
-				return null;
-			}
 			$location = $block->property->location;
 			$locationId = $location->id;
             $_k = $locationId.'|'.$biofix_date;
@@ -179,7 +176,6 @@ class CommonPestSpray extends BasePestSpray
 		if(!$date){
 			return;
 		}
-		
 		$date = new DateTime($date);
 		$date = $date->add(date_interval_create_from_date_string($this->every.' day'));
 		$result = $date->format('Y-m-d');

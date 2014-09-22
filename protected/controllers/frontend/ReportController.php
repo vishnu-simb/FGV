@@ -138,7 +138,7 @@ class ReportController extends SimbController
 		
 		$VARS['grower'] = $grower;
 		$VARS['dateRange'] = $this->getDateRange();
-		$VARS['yearReport'] = isset($_GET['year'])?$_GET['year']:date('Y',time());// Set default report
+		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
 		
         $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
@@ -182,9 +182,9 @@ class ReportController extends SimbController
 					$pd->pest = isset($pests[$pest])?$pests[$pest]:'';
 					if($pd->pest){
 						$pp = $pd->pest;
-						$pd->biofix = $pd->pest->getBiofix($block->id,false);
+						$pd->biofix = $pd->pest->getBiofix($block->id,false,$VARS['hasFollowYear']);
 						if($pd->biofix) $pd->biofix = $pd->biofix->date;
-						$pd->secondCohortBiofix = $pd->pest->getBiofix($block->id,true);
+						$pd->secondCohortBiofix = $pd->pest->getBiofix($block->id,true,$VARS['hasFollowYear']);
 						if($pd->secondCohortBiofix) $pd->secondCohortBiofix = $pd->secondCohortBiofix->date;
 					}else{
 						$pd->pest = $pp;
@@ -194,11 +194,11 @@ class ReportController extends SimbController
                     $ss = (int)(!$pd->isLowPop && $pd->pest->hasSecondCohort($block->id));
 					for($second=0;$second<=$ss;$second++){
 						foreach($sprays as $k=>$spray){
-							if($spray && date('Y',strtotime($pd->biofix)) == $VARS['yearReport']){ 
+							if($spray){ 
 								$sd = new SprayResult();
 								$secondBool = (bool)$second;
-								$sd->sprayDate = $spray->getDate($block,$secondBool);
-								$sd->coverUntil = $spray->getCoverRequired($block,$secondBool);
+								$sd->sprayDate = $spray->getDate($block,$secondBool,$VARS['hasFollowYear']);
+								$sd->coverUntil = $spray->getCoverRequired($block,$secondBool,$VARS['hasFollowYear']);
 								if($secondBool){
 									//die(var_dump($sd->sprayDate));
 									$pd->secondCohortSprays[$k] = $sd;
