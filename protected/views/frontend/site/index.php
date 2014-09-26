@@ -11,8 +11,9 @@ Yii::app()->clientScript->registerScript('index',"
 	var _date = $('#datePicker').html();
 	var months = new Array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 	var actualDate = new Date('01 '+_date); // convert to actual date
-	
-	loadBlock(); // load default block by grower
+	var reportYear = new Date('01 January,'+$('#yearPicker').html()); // convert to actual date
+
+		loadBlock(); // load default block by grower
 		
 	loadSprayTable();
 	
@@ -79,15 +80,15 @@ Yii::app()->clientScript->registerScript('index',"
 	 */
 	
 	$('.yr-button-prev').click(function(){
-		var prev = actualDate.setYear(actualDate.getFullYear() -1);
-		$('#yearPicker').html(actualDate.getFullYear());
+		var prev = reportYear.setYear(reportYear.getFullYear() -1);
+		$('#yearPicker').html(reportYear.getFullYear());
 		loadSprayTable();
 	});
 	$('.yr-button-next').click(function(){
 		var cur = new Date();
-		if(actualDate.getFullYear() <= cur.getFullYear()-1){
-			var next = actualDate.setYear(actualDate.getFullYear() +1);
-			$('#yearPicker').html(actualDate.getFullYear());
+		if(reportYear.getFullYear() <= cur.getFullYear()-1){
+			var next = reportYear.setYear(reportYear.getFullYear() +1);
+			$('#yearPicker').html(reportYear.getFullYear());
 			loadSprayTable();
 		}
 	});
