@@ -23,9 +23,7 @@ class UpdateBiofixCommand extends SimbConsoleCommand
             $pest_id = $objBiofix->pest_id;
             $block_id = $objBiofix->block_id;
             $date = $objBiofix->date;      
-            
             $this->msg("Processing Biofix id: " . $objBiofix->id . ", Pest ID: " . $pest_id. ", Block: " . $block_id . ", Date: " . $date);      
-
             $format = Yii::app()->params['dbDateFormat'];
             $pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$pest_id));
             $block = Block::model()->findByAttributes(array('id'=>$block_id));
@@ -34,15 +32,11 @@ class UpdateBiofixCommand extends SimbConsoleCommand
             $this->msg("Loaded pests and blocks");
             
             foreach($pestSpray as $key=>$vv){
-                $this->msg("Processing Pest Spray: " . $vv->id);    
-                $spraydates[$vv->id]= $vv->getDate($block, false, date('Y',strtotime($date)),true);
-                
-                print_r($spraydates);
-                
-                $objBiofix->params = CJSON::encode($spraydates);
-                $objBiofix->update();                
-            }            
-            
+                $spraydates[$vv->id]= $vv->getDate($block, ($objBiofix->second_cohort=='yes')?true:false, date('Y',strtotime($date)),true);
+            }
+            $this->msg("Processing Biofix : " . $objBiofix->id);
+            print_r(CJSON::encode($spraydates));
+            $objBiofix->updateByPk($objBiofix->id,array('params'=>CJSON::encode($spraydates)));
         }       
     }
     
