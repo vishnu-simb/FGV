@@ -66,20 +66,36 @@ class CommonBiofix extends BaseBiofix
     	if (parent::beforeSave()) {
     		$format = Yii::app()->params['dbDateFormat'];
     		$postData = Yii::app()->request->getPost('Biofix');
-    		$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$postData['pest_id']));
-    		$block = Block::model()->findByAttributes(array('id'=>$postData['block_id']));
-    		$spraydates = array();
-    		foreach($pestSpray as $key=>$vv){
-    			$spraydates[$vv->id]= $vv->getDate($block,($postData['second_cohort']=='yes')?true:false,date('Y',strtotime($postData['date'])),true);
+    		if (!$this->isNewRecord) {
+    			$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$postData['pest_id']));
+    			$block = Block::model()->findByAttributes(array('id'=>$postData['block_id']));
+    			$spraydates = array();
+    			foreach($pestSpray as $key=>$vv){
+    				$spraydates[$vv->id]= $vv->getDate($block,($postData['second_cohort']=='yes')?true:false,date('Y',strtotime($postData['date'])),true);
+    			}
+    			$this->params = CJSON::encode($spraydates);
     		}
-    		$this->params = CJSON::encode($spraydates);
     		$this->updated_at = date($format);
     		return true;
     	} else {
     		return false;
     	}
     }
-    
+    public function afterSave(){
+    	parent::afterSave();
+    	if ($this->isNewRecord){
+    		$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$this->pest_id));
+    		$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
+    		$spraydates = array();
+    		foreach($pestSpray as $key=>$vv){
+    			$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,date('Y',strtotime($this->date)),true);
+    		}
+    		$biofix = new CommonBiofix;
+    		$bb = $biofix->findByAttributes(array('id'=>$this->id));
+    		$bb->params = CJSON::encode($spraydates);
+    		$bb->save();
+    	}
+    }
     
     
     /**
