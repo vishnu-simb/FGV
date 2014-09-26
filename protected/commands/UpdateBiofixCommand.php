@@ -36,7 +36,8 @@ class UpdateBiofixCommand extends SimbConsoleCommand
             }
             $this->msg("Processing Biofix : " . $objBiofix->id);
             print_r(CJSON::encode($spraydates));
-            $objBiofix->updateByPk($objBiofix->id,array('params'=>CJSON::encode($spraydates)));
+            $objBiofix->params = CJSON::encode($spraydates);
+            $objBiofix->save();
         }       
     }
     

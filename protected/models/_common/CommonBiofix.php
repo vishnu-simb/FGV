@@ -65,13 +65,12 @@ class CommonBiofix extends BaseBiofix
     public function beforeSave(){
     	if (parent::beforeSave()) {
     		$format = Yii::app()->params['dbDateFormat'];
-    		$postData = Yii::app()->request->getPost('Biofix');
     		if (!$this->isNewRecord) {
-    			$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$postData['pest_id']));
-    			$block = Block::model()->findByAttributes(array('id'=>$postData['block_id']));
+    			$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$this->pest_id));
+    			$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
     			$spraydates = array();
     			foreach($pestSpray as $key=>$vv){
-    				$spraydates[$vv->id]= $vv->getDate($block,($postData['second_cohort']=='yes')?true:false,date('Y',strtotime($postData['date'])),true);
+    				$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,date('Y',strtotime($this->date)),true);
     			}
     			$this->params = CJSON::encode($spraydates);
     		}
