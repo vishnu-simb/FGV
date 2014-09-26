@@ -19,6 +19,7 @@ return array(
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
         'bootstrap.behaviors.*',
+        'application.extensions.giix-components.*'
     ),
     'preload' => array(
         'log',
