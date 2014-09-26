@@ -22,17 +22,17 @@ class CommonLocation extends BaseLocation
     public function getBOM()
     {
         $observation = $this->observation;
-		if($observation{0} == '*')
+		if($observation == '*')
 			$observation = null;
 		
 		$forcast = $this->forcast;
-		if($forcast{0} == '*')
+		if($forcast == '*')
 			$forcast = null;
 		return new BOM($observation, $forcast);
     }
     
     function isSpecial(){
-    	return ($this->observation{0} == '*');
+    	return ($this->observation == '*');
     }
     
     function getWeather($date = null){

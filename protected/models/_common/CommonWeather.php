@@ -29,11 +29,17 @@ class CommonWeather extends BaseWeather
 		$date = new DateTime($this->date);
 		$date = $date->sub(date_interval_create_from_date_string('1 day'));
 		$p_date = $date->format('Y-m-d');
+        
+        $params = array('date' => $p_date, 'location_id' => $this->location_id);
+        $ck = self::_key($params);
+        if(isset(self::$ids[$ck])){
+			return self::$ids[$ck];
+		}
         //try to get from database
-		$return_date = self::model()->findByAttributes(array('date' => $p_date, 'location_id' => $this->location_id));
+		$return_date = self::model()->findByAttributes($params);
 	    //if fail, calculate it
         if (!$return_date)
-            $return_date = self::getWeatherAverage(array('location_id'=>$this->location_id,'date'=>$p_date));
+            $return_date = self::getWeatherAverage($params);
         return $return_date;
     }
 	
@@ -41,10 +47,17 @@ class CommonWeather extends BaseWeather
         $date = new DateTime($this->date);
 		$date = $date->add(date_interval_create_from_date_string('1 day'));
 		$n_date = $date->format('Y-m-d');
+        
+        $params = array('date' => $n_date, 'location_id' => $this->location_id);
+        $ck = self::_key($params);
+        if(isset(self::$ids[$ck])){
+			return self::$ids[$ck];
+		}
+        
         //try to get from database
-		$return_date = self::model()->findByAttributes(array('date' => $n_date, 'location_id' => $this->location_id));
+		$return_date = self::model()->findByAttributes($params);
 	    if (!$return_date)
-            $return_date = self::getWeatherAverage(array('location_id'=>$this->location_id,'date'=>$n_date));
+            $return_date = self::getWeatherAverage($params);
         return $return_date;
     }
     
@@ -66,8 +79,6 @@ class CommonWeather extends BaseWeather
             $criteria->order = 'date DESC';
             $criteria->limit = '400';
         	$ret = self::model()->findAll($criteria); 
-			//$ret = static::getAll(array('location_id'=>$id['location_id']));
-			//$ret->sql->order_by('weather_date DESC')->Limit(400);
 			foreach($ret as $row){
 				$rck = self::_key(array('location_id'=>$row->location->id,'date'=>$row->date));
 				self::$ids[$rck] = $row;
@@ -92,6 +103,7 @@ class CommonWeather extends BaseWeather
 			$id['min'] = $data[0];
 			$id['max'] = $data[1];
 			$weather = self::fromAVG($id);
+            self::$ids[$ck] = $weather;
 			return $weather;
 		}
 		
@@ -114,6 +126,7 @@ class CommonWeather extends BaseWeather
         
 		if($row) {
 			$weather = self::fromAVG($row);
+            self::$ids[$ck] = $weather;
 			return $weather;
 		}
 		
@@ -130,6 +143,7 @@ class CommonWeather extends BaseWeather
 			$id['min'] = $data[0];
 			$id['max'] = $data[1];
 			$weather = self::fromAVG($id);
+            self::$ids[$ck] = $weather;
 			return $weather;
 		}
 		

@@ -6,7 +6,8 @@ Yii::import('application.models._common.CommonDegreeDay');
 
 class CommonPestSpray extends BasePestSpray
 {
-    private $_date = null;
+    //private $_date = null;
+    protected static $_date = array();
     protected static $_location = array();
 	private $isLowPop = false;
     
@@ -73,28 +74,38 @@ class CommonPestSpray extends BasePestSpray
 		return $this->isLowPop;
 	}
     
-    function __clone()
-	{
-		$this->_date = null;
-	}
-    
-    function getDate($block, $secondCohort = false,$year = false){
-		$k = $block->id.'|'.(int)$secondCohort;
-		if(isset($this->_date[$k])){
-			return $this->_date[$k];
+    function getDate($block, $secondCohort = false, $hasFollowyear = false,$hasUpdate= false){
+		$k = $block->id.'|'.$this->pest_id.'|'.(int)$secondCohort;
+        
+        if (empty(self::$_date[$k]))
+            self::$_date[$k] = array();
+		if(isset(self::$_date[$k][$this->number])){
+			return self::$_date[$k][$this->number];
 		}
+        
         $pest = $this->pest;
-		$biofix = $pest->getBiofix($block->id, $secondCohort);
+		$biofix = $pest->getBiofix($block->id, $secondCohort, $hasFollowyear);
 		if($biofix){
 			//Pre Setup
-			$biofix_date = $biofix->date;
-			if(($year) && date('Y',strtotime($biofix_date)) != $year){
-				return null;
+			if(!empty($biofix->params) && !$hasUpdate){
+				$params = CJSON::decode($biofix->params);
+				return ($params[$this->id])?$params[$this->id]:null; // Return from DB
 			}
+			$biofix_date = $biofix->date;
+            
+            //If this is the first spray, use the biofix date, otherwise use the previous spray date for init
+            if ($this->number > 1 && isset(self::$_date[$k]) && isset(self::$_date[$k][$this->number - 1]))
+            {
+                $biofix_date = self::$_date[$k][$this->number - 1];
+            }
+                
+            
+            
 			$location = $block->property->location;
 			$locationId = $location->id;
             $_k = $locationId.'|'.$biofix_date;
-			if(!isset(static::$_location[$_k])){
+            $a = array();
+			if(!isset(static::$_location[$_k]) && strtotime($biofix_date) < time()){
 			    $criteria = new CDbCriteria();
             	$criteria->condition = 'location_id=:location_id AND date >= :weather_date';
             	$criteria->params = array(':location_id'=>$locationId,':weather_date'=>$biofix_date);
@@ -106,18 +117,17 @@ class CommonPestSpray extends BasePestSpray
                 /*
 				if(!count($all)){
 					//throw new \Exception('No weather data (all)');
-					//return null;
+					return null;
 				}
                 */
 				
 				//Build location weather cache
-				$a = array();
 				foreach($all as $v){
 					$a[strtotime($v->date)] = $v;
 				}
 				static::$_location[$_k] = $a;
 			}
-			$all = static::$_location[$_k];
+			$all = $a;
 			
 			//Start
 			$lastDD = $lastBio = $DDsinceBiofix = 0;
@@ -131,7 +141,7 @@ class CommonPestSpray extends BasePestSpray
 				//Get DD
 				$DD = CommonDegreeDay::cachedCreate($weather, $pest);
 				$DDsinceBiofix = $DD->SinceBiofix($block, $secondCohort, $lastBio);
-				//echo $weather->date,': '.$weather->min.','.$weather->max.' = <b>',$DDsinceBiofix,'</b><br />';
+                //echo $weather->date,': '.$weather->min.','.$weather->max.' = <b>',$DDsinceBiofix,'</b><br />';
 				
 				if($lastDD === 0){
 					//set LastDD early
@@ -142,7 +152,7 @@ class CommonPestSpray extends BasePestSpray
 				//$this->dd > $lastBio &&
 				if($this->dd < $DDsinceBiofix) { //Is $lastDD < NUMBER < $DDsinceBiofix
 					//exit;
-					return $this->_date[$k] = $lastDD->getDate();
+					return self::$_date[$k][$this->number] = $lastDD->getDate();
 				}
 				
 				//increment and sanity check
@@ -179,7 +189,6 @@ class CommonPestSpray extends BasePestSpray
 		if(!$date){
 			return;
 		}
-		
 		$date = new DateTime($date);
 		$date = $date->add(date_interval_create_from_date_string($this->every.' day'));
 		$result = $date->format('Y-m-d');

@@ -1,4 +1,6 @@
 <?php
+set_time_limit(1200);
+
 class NodeNotFound extends Exception {
 
 }

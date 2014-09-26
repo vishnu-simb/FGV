@@ -30,11 +30,18 @@ class CommonPest extends BasePest
 		return PestSpray::model()->findByAttributes(array('pest_id'=>$this->id,'number'=>$number));
 	}
     
-    function getBiofix($block_id, $hasSecondCohort){
+    function getBiofix($block_id, $hasSecondCohort,$hasFollowYear = false){
         $_k = $block_id. '|'. $this->id. '|'. ($hasSecondCohort?'1':'0');
         if (isset(static::$_block[$_k]))
             return static::$_block[$_k];
         else
-            return static::$_block[$_k] = Biofix::model()->findByAttributes(array('block_id'=>$block_id,'pest_id'=>$this->id,'second_cohort'=>$hasSecondCohort?'yes':'no'));
+        	if($hasFollowYear){
+    			return static::$_block[$_k] = Biofix::model()->findByAttributes(array('block_id'=>$block_id,'pest_id'=>$this->id,'second_cohort'=>$hasSecondCohort?'yes':'no'),array(
+																			        'condition'=>'YEAR(date)=:date', 
+																			        'params'=>array(':date'=>$hasFollowYear),
+    																				'order'=>'id DESC'
+																			    ));
+        	}
+            return static::$_block[$_k] = Biofix::model()->findByAttributes(array('block_id'=>$block_id,'pest_id'=>$this->id,'second_cohort'=>$hasSecondCohort?'yes':'no'),array('order'=>'id DESC'));
     }
 }
