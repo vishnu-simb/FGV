@@ -42,7 +42,7 @@
 													array('name'=>'ordering','header'=>'','class' =>'ext.yii-ordering-column.columnBlock','visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,'filter'=>false),
 													array('name'=>'trap_name','header'=>''),
 													array('name'=>'','value'=>function($data){
-															echo '<input type="text" name="Traps['.$data['id'].']" class="spinner" max="200" style="width: 30px;" />';
+															echo '<input type="text" name="Traps['.$data['id'].']" class="spinner" style="width: 30px;" />';
 														},'header'=>'','htmlOptions' => array('class' => 'right-cell')), 
 
 													

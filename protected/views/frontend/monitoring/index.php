@@ -44,7 +44,7 @@
 									foreach($block->getMites() as $monitor){
 										echo '<tr>';
 										echo '<td>'.$monitor->name.'</td>';
-										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="PercentLi['.$block->id.','.$monitor->id.']" class="spinner" value="" max="100" style="width: 30px;" /></td>';
+										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="PercentLi['.$block->id.','.$monitor->id.']" class="spinner" value="" style="width: 30px;" /></td>';
 										echo '<td style="text-align: right;border-left: 0 none;"><input type="text" name="NoDays['.$block->id.','.$monitor->id.']" class="spinner" value="" style="width: 30px;" /></td>';
 										
 										echo '</tr>';
