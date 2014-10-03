@@ -193,7 +193,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 							array(
 								'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
 								'label' => 'Edit profile',
-								'url' => '#',
+								'url' => Yii::app()->baseUrl.'/backend/users/update/'.Yii::app()->user->id,
 							),
 							array(
                                 'label' => Yii::t('app', 'Log out'),

@@ -25,9 +25,9 @@
 
                     <div class="span12">  
                       
-                    	  <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap() ,'id','name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
+                    	  <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
     					  
-                          <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xxlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'),'readonly'=>'true')); ?>
+                          <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xxlarge datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
 
                           <?php echo $form->textFieldControlGroup($modelTrapCheck, 'value', array('class' => 'spinner input-xxlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('value'))); ?>
 			  

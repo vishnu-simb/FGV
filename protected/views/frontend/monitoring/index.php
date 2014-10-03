@@ -99,7 +99,7 @@
 												<?php echo $lastest['no_days'] ;?>
 											</td>
 											<td style="text-align: right;">
-												<?php echo $lastest['mm_average_li'] ;?>
+												<?php echo !empty($lastest['mm_average_li'])?$lastest['mm_average_li']:0 ;?>
 											</td>
 											<td style="text-align: right;width: 65px">
 											<a href="<?php echo Yii::app()->baseUrl."/monitoring/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>

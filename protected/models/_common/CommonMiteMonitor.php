@@ -66,6 +66,20 @@ class CommonMiteMonitor extends BaseMiteMonitor
     /**
      * @return Block[]
      */
+    public function getGrowerBlock(){
+    	$sql="SELECT b.id as id,b.name as name,CONCAT (g.name,' - ',p.name,' - ',b.name) AS block_name
+		FROM ".Block::model()->tableName()." b
+    			INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+    			INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id
+    	ORDER BY g.name";
+    	return new CSqlDataProvider($sql, array(
+    			'pagination'=>false,
+    	));
+    }
+    
+    /**
+     * @return Block[]
+     */
     public function getBlock(){
     	$criteria = new CDbCriteria();
     	$criteria->condition = 'is_deleted=:is_deleted';

@@ -182,7 +182,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         'items' => array(
                             array(
                                 'label' => 'Edit profile',
-                                'url' => '#',
+                                'url' => array('users/update/'.Yii::app()->user->id),
                             ),
                             array(
                                 'label' => Yii::t('app', 'Log out'),
