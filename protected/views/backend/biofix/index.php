@@ -56,9 +56,9 @@ $('.search-form-ext form').submit(function(){
 	'columns' => array(
 		//'id',
 		array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
-		array('name'=>'property','value'=>'$data->property->name','filter'=>CHtml::activeDropDownList($modelBiofix,'property', CHtml::listData( $modelBiofix->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelBiofix,'grower', CHtml::listData( $modelBiofix->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
-		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock()->getData() ,'id','name'),array('empty'=>'Select A Block'))),
+		array('name'=>'property','value'=>'$data->property->name','filter'=>CHtml::activeDropDownList($modelBiofix,'property', CHtml::listData($modelBiofix->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property'))),
+		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlockByProperty() ,'id','name'),array('empty'=>'Select A Block'))),
 		'second_cohort',
 		'date',
 		

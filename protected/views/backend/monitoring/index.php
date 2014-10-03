@@ -55,23 +55,14 @@ $('.search-form-ext form').submit(function(){
 
 'columns' => array(
 		//'id',
-		array('name'=>'mite.name','header'=>'Mite','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'mite', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite'))),
-		array('name'=>'property.name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'property', CHtml::listData( $modelMiteMonitor->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
-		array('name'=>'block.name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'block', CHtml::listData( $modelMiteMonitor->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
-		array('name'=>'grower.name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'grower', CHtml::listData( $modelMiteMonitor->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'mite','header'=>'Mite','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'mite_id', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite'))),
+		array('name'=>'grower','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'grower', CHtml::listData( $modelMiteMonitor->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+		array('name'=>'property','header'=>'Property','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'property', CHtml::listData( $modelMiteMonitor->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property'))),
+		array('name'=>'block','header'=>'Block','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'block_id', CHtml::listData( $modelMiteMonitor->getBlockByProperty() ,'id','name'),array('empty'=>'Select A Block'))),
 		'date',
 		'percent_li',
 		'no_days',
-		/*
-		'average_li',
-		'creator_id',
-		'ordering',
-		'created_at',
-		'updated_at',
-		'status',
-		'is_deleted',
-		'params',
-		*/
+
 		array(
 			'class' => 'bootstrap.widgets.TbButtonColumn',
 		),
