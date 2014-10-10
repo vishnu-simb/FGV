@@ -64,6 +64,9 @@ class CommonBiofix extends BaseBiofix
     
     public function beforeSave(){
     	if (parent::beforeSave()) {
+    		if(!$this->isNewRecord){
+    			$this->params = CJSON::encode($this->getSprayDates());
+    		}
     		$this->updated_at = date('Y-m-d H:i:s',time());
     		return true;
     	} else {
@@ -72,10 +75,12 @@ class CommonBiofix extends BaseBiofix
     }
     
     public function afterSave(){
-			$bb = Biofix::model()->findByPk($this->id);
+    	if($this->isNewRecord){
+    		$bb = Biofix::model()->findByPk($this->id);
     		$bb->params = CJSON::encode($this->getSprayDates());
     		$bb->save(false);
     		parent::afterSave();
+    	}
     }
     
     private function getSprayDates(){
