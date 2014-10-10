@@ -32,7 +32,7 @@ class UpdateBiofixCommand extends SimbConsoleCommand
             $this->msg("Loaded pests and blocks");
             
             foreach($pestSpray as $key=>$vv){
-                $spraydates[$vv->id]= $vv->getDate($block, ($objBiofix->second_cohort=='yes')?true:false, date('Y',strtotime($date)),true);
+                $spraydates[$vv->id]= $vv->getDate($block, ($objBiofix->second_cohort=='yes')?true:false, $date,true);
             }
             $this->msg("Processing Biofix : " . $objBiofix->id);
             print_r(CJSON::encode($spraydates));

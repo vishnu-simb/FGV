@@ -23,7 +23,7 @@ class CommonBiofix extends BaseBiofix
     	return array(
     			'alias'=>'biofix',
     			'condition'=>'biofix.is_deleted=0',
-    			//'order'=>'artwork.sort ASC'
+    			'order'=>'biofix.date DESC'
     	);
     }
     
@@ -70,7 +70,7 @@ class CommonBiofix extends BaseBiofix
     			$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
     			$spraydates = array();
     			foreach($pestSpray as $key=>$vv){
-    				$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,date('Y',strtotime($this->date)),true);
+    				$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,$this->date,true);
     			}
     			$this->params = CJSON::encode($spraydates);
     		}
@@ -87,7 +87,7 @@ class CommonBiofix extends BaseBiofix
     		$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
     		$spraydates = array();
     		foreach($pestSpray as $key=>$vv){
-    			$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,date('Y',strtotime($this->date)),true);
+    			$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,$this->date,true);
     		}
     		$biofix = new CommonBiofix;
     		$bb = $biofix->findByAttributes(array('id'=>$this->id));
