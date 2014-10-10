@@ -75,7 +75,7 @@ class CommonBiofix extends BaseBiofix
     }
     
     public function afterSave(){
-    	if($this->isNewRecord){
+    	if($this->isNewRecord || strpos($this->params,'null')){
     		$bb = Biofix::model()->findByPk($this->id);
     		$bb->params = CJSON::encode($this->getSprayDates());
     		$bb->save(false);

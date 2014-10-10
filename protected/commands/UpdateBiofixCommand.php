@@ -24,19 +24,6 @@ class UpdateBiofixCommand extends SimbConsoleCommand
             $block_id = $objBiofix->block_id;
             $date = $objBiofix->date;      
             $this->msg("Processing Biofix id: " . $objBiofix->id . ", Pest ID: " . $pest_id. ", Block: " . $block_id . ", Date: " . $date);      
-            $format = Yii::app()->params['dbDateFormat'];
-            $pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$pest_id));
-            $block = Block::model()->findByAttributes(array('id'=>$block_id));
-            $spraydates = array();        
-            
-            $this->msg("Loaded pests and blocks");
-            
-            foreach($pestSpray as $key=>$vv){
-                $spraydates[$vv->id]= $vv->getDate($block, ($objBiofix->second_cohort=='yes')?true:false, $date,true);
-            }
-            $this->msg("Processing Biofix : " . $objBiofix->id);
-            print_r(CJSON::encode($spraydates));
-            $objBiofix->params = CJSON::encode($spraydates);
             $objBiofix->save();
         }       
     }
