@@ -64,38 +64,29 @@ class CommonBiofix extends BaseBiofix
     
     public function beforeSave(){
     	if (parent::beforeSave()) {
-    		$format = Yii::app()->params['dbDateFormat'];
-    		if (!$this->isNewRecord) {
-    			$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$this->pest_id));
-    			$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
-    			$spraydates = array();
-    			foreach($pestSpray as $key=>$vv){
-    				$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,$this->date,true);
-    			}
-    			$this->params = CJSON::encode($spraydates);
-    		}
-    		$this->updated_at = date($format);
+    		$this->updated_at = date('Y-m-d H:i:s',time());
     		return true;
     	} else {
     		return false;
     	}
     }
+    
     public function afterSave(){
-    	parent::afterSave();
-    	if ($this->isNewRecord){
-    		$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$this->pest_id));
-    		$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
-    		$spraydates = array();
-    		foreach($pestSpray as $key=>$vv){
-    			$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,$this->date,true);
-    		}
-    		$biofix = new CommonBiofix;
-    		$bb = $biofix->findByAttributes(array('id'=>$this->id));
-    		$bb->params = CJSON::encode($spraydates);
-    		$bb->save();
-    	}
+			$bb = Biofix::model()->findByPk($this->id);
+    		$bb->params = CJSON::encode($this->getSprayDates());
+    		$bb->save(false);
+    		parent::afterSave();
     }
     
+    private function getSprayDates(){
+    	$spraydates = array();
+    	$pestSpray = PestSpray::model()->findAllByAttributes(array('pest_id'=>$this->pest_id));
+    	$block = Block::model()->findByAttributes(array('id'=>$this->block_id));
+    	foreach($pestSpray as $key=>$vv){
+    		$spraydates[$vv->id]= $vv->getDate($block,($this->second_cohort=='yes')?true:false,$this->date,true);
+    	}
+    	return $spraydates;
+    }
     
     /**
      * @return Block[]
