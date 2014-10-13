@@ -57,7 +57,10 @@ $('.search-form-ext form').submit(function(){
 		'id',
 		'name',
 		'type',
-		array('name'=>'color' ,'value'=>'$data->color','filter'=>false,),
+		array('name'=>'color','value'=>function($data){
+			echo '<div style="background:'.$data['color'].'">&nbsp&nbsp&nbsp&nbsp</div>';
+		},'header'=>'Color','filter'=>false,),
+		//array('name'=>'color' ,'value'=>'$data->color','filter'=>false,),
 		/*
 		'creator_id',
 		'ordering',
@@ -69,6 +72,7 @@ $('.search-form-ext form').submit(function(){
 		*/
 		array(
 			'class' => 'bootstrap.widgets.TbButtonColumn',
+			
 		),
 	),
 )); ?>

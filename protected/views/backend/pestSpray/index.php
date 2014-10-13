@@ -74,6 +74,9 @@ $('.search-form-ext form').submit(function(){
 		*/
 		array(
 			'class' => 'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array(
+					'class' => 'c-button',
+			),
 		),
 	),
 )); ?>

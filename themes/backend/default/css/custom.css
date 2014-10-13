@@ -37,3 +37,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 .weekly-interval{
 	display:none;
 }
+.c-button{
+	width: 100px!important;
+	float:left;
+}

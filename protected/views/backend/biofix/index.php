@@ -72,7 +72,10 @@ $('.search-form-ext form').submit(function(){
 		'params',
 		*/
 		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
+		'class' => 'bootstrap.widgets.TbButtonColumn',
+		'htmlOptions' => array(
+        'class' => 'c-button',
+    		),
 		),
 	),
 )); ?>
