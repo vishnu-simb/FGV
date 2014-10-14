@@ -187,12 +187,13 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
-    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline');
+    	$VAR['chart'] = array('renderTo'=>'yw1','zoomType' => 'x','type'=>'spline');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
+    	$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
-    	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0);
+    	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+    	$VAR['xAxis'] = array( 'type'=> 'datetime','categories'=>array_keys($this->getxAxis($m)));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'0','to'=>'1500','color'=>'rgba(68, 170, 213, 0.1)','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'1500','to'=>'2500','color'=>'rgba(0, 0, 0,0)','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'3500','color'=>'rgba(68, 170, 213, 0.1)','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
     	$VAR['series'] = $serial;
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
