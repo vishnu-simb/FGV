@@ -239,7 +239,7 @@ class ReportController extends SimbController
             $errorText = YII_DEBUG ? sprintf(
                 Yii::t('app', 'The ID %s does not exist in %s.'),
                 $id,
-                'My Account'
+                'Grower'
             ) : Yii::t('app', 'The requested page does not exist.');
 			throw new CHttpException(404, $errorText);
 		}

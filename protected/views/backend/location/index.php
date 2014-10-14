@@ -54,7 +54,9 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		//'id',
+		array(
+			'class' => 'bootstrap.widgets.TbButtonColumn',
+		),
 		'name',
 		'observation',
 		'forcast',
@@ -68,10 +70,7 @@ $('.search-form-ext form').submit(function(){
 		'is_deleted',
 		'params',
 		*/
-		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
-			
-		),
+		
 	),
 )); ?>
         </div>

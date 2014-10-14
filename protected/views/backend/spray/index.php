@@ -54,7 +54,12 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		//'id',
+		array(
+			'class' => 'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array(
+					'class' => 'c-button',
+			),
+		),
 		array('name'=>'chemical','value'=>'$data->chemical->name','filter'=>CHtml::activeDropDownList($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))),
 		array('name'=>'property','value'=>'$data->property->name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelSpray,'property', CHtml::listData( $modelSpray->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'grower','header'=>'Grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelSpray,'grower', CHtml::listData( $modelSpray->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
@@ -71,12 +76,7 @@ $('.search-form-ext form').submit(function(){
 		'is_deleted',
 		'params',
 		*/
-		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
-			'htmlOptions' => array(
-					'class' => 'c-button',
-			),
-		),
+		
 	),
 )); ?>
         </div>

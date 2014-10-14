@@ -54,6 +54,12 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 	'columns' => array(
+		array(
+			'class' => 'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array(
+							'class' => 'c-button',
+			),
+		),
 		//array('name'=>'ordering','header'=>'Sequence Number','class' => 'ext.yii-ordering-column.column','filter'=>false),
 		array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
 		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock()->getData() ,'id','name'),array('empty'=>'Select A Block'))),
@@ -71,12 +77,7 @@ $('.search-form-ext form').submit(function(){
 		'is_deleted',
 		'params',
 		*/
-		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
-			'htmlOptions' => array(
-					'class' => 'c-button',
-			),
-		),
+		
 	),
 ));?>
         </div>

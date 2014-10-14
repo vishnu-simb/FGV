@@ -54,7 +54,12 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		//'id',
+		array(
+			'class' => 'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array(
+					'class' => 'c-button',
+			),
+		),
 		array('name'=>'property','value'=>'$data->property->name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelTrapCheck,'property', CHtml::listData( $modelTrapCheck->getProperty() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'block','value'=>'$data->block->name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelTrapCheck,'block', CHtml::listData( $modelTrapCheck->getBlock() ,'id','name'),array('empty'=>'Select A Block'))),
 		array('name'=>'grower','value'=>'$data->grower->name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelTrapCheck,'grower', CHtml::listData( $modelTrapCheck->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
@@ -71,12 +76,7 @@ $('.search-form-ext form').submit(function(){
 		'is_deleted',
 		'params',
 		*/
-		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
-			'htmlOptions' => array(
-					'class' => 'c-button',
-			),
-		),
+		
 	),
 )); ?>
         </div>

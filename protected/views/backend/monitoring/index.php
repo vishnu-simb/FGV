@@ -54,7 +54,12 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		//'id',
+		array(
+			'class' => 'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array(
+					'class' => 'c-button',
+			),
+		),
 		array('name'=>'mite','header'=>'Mite','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'mite_id', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite'))),
 		array('name'=>'grower','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'grower', CHtml::listData( $modelMiteMonitor->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
 		array('name'=>'property','header'=>'Property','filter'=>CHtml::activeDropDownList($modelMiteMonitor,'property', CHtml::listData( $modelMiteMonitor->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property'))),
@@ -63,12 +68,7 @@ $('.search-form-ext form').submit(function(){
 		'percent_li',
 		'no_days',
 
-		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
-			'htmlOptions' => array(
-					'class' => 'c-button',
-			),
-		),
+		
 	),
 )); ?>
         </div>

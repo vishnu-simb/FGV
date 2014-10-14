@@ -54,7 +54,12 @@ $('.search-form-ext form').submit(function(){
     'summaryText' => Yii::t('app', 'Showing page {page}: {start} to {end} of {count} record(s) found'),
 
 'columns' => array(
-		//'id',
+		array(
+			'class' => 'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array(
+					'class' => 'c-button',
+			),
+		),
 		 array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
 		 array('name'=>'grower'),
 		'number',
@@ -72,12 +77,7 @@ $('.search-form-ext form').submit(function(){
 		'is_deleted',
 		'params',
 		*/
-		array(
-			'class' => 'bootstrap.widgets.TbButtonColumn',
-			'htmlOptions' => array(
-					'class' => 'c-button',
-			),
-		),
+		
 	),
 )); ?>
         </div>
