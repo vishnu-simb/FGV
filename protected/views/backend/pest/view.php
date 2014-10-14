@@ -30,6 +30,7 @@ $this->menu = array(
 		'name',
 		'dd',
 		'calculate',
+		'color',
 		/*
 		'creator_id',
 		'ordering',

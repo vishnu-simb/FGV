@@ -13,6 +13,7 @@
  * @property string $name
  * @property double $dd
  * @property string $calculate
+ * @property string $color
  * @property string $creator_id
  * @property integer $ordering
  * @property string $created_at
@@ -43,7 +44,7 @@ abstract class BasePest extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, dd, calculate', 'required','except' => 'search'),
+			array('name, dd, calculate, color', 'required','except' => 'search'),
 			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('dd', 'numerical'),
 			array('name', 'length', 'max'=>100),
@@ -76,6 +77,7 @@ abstract class BasePest extends SimbActiveRecord{
 			'name' => Yii::t('app', 'Name'),
 			'dd' => Yii::t('app', 'DD(n)'),
 			'calculate' => Yii::t('app', 'Enable Calculations'),
+			'color' => Yii::t('app', 'Color'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),

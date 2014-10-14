@@ -58,6 +58,9 @@ $('.search-form-ext form').submit(function(){
 		'name',
 		'dd',
 		'calculate',
+		array('name'=>'color','value'=>function($data){
+			echo '<div style="background:'.$data['color'].'">&nbsp&nbsp&nbsp&nbsp</div>';
+		},'header'=>'Color','filter'=>false,),
 		/*
 		 'creator_id',
 		'ordering',

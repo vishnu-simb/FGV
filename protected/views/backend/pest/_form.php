@@ -41,6 +41,8 @@
 
 							<?php echo $form->dropDownListControlGroup($modelPest, 'calculate', array('yes'=>'Yes','no'=>'No'))?>
 							
+							<?php echo $form->textFieldControlGroup($modelPest, 'color', array('maxlength' => 100, 'class' => 'input-medium colorpick', 'placeholder' => $modelPest->getAttributeLabel('color'))); ?>
+							
 							<!--  
                             <?php //echo $form->textFieldControlGroup($modelPest, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelPest->getAttributeLabel('creator_id'))); ?>
 

@@ -100,8 +100,9 @@ class GraphController extends SimbApiController {
     			while($mm < $e)
     			{
     				if(date($mm) < date(time())){
-	    				$dd = null;
+	    				$dd = 0;
 	    				foreach($data as $val){
+	    					
 	    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
 	    						$dd = intval($val["tc_value"]);
 	    					}
@@ -110,18 +111,17 @@ class GraphController extends SimbApiController {
     				}
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat));
+    			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
     		}
     
     	}
     	if(!empty($serial)){
-    		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'area',);
+    		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'spline');
     		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    		$VAR['plotOptions'] = array('area'=>array('connectNulls'=>true));
     		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    		$VAR['yAxis'] = array('title'=>array('text'=>''));
+    		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'allowDecimals'=>false);
     		$VAR['series'] = $serial;
     	}else{
     		$VAR['chart']= $serial;
@@ -186,12 +186,12 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
-    	$VAR['chart'] = array('renderTo'=>'yw1');
+    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
     	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>''));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0);
     	$VAR['series'] = $serial;
     	echo CJSON::encode($VAR);
     	Yii::app()->end();

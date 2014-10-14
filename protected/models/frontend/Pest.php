@@ -8,4 +8,7 @@ class Pest extends CommonPest
     {
 		return parent::model($className);
 	}
+	public static function PestColor($m){
+		return Pest::model()->findByAttributes(array('name'=>$m))->color;
+	}
 }

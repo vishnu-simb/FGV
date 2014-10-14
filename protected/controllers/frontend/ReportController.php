@@ -98,7 +98,7 @@ class ReportController extends SimbController
 					$sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat));
+    			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
     		}
     		
     	}
@@ -106,11 +106,10 @@ class ReportController extends SimbController
 		    $yAxis = array();
             for($i = 1; $i <= $max_value+1; $i++)
                 $yAxis[] = $i;
-			$VAR['chart'] = array('zoomType' => 'x','type'=>'area',);
+			$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
 			$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-            $VAR['plotOptions'] = array('area'=>array('connectNulls'=>true));
 			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
 			$VAR['xAxis'] = array(
                                 'type' => 'datetime',
