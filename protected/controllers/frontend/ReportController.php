@@ -2,6 +2,8 @@
 
 class ReportController extends SimbController
 {
+	private $Pest_CLID = array();
+	
     public function beforeRender($view){
         $this->layout = '//layouts/report';
         return true;
@@ -87,7 +89,7 @@ class ReportController extends SimbController
     			$sedat = array();
     			while($mm <= $max_time)
     			{
-    				$dd = 0;
+    				$dd = null;
     				foreach($data as $val){
     					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
     						$dd = intval($val["tc_value"]);
@@ -110,7 +112,7 @@ class ReportController extends SimbController
 			$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-			$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+            $VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
 			$VAR['xAxis'] = array(
                                 'type' => 'datetime',
                                 'minRange' => 14 * 24 * 3600000 // fourteen days
@@ -121,6 +123,77 @@ class ReportController extends SimbController
         return $VAR;
 	}
 	
+	private function getMite($block, $grower){
+		$data = $this->getDateRange();
+		$VAR = array();
+		$filter = array(
+				'block_id' => $block->id,
+				'date_from' => $data['date_from'],
+				'date_to' => $data['date_to']
+		);
+		$model = new MiteMonitor('search');
+    	$model->unsetAttributes();
+		$dataProvider = $model->getMiteMonitorInRange($filter);
+		$data = $dataProvider->getData();
+		$mite = Mite::model()->findAll();
+		$serial = array();
+		$PEST = function($sedat,$mite,$min_time){ // The method to calculate PEST CLID data
+			if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Merge value only with Type = Pest
+				$data = array_merge(array('name'=>'PESTS'),array('data'=>$sedat),array('color'=>'#ff0000'));
+				$pest = $this->Pest_CLID;
+				if(!empty($pest)){
+					$merge = array();
+					foreach($data['data'] as $key=>&$val){ // Loop though current pest
+						$pp = $pest['data'][$key]; // Get the values from the last Pest_CLID data
+						$merge[$key]= $pp+$val;
+					}
+					$this->Pest_CLID = array_merge(array('name'=>'PESTS','pointInterval' => 24 * 3600 * 1000,'pointStart' =>$min_time*1000),array('data'=>$merge),array('color'=>'#ff0000'));
+				}else{
+					$this->Pest_CLID =  $data;
+				}
+			}
+		};
+		$keys_arr = array();
+		foreach($mite as $v){
+			$keys_arr[] = $v->name;
+		}
+		$min_time = strtotime($filter['date_from']);
+		$max_time = strtotime($filter['date_to']);
+		$max_value = 0;
+		foreach($keys_arr as $r){
+			$mm = $min_time;
+			$sedat = array();
+			$dd = 0;
+			while($mm < $max_time)
+			{
+				if(date($mm) < date(time())){
+			
+					foreach($data as $val){
+						if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
+							$dd = ($val['mm_average_li']*$val['mm_no_days'])+$dd;
+						}
+					}
+					$sedat[] = $dd;
+				}
+				$mm = strtotime('+1 day', $mm); // increment for loop
+			}
+			$PEST($sedat,$r,$min_time); // Merge CLID data on PESTS
+			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
+		
+		}
+		$serial[] = $this->Pest_CLID;
+		$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
+		$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
+		$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
+		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+		$VAR['xAxis'] =  array('type' => 'datetime','minRange' => 14 * 24 * 3600000); // fourteen days 
+		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'0','to'=>'1500','color'=>'rgba(68, 170, 213, 0.1)','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'1500','to'=>'2500','color'=>'rgba(0, 0, 0,0)','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'3500','color'=>'rgba(68, 170, 213, 0.1)','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
+		$VAR['series'] = $serial;
+		return $VAR;
+	}
+		
+		
 	/**
 	 * Manages all models.
 	 */
@@ -215,6 +288,7 @@ class ReportController extends SimbController
 				
                 if (empty($VARS['graphData'][$block->id]))
 				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower);
+                	$VARS['graphMiteData'][$block->id] = $this->getMite($block, $grower);
 				
 			}
 		}

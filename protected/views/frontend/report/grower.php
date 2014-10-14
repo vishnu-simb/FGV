@@ -125,6 +125,15 @@ foreach($VARS['blocks'] as $block){
 								'options'=>$VARS['graphData'][$block->id]
 						));
         ?>
+        
+         <?php
+            if (empty($VARS['graphMiteData'][$block->id]))
+                echo 'There is no data for Graph.';
+            else
+                $this->Widget('ext.highcharts.HighchartsWidget', array(
+								'options'=>$VARS['graphMiteData'][$block->id]
+						));
+        ?>
     </div>
 
 	<h4>Spray Logs</h4>
