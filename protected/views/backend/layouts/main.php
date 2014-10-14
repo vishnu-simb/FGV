@@ -170,7 +170,7 @@ $bootstrap = Yii::app()->bootstrap;
 
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="<?php echo $resourceUrl ?>/img/favicon.ico"/>
+        <link rel="shortcut icon" href="<?php echo $resourceUrl ?>/img/favicon.png"/>
         <!-- Apple devices Homescreen icon -->
         <link rel="apple-touch-icon-precomposed" href="<?php echo $resourceUrl ?>/img/apple-touch-icon-precomposed.png"/>
 

@@ -3,7 +3,7 @@
  * Yii configurations for FrontEnd
  */
 return array(
-    'name' => 'Fruit Growers Victoria',
+    'name' => 'Growfruit',
     'basePath' => dirname(__FILE__) . DS . '..' . DS . '..',
     'theme' => 'default',
     // path aliases
