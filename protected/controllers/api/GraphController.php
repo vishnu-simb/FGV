@@ -119,8 +119,7 @@ class GraphController extends SimbApiController {
     		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'spline');
     		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    		$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true));
-    		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
+    		$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'allowDecimals'=>false);
     		$VAR['series'] = $serial;
@@ -187,9 +186,8 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
-    	$VAR['chart'] = array('renderTo'=>'yw1','zoomType' => 'x','type'=>'spline');
+    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
-    	$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
     	$VAR['xAxis'] = array( 'type'=> 'datetime','categories'=>array_keys($this->getxAxis($m)));
