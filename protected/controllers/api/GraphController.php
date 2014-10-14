@@ -100,7 +100,7 @@ class GraphController extends SimbApiController {
     			while($mm < $e)
     			{
     				if(date($mm) < date(time())){
-	    				$dd = 0;
+	    				$dd = null;
 	    				foreach($data as $val){
 	    					
 	    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
@@ -119,6 +119,7 @@ class GraphController extends SimbApiController {
     		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'spline');
     		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+    		$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true));
     		$VAR['legend'] = array('layout'=>'vertical','align'=>'right','verticalAlign'=>'middle','borderWidth'=>'0');
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'allowDecimals'=>false);
