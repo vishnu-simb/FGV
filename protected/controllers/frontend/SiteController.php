@@ -72,9 +72,10 @@ class SiteController extends SimbControllerFrontend
     		$model->attributes = $_POST['FormUserLogin'];
     		// validate user input and redirect to previous page if valid
     		if ($model->validate()) {
+    			/*
     			// reinit session to store flash
     			Yii::app()->session->open();
-    			Yii::app()->user->setFlash('success', Yii::t('app', 'Log in successfully!'));
+    			Yii::app()->user->setFlash('success', Yii::t('app', 'Log in successfully!'));*/
     			$this->redirect((Yii::app()->user->returnUrl ? Yii::app()->user->returnUrl : array('site/index')));
     		}
     	}
@@ -167,11 +168,11 @@ class SiteController extends SimbControllerFrontend
     {
     	// force to logout
     	Yii::app()->user->logout();
-    
-    	// reinit session to store flash
-    	Yii::app()->session->open();
-    	Yii::app()->user->setFlash('success', Yii::t('app', 'You were logged out successfully!'));
-    
+    	/**
+	    	// reinit session to store flash
+	    	Yii::app()->session->open();
+	    	Yii::app()->user->setFlash('success', Yii::t('app', 'You were logged out successfully!'));
+	    */
     	$this->redirect(Yii::app()->user->loginUrl);
     }
 }

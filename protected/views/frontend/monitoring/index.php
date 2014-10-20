@@ -22,6 +22,7 @@
 							'htmlOptions' => array('class' => 'form-horizontal form-search-advanced form-validate'),
 						)); ?>
 						<?php if($search):?>
+						<?php echo TbHtml::textField('date',gmdate('Y-m-d'), array('class' => 'input-xxlarge datepick', 'placeholder' => gmdate('Y-m-d'))); ?> 
 						<?php
 						 foreach($modelGrower->search()->getData() as $grower){
 							 foreach($grower->getProperties() as $property){

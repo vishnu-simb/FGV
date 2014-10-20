@@ -27,7 +27,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 .no-caret > a > span.caret { display: none;}
 
 /* Message */
-#ron-message-main { position: absolute; top: 0; left: 0; width: 100%; z-index: 1000;}
+#ron-message-main {width: 100%; z-index: 1000;}
 
 @media (max-width: 1200px) {
     .icon-nav{display:block !important}

@@ -174,7 +174,7 @@ $bootstrap = Yii::app()->bootstrap;
 
     <body class="<?php echo $this->bodyClass ?>">
 
-        <?php $this->renderPartial('//layouts/_message_main') ?>
+       
 
         <div class="container-fluid" id="content">
 
@@ -184,13 +184,14 @@ $bootstrap = Yii::app()->bootstrap;
 
             <div id="main">
                 <div class="container-fluid">
+               
                     <div class="page-header">
                         <div class="pull-left">
                             <h1><?php echo $this->pageTitle ?></h1>
                         </div>
 
                     </div>
-
+					 <?php $this->renderPartial('//layouts/_message_main') ?>
                     <?php
                     $this->widget('zii.widgets.CBreadcrumbs', array(
                             'links' => $this->breadcrumbs,
@@ -201,7 +202,7 @@ $bootstrap = Yii::app()->bootstrap;
                 </div>
             </div>
         </div>
-
+	 
     </body>
 </html>
  

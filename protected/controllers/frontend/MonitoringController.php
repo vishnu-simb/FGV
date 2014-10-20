@@ -115,7 +115,7 @@ class MonitoringController extends SimbController
 						if($_POST['NoDays'][$key] != ""){
 							$saveMonitor = new MiteMonitor();
 							$data = explode(',',$key);
-							$save = array('percent_li'=>$value,'no_days'=>$_POST['NoDays'][$key],'block_id'=>$data[0],'mite_id'=>$data[1],'date'=>gmdate('Y-m-d'));
+							$save = array('percent_li'=>$value,'no_days'=>$_POST['NoDays'][$key],'block_id'=>$data[0],'mite_id'=>$data[1],'date'=>!empty($_POST['date'])?$_POST['date']:gmdate('Y-m-d'));
 							$saveMonitor->attributes = $save;
 							if($saveMonitor->save()){
 								Yii::app()->session->open();

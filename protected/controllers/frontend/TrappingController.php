@@ -114,7 +114,7 @@ class TrappingController extends SimbController
 				foreach ($_POST['Traps'] as $key => $value){ // save multiple records
 					if($value != ""){
 						$saveTrapCheck = new TrapCheck();
-						$save = array('value'=>$value,'trap_id'=>$key,'date'=>gmdate('Y-m-d'));
+						$save = array('value'=>$value,'trap_id'=>$key,'date'=>!empty($_POST['date'])?$_POST['date']:gmdate('Y-m-d'));
 						$saveTrapCheck->attributes = $save;
 						if($saveTrapCheck->save()){
 							Yii::app()->session->open();
