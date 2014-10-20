@@ -191,7 +191,7 @@ class GraphController extends SimbApiController {
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
     	$VAR['xAxis'] = array( 'type'=> 'datetime','categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1530','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2530','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3530','color'=>'#F5D3F5','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3600,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1530','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2530','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3530','color'=>'#F5D3F5','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
     	$VAR['series'] = $serial;
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
