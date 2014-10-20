@@ -178,7 +178,7 @@ $bootstrap = Yii::app()->bootstrap;
 
     <body class="<?php echo $this->bodyClass ?>">
 
-        
+         <?php echo $this->renderPartial('//layouts/_scroll_to_right') ?>
 
         <div class="container-fluid" id="content">
 

@@ -33,7 +33,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 
 /* Message */
 #ron-message-main {width: 100%; z-index: 1000;}
-
+#scroll_to_right {position:fixed; right: 30px;bottom: 20px;z-index: 99999;}
 @media (max-width: 1200px) {
     .icon-nav{display:block !important}
 }

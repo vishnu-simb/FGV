@@ -139,7 +139,7 @@ class ReportController extends SimbController
 		$serial = array();
 		$PEST = function($sedat,$mite,$min_time){ // The method to calculate PEST CLID data
 			if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Merge value only with Type = Pest
-				$data = array_merge(array('name'=>'PESTS'),array('data'=>$sedat),array('color'=>'#ff0000'));
+				$data = array_merge(array('name'=>'Total Pests'),array('data'=>$sedat),array('color'=>'#ff0000'));
 				$pest = $this->Pest_CLID;
 				if(!empty($pest)){
 					$merge = array();
@@ -147,7 +147,7 @@ class ReportController extends SimbController
 						$pp = $pest['data'][$key]; // Get the values from the last Pest_CLID data
 						$merge[$key]= $pp+$val;
 					}
-					$this->Pest_CLID = array_merge(array('name'=>'PESTS','pointInterval' => 24 * 3600 * 1000,'pointStart' =>$min_time*1000),array('data'=>$merge),array('color'=>'#ff0000'));
+					$this->Pest_CLID = array_merge(array('name'=>'Total Pests','pointInterval' => 24 * 3600 * 1000,'pointStart' =>$min_time*1000),array('data'=>$merge),array('color'=>'#ff0000'));
 				}else{
 					$this->Pest_CLID =  $data;
 				}
