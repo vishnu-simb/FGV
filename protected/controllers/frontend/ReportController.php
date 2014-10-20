@@ -188,7 +188,7 @@ class ReportController extends SimbController
 		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
 		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
 		$VAR['xAxis'] =  array('type' => 'datetime','minRange' => 14 * 24 * 3600000); // fourteen days 
-		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'0','to'=>'1500','color'=>'rgba(68, 170, 213, 0.1)','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'1500','to'=>'2500','color'=>'rgba(0, 0, 0,0)','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'3500','color'=>'rgba(68, 170, 213, 0.1)','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
+		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
 		$VAR['series'] = $serial;
 		return $VAR;
 	}
