@@ -109,7 +109,7 @@ class ReportController extends SimbController
             for($i = 1; $i <= $max_value+1; $i++)
                 $yAxis[] = $i;
 			$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
-			$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
+			$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
             $VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
@@ -139,7 +139,7 @@ class ReportController extends SimbController
 		$serial = array();
 		$PEST = function($sedat,$mite,$min_time){ // The method to calculate PEST CLID data
 			if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Merge value only with Type = Pest
-				$data = array_merge(array('name'=>'Total Pests'),array('data'=>$sedat),array('color'=>'#ff0000'));
+				$data = array_merge(array('name'=>'Total Pests'),array('data'=>$sedat),array('color'=>'#000000'));
 				$pest = $this->Pest_CLID;
 				if(!empty($pest)){
 					$merge = array();
@@ -147,7 +147,7 @@ class ReportController extends SimbController
 						$pp = $pest['data'][$key]; // Get the values from the last Pest_CLID data
 						$merge[$key]= $pp+$val;
 					}
-					$this->Pest_CLID = array_merge(array('name'=>'Total Pests','pointInterval' => 24 * 3600 * 1000,'pointStart' =>$min_time*1000),array('data'=>$merge),array('color'=>'#ff0000'));
+					$this->Pest_CLID = array_merge(array('name'=>'Total Pests','pointInterval' => 24 * 3600 * 1000,'pointStart' =>$min_time*1000),array('data'=>$merge),array('color'=>'#000000'));
 				}else{
 					$this->Pest_CLID =  $data;
 				}
@@ -183,16 +183,15 @@ class ReportController extends SimbController
 		}
 		$serial[] = $this->Pest_CLID;
 		$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
-		$VAR['title'] = array('text'=> $grower->name. ' betweent '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
+		$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 		$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
 		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
 		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
 		$VAR['xAxis'] =  array('type' => 'datetime','minRange' => 14 * 24 * 3600000); // fourteen days 
-		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
+		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
 		$VAR['series'] = $serial;
 		return $VAR;
 	}
-		
 		
 	/**
 	 * Manages all models.

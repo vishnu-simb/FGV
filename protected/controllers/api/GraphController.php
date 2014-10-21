@@ -144,7 +144,7 @@ class GraphController extends SimbApiController {
     	$mite = Mite::model()->findAll();
     	$PEST = function ($sedat,$mite){ // The method to calculate PEST CLID data
     		if(in_array($mite,Mite::model()->findAllByAttributes(array('type'=>'Pest')))){ // Merge value only with Type = Pest
-    			$data = array_merge(array('name'=>'Total Pests'),array('data'=>$sedat),array('color'=>'#ff0000'));
+    			$data = array_merge(array('name'=>'Total Pests'),array('data'=>$sedat),array('color'=>'#000000'));
     			$pest = $this->Pest_CLID;
     			if(!empty($pest)){
     				$merge = array();
@@ -152,7 +152,7 @@ class GraphController extends SimbApiController {
     					$pp = $pest['data'][$key]; // Get the values from the last Pest_CLID data
     					$merge[$key]= $pp+$val;
     				}
-    				$this->Pest_CLID = array_merge(array('name'=>'Total Pests'),array('data'=>$merge),array('color'=>'#ff0000'));
+    				$this->Pest_CLID = array_merge(array('name'=>'Total Pests'),array('data'=>$merge),array('color'=>'#000000'));
     			}else{
     				$this->Pest_CLID =  $data;
     			}
@@ -191,7 +191,7 @@ class GraphController extends SimbApiController {
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
     	$VAR['xAxis'] = array( 'type'=> 'datetime','categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples','style'=>array('color'=>'#606060')))));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
     	$VAR['series'] = $serial;
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
