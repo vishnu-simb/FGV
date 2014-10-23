@@ -191,7 +191,10 @@ $bootstrap = Yii::app()->bootstrap;
                         </div>
 
                     </div>
-					 <?php $this->renderPartial('//layouts/_message_main') ?>
+                    <div class="row-fluid">
+					<div class="span8">
+						 <?php $this->renderPartial('//layouts/_message_main') ?>
+					 </div></div>
                     <?php
                     $this->widget('zii.widgets.CBreadcrumbs', array(
                             'links' => $this->breadcrumbs,

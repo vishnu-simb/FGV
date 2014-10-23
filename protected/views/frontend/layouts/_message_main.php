@@ -17,8 +17,6 @@ JS_SCRIPT
     CClientScript::POS_READY
 );
 ?>
-<div class="row-fluid">
-<div class="span8">
 <div id="ron-message-main">
     <?php
     $strMessage = '';
@@ -28,6 +26,4 @@ JS_SCRIPT
     }
     echo $strMessage ? '<div id="main-message" class="alert-message">' . $strMessage . '</div>' : '';
     ?>
-</div>
-</div>
 </div>

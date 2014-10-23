@@ -8,17 +8,22 @@
 
 /*Table structure for table `location` */
 
-CREATE TABLE `location` (
-  `location_id` varchar(100) NOT NULL,
-  `location_name` varchar(100) DEFAULT NULL,
-  `location_observation` varchar(45) DEFAULT NULL,
-  `location_forcast` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`location_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AVG_ROW_LENGTH=963;
+DROP TABLE IF EXISTS location;
+CREATE TABLE location (
+  location_id VARCHAR(100) NOT NULL,
+  location_name VARCHAR(100) DEFAULT NULL,
+  location_observation VARCHAR(45) DEFAULT NULL,
+  location_forcast VARCHAR(45) DEFAULT NULL,
+  PRIMARY KEY (location_id)
+)
+ENGINE = INNODB
+AVG_ROW_LENGTH = 963
+CHARACTER SET latin1
+COLLATE latin1_swedish_ci;
 
 /*Data for the table `location` */
 
-INSERT INTO `location` (`location_id`, `location_name`, `location_observation`, `location_forcast`) VALUES
+INSERT INTO location VALUES
 ('armourstation', 'Ian Armour', NULL, NULL),
 ('castlemaine', 'Castlemaine', 'IDCJDW3013', 'castlemaine'),
 ('cerberus', 'Cerberus', 'IDCJDW3014', 'cerberus'),

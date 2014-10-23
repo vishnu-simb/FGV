@@ -69,7 +69,10 @@ $bootstrap = Yii::app()->bootstrap;
     </head>
 
     <body class='<?php echo $this->getBodyClass('login') ?>'>
-    <?php $this->renderPartial('//layouts/_message_main') ?>
+        <div class="row-fluid">
+					<div class="span12">
+						 <?php $this->renderPartial('//layouts/_message_main') ?>
+			</div></div>
         <div class="wrapper">
             <?= $content ?>
         </div>

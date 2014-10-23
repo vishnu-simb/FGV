@@ -20,10 +20,10 @@ class m141014_014816_update_pest extends CDbMigration
 
 	public function down()
 	{
-		echo "m141014_014816_update_pest migration down.\n";
+		echo "m141014_014816_update_pest migration ";
 		$this->updateTablePrefix();
 		$this->dropColumn($this->tableNamePest,'color');
-		return false;
+		return true;
 	}
 
 	/*

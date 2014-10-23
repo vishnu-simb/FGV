@@ -7,19 +7,24 @@
 
 /*Table structure for table `sizing` */
 
-CREATE TABLE `sizing` (
-  `sizing_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `block_id` int(11) NOT NULL,
-  `variety_id` int(10) unsigned NOT NULL,
-  `sizing_date` date NOT NULL,
-  `sizing_value` float unsigned NOT NULL,
-  `sizing_type` enum('size','weight') NOT NULL,
-  PRIMARY KEY (`sizing_id`),
-  KEY `fk_sizing_block1` (`block_id`),
-  KEY `fk_sizing_variety1` (`variety_id`),
-  CONSTRAINT `fk_sizing_variety1` FOREIGN KEY (`variety_id`) REFERENCES `variety` (`variety_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `sizing_ibfk_1` FOREIGN KEY (`block_id`) REFERENCES `block` (`block_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE sizing (
+  sizing_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  block_id INT(11) NOT NULL,
+  variety_id INT(10) UNSIGNED NOT NULL,
+  sizing_date DATE NOT NULL,
+  sizing_value FLOAT UNSIGNED NOT NULL,
+  sizing_type ENUM('size','weight') NOT NULL,
+  PRIMARY KEY (sizing_id),
+  INDEX fk_sizing_block1 (block_id),
+  CONSTRAINT fk_sizing_variety1 FOREIGN KEY (variety_id)
+    REFERENCES variety(variety_id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT sizing_ibfk_1 FOREIGN KEY (block_id)
+    REFERENCES block(block_id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+ENGINE = INNODB
+AUTO_INCREMENT = 1
+CHARACTER SET latin1
+COLLATE latin1_swedish_ci;
 
 /*Data for the table `sizing` */
 
