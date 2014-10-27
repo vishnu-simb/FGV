@@ -25,39 +25,45 @@
                     <div class="span12">
                     	 <div style="float:left;">
                     	 <?php if(Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER):?>
+                    	 <div class="controls" style="margin:0px">
                     	  	 <div class="calendar fc">
-								<table class="fc-header">
-								<tbody><tr>
-								<td class="fc-header-left">
-								<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
-								</td>
-								<td class="fc-header-center" style="text-align: left;">
-								<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
-								<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
-								<span class="fc-header-title"><h2><span id="yearPicker"><?=date('Y')?></span></h2></span>
-								<span class="fc-button yr-button-next fc-state-default fc-corner-left fc-corner-right">
-								<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr>
-								</tbody>
-								</table>
+									<table class="fc-header">
+									<tbody><tr>
+									<td class="fc-header-left">
+									</td>
+									<td class="fc-header-center" style="text-align: left;">
+									<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
+									<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
+									<span class="fc-header-title"><h2><span id="yearPicker"><?=date('Y')?></span></h2></span>
+									<span class="fc-button yr-button-next fc-state-default fc-corner-left fc-corner-right">
+									<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr>
+									</tbody>
+									</table>
 							</div>
+						 </div>
+						   <?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
                     	   <?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->getBlockByGrowerId(Yii::app()->user->id),'id','name','property.name'), array('class' => 'growerable input-xxlarge'))?>
                     	   <?php else:?>
-                    	  	 <div class="calendar fc">
-								<table class="fc-header">
-								<tbody><tr>
-								<td class="fc-header-left">
-								<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
-								</td>
-								<td class="fc-header-center" style="text-align: left;">
-								<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
-								<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
-								<span class="fc-header-title"><h2><span id="yearPicker"><?=date('Y')?></span></h2></span>
-								<span class="fc-button yr-button-next fc-state-default fc-corner-left fc-corner-right">
-								<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr>
-								</tbody>
-								</table>
+                    	   <div class="controls" style="margin:0px">
+	                    	   <div class="calendar fc">
+									<table class="fc-header">
+									<tbody><tr>
+									<td class="fc-header-left">
+									</td>
+									<td class="fc-header-center" style="text-align: left;">
+									<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
+									<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
+									<span class="fc-header-title"><h2><span id="yearPicker"><?=date('Y')?></span></h2></span>
+									<span class="fc-button yr-button-next fc-state-default fc-corner-left fc-corner-right">
+									<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr>
+									</tbody>
+									</table>
+								</div>
+								 
 							</div>
-                    		<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAll() ,'id','name'), 
+									<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'select2-me clickable input-xlarge'))?>
+                    	   	 
+                    	  		<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAll() ,'id','name'), 
                     				array(
 										'class' => 'select2-me input-xlarge',
 										'ajax' => array(
@@ -81,7 +87,7 @@
 										  		} ',)
 							))?>
 		                    <?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->findAll() ,'id','name'), array('class' => 'blockable input-xxlarge'))?>
-                     
+
                      	  
                       	 <?php endif;?>
                     	 </div>

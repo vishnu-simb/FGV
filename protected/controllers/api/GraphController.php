@@ -139,6 +139,7 @@ class GraphController extends SimbApiController {
     	$model = new MiteMonitor('search');
     	$model->unsetAttributes();
     	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
+    	$date_range = $model->getMiteRange();
     	$dataProvider = $model->getSqlDataProvider();
     	$data = $dataProvider->getData();
     	$mite = Mite::model()->findAll();
@@ -158,23 +159,47 @@ class GraphController extends SimbApiController {
     			}
     		}
     	};
+    	$MITE = function($data,$date_range,$r){ // The method to calculate CLID data cumulative over the season 
+    		$e = strtotime($date_range['date_initial']);
+    		$mm = strtotime($date_range['date_start']);
+    		$mite_data = array();
+    		$dd['cumulative'] = 0;
+    		while($mm < $e)
+    		{
+    			if(date($mm) < date(time())){
+    				foreach($data as $val){
+    					if($val["mite_name"]==$r){ // get cumulative data with pest
+    						if($val["mm_date"]==date("Y-m-d", $mm)){
+    							$dd['cumulative'] = ($val['mm_average_li']*$val['mm_no_days'])+$dd['cumulative'];
+    						}
+    						$dd['mite_name'] = $val['mite_name'];
+    						$dd['date'] = date("Y-m-d", $mm);
+    					}
+    					
+    				}
+    				$mite_data[] = $dd;
+    			}
+    			$mm = strtotime('+1 day', $mm); // increment for loop
+    		}
+    		return $mite_data;
+    	};
+    	
     	$keys_arr = array();
     	foreach($mite as $v){
     		$keys_arr[] = $v->name;
     	}
     	$serial = array();
     	$e = strtotime('+1 month',$m);
+    	$mite_data = array();
     	foreach($keys_arr as $r){
     		$mm = $m;
     		$sedat = array();
-    		$dd = 0;
     		while($mm < $e)
     		{
     			if(date($mm) < date(time())){
-    				
-    				foreach($data as $val){
-    					if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
-    						$dd = ($val['mm_average_li']*$val['mm_no_days'])+$dd;
+    				foreach($MITE($data,$date_range,$r) as $val){
+    					if($val["date"]==date("Y-m-d", $mm)){
+    						$dd = $val['cumulative'];
     					}
     				}
     				$sedat[] = $dd;
