@@ -195,10 +195,10 @@ class GraphController extends SimbApiController {
     		$mm = $m;
     		$sedat = array();
     		while($mm < $e)
-    		{
+    		{	$dd = 0;
     			if(date($mm) < date(time())){
     				foreach($MITE($data,$date_range,$r) as $val){
-    					if($val["date"]==date("Y-m-d", $mm)){
+    					if(isset($val["date"]) && $val["date"]==date("Y-m-d", $mm)){
     						$dd = $val['cumulative'];
     					}
     				}
