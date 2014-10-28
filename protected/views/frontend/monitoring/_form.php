@@ -25,7 +25,7 @@
 
                     <div class="span12"> 
                        
-              			  <?php echo $form->dropDownListControlGroup($modelMonitor, 'block_id', CHtml::listData($modelMonitor->getGrowerBlock()->getData() ,'id','block_name'), array('class' => 'input-xxlarge','disabled '=>'true'))?>
+              			  <?php echo $form->dropDownListControlGroup($modelMonitor, 'block_id', CHtml::listData($modelMonitor->getGrowerBlock()->getData() ,'id','block_name'), array('class' => 'input-xxlarge'))?>
     					  
                     	  <?php echo $form->dropDownListControlGroup($modelMonitor, 'mite_id', CHtml::listData($modelMonitor->getMite() ,'id','name'), array('class' => 'input-xxlarge'))?>
     					  

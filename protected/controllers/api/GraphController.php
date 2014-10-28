@@ -194,8 +194,9 @@ class GraphController extends SimbApiController {
     	foreach($keys_arr as $r){
     		$mm = $m;
     		$sedat = array();
+    		$dd = 0;
     		while($mm < $e)
-    		{	$dd = 0;
+    		{	
     			if(date($mm) < date(time())){
     				foreach($MITE($data,$date_range,$r) as $val){
     					if(isset($val["date"]) && $val["date"]==date("Y-m-d", $mm)){

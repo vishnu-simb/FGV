@@ -71,7 +71,7 @@
 							<div class="box-title">
 							<h3>
 									<i class="icon-table"></i>
-									Latest sprays
+									Latest Trapping
 								</h3>
 							
 							</div>
