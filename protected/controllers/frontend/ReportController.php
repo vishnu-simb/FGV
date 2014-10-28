@@ -117,7 +117,7 @@ class ReportController extends SimbController
                                 'type' => 'datetime',
                                 'minRange' => 14 * 24 * 3600000 // fourteen days
                             );
-			$VAR['yAxis'] = array('type' => 'category','title' => '');
+			$VAR['yAxis'] = array('type' => 'category','title' => '','minRange' => 0.1);
 			$VAR['series'] = $serial;
 		}
         return $VAR;

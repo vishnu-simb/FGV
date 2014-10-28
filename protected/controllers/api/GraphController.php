@@ -121,7 +121,7 @@ class GraphController extends SimbApiController {
     		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
     		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'allowDecimals'=>false);
+    		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;
     	}else{
     		$VAR['chart']= $serial;
