@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScript('index',"
 	/* handle report by GrowerID */
 		
 	$('.clickable').change(function(){ 
-		var url = 'report/grower/?id='+$(this).val()+'&year='+$('#yearPicker').html();
+		var url = 'report/grower/'+$(this).val()+'/'+$('#yearPicker').html();
 		if(url.length){
 		window.open(url,'_blank');
 		$('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');

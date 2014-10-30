@@ -85,7 +85,7 @@ td, th  {
 	margin-bottom: 20px;
 	border: 1px solid #777 !important;
 }
-
+.prediction{width:100%;}
 .prediction tr:last-child {
 	border-bottom: 1px solid #777 !important;
 }
@@ -136,11 +136,8 @@ html {
 }
 
 body {
-	width: 920px;
-	margin: 50px auto;
 	border: 1px solid #bbb;
 	box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-	padding: 20px;
 }
 
 div#print-footer {

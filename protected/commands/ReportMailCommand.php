@@ -25,11 +25,11 @@ class ReportMailCommand extends SimbConsoleCommand{
             		}
             		if($do_report && count($grower->getBlock())){
             			
-            			$pdf = Yii::app()->ePdf->HTML2PDF();
+            			$pdf = Yii::app()->ePdf->HTML2PDF('P', 'A4', 'en');
             			$pdf->AddFont('helvetica','B','helvetica.php');
             			$pdf->WriteHTML("<style>".file_get_contents(Yii::app()->request->baseUrl.'/static/flatapp/css/pdf_report.css')."</style>");
-            			$pdf->WriteHTML(file_get_contents(Yii::app()->request->baseUrl.'/report/grower/'.$grower->id));
-            			$pdf_as_string = $pdf->Output('', 'S'); // $pdf is a TCPDF instance
+            			$pdf->WriteHTML(file_get_contents(Yii::app()->request->baseUrl.'/report/grower/'.$grower->id.'/'.date("Y", time()).'?hasReportEmail=true'));
+            			$pdf_as_string = $pdf->Output('','s'); // $pdf is a TCPDF instance
             			// Get basic info for sending email
             			$arrParams = array(
             					'{name}'=>$grower->name ,
@@ -42,7 +42,7 @@ class ReportMailCommand extends SimbConsoleCommand{
 			    		$mail->subject = Yii::t('app','Spray Report '.date('Y-M-d'));
 			    		$mail->sender_name = Yii::t('app', 'FGV Report');
 			    		$mail->sender_email = Yii::app()->params['noreplyEmail'];
-			    		$attachment = array('content'=>$pdf_as_string,'name'=>'Spray Report '.date('Y-M-d'),'type'=>'application/pdf') ; 
+			    		$attachment = array('content'=>$pdf_as_string,'name'=>'Spray-Report-'.date('Y-M-d').'.pdf','type'=>'application/pdf') ; 
 			    		$mail->attachment = $attachment;
 			    		$mail->sendGrowerReport($arrParams);
 			    		echo $grower->email." has been sent \n";

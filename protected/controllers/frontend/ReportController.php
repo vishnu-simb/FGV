@@ -210,7 +210,7 @@ class ReportController extends SimbController
 		$VARS['grower'] = $grower;
 		$VARS['dateRange'] = $this->getDateRange();
 		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
-		
+		$VARS['hasReportEmail'] = isset($_GET['hasReportEmail'])?true:false; // Set default report
         $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
@@ -285,8 +285,10 @@ class ReportController extends SimbController
 				}
 				$VARS['sprayDates'][$block->id] = $sprayData;
 				
-                if (empty($VARS['graphData'][$block->id]))
+                if (empty($VARS['graphData'][$block->id])&& !$VARS['hasReportEmail'])
 				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower);
+                
+                if (empty($VARS['graphMiteData'][$block->id]) && !$VARS['hasReportEmail'])
                 	$VARS['graphMiteData'][$block->id] = $this->getMite($block, $grower);
 				
 			}
