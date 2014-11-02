@@ -10,14 +10,14 @@ class CommonChemical extends BaseChemical
     }
     
     function perKG(){
-		return $this->packPrice/$this->packQty;
+		return $this->pack_price/$this->pack_qty;
 	}
 
 	/**
 	 * @return the $cost
 	 */
 	public function getCost() {
-		return $this->perKG()/1000 * (($this->dilutionRate*$this->applicationRate)/100);
+		return $this->perKG()/1000 * (($this->dilution_rate*$this->application_rate)/100);
 	}
 	
 	function calculateCost($ha){

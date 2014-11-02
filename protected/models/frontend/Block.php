@@ -21,8 +21,13 @@ class Block extends CommonBlock
 	function getMites(){
 		return Mite::model()->findAll();
 	}
+	
 	public function getBlockByGrowerId($grower_id){
 		return Block::model()->with(array('property'=>array('condition'=>'property.grower_id='.$grower_id)))->findAll();
+	}
+	
+	function getSprays(){
+		return Spray::model()->with(array('property'=>array('condition'=>'block_id = '.$this->id.' AND ((YEAR(date) = YEAR(NOW()) AND MONTH(date) < 6) OR (YEAR(date) = YEAR(NOW())-1 AND MONTH(date) >= 6))')))->findAll();
 	}
 
 }

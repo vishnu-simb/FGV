@@ -146,15 +146,9 @@ foreach($VARS['blocks'] as $block){
 		</tr>
 		<?php 
 		$total_cost = 0;
-        $sql = "SELECT * FROM ". Spray::model()->tableName();
-		$sql .= " WHERE block_id = {$block->id} AND ((YEAR(date) = YEAR(NOW()) AND MONTH(date) < 6) OR (YEAR(date) = YEAR(NOW())-1 AND MONTH(date) >= 6))";
-		$sql .= " ORDER BY date";
-		
-		$res = Yii::app()->db->createCommand($sql)->query();
-        $sprays = $res?$res->readAll():'';
-		if ($sprays)
+		if ($block->getSprays())
         {
-            foreach($sprays as $spray){
+            foreach($block->getSprays() as $spray){
     			echo '<tr><td>'.DateHelper::dateOutput($spray->date).'</td>';
     			echo '<td>'.$spray->chemical->name.'</td>';
     			echo '<td>'.$spray->quantity.'</td>';
