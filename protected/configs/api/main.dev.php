@@ -2,8 +2,12 @@
 /**
  * Yii configurations for API
  */
+ //Load multiple classes
+require_once( dirname(__FILE__) . '/../../components/SimbHelper.php');
+
 return array(
-    'name' => 'Fruit Growers Victoria API',
+    'name' => 'Growfruit API',
+	'timeZone' => 'Australia/Melbourne',
     'basePath' => dirname(__FILE__) . DS . '..' . DS . '..',
     // path aliases
     'aliases' => array(
@@ -12,6 +16,7 @@ return array(
     ),
     // autoloading model and component classes
     'import' => array(
+    	'application.extensions.giix-components.*',
         'application.models.api.*',
         'application.models.service.*',
         'application.components.*',
@@ -19,7 +24,6 @@ return array(
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
         'bootstrap.behaviors.*',
-        'application.extensions.giix-components.*'
     ),
     'preload' => array(
         'log',

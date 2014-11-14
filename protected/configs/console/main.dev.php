@@ -3,7 +3,8 @@
  * Yii configurations for Console
  */
 return array(
-    'name' => 'Fruit Growers Victoria - Console',
+    'name' => 'Growfruit - Console',
+	'timeZone' => 'Australia/Melbourne',
     'basePath' => dirname(__FILE__) . DS . '..' . DS . '..',
 	// path aliases
 		'aliases' => array(
@@ -27,7 +28,6 @@ return array(
     ),
     'components' => CMap::mergeArray(
             require(dirname(__FILE__) . DS . '..' . DS . 'db_connect.php'),
-    		
             array(
                 // Logging system
                 'log' => array(
@@ -58,9 +58,6 @@ return array(
                         ),
                     ),
                 ),
-            	'request' => array(
-		            	'baseUrl' => 'http://www.example.com',
-		        ),
                 'ePdf' => array(
                 		'class' =>'ext.yii-pdf.EYiiPdf',
                 		'params' => array(
@@ -85,30 +82,33 @@ return array(
                 						)*/
                 				),
                 'HTML2PDF' => array(
-                				'librarySourcePath' => 'application.vendors.html2pdf.*',
-                				'classFile'         => 'html2pdf.class.php', // For adding to Yii::$classMap
-                						'defaultParams'     => array( // More info: http://wiki.spipu.net/doku.php?id=html2pdf:en:v4:accueil
+                					'librarySourcePath' => 'application.vendors.html2pdf.*',
+                					'classFile'         => 'html2pdf.class.php', // For adding to Yii::$classMap
+                					'defaultParams'     => array( // More info: http://wiki.spipu.net/doku.php?id=html2pdf:en:v4:accueil
                 						 'orientation' => 'P', // landscape or portrait orientation
                 								'format'      => 'A4', // format A4, A5, ...
                 								'language'    => 'en', // language: fr, en, it ...
                 								'unicode'     => true, // TRUE means clustering the input text IS unicode (default = true)
                 								'encoding'    => 'UTF-8', // charset encoding; Default is UTF-8
-                								'marges'      => array(5, 5, 5, 8), // margins by default, in order (left, top, right, bottom)
-                						)
+                								'marges'      => array(10,10,10,10), // margins by default, in order (left, top, right, bottom)
+                					)
                 				)
                 		),
+                ),
+                'request' => array(
+                		'baseUrl' => 'http://fruitgrowersvictory.simb',
                 ),
                 'mail' => array(
                 		'class' => 'ext.yii-mail.YiiMail',
                 		'transportType' => 'php',
                 		/*
                 		 'transportType' => 'smtp',
-                'transportOptions'=>array(
+                		'transportOptions'=>array(
                 		'host'=>'mail.host',
                 		'username'=>'',
                 		'password'=>'',
                 		'port'=>'26',
-                ),*/
+                		),*/
                 		'viewPath' => 'application.views.mail',
                 		'logging' => true,
                 		'dryRun' => false,

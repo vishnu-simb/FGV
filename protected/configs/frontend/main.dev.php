@@ -2,8 +2,14 @@
 /**
  * Yii configurations for FrontEnd
  */
+ini_set('memory_limit', '256M');
+//Load multiple classes
+require_once( dirname(__FILE__) . '/../../components/SimbHelper.php');
+ 
 return array(
+	
     'name' => 'Growfruit',
+	'timeZone' => 'Australia/Melbourne',
     'basePath' => dirname(__FILE__) . DS . '..' . DS . '..',
     'theme' => 'default',
     // path aliases
@@ -17,9 +23,10 @@ return array(
         'application.models.frontend.*',
         'application.models.service.*',
         'application.components.*',
-    	'application.helpers.*',
+		'application.helpers.*',
     	'ext.yii-mail.YiiMailMessage',
-    		
+    	'ext.yii-ordering-column.*',
+		
         // For bootstrap
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
@@ -48,6 +55,31 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1'),
         ),
+    	'webshell'=>array(
+    		'class'=>'ext.webshell.WebShellModule',
+    		// when typing 'exit', user will be redirected to this URL
+    		'exitUrl' => '/',
+    		// custom wterm options
+    		'wtermOptions' => array(
+    				// linux-like command prompt
+    				'PS1' => '%',
+    		),
+    						// additional commands (see below)
+    		'commands' => array(
+    								'test' => array('js:function(){return "Hello, world!";}', 'Just a test.'),
+    						),
+    						// uncomment to disable yiic
+    						// 'useYiic' => false,
+    		
+    						// adding custom yiic commands not from protected/commands dir
+    						'yiicCommandMap' => array(
+    								/*
+    								'email'=>array(
+    										'class'=>'ext.mailer.MailerCommand',
+    										'from'=>'sam@rmcreative.ru',
+    								),*/
+    						),
+    		),
     ),
     'components' => CMap::mergeArray(
             require(dirname(__FILE__) . DS . '..' . DS . 'db_connect.php'),
@@ -85,6 +117,43 @@ return array(
                         ),
                     ),
                 ),
+            		'ePdf' => array(
+            				'class' =>'ext.yii-pdf.EYiiPdf',
+            				'params' => array(
+            						'mpdf' => array(
+            								'librarySourcePath' => 'application.vendors.mpdf.*',
+            								'constants'         => array(
+            										'_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
+            								),
+            								'class'=>'mpdf', // the literal class filename to be loaded from the vendors folder
+            								/*'defaultParams'     => array( // More info: http://mpdf1.com/manual/index.php?tid=184
+            								 'mode'              => '', //  This parameter specifies the mode of the new document.
+            										'format'            => 'A4', // format A4, A5, ...
+            										'default_font_size' => 0, // Sets the default document font size in points (pt)
+            										'default_font'      => '', // Sets the default font-family for the new document.
+            										'mgl'               => 15, // margin_left. Sets the page margins for the new document.
+            										'mgr'               => 15, // margin_right
+            										'mgt'               => 16, // margin_top
+            										'mgb'               => 16, // margin_bottom
+            										'mgh'               => 9, // margin_header
+            										'mgf'               => 9, // margin_footer
+            										'orientation'       => 'P', // landscape or portrait orientation
+            								)*/
+            						),
+            						'HTML2PDF' => array(
+            								'librarySourcePath' => 'application.vendors.html2pdf.*',
+            								'classFile'         => 'html2pdf.class.php', // For adding to Yii::$classMap
+            								'defaultParams'     => array( // More info: http://wiki.spipu.net/doku.php?id=html2pdf:en:v4:accueil
+            										'orientation' => 'P', // landscape or portrait orientation
+            										'format'      => 'A5', // format A4, A5, ...
+            										'language'    => 'en', // language: fr, en, it ...
+            										'unicode'     => true, // TRUE means clustering the input text IS unicode (default = true)
+            										'encoding'    => 'UTF-8', // charset encoding; Default is UTF-8
+            										'marges'      => array(10,10,10,10), // margins by default, in order (left, top, right, bottom)
+            								)
+            						)
+            				),
+            		),
                 // ClientScript
                 'clientScript' => array(
                     'class' => 'ext.npMinScript.NpMinScript',
@@ -123,8 +192,8 @@ return array(
                     'allowAutoLogin'=>true,
 	   
                 ),
-                
-                'mail' => array(
+				
+				'mail' => array(
 					'class' => 'ext.yii-mail.YiiMail',
 		            'transportType' => 'php',
 		            /*
@@ -139,6 +208,7 @@ return array(
 					'logging' => true,
 					'dryRun' => false,
 				),
+				
                 // Url Manager
                 'urlManager' => array(
                     'class' => 'SimbUrlManagerFrontend',
@@ -147,6 +217,9 @@ return array(
                     'showScriptName' => false,
                     'appendParams' => false,
                 ),
+                'image'=>array(
+                    'class'=>'application.extensions.image.Image'
+                )
             )
         ),
     // array of params for the whole app

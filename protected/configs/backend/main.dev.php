@@ -4,6 +4,7 @@
  */
 return array(
     'name' => 'Growfruit',
+	'timeZone' => 'Australia/Melbourne',
     'basePath' => dirname(__FILE__) . DS . '..' . DS . '..',
     'theme' => 'default',
     // path aliases
@@ -17,7 +18,7 @@ return array(
         'application.models.backend.*',
         'application.models.service.*',
         'application.components.*',
-    	'application.helpers.*',
+    	'ext.yii-ordering-column.*',
         // For bootstrap
         'bootstrap.helpers.*',
         'bootstrap.widgets.*',
