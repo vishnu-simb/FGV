@@ -3,11 +3,8 @@
 /* @var $this CController */
 /* @var $clientScript CClientScript */
 /* @var $bootstrap TbApi */
-$themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
 
 $clientScript = Yii::app()->clientScript;
-$resourceUrl = $clientScript->staticUrl.'/flatapp';
-$bootstrap = Yii::app()->bootstrap;
 ?>
 <!doctype html>
 <html>
@@ -19,13 +16,10 @@ $bootstrap = Yii::app()->bootstrap;
         <!-- Apple devices fullscreen -->
         <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
         <title><?php echo $this->browserTitle ?></title>
-        <?php 
-            $clientScript->registerCssFile($resourceUrl . '/css/report.css');
-            $clientScript->registerScriptFile($resourceUrl . '/js/jquery.min.js');
-        ?>
     </head>
 
     <body>
+   
         <?php echo $content ?>
     </body>
 </html>

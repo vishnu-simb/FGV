@@ -210,8 +210,7 @@ class ReportController extends SimbController
 		$VARS['grower'] = $grower;
 		$VARS['dateRange'] = $this->getDateRange();
 		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
-		$VARS['hasReportEmail'] = isset($_GET['hasReportEmail'])?true:false; // Set default report
-        $max_spray_count = 0;
+	    $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
 		}
@@ -285,18 +284,118 @@ class ReportController extends SimbController
 				}
 				$VARS['sprayDates'][$block->id] = $sprayData;
 				
-                if (empty($VARS['graphData'][$block->id])&& !$VARS['hasReportEmail'])
+                if (empty($VARS['graphData'][$block->id]))
 				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower);
                 
-                if (empty($VARS['graphMiteData'][$block->id]) && !$VARS['hasReportEmail'])
+                if (empty($VARS['graphMiteData'][$block->id]))
                 	$VARS['graphMiteData'][$block->id] = $this->getMite($block, $grower);
 				
 			}
 		}
         //$VARS['email'] = $this->email;
-        $VARS['link'] = Yii::app()->baseUrl. '/report/?grower='.$grower->id;
+        $VARS['link'] = Yii::app()->baseUrl. '/report/grower/'.$grower->id;
 		$this->render('grower', array(
                 'VARS' => $VARS
+		));
+	}
+	
+	/**
+	 * Manages all models.
+	 */
+	public function actionPdf($id)
+	{
+		$grower = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Report for '. $grower->name);
+		$VARS = array();
+		$VARS['blocks'] = $VARS['sprayDates'] = $VAR['graphData'] = array();
+	
+		if(!($grower instanceof Grower)){
+			throw new Exception('Invalid Request (Grower)');
+		}
+	
+		$VARS['grower'] = $grower;
+		$VARS['dateRange'] = $this->getDateRange();
+		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
+		$max_spray_count = 0;
+		foreach(Pest::model()->findAll() as $pest){
+			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
+		}
+		$sprayDates = $pests = array();
+		foreach(Pest::model()->findAll() as $pest){
+			$pests[$pest->name] = $pest;
+			if($pest->calculate == 'yes'){
+				for($i=1,$f=$pest->getSprayCount();$i<=$f;++$i){
+					$spray = $pest->getSpray($i,$grower);
+					$sprayDates[$pest->name][$i] = $spray;
+					if($spray->hasLowPopulation()){
+						$lowPop = clone $spray;
+						$lowPop->swapPopulationValues();
+						$sprayDates[$pest->name.'<br/>Low Population'][$i] = $lowPop;
+					}
+				}
+				for($f++;$f<=$max_spray_count;++$f){
+					$sprayDates[$pest->name][$f] = null;
+					if($spray->hasLowPopulation()){
+						$sprayDates[$pest->name.'<br/>Low Population'][$f] = null;
+					}
+				}
+			}
+		}
+		$VARS['pests'] = $pests;
+		$properties = $grower->getProperties();
+		foreach($properties as $property){
+			//Get Data
+			$blocks = $property->getBlocks();
+	
+			foreach($blocks as $block){
+				$VARS['blocks'][] = $block;
+				//$VARS['sprayDates'][$block->getId()] = $sprayDates;
+	
+				$sprayData = array();
+				$pp = null;
+				foreach($sprayDates as $pest=>$sprays){
+					$pd = new PestResult();
+					$pd->pest = isset($pests[$pest])?$pests[$pest]:'';
+					if($pd->pest){
+						$pp = $pd->pest;
+						$pd->biofix = $pd->pest->getBiofix($block->id,false,$VARS['hasFollowYear']);
+						if($pd->biofix) $pd->biofix = $pd->biofix->date;
+						$pd->secondCohortBiofix = $pd->pest->getBiofix($block->id,true,$VARS['hasFollowYear']);
+						if($pd->secondCohortBiofix) $pd->secondCohortBiofix = $pd->secondCohortBiofix->date;
+					}else{
+						$pd->pest = $pp;
+						$pd->isLowPop = true;
+					}
+					//&& $date->isLowPop()
+					$ss = (int)(!$pd->isLowPop && $pd->pest->hasSecondCohort($block->id));
+					for($second=0;$second<=$ss;$second++){
+						foreach($sprays as $k=>$spray){
+							if($spray){
+								$sd = new SprayResult();
+								$secondBool = (bool)$second;
+								$sd->sprayDate = $spray->getDate($block,$secondBool,$VARS['hasFollowYear']);
+								$sd->coverUntil = $spray->getCoverRequired($block,$secondBool,$VARS['hasFollowYear']);
+								if($secondBool){
+									//die(var_dump($sd->sprayDate));
+									$pd->secondCohortSprays[$k] = $sd;
+								}else{
+									$pd->sprays[$k] = $sd;
+								}
+							}else{
+								$pd->sprays[$k] = null;
+							}
+						}
+					}
+					$sprayData[$pest] = $pd;
+				}
+				$VARS['sprayDates'][$block->id] = $sprayData;
+
+			}
+		}
+		//$VARS['email'] = $this->email;
+		$VARS['link'] = Yii::app()->baseUrl. '/report/pdf/'.$grower->id;
+		$this->render('pdf', array(
+				'VARS' => $VARS
 		));
 	}
 	

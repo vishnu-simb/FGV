@@ -25,9 +25,7 @@ class ReportMailCommand extends SimbConsoleCommand{
             		}
             		if($do_report && count($grower->getBlock())){
             			$pdf = Yii::app()->ePdf->HTML2PDF();
-            			$pdf->AddFont('helvetica','B','helvetica.php');
-            			$pdf->WriteHTML("<style>".file_get_contents(Yii::app()->basePath.'/data/report/pdf_report.css')."</style>");
-            			$pdf->WriteHTML(file_get_contents('http://fgv.wearebuilding.net/report/grower/'.$grower->id.'/'.date("Y", time()).'/?hasReportEmail=true'));
+            			$pdf->WriteHTML(file_get_contents('http://fgv.wearebuilding.net/report/pdf/'.$grower->id.'/'.date("Y", time())));
             			$pdf_as_string = $pdf->Output('','S'); // $pdf is a TCPDF instance
             			// Get basic info for sending email
             			$arrParams = array(
