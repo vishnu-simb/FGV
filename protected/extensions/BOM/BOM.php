@@ -12,6 +12,7 @@ class BOM {
 	}
 	
     private static $_forcastCache = array();
+    
 	function _parseForcast(){
 		$url = 'http://www.bom.gov.au/vic/forecasts/'.$this->forcast.'.shtml';  
         $k = $this->forcast.'|'.date('Ymd');
@@ -75,6 +76,7 @@ class BOM {
 	}
 	
 	private static $_longRangeCache = array();
+	
 	function _longRange($date = null){
 		if($date === null) $date = time();
 		

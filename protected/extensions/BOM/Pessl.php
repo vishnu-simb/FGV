@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Fetch.php');
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Services_JSON.php');
+
 class Pessl {
 	private $username;
 	private $password;
@@ -42,15 +43,15 @@ class Pessl {
 		
 		$http->setUrl($url);
 		$ret = (string)$http->post($post);
-		
-		if(preg_match('`var data = ([^;]+);`', $ret, $data)){
+		//debug data file_put_contents(Yii::app()->basePath.'/data/data.txt',$ret);
+		if(preg_match('/data:([^]]+)/', $ret, $data)){
 			$j = new Services_JSON();
-			$data = $j->decode($data[1]);
+			$data = $j->decode($data[1]."]");
 			$ret = array();
 			foreach($data as $v){
 				$min = "sens_min_".$this->ch;
 				$max = "sens_max_".$this->ch;
-				$ret[$v->f_date] = array($v->$min,$v->$max);
+				$ret[$v->date] = array($v->$min,$v->$max);
 			}
 			return $ret;
 		}
