@@ -17,6 +17,7 @@ class m140821_112133_update_mite extends CDbMigration
 	
 	public function up()
 	{
+	
 		$this->updateTablePrefix();
      
 		$this->insert($this->tableNameMite, array(
@@ -68,7 +69,7 @@ class m140821_112133_update_mite extends CDbMigration
 				'id' => 4,
 				'name' => 'Typhlodromus',
 				'type' => 'Predatory',
-				'color' => '#041b5f',
+				'color' => '#0e7600',
 				// Common fields, should appear in all tables
 				'creator_id' => 0,
 				'ordering' => 0,

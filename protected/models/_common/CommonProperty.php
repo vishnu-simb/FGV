@@ -47,12 +47,6 @@ class CommonProperty extends BaseProperty
     function getBlocks(){
     	return Property::model()->findAll('property_id='.$this->id);
     }
-    
-    /**
-     * @return Property
-     */
-    public function getByName($name){
-    	return self::model()->find('LOWER(name) = :name', array('name' => strtolower($name)));
-    }
+ 
 }
 

@@ -97,8 +97,8 @@ class MonitoringController extends SimbController
 			
 						$f = fopen($file_path, "r");
 						$row = -1;
-						$current_property_name = $current_block_name = $current_mite_name = '';
-						$property_id = $block_id = $mite_id = '';
+						$current_grower_name = $current_property_name = $current_block_name = $current_mite_name = '';
+						$grower_id = $property_id = $block_id = $mite_id = '';
 						$success = 1;
 						while(($filedata = fgetcsv($f)) !== FALSE)
 						{
@@ -106,11 +106,31 @@ class MonitoringController extends SimbController
 							if ($row == 0) // skip the header
 								continue;
 			
-							//Get property name
-							if (!empty($filedata[0]) && $filedata[0] != $current_property_name)
+							//Get grower name
+							if (!empty($filedata[0]) && $filedata[0] != $current_grower_name)
 							{
-								$current_property_name = $filedata[0];
-								$property = Property::model()->getByName($current_property_name);
+								$current_grower_name = $filedata[0];
+								$grower = Grower::model()->getByName($current_grower_name);
+									
+								if (!$grower)
+								{
+									$success = 0;
+									Yii::app()->session->open();
+									Yii::app()->user->setFlash('error', Yii::t('app', "Invalid grower name at line: ".$row));
+									break;
+								}
+								else
+								{
+									$grower_id = $grower->id;
+								}
+							}
+								
+							
+							//Get property name
+							if (!empty($filedata[1]) && $filedata[1] != $current_property_name)
+							{
+								$current_property_name = $filedata[1];
+								$property = Property::model()->findByAttributes(array('grower_id'=>$grower_id,'name'=>$current_property_name));
 			
 								if (!$property)
 								{
@@ -126,10 +146,10 @@ class MonitoringController extends SimbController
 							}
 			
 							//Get block name
-							if (!empty($filedata[1]) && $filedata[1] != $current_block_name && $property_id)
+							if (!empty($filedata[2]) && $filedata[2] != $current_block_name && $property_id)
 							{
-								$current_block_name = $filedata[1];
-								$block = Block::model()->getByNameLike($current_block_name, $property_id);
+								$current_block_name = $filedata[2];
+								$block = Block::model()->findByAttributes(array('name'=>$current_block_name,'property_id'=>$property_id));
 								if (!$block)
 								{
 									$success = 0;
@@ -144,9 +164,9 @@ class MonitoringController extends SimbController
 							}
 			
 							//Get mite name
-							if (!empty($filedata[2]) && $filedata[2] != $current_mite_name)
+							if (!empty($filedata[3]) && $filedata[3] != $current_mite_name)
 							{
-								$current_mite_name = $filedata[2];
+								$current_mite_name = $filedata[3];
 								$mite = Mite::model()->getByNameLike($current_mite_name);
 								if (!$mite)
 								{
@@ -164,7 +184,7 @@ class MonitoringController extends SimbController
 							 
 							if ($block_id && $mite_id)
 							{
-								$date = date('Y-m-d', strtotime($filedata[3]));
+								$date = date('Y-m-d', strtotime($filedata[4]));
 								$modelMonitor = new MiteMonitor();
 								$monitor = MiteMonitor::model()->findByAttributes(array('mite_id'=>$mite_id,'block_id'=>$block_id,'date'=>$date));
 								if ($monitor) //update existed record
@@ -172,8 +192,8 @@ class MonitoringController extends SimbController
 								$modelMonitor->mite_id = $mite_id;
 								$modelMonitor->block_id = $block_id;
 								$modelMonitor->date = $date;
-								$modelMonitor->percent_li = $filedata[4];
-								$modelMonitor->no_days = $filedata[5];
+								$modelMonitor->percent_li = $filedata[5];
+								$modelMonitor->no_days = $filedata[6];
 								if (!$modelMonitor->save())
 								{
 									$success = 0;

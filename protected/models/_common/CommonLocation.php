@@ -46,4 +46,5 @@ class CommonLocation extends BaseLocation
     	$weather = new Pessl('Fankhauser Apples', 'Alvina', '00001840');
     	return $weather->getData(10);
     }
+
 }

@@ -40,7 +40,6 @@ class m140821_035603_add_mite extends CDbMigration
 				$this->tableNameMite,
 				'name', false
 		);
-		
 		return true;
 	}
 

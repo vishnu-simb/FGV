@@ -101,6 +101,12 @@ class CommonGrower extends BaseGrower
     	return $a;
     	
     }
-    
+
+    /**
+     * @return grower
+     */
+    public function getByName($name){
+    	return self::model()->find('LOWER(name) = :name', array('name' => strtolower($name)));
+    }
  
 }
