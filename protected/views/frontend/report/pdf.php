@@ -5,24 +5,19 @@
 	table.page_content {width: 100%; border: none;}
 	table.page_footer {width: 100%; border: none; background-color: #eee; border-top: solid 1mm #444; padding: 2mm}
 	table.prediction {width: 100%; border: none; background-color: #fff;}
-
 	tr{width: 100%; padding: 2mm}
 	tr.head  {background-color: #eee; padding: 2mm}
 	
 	th{text-align: left;};
 -->
 </style>
-<?php
-	if(!empty($VARS['email'])){
-		echo '<a href="',$VARS['link'],'">If this email doesnt load correctly, goto: ',$VARS['link'],'</a>';
-	}
-?>
+
 <?php
 foreach($VARS['blocks'] as $block){
 	$sprayDates = $VARS['sprayDates'][$block->id];
 ?>
 <page pageset="old" backtop="14mm" backbottom="14mm" backleft="10mm" backright="10mm" style="font-size: 9pt">
-	<page_header>
+	<pageheader>
 		<table class="page_header">
 			<tr>
 				<td style="width: 100%; text-align: left">
@@ -30,18 +25,8 @@ foreach($VARS['blocks'] as $block){
 				</td>
 			</tr>
 		</table>
-	</page_header>
-	<page_footer>
-		<table class="page_footer">
-			<tr>
-				<td style="width: 100%; text-align: right">
-					Created by Fruit Growers Victoria. Report problems to <b>fido@fgv.com.au</b>
-				</td>
-			</tr>
-		</table>
-	</page_footer>
-	
-<div class="standard">
+	</pageheader>
+  <div class="standard">
 	<h1></h1>
 	<h2><?=$block->name;?> - <?=$block->property->name?></h2>
 	
@@ -166,7 +151,21 @@ foreach($VARS['blocks'] as $block){
 		</tr>
 	</table>
 </div>
-</page>
+
+	<pagefooter>
+		<table class="page_footer">
+			<tr>
+				<td style="width: 100%; text-align: right">
+					Created by Fruit Growers Victoria. Report problems to <b>fido@fgv.com.au</b>
+				</td>
+			</tr>
+		</table>
+	</pagefooter>
+</page>	
+<pagebreak />
 <?php 
 }
 ?>
+  </body>
+
+</html>
