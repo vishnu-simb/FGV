@@ -16,6 +16,7 @@
 foreach($VARS['blocks'] as $block){
 	$sprayDates = $VARS['sprayDates'][$block->id];
 ?>
+
 <page pageset="old" backtop="14mm" backbottom="14mm" backleft="10mm" backright="10mm" style="font-size: 9pt">
 	<pageheader>
 		<table class="page_header">
@@ -151,7 +152,6 @@ foreach($VARS['blocks'] as $block){
 		</tr>
 	</table>
 </div>
-
 	<pagefooter>
 		<table class="page_footer">
 			<tr>
@@ -162,7 +162,9 @@ foreach($VARS['blocks'] as $block){
 		</table>
 	</pagefooter>
 </page>	
-<pagebreak />
+
+
+	<pagebreak></pagebreak>
 <?php 
 }
 ?>

@@ -33,9 +33,11 @@ class ReportMailCommand extends SimbConsoleCommand{
             					'{interval}'=>$grower->reporting,
             					'{signature}'=>Yii::app()->params['emailSignature'],
             			);
-            			// sent email
+            			// Sent email
             			$mail = new Message();
 			    		$mail->recipient_email = explode(',',$grower->email);
+			    		// Add cc email 
+			    		$mail->recipient_email[] = Yii::app()->params['ccEmail'];
 			    		$mail->subject = Yii::t('app','[Spray Report] '.$grower->name.' '.date('Y-M-d'));
 			    		$mail->sender_name = Yii::t('app', 'FGV Report');
 			    		$mail->sender_email = Yii::app()->params['noreplyEmail'];

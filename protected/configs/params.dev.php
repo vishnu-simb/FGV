@@ -21,6 +21,7 @@ return array(
 	'noreplyDisplayEmail'=>'Growfruit',
 	'adminEmail'=>'admin@fgv.com.au',
 	'contactEmail'=>'admin@fgv.com.au',
+	'ccEmail'=>'andy@simb.com.au',
 	'sendEmailWithSMTP'=>false,
 	'userSMTP' => array(
 				'host'=>'',
