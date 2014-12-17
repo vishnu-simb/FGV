@@ -35,8 +35,13 @@ class ReportMailCommand extends SimbConsoleCommand{
             			);
             			// Sent email
             			$mail = new Message();
-			    		$mail->recipient_email = explode(',',$grower->email);
 			    		// Add cc email 
+            			$recipients = explode(',',$grower->email);
+            			foreach($recipients as $recipient){
+            				if(filter_var($recipient, FILTER_VALIDATE_EMAIL)){ // Validating email addresses
+            					$mail->recipient_email[] = $recipient;
+            				}
+            			}
 			    		$mail->recipient_email[] = Yii::app()->params['ccEmail'];
 			    		$mail->subject = Yii::t('app','[Spray Report] '.$grower->name.' '.date('Y-M-d'));
 			    		$mail->sender_name = Yii::t('app', 'FGV Report');
@@ -46,8 +51,6 @@ class ReportMailCommand extends SimbConsoleCommand{
 			    		$mail->sendGrowerReport($arrParams);
 			    		echo $grower->email." has been sent \n";
             		}
-            		
             	}
-   				
             }
   }
