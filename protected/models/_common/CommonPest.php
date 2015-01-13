@@ -37,7 +37,7 @@ class CommonPest extends BasePest
         else
         	if($hasFollowYear){
     			return static::$_block[$_k] = Biofix::model()->findByAttributes(array('block_id'=>$block_id,'pest_id'=>$this->id,'second_cohort'=>$hasSecondCohort?'yes':'no'),array(
-																			        'condition'=>(strlen($hasFollowYear) == 4)?'YEAR(date)=:date':'date=:date', 
+																			        'condition'=>(strlen($hasFollowYear) == 4)?'(YEAR(date)=:date OR YEAR(date)+1=:date)':'date=:date', 
 																			        'params'=>array(':date'=>$hasFollowYear),
     																				'order'=>'date DESC'
 																			    ));

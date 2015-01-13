@@ -52,7 +52,10 @@
 					}
 					$d = DateHelper::dateOutput($date);
 					if($d){
-						echo $d;
+                        if (date('Y', $ds) < $VAR['hasFollowYear'])
+                            echo "<span class='previous_year'>$d</span>";
+                        else
+						    echo $d;
 					}else{
 						echo ' - ';
 					}
@@ -82,7 +85,10 @@
 						}
 						$d = DateHelper::dateOutput($date);
 						if($d){
-							echo $d;
+							if (date('Y', $ds) < $VAR['hasFollowYear'])
+                                echo "<span class='previous_year'>$d</span>";
+                            else
+    						    echo $d;
 						}else{
 							echo ' - ';
 						}
@@ -117,7 +123,10 @@
 				if($spray){
 					$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],false,$VAR['hasFollowYear']));
 					if($d){
-						echo $d;
+						if (date('Y', $ds) < $VAR['hasFollowYear'])
+                            echo "<span class='previous_year'>$d</span>";
+                        else
+						    echo $d;
 					}else{
 						echo ' - ';
 					}
@@ -125,7 +134,10 @@
 						$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],true,$VAR['hasFollowYear']));
 						echo '</span><span>';
 						if($d){
-							echo $d;
+							if (date('Y', $ds) < $VAR['hasFollowYear'])
+                                echo "<span class='previous_year'>$d</span>";
+                            else
+    						    echo $d;
 						}else{
 							echo ' - ';
 						}
