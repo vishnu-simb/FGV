@@ -54,7 +54,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
     width: 20%;
 }
     .spraytable .tablebody .th span.previous_year{
-        color: #ccc;
+        color: #777;
     }
 .spraytable .tablebody > div:nth-child(2n), .labelrow {
     color: #aaa;
