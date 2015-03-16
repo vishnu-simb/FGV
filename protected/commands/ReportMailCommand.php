@@ -24,8 +24,16 @@ class ReportMailCommand extends SimbConsoleCommand{
             				break;
             		}
             		if($do_report && count($grower->getBlock())){
+      		            /* HTTP request failed! HTTP/1.1 406 Not Acceptable fixed*/
+  		                $curl_handle=curl_init();
+                        curl_setopt($curl_handle, CURLOPT_URL,'http://growfruit.fgv.com.au/report/pdf/'.$grower->id.'/'.date("Y"));
+                        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+                        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+                        $html = curl_exec($curl_handle);
+                        curl_close($curl_handle);
+                        
             			$pdf = Yii::app()->ePdf->mpdf('', 'A4', 9, '', 10, 10, 10, 10, 5, 5);
-            			$pdf->WriteHTML(file_get_contents('http://fgv.wearebuilding.net/report/pdf/'.$grower->id.'/'.date("Y", time())));
+            			$pdf->WriteHTML($html);
             			$pdf_as_string = $pdf->Output('','S'); // $pdf is a TCPDF instance
             			// Get basic info for sending email
             			$arrParams = array(
