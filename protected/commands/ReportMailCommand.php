@@ -42,7 +42,9 @@ class ReportMailCommand extends SimbConsoleCommand{
             					$mail->recipient_email[] = $recipient;
             				}
             			}
-			    		$mail->recipient_email[] = Yii::app()->params['ccEmail'];
+			    		//$mail->recipient_email[] = Yii::app()->params['ccEmail'];
+                        $mail->recipient_email[] = 'fido@fgv.com.au';
+                        $mail->recipient_email[] = 'ido@fgv.com.au';
 			    		$mail->subject = Yii::t('app','[Spray Report] '.$grower->name.' '.date('Y-M-d'));
 			    		$mail->sender_name = Yii::t('app', 'FGV Report');
 			    		$mail->sender_email = Yii::app()->params['noreplyEmail'];
