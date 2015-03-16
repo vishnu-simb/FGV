@@ -168,6 +168,3 @@ foreach($VARS['blocks'] as $block){
 <?php 
 }
 ?>
-  </body>
-
-</html>
