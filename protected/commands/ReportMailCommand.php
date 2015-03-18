@@ -5,10 +5,10 @@ class ReportMailCommand extends SimbConsoleCommand
     {
         set_time_limit(600);    // 10 minute timeout
         
-        echo "Sending ReportMail: .... \n";
+        echo "Sending ReportMail: .... <br>\n";
 
-        define("EMAIL_ADMINS_ONLY", true);
-        define("SEND_ALL", true);
+        define("EMAIL_ADMINS_ONLY", false);
+        define("SEND_ALL", false);
         
         foreach(Grower::model()->findAll() as $key=>$grower) {
             $do_report = SEND_ALL;
@@ -94,11 +94,9 @@ class ReportMailCommand extends SimbConsoleCommand
                     }                    
                 }
                 
-                print "Emailing: ";
-                print_r($mail->$mail->recipient_email);
-                
-                die("STOP");
-
+                foreach($mail->recipient_email as $e) {
+                    print "Emailing " . $e . "<br>";
+                }
                 
 			    $mail->subject = Yii::t('app','[Spray Report] '.$grower->name.' '.date('Y-M-d'));
 			    $mail->sender_name = Yii::t('app', 'FGV Report');
@@ -106,7 +104,7 @@ class ReportMailCommand extends SimbConsoleCommand
 			    $attachment = array('content'=>$pdf_as_string,'name'=>strtolower(str_replace(' ','-',$grower->name).'-'.$grower->reporting.'-'.date('Y-M-d').'.pdf'),'encoding' => 'base64','type'=>'application/pdf') ; 
 			    $mail->attachment = $attachment;
 			    $mail->sendGrowerReport($arrParams);
-			    echo $grower->email." has been sent \n";
+			    echo $grower->name. " report has been sent \n";
             }
             
         }
