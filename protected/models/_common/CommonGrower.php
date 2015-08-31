@@ -74,9 +74,9 @@ class CommonGrower extends BaseGrower
      * Generates the password salt.
      * @return  string salt
      */
-    public function saltGenerator()
+    public function saltGenerator($lengh = 8)
     {
-    	return '$2y$07$'.strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+    	return substr('$2y$07$'.strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'), 0, $lengh);
     }
     
     /**
