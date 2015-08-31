@@ -8,9 +8,12 @@
     <div class="span12">
         <div class="box">
 
- 	<?php $this->renderPartial('_search',array(
-                'modelGrower' => $modelGrower,
-     )); ?>
+ 	<?php 
+        if (Yii::app()->user->getState('role') !== Users::USER_TYPE_GROWER)
+             $this->renderPartial('_search',array(
+                        'modelGrower' => $modelGrower,
+             )); 
+    ?>
 
         </div>
     </div>

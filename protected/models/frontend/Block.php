@@ -30,4 +30,11 @@ class Block extends CommonBlock
 		return Spray::model()->with(array('property'=>array('condition'=>'block_id = '.$this->id.' AND ((YEAR(date) = YEAR(NOW()) AND MONTH(date) < 6) OR (YEAR(date) = YEAR(NOW())-1 AND MONTH(date) >= 6))')))->findAll();
 	}
 
+    function getPropertyByGrower(){
+		if(isset($this->grower) && !empty($this->grower)){
+			return Property::model()->findAllByAttributes(array('grower_id'=>$this->grower),array('order'=>'name'));
+		}else{
+			return $this->getProperty();
+		}
+	}
 }

@@ -101,9 +101,34 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 
                     ),
                     array(
+                    	'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER,
+                        'label' => Yii::t('app', 'Management'),
+                        'itemOptions' => array(),
+                        'items' => array(
+							array(
+									'label' => Yii::t('app', 'Block'),
+									'url' => Yii::app()->baseUrl.'/block',
+							),
+							array(
+									'label' => Yii::t('app', 'Property'),
+									'url' => Yii::app()->baseUrl.'/property',
+							),
+                            array(
+									'label' => Yii::t('app', 'Trap'),
+									'url' => Yii::app()->baseUrl.'/trap',
+							),
+							array(
+									'label' => Yii::t('app', 'TrapCheck'),
+									'url' => Yii::app()->baseUrl.'/trapCheck',
+							),
+						),
+
+                    ),
+                    array(
                         'label' => Yii::t('app', 'My Account'), 
                         'url' => Yii::app()->baseUrl.'/myaccount',
-                        'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER)
+                        'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER
+                    )
                 ),
                 'encodeLabel' => false,
                 'htmlOptions' => array(

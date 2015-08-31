@@ -25,7 +25,12 @@
 
                     <div class="span12">  
                       
-                    	  <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'), array('class' => 'input-xxlarge'))?>
+                    	  <?php 
+                            if (Yii::app()->user->getState('role') !== Users::USER_TYPE_GROWER)
+                                echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'), array('class' => 'input-xxlarge'));
+                            else
+                                echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrapByGrower() ,'id','name'), array('class' => 'input-xxlarge'))
+                          ?>
     					  
                           <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xxlarge datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
 

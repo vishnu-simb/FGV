@@ -111,9 +111,12 @@ class SprayingController extends SimbController
 				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$modelSpray->id.' create successfully!'));
 			}
 		}
+        $grower_id = '';
+        if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
+            $grower_id = Yii::app()->user->id;
 		$this->render('index', array(
 				'modelSpray' => $modelSpray,
-				'dataProvider' => $modelSpray->SearchLatestSpray(),
+				'dataProvider' => $modelSpray->SearchLatestSpray($grower_id),
 		));
 	}
 	

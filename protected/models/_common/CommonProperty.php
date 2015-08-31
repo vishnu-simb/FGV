@@ -45,8 +45,19 @@ class CommonProperty extends BaseProperty
     }
     
     function getBlocks(){
-    	return Property::model()->findAll('property_id='.$this->id);
+    	return Block::model()->findAll('property_id='.$this->id);
     }
+    
+    /**
+     * @return Property[]
+     */
+    function getPropertyByGrower(){
+		if(isset($this->grower_id) && !empty($this->grower_id)){
+			return $this->findAllByAttributes(array('grower_id'=>$this->grower_id),array('order'=>'name'));
+		}else{
+			return $this->findAll();
+		}
+	}
  
 }
 

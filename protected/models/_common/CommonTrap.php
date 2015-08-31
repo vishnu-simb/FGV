@@ -96,5 +96,44 @@ class CommonTrap extends BaseTrap
     	$criteria->order = 'name';
     	return Grower::model()->findAll($criteria);
     }
-
+	
+	function getTrapByBlock(){
+	    if(isset($this->block->id)){
+			return $this->findAllByAttributes(array('block_id'=>$this->block->id),array('order'=>'name'));
+		}else{
+            if(isset($this->grower) && !empty($this->grower)){
+    			$blocks = $this->getBlockByProperty();
+                $block = array();
+                foreach($blocks as $b){
+    				$block[] = $b->id;
+    			}
+                return $this->findAllByAttributes(array('block_id'=>$block),array('order'=>'name'));
+            }else{
+                return $this->findAll(array('order'=>'name'));
+            }
+		}
+	    
+		
+	}
+	function getPropertyByGrower(){
+		if(isset($this->grower) && !empty($this->grower)){
+			return Property::model()->findAllByAttributes(array('grower_id'=>$this->grower),array('order'=>'name'));
+		}else{
+			return $this->getProperty();
+		}
+	}
+	function getBlockByProperty(){
+		if(isset($this->property) && !empty($this->property)){
+			return Block::model()->findAllByAttributes(array('property_id'=>$this->property),array('order'=>'name'));
+		}elseif(isset($this->grower) && !empty($this->grower)){
+			$properties = $this->getPropertyByGrower();
+			$prop = array();
+			foreach($properties as $property){
+				$prop[] = $property->id;
+			}
+			return Block::model()->findAllByAttributes(array('property_id'=>$prop),array('order'=>'name'));
+		}else{
+			return $this->getBlock()->getData();
+		}
+	}
 }
