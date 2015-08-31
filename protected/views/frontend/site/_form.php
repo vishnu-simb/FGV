@@ -61,9 +61,9 @@
 								</div>
 								 
 							</div>
-									<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'select2-me clickable input-xlarge'))?>
+									<?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->byname()->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'select2-me clickable input-xlarge'))?>
                     	   	 
-                    	  		<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->findAll() ,'id','name'), 
+                    	  		<?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->byname()->findAll() ,'id','name'), 
                     				array(
 										'class' => 'select2-me input-xlarge',
 										'ajax' => array(

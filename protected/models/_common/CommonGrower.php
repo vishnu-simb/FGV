@@ -17,6 +17,19 @@ class CommonGrower extends BaseGrower
     	);
     }
     
+    /**
+     * scope of yii
+     * @return array
+     * @see scope of yii
+     */
+    public function scopes(){
+    	return array(
+    			'byname'=>array(
+    					'order'=>'name'
+    			)
+    	);
+    }
+    
     public function beforeSave(){
     	if (parent::beforeSave()) {
     		$format = Yii::app()->params['dbDateFormat'];
@@ -83,7 +96,7 @@ class CommonGrower extends BaseGrower
             'condition'=>$this->getTableAlias().'.id=:grower_id',
             'params'=>array(':grower_id'=>$grower_id),
         ));
-        return $this->findAll();
+        return $this->byname()->findAll();
     }
     
     function getProperties(){
