@@ -3,11 +3,9 @@
 /* @var $modelBiofix Biofix */
 /* @var $form TbActiveForm */
 ?>
-
 <div class="alert alert-info">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <?php echo Yii::t('app', 'Fields with <span class="required">*</span> are required.') ?></div>
-
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'biofix-form',
                 // Please note: When you enable ajax validation, make sure the corresponding
@@ -22,9 +20,7 @@
                     'validateOnSubmit'=>true,
                 ),
             )); ?>
-
 <?php echo $form->errorSummary($modelBiofix); ?>
-
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered">
@@ -32,45 +28,19 @@
                 <h3><i class="icon-th-list"></i><?php echo Yii::t('app', 'General Info') ?></h3>
             </div>
             <div class="box-content nopadding">
-
-                            <div class="span6">
-                            <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'))?>
-
-                            <?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block'))?>
-                    
-							<?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'))?>
-                            
-                            <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
- 							<!-- 
-                            <?php //echo $form->textFieldControlGroup($modelBiofix, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('creator_id'))); ?>
-							-->
-                            </div>
-							 <!-- 
-                            <div class="span6">
-                            
-                            <?php //echo $form->textFieldControlGroup($modelBiofix, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('ordering'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelBiofix, 'created_at', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('created_at'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelBiofix, 'updated_at', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('updated_at'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelBiofix, 'status', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('status'))); ?>
-
-                            <?php //echo $form->textFieldControlGroup($modelBiofix, 'is_deleted', array('class' => 'input-xlarge', 'placeholder' => $modelBiofix->getAttributeLabel('is_deleted'))); ?>
-
-                            <?php //echo $form->textAreaControlGroup($modelBiofix, 'params', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelBiofix->getAttributeLabel('params'))); ?>
-</div>-->
-
-                            <div class="span12">
+                <div class="span6">
+                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'))?>
+                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block'))?>
+                    <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
+                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'))?>
+ 				</div>
+                <div class="span12">
                     <div class="form-actions">
                         <?php echo TbHtml::submitButton($modelBiofix->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'),array(
                             'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
                         )); ?>
                     </div>
-                    
-                    
                 </div>
-
                 <?php $this->endWidget(); ?>
             </div>
         </div>

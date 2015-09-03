@@ -18,7 +18,7 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
 
-                    <div class="span4">     <?php //echo $form->textFieldControlGroup($modelTrap, 'id', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('id'))); ?>
+                    <div class="span6">     <?php //echo $form->textFieldControlGroup($modelTrap, 'id', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('id'))); ?>
 
                                             <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))?>
                             
@@ -27,7 +27,7 @@
                                             <?php echo $form->dropDownListControlGroup($modelTrap, 'name',CHtml::listData( $modelTrap->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap')); ?>
 
             </div>  
-                    <div class="span4">    
+                    <div class="span6">    
                     						 <?php echo $form->dropDownListControlGroup($modelTrap, 'property', CHtml::listData( $modelTrap->getProperty() ,'id','name'),array('empty'=>'Select A Block'))?>
                         
                                              <?php echo $form->dropDownListControlGroup($modelTrap, 'grower', CHtml::listData( $modelTrap->getGrower() ,'id','name'),array('empty'=>'Select A Block'))?>

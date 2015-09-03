@@ -3,11 +3,9 @@
 /* @var $modelLocation Location */
 /* @var $form TbActiveForm */
 ?>
-
 <div class="alert alert-info">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <?php echo Yii::t('app', 'Fields with <span class="required">*</span> are required.') ?></div>
-
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'location-form',
                 // Please note: When you enable ajax validation, make sure the corresponding
@@ -22,9 +20,7 @@
                     'validateOnSubmit'=>true,
                 ),
             )); ?>
-
 <?php echo $form->errorSummary($modelLocation); ?>
-
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered">
@@ -32,25 +28,18 @@
                 <h3><i class="icon-th-list"></i><?php echo Yii::t('app', 'General Info') ?></h3>
             </div>
             <div class="box-content nopadding">
-
-                            <div class="span6">
-                      
-                            <?php echo $form->textFieldControlGroup($modelLocation, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('name'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelLocation, 'observation', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('observation'))); ?>
-
-                            <?php echo $form->textFieldControlGroup($modelLocation, 'forcast', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('forcast'))); ?>
-							
-							</div>
-						
-                            <div class="span12">
+                <div class="span6">
+                    <?php echo $form->textFieldControlGroup($modelLocation, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('name'))); ?>
+                    <?php echo $form->textFieldControlGroup($modelLocation, 'observation', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('observation'))); ?>
+                    <?php echo $form->textFieldControlGroup($modelLocation, 'forcast', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('forcast'))); ?>
+				</div>
+                <div class="span12">
                     <div class="form-actions">
                         <?php echo TbHtml::submitButton($modelLocation->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'),array(
                             'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
                         )); ?>
                     </div>
                 </div>
-
                 <?php $this->endWidget(); ?>
             </div>
         </div>

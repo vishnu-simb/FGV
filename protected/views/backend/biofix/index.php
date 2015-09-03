@@ -47,7 +47,7 @@ $('.search-form-ext form').submit(function(){
 	'filter' => $modelBiofix,
     'filterCssClass' => 'thefilter',
     'ajaxUpdate' => false,
-    'itemsCssClass' => 'table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
+    'itemsCssClass' => 'dataTable simple-table dt-responsive table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
     'htmlOptions' => array(
     'class' => 'dataTables_wrapper',
     ),
@@ -65,8 +65,8 @@ $('.search-form-ext form').submit(function(){
 		array('name'=>'grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelBiofix,'grower', CHtml::listData( $modelBiofix->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
 		array('name'=>'property','value'=>'$data->property->name','filter'=>CHtml::activeDropDownList($modelBiofix,'property', CHtml::listData($modelBiofix->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlockByProperty() ,'id','name'),array('empty'=>'Select A Block'))),
-		'second_cohort',
 		'date',
+        'second_cohort',
 		
 		/*
 		'creator_id',

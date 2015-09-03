@@ -17,12 +17,10 @@
 
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
-
-                    <div class="span4">    
-                                            <?php echo $form->textFieldControlGroup($modelVariety, 'name', array('maxlength' => 255, 'class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('name'))); ?>
-
-            		</div>
-            </div>
+        <div class="span12">    
+            <?php echo $form->textFieldControlGroup($modelVariety, 'name', array('maxlength' => 255, 'class' => 'input', 'placeholder' => $modelVariety->getAttributeLabel('name'))); ?>
+        </div>
+    </div>
     <div class="form-actions">
         <?php echo TbHtml::submitButton(Yii::t('app', 'Search'),  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>
     </div>

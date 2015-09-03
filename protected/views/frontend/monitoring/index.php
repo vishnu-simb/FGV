@@ -15,7 +15,7 @@
         </div>
     </div>
     	<div class="row-fluid">
-					<div class="span8">
+					<div class="span12">
 						<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							'action' => Yii::app()->createUrl($this->route),
 							'method' => 'post',
@@ -85,7 +85,7 @@
 										<th>Mite</th>
 										<th style="text-align: right;">% Li</th>
 										<th style="text-align: right;">No days b/n</th>
-										<th style="text-align: right;">Average Li</th>
+										<th class="hidden-mobile-360" style="text-align: right;">AVG Li</th>
 										<th></th>
 										</tr>
 									</thead>
@@ -99,12 +99,12 @@
 											<td style="text-align: right;">
 												<?php echo $lastest['no_days'] ;?>
 											</td>
-											<td style="text-align: right;">
+											<td class="hidden-mobile-360" style="text-align: right;">
 												<?php echo !empty($lastest['mm_average_li'])?$lastest['mm_average_li']:0 ;?>
 											</td>
 											<td style="text-align: right;width: 65px">
-											<a href="<?php echo Yii::app()->baseUrl."/monitoring/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>
-											<a href="<?php echo Yii::app()->baseUrl."/monitoring/delete/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-remove"></i></a>
+    											<a href="<?php echo Yii::app()->baseUrl."/monitoring/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>
+    											<a href="<?php echo Yii::app()->baseUrl."/monitoring/delete/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-remove"></i></a>
 											</td>
 										</tr>
 									<?php endforeach;?>

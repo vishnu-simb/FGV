@@ -323,7 +323,7 @@ $(document).ready(function() {
 				});
 			}
 		});
-}
+    }
 
 	// Wizard
 	if($(".form-wizard").length > 0){
@@ -379,7 +379,22 @@ $(document).ready(function() {
 	// dataTables
 	if($('.dataTable').length > 0){
 		$('.dataTable').each(function(){
-			if(!$(this).hasClass("dataTable-custom")) {
+		    if ($(this).find('tr td.empty').length == 1){
+                return;
+		    }
+		    /* Custom simple-table */
+            if($(this).hasClass("simple-table")) {
+                var opt = {
+                    bFilter: false,
+                    bLengthChange: false,
+                    bInfo: false,
+                    bPaginate: false,
+                    bSort: false,
+                    bSortCellsTop: true,
+                    
+                };
+                var oTable = $(this).dataTable(opt);
+            }else if(!$(this).hasClass("dataTable-custom")) {
 				var opt = {
 					"sPaginationType": "full_numbers",
 					"oLanguage":{
@@ -483,7 +498,7 @@ $(document).ready(function() {
 				oTable.fnAdjustColumnSizing();
 			}
 		});
-}
+    }
 
 	// force correct width for chosen
 	resize_chosen();
@@ -538,13 +553,24 @@ $(document).ready(function() {
 				$el.find('.amount').html($el.slider('value'));
 			}
 		});
-}
+    }
+    
+    $('.table a.btn').click(function(e){
+        if ($(this).find('i.icon-remove').length > 0){
+            if (confirm('Are sure want to delete record?')){
+                return true;
+            }else{
+                e.preventDefault();
+                return false;
+            }
+        }
+    });
 
-if($(".ckeditor").length > 0){
-	CKEDITOR.replace("ck");
-}
+    if($(".ckeditor").length > 0){
+    	CKEDITOR.replace("ck");
+    }
 
-$(".retina-ready").retina("@2x");
+    $(".retina-ready").retina("@2x");
 
 });
 

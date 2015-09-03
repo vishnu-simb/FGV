@@ -18,7 +18,7 @@
         </div>
     </div>
     	<div class="row-fluid">
-					<div class="span8">
+					<div class="span12">
 						<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							'action' => Yii::app()->createUrl($this->route),
 							'method' => 'post',

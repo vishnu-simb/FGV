@@ -18,23 +18,23 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
 
-                    <div class="span4">     
+                    <div class="span6">     
                     						<?php echo $form->dropDownListControlGroup($modelBlock, 'property_id', CHtml::listData( $modelBlock->getProperty() ,'id','name'),array('empty' => 'Select A Property'))?>
 											
 											<?php echo $form->dropDownListControlGroup($modelBlock, 'location', CHtml::listData( $modelBlock->getLocation() ,'id','name'),array('empty' => 'Select A Location'))?>
 											
-											<?php echo $form->dropDownListControlGroup($modelBlock, 'grower', CHtml::listData( $modelBlock->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
+											<?php echo $form->textFieldControlGroup($modelBlock, 'tree_spacing', array('maxlength' => 11, 'class' => 'input', 'placeholder' => $modelBlock->getAttributeLabel('tree_spacing'))); ?>
 											
-											<?php echo $form->dropDownListControlGroup($modelBlock, 'name', CHtml::listData( $modelBlock->findAll() ,'name','name'),array('empty' => 'Select A Block'))?>
-											
+                    						<?php echo $form->textFieldControlGroup($modelBlock, 'row_width', array('class' => 'input', 'placeholder' => $modelBlock->getAttributeLabel('row_width'))); ?>
                                         
                                            
             </div>  
-                    <div class="span4">     
-                    						<?php echo $form->textFieldControlGroup($modelBlock, 'tree_spacing', array('maxlength' => 11, 'class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('tree_spacing'))); ?>
+                    <div class="span6">     
+                    						<?php echo $form->dropDownListControlGroup($modelBlock, 'grower', CHtml::listData( $modelBlock->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
 											
-                    						<?php echo $form->textFieldControlGroup($modelBlock, 'row_width', array('class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('row_width'))); ?>
-
+											<?php echo $form->dropDownListControlGroup($modelBlock, 'name', CHtml::listData( $modelBlock->findAll() ,'name','name'),array('empty' => 'Select A Block'))?>
+											
+                            
             </div>
             </div>
     <div class="form-actions">

@@ -77,3 +77,33 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
     width: 40% !important;
 }
 .right-cell{text-align: right!important;}
+
+#main .page-header .pull-left h1{
+    line-height: 36px;
+}
+
+@media (max-width: 480px) {
+    .form-horizontal.form-search-advanced .search-button-title select{
+        width: auto;
+        max-width: 100%;
+    }
+    .form-horizontal.form-column [class*="span"] .control-group .control-label{
+        width: 100%;
+    }
+    .form-horizontal .form-actions{
+        padding: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .grid-view .ui-spinner-input{
+        margin: 0 18px 0 0;
+    }
+    .hidden-mobile-360{
+        display: none !important;
+    }
+}
+
+@media (max-width: 320px) {
+    
+}
