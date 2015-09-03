@@ -104,7 +104,7 @@ class CommonBlock extends BaseBlock
     /**
      * @return Property[]
      */
-    function getPropertyByGrower(){
+    function getPropertyByGrower(){       
 		if(isset($this->grower) && !empty($this->grower)){
 			return Property::model()->findAllByAttributes(array('grower_id'=>$this->grower),array('order'=>'name'));
 		}else{

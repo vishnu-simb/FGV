@@ -2,6 +2,11 @@
 /* @var $this SprayController */
 /* @var $modelSpray Spray */
 
+if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
+    $this->menu = array(
+    	array('label' => sprintf(Yii::t('app', 'Import %s'), 'Trapping'), 'url' => array('import')),
+    );
+
 ?>
 
 <div class="row-fluid">

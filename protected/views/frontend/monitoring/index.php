@@ -2,13 +2,20 @@
 /* @var $this SprayController */
 /* @var $modelSpray Spray */
 
+if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
+    $this->menu = array(
+    	array('label' => sprintf(Yii::t('app', 'Import %s'), 'MiteMonitor'), 'url' => array('import')),
+    );
+
 ?>
 
 <div class="row-fluid">
     <div class="span12">
         <div class="box">
             
- <?php $this->renderPartial('_search',array(
+ <?php 
+    if (Yii::app()->user->getState('role') !== Users::USER_TYPE_GROWER)
+        $this->renderPartial('_search',array(
                 'modelGrower' => $modelGrower,
             )); ?>
             
@@ -83,9 +90,10 @@
 									<thead>
 										<tr>
 										<th>Mite</th>
+                                        <th>Date</th>
 										<th style="text-align: right;">% Li</th>
-										<th style="text-align: right;">No days b/n</th>
-										<th class="hidden-mobile-360" style="text-align: right;">AVG Li</th>
+										<th class="hidden-mobile-360" style="text-align: right;">No days b/n</th>
+										<th class="hidden-mobile-400" style="text-align: right;">AVG Li</th>
 										<th></th>
 										</tr>
 									</thead>
@@ -93,13 +101,14 @@
 									<?php foreach($dataProvider->getData() as $lastest):?>
 										<tr>
 											<td><?php echo $lastest['monitoring_name'] ; ?></td>
+                                            <td><?php echo date('d/m/Y', strtotime($lastest['date'])) ; ?></td>
 											<td style="text-align: right;">
 												<?php echo $lastest['percent_li'] ;?>%
 											</td>
-											<td style="text-align: right;">
+											<td class="hidden-mobile-360"  style="text-align: right;">
 												<?php echo $lastest['no_days'] ;?>
 											</td>
-											<td class="hidden-mobile-360" style="text-align: right;">
+											<td class="hidden-mobile-400" style="text-align: right;">
 												<?php echo !empty($lastest['mm_average_li'])?$lastest['mm_average_li']:0 ;?>
 											</td>
 											<td style="text-align: right;width: 65px">

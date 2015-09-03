@@ -47,7 +47,7 @@ $('.search-form-ext form').submit(function(){
 	'filter' => $modelProperty,
     'filterCssClass' => 'thefilter',
     'ajaxUpdate' => false,
-    'itemsCssClass' => 'table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
+    'itemsCssClass' => 'dataTable simple-table dt-responsive table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
     'htmlOptions' => array(
     'class' => 'dataTables_wrapper',
     ),

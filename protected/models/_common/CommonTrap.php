@@ -102,7 +102,7 @@ class CommonTrap extends BaseTrap
 			return $this->findAllByAttributes(array('block_id'=>$this->block->id),array('order'=>'name'));
 		}else{
             if(isset($this->grower) && !empty($this->grower)){
-    			$blocks = $this->getBlockByProperty();
+    			$blocks = $this->getBlockByGrower();
                 $block = array();
                 foreach($blocks as $b){
     				$block[] = $b->id;
@@ -136,4 +136,16 @@ class CommonTrap extends BaseTrap
 			return $this->getBlock()->getData();
 		}
 	}
+    function getBlockByGrower(){
+        if(isset($this->grower) && !empty($this->grower)){
+			$properties = Property::model()->findAllByAttributes(array('grower_id'=>$this->grower),array('order'=>'name'));
+			$prop = array();
+			foreach($properties as $property){
+				$prop[] = $property->id;
+			}
+			return Block::model()->findAllByAttributes(array('property_id'=>$prop),array('order'=>'name'));
+		}else{
+			return $this->getBlock()->getData();
+		}
+    }
 }

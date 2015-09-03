@@ -74,7 +74,11 @@ $bootstrap = Yii::app()->bootstrap;
         // icheck
         // Trick: should not be combined to avoid errors
         $clientScript->registerCssFile($resourceUrl . '/css/plugins/icheck/all.css', '', true);
-
+        
+        // Datatable
+        $clientScript->registerCssFile($resourceUrl . '/css/plugins/datatable/jquery.dataTables.css');
+        $clientScript->registerCssFile($resourceUrl . '/css/plugins/datatable/dataTables.responsive.css');
+        
         // theme
         $clientScript->registerCssFile($resourceUrl . '/css/style.css');
         $clientScript->registerCssFile($resourceUrl . '/css/themes.css');
@@ -151,9 +155,14 @@ $bootstrap = Yii::app()->bootstrap;
         $clientScript->registerScriptFile($resourceUrl . '/js/plugins/validation/jquery.validate.min.js');
         $clientScript->registerScriptFile($resourceUrl . '/js/plugins/validation/additional-methods.min.js');
 
+        // Datatable
+        $clientScript->registerScriptFile($resourceUrl . '/js/plugins/datatable/jquery.dataTables.js');
+        $clientScript->registerScriptFile($resourceUrl . '/js/plugins/datatable/jquery.dataTables.columnFilter.js');
+        $clientScript->registerScriptFile($resourceUrl . '/js/plugins/datatable/dataTables.responsive.js');
+
         // theme framework
-        $clientScript->registerScriptFile($resourceUrl . '/js/eakroko.js');
         $clientScript->registerScriptFile($resourceUrl . '/js/application.min.js');
+        $clientScript->registerScriptFile($resourceUrl . '/js/eakroko.js');
 
         ?>
 

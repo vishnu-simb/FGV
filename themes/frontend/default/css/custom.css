@@ -82,6 +82,114 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
     line-height: 36px;
 }
 
+
+.table.dataTable, table.dataTable tr.child ul{
+    max-width: 100%;
+    width: 100% !important;
+}
+    table.dataTable tr.child ul li{
+        white-space: normal;
+    }
+
+.table.dataTable input,.table.dataTable textarea,.table.dataTable .uneditable-input{
+    width: auto;
+    margin-bottom: 0;
+    max-width: 160px;
+}
+.table.dataTable select{
+    width: auto;
+    margin-bottom: 0;
+    max-width: 160px;
+}
+table.dataTable tr.odd{
+    background: none;
+}
+table.dataTable tr.odd td.sorting_1{
+    background-color: #f9f9f9;
+}
+table.dataTable tr.even td.sorting_1{
+    background: none;
+}
+
+table.dataTable tr td.c-button{
+    float: none;
+    text-align: center;
+}
+    table.dataTable tr td.c-button a.btn{
+    }
+    
+table.dataTable.dtr-inline.collapsed tbody td:first-child::before, table.dataTable.dtr-inline.collapsed tbody th:first-child::before{
+    top: 35%;
+}
+
+table.dataTable .filter-container #Users_username,
+table.dataTable .filter-container #Users_type,
+table.dataTable .filter-container #Biofix_date,
+table.dataTable .filter-container #Biofix_second_cohort,
+table.dataTable .filter-container #Block_tree_spacing,
+table.dataTable .filter-container #Block_tree_variety,
+table.dataTable .filter-container #Block_row_width,
+table.dataTable .filter-container #Chemical_pack_qty,
+table.dataTable .filter-container #Chemical_pack_price,
+table.dataTable .filter-container #Chemical_dilution_rate,
+table.dataTable .filter-container #Chemical_application_rate,
+table.dataTable .filter-container #Grower_username,
+table.dataTable .filter-container #Grower_enabled,
+table.dataTable .filter-container #Pest_dd,
+table.dataTable .filter-container #Pest_calculate,
+table.dataTable .filter-container #Mite_type,
+table.dataTable .filter-container #MiteMonitor_date,
+table.dataTable .filter-container #MiteMonitor_no_days,
+table.dataTable .filter-container #Sizing_date,
+table.dataTable .filter-container #Sizing_value,
+table.dataTable .filter-container #Sizing_type,
+table.dataTable .filter-container #Spray_date,
+table.dataTable .filter-container #Spray_quantity,
+table.dataTable .filter-container #TrapCheck_date,
+table.dataTable .filter-container #TrapCheck_comment{
+    width: 80px;
+}
+
+table.dataTable .filter-container #PestSpray_number,
+table.dataTable .filter-container #PestSpray_dd,
+table.dataTable .filter-container #PestSpray_every,
+table.dataTable .filter-container #MiteMonitor_percent_li,
+table.dataTable .filter-container #TrapCheck_value{
+    width: 50px;
+}
+
+#pest-grid table.dataTable tr.child ul li span.dtr-data div,
+#yw1 table.dataTable tr.child ul li span.dtr-data div{
+    width: 30px;
+}
+
+@media (max-width: 1024px) {
+    .form-horizontal.form-search-advanced .span6 .control-label{
+        width: 80px;
+    }
+    .form-horizontal.form-search-advanced .span6 .controls{
+        margin-left: 100px;
+    }
+}
+
+@media (max-width: 900px) {
+    .form-horizontal.form-search-advanced .span6 .control-label{
+        width: 60px;
+    }
+    .form-horizontal.form-search-advanced .span6 .controls{
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 840px) {
+    .form-horizontal.form-search-advanced .span6 .control-label{
+        width: 120px;
+    }
+    .form-horizontal.form-search-advanced .span6 .controls{
+        margin-left: 140px;
+    }
+}
+
 @media (max-width: 480px) {
     .form-horizontal.form-search-advanced .search-button-title select{
         width: auto;
@@ -95,7 +203,18 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
     }
 }
 
+@media (max-width: 400px) {
+    .hidden-mobile-400{
+        display: none !important;
+    }
+}
+
 @media (max-width: 360px) {
+    .ctrapCheck-aindex .form-search-advanced .search-button-title .search-button{
+        display: block;
+        width: 112px;
+        margin-bottom: 10px;
+    }
     .grid-view .ui-spinner-input{
         margin: 0 18px 0 0;
     }
@@ -105,5 +224,7 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 }
 
 @media (max-width: 320px) {
-    
+    .pagination ul > li > a, .pagination ul > li > span{
+        padding: 4px 10px;
+    }
 }
