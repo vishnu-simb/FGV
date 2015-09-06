@@ -42,7 +42,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <br />
-                <h4>Spray dates report and Month graphs</h4>
+                <h4>Spray dates report and Season graphs</h4>
                 <input type="hidden" id="Grower_id" value="<?=Yii::app()->user->id?>" />
         	    <?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->getBlockByGrowerId(Yii::app()->user->id),'id','name','property.name'), array('class' => 'growerable input-xlarge'))?>
     	    <?php else:?>
