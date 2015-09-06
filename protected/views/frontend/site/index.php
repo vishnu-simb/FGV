@@ -188,7 +188,9 @@ Yii::app()->clientScript->registerScript('index',"
             var number_of_col = $('.spraytable .th:first > span').length + $('.spraytable .th:first > span.doublewidth').length;
             if (number_of_col)
             {
-                $('.spraytable .th > span').css('width', 100.0/number_of_col + '%');
+                var col_width = 100.0/number_of_col;
+                $('.spraytable .th > span').css('width', col_width + '%');
+                $('.spraytable .th > span.doublewidth').attr('style', 'width: '+col_width*2+'% !important');
             }
         }
     }
