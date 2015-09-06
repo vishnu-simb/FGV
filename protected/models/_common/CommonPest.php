@@ -19,15 +19,25 @@ class CommonPest extends BasePest
     	return $this->hasSecondCohort;
     }
 
-	function getSprayCount(){
+	function getSprayCount($grower_id = 0){
 		if($this->sprayCount) return $this->sprayCount;
-		$sql='SELECT COUNT(*) FROM '.PestSpray::model()->tableName().' WHERE pest_id='.$this->id.' AND grower_id=0';
+		$sql='SELECT COUNT(*) FROM '.PestSpray::model()->tableName().' WHERE pest_id='.$this->id.' AND grower_id='. $grower_id;
 		$this->sprayCount = Yii::app()->db->createCommand($sql)->queryScalar();
+        if ($grower_id && $this->sprayCount == 0)
+        {
+            $sql='SELECT COUNT(*) FROM '.PestSpray::model()->tableName().' WHERE pest_id='.$this->id.' AND grower_id=0';
+		    $this->sprayCount = Yii::app()->db->createCommand($sql)->queryScalar();
+        }
 		return $this->sprayCount;
 	}
 	
 	function getSpray($number,$grower_id){
-		return PestSpray::model()->findByAttributes(array('pest_id'=>$this->id,'number'=>$number));
+	   /*
+	    $pestspray = PestSpray::model()->findByAttributes(array('pest_id'=>$this->id,'number'=>$number,'grower_id'=>$grower_id));
+		if ($pestspray)
+            return $pestspray;
+        */
+        return PestSpray::model()->findByAttributes(array('pest_id'=>$this->id,'number'=>$number));
 	}
     
     function getBiofix($block_id, $hasSecondCohort,$hasFollowYear = false){

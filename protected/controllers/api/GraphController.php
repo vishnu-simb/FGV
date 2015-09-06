@@ -5,6 +5,15 @@ class GraphController extends SimbApiController {
 	protected $block;
 	
 	private $Pest_CLID = array();
+    private $pointInterval = 86400000; // 1 days
+    private $maxZoom = 1209600000; // 14 days
+    
+    /* Dates in season will be greater than or equal date_from and less than date_to */
+    private $Season = array(
+        'Early' => array('date_from' => '08-01', 'date_to' => '12-01'),
+        'Mid' => array('date_from' => '12-01', 'date_to' => '03-01'),
+        'Late' => array('date_from' => '03-01', 'date_to' => '08-01')
+    );
 	
 	function __construct(){
 		$this->block = Block::model()->findByPk($_GET['block']);
@@ -54,14 +63,14 @@ class GraphController extends SimbApiController {
     	$max_spray_count = 0;
     	foreach(Pest::model()->findAll() as $pest){
     		if($pest->calculate == 'yes'){
-    			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
+    			$max_spray_count = max($max_spray_count,$pest->getSprayCount($grower->id));
     		}
     	}
     
     	$sprayDates = array();
     	foreach(Pest::model()->findAll() as $pest){
     		if($pest->calculate == 'yes'){
-    			for($i=1,$f=$pest->getSprayCount();$i<=$f;++$i){
+    			for($i=1,$f=$pest->getSprayCount($grower->id);$i<=$f;++$i){
     				$spray = $pest->getSpray($i,$grower->id);
     				$sprayDates[$pest->name][$i] = $spray;
     			}
@@ -76,13 +85,21 @@ class GraphController extends SimbApiController {
 
     public function actionGetBlockTrap(){
     	$VAR = array();
-    	$m = $_GET['date'];
-    	$m = strtotime('01-'.str_replace(',','-',$m));
-    	$date= date('Y-m',$m);
+    	$season = $_GET['season'];
+        $year = $_GET['year'];
+        $dates = $this->Season[$season];
+        if ($season == 'Mid')
+            $dates['date_from'] = ($year-1).'-'.$dates['date_from'];
+        else
+            $dates['date_from'] = $year.'-'.$dates['date_from'];
+        $dates['date_to'] = date('Y-m-d', strtotime($year.'-'.$dates['date_to']. ' -1 day'));
+        
+        $filter = $dates;
+        $filter['block_id'] = $this->block->id;
+        
     	$model = new TrapCheck('search');
     	$model->unsetAttributes();
-    	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
-    	$dataProvider = $model->getSqlDataProvider();
+    	$dataProvider = $model->getTrapCheckInRange($filter);
     	$data = $dataProvider->getData();
     	$pest= array();
     	for($i = 0 ; $i < count($data)  ; $i++ )
@@ -92,8 +109,8 @@ class GraphController extends SimbApiController {
     	$serial = array();
     	$keys_arr = array_keys($pest);
     	if(!empty($keys_arr)){
-    
-    		$e = strtotime('+1 month',$m);
+            $m = strtotime($dates['date_from']);
+    		$e = strtotime($dates['date_to']);;
     		foreach($keys_arr as $r){
     			$mm = $m;
     			$sedat = array();
@@ -111,18 +128,20 @@ class GraphController extends SimbApiController {
     				}
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
+    			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
     		}
     
     	}
     	if(!empty($serial)){
-    		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'spline');
-    		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
-    		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+    		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'spline','zoomType'=>'x');
+    		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+    		$VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
+            $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
-    		$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
+    		$VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
+    		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;
+            $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
     	}else{
     		$VAR['chart']= $serial;
     	}
@@ -133,14 +152,22 @@ class GraphController extends SimbApiController {
     
     public function actionGetBlockMite(){
     	$VAR = array();
-    	$m = $_GET['date'];
-    	$m = strtotime('01-'.str_replace(',','-',$m));
-    	$date= date('Y-m',$m);
+        $season = $_GET['season'];
+        $year = $_GET['year'];
+        $dates = $this->Season[$season];
+        if ($season == 'Mid')
+            $dates['date_from'] = ($year-1).'-'.$dates['date_from'];
+        else
+            $dates['date_from'] = $year.'-'.$dates['date_from'];
+        $dates['date_to'] = date('Y-m-d', strtotime($year.'-'.$dates['date_to']. ' -1 day'));
+        
+        $filter = $dates;
+        $filter['block_id'] = $this->block->id;
     	$model = new MiteMonitor('search');
     	$model->unsetAttributes();
-    	$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
-    	$date_range = $model->getMiteRange();
-    	$dataProvider = $model->getSqlDataProvider();
+    	//$model->attributes = array('block_id'=>$this->block->id,'date'=>$date);
+    	//$date_range = $model->getMiteRange();
+    	$dataProvider = $model->getMiteMonitorInRange($filter);
     	$data = $dataProvider->getData();
     	$mite = Mite::model()->findAll();
     	$PEST = function ($sedat,$mite){ // The method to calculate PEST CLID data
@@ -153,15 +180,15 @@ class GraphController extends SimbApiController {
     					$pp = $pest['data'][$key]; // Get the values from the last Pest_CLID data
     					$merge[$key]= $pp+$val;
     				}
-    				$this->Pest_CLID = array_merge(array('name'=>'Total Pests'),array('data'=>$merge),array('color'=>'#000000'));
+    				$this->Pest_CLID = array('name'=>'Total Pests','data'=>$merge,'color'=>'#000000','pointInterval'=> $this->pointInterval);
     			}else{
     				$this->Pest_CLID =  $data;
     			}
     		}
     	};
     	$MITE = function($data,$date_range,$r){ // The method to calculate CLID data cumulative over the season 
-    		$e = strtotime($date_range['date_initial']);
-    		$mm = strtotime($date_range['date_start']);
+    		$e = strtotime($date_range['date_to']);
+    		$mm = strtotime($date_range['date_from']);
     		$mite_data = array();
     		$dd['cumulative'] = 0;
     		while($mm < $e)
@@ -189,7 +216,8 @@ class GraphController extends SimbApiController {
     		$keys_arr[] = $v->name;
     	}
     	$serial = array();
-    	$e = strtotime('+1 month',$m);
+        $m = strtotime($dates['date_from']);
+    	$e = strtotime($dates['date_to']);
     	$mite_data = array();
     	foreach($keys_arr as $r){
     		$mm = $m;
@@ -198,7 +226,7 @@ class GraphController extends SimbApiController {
     		while($mm < $e)
     		{	
     			if(date($mm) < date(time())){
-    				foreach($MITE($data,$date_range,$r) as $val){
+    				foreach($MITE($data,$dates,$r) as $val){
     					if(isset($val["date"]) && $val["date"]==date("Y-m-d", $mm)){
     						$dd = $val['cumulative'];
     					}
@@ -208,17 +236,19 @@ class GraphController extends SimbApiController {
     			$mm = strtotime('+1 day', $mm); // increment for loop
     		}
     		$PEST($sedat,$r); // Merge CLID data on PESTS
-    		$serial[] = array_merge(array('name'=>$r),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
+    		$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Mite::MiteColor($r),'pointInterval'=>$this->pointInterval);
     		
     	}
     	$serial[] = $this->Pest_CLID;
-    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline');
-    	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("Y-m-d", $m).' and '.date("Y-m-t", $m));
+    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline','zoomType'=>'x');
+    	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+        $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
-    	$VAR['xAxis'] = array('categories'=>array_keys($this->getxAxis($m)));
-    	$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
+    	$VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
     	$VAR['series'] = $serial;
+        $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
     	echo CJSON::encode($VAR);
     	Yii::app()->end();
     
@@ -299,12 +329,13 @@ class GraphController extends SimbApiController {
     	 
     }
     
-    private function getxAxis($m){
+    private function getxAxis($m, $e = 0){
     	$xAxis = array();
-    	$e = strtotime('+1 month',$m);
+        if (empty($e))
+    	   $e = strtotime('+1 month',$m);
     	while($m < $e)
     	{	if(date($m) < date(time())){
-    			$xAxis[date("d", $m)] = array_merge(array(date("d", $m)),$xAxis);
+    			$xAxis[date("d/m", $m)] = array_merge(array(date("d/m", $m)),$xAxis);
     		}
     		$m = strtotime('+1 day', $m); // increment for loop
     	

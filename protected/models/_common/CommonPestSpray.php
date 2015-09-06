@@ -89,7 +89,7 @@ class CommonPestSpray extends BasePestSpray
 			//Pre Setup
 			if(!empty($biofix->params) && !$hasUpdate){
 				$params = CJSON::decode($biofix->params);
-				return ($params[$this->id])?$params[$this->id]:null; // Return from DB
+				return !empty($params[$this->id])?$params[$this->id]:null; // Return from DB
 			}
 			$biofix_date = $biofix->date;
             
