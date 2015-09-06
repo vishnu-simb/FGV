@@ -66,7 +66,7 @@
     				</div>
                     <div class="clearfix"></div>
                     <br />
-                    <h4>Spray dates report and Month graphs</h4>
+                    <h4>Spray dates report and Season graphs</h4>
            	   	    <?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->byname()->findAll() ,'id','name'), 
             				array(
     							'class' => 'select2-me input-xlarge',
