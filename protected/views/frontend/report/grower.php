@@ -314,8 +314,8 @@ foreach($VARS['blocks'] as $block){
 				echo '<td>';
 				if($s instanceof SprayResult){
 					$tb = false;
-					if(!isset($firstToBoldMap[$sk]) && strtotime($s->sprayDate) > time()){
-						$firstToBoldMap[$sk] = true;
+					if(!isset($firstToBoldMap[$k]) && strtotime($s->sprayDate) > time()){
+						$firstToBoldMap[$k] = true;
 						$tb = true;
 						echo '<b>';
 					}
