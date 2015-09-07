@@ -310,12 +310,13 @@ foreach($VARS['blocks'] as $block){
 		$h = array();
 		echo '<td>'.Number::Ordinal($i).' Spray/Gen '.$i.' Complete:</td>';
 		foreach($row as $k=>$ss){
+		    $j = 0;
 			foreach($ss as $sk=>$s){
 				echo '<td>';
 				if($s instanceof SprayResult){
 					$tb = false;
-					if(!isset($firstToBoldMap[$k]) && strtotime($s->sprayDate) > time()){
-						$firstToBoldMap[$k] = true;
+					if(!isset($firstToBoldMap[$k.$j]) && strtotime($s->sprayDate) > time()){
+						$firstToBoldMap[$k.$j] = true;
 						$tb = true;
 						echo '<b>';
 					}
@@ -324,6 +325,7 @@ foreach($VARS['blocks'] as $block){
 						echo '</b>';
 				}
 				echo '</td>';
+                $j++;
 			}
 		}
 		echo '</tr>';
