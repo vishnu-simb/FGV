@@ -218,8 +218,8 @@ class ReportController extends SimbController
 		foreach(Pest::model()->findAll() as $pest){
 			$pests[$pest->name] = $pest;
 			if($pest->calculate == 'yes'){
-				for($i=1,$f=$pest->getSprayCount();$i<=$f;++$i){
-					$spray = $pest->getSpray($i,$grower);
+				for($i=1,$f=$pest->getSprayCount($id);$i<=$f;++$i){
+					$spray = $pest->getSpray($i,$id);
 					$sprayDates[$pest->name][$i] = $spray;
 					if($spray->hasLowPopulation()){
 						$lowPop = clone $spray;
