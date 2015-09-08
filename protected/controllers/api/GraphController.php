@@ -147,7 +147,7 @@ class GraphController extends SimbApiController {
             if (!empty($spraydates))
             {
                 foreach($spraydates as $index => $spray){
-                    $VAR['spraydates'][$index] = $spray->date;
+                    $VAR['spraydates'][$index] = array('date'=>$spray->date, 'chemical'=>$spray->chemical->name);
                 }
             }
     	}else{

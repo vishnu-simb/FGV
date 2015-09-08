@@ -138,13 +138,13 @@ Yii::app()->clientScript->registerScript('index',"
                                 if (jgraph.spraydates.length){
                                     jgraph.xAxis['plotBands'] = [];
                                     for(var j in jgraph.spraydates){
-                                        var date = jgraph.spraydates[j];
+                                        var date = jgraph.spraydates[j].date;
                                         var plot_obj = {
                                             from: createDateObj(date),
                                             to: createDateObj(date, 1),
                                             color: spray_date_color,
                                             label: {
-                                                text: 'Spray date',
+                                                text: jgraph.spraydates[j].chemical,
                                                 'style': {
                                                     color: spray_date_label_color
                                                 }
