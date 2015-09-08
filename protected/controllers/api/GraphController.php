@@ -146,8 +146,18 @@ class GraphController extends SimbApiController {
             $VAR['spraydates'] = array();
             if (!empty($spraydates))
             {
+                $existed = array();
                 foreach($spraydates as $index => $spray){
-                    $VAR['spraydates'][$index] = array('date'=>$spray->date, 'chemical'=>$spray->chemical->name);
+                    $chemical = $spray->chemical->name;
+                    if (!isset($existed[$spray->date]))
+                    {
+                        $existed[$spray->date] = $index;
+                    }
+                    else
+                    {
+                        $chemical = $VAR['spraydates'][$existed[$spray->date]]['chemical']. "<br/>". $spray->chemical->name;
+                    } 
+                    $VAR['spraydates'][$existed[$spray->date]] = array('date'=>$spray->date, 'chemical'=>$chemical);
                 }
             }
     	}else{

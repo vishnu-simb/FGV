@@ -154,6 +154,7 @@ Yii::app()->clientScript->registerScript('index',"
                                     }
                                     delete jgraph.spraydates;
                                 }
+                                console.log(jgraph);
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
 					  		}
