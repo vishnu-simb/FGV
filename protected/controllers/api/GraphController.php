@@ -181,7 +181,10 @@ class GraphController extends SimbApiController {
 		}
 		$min_time = strtotime($dates['date_from']);
 		$max_time = strtotime($dates['date_to']);
-        $grower_blocks = $grower_total_mites = $grower_avg_mites = $location_blocks = $location_total_mites = $location_avg_mites = array();
+        $grower_blocks = Block::model()->findAllAttributes(array('is_deleted' => 0));
+        if ($location_id)
+            $location_blocks = Block::model()->with(array('property'=>array('condition'=>"property.location_id='$location_id'")))->findAll();
+        $grower_total_mites = $grower_avg_mites = $location_total_mites = $location_avg_mites = array();
 		foreach($keys_arr as $r){
 			$mm = $min_time;
 			$sedat = array();
@@ -195,15 +198,8 @@ class GraphController extends SimbApiController {
 						if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
 						    $value = $val['mm_average_li']*$val['mm_no_days'];
 							$grower_dd += $value;
-                            if (empty($grower_blocks[$val["block_id"]]))
-                                $grower_blocks[$val["block_id"]] = 1;
                             if ($location_id && $val['location_id'] == $location_id)
-                            {
                                 $location_dd += $value;
-                                if (empty($location_blocks[$val["block_id"]]))
-                                    $location_blocks[$val["block_id"]] = 1;
-                            }
-                                
 						}
 					}
                     if (!isset($grower_total_mites[$index]))
@@ -221,13 +217,12 @@ class GraphController extends SimbApiController {
 			}
 		}
         $length = count($grower_total_mites);
-        $number_of_grower_blocks = count($grower_blocks);
-        $number_of_location_blocks = count($location_blocks);
-        
+        $number_of_grower_blocks = empty($grower_blocks)?1:count($grower_blocks);;
+        $number_of_location_blocks = empty($location_blocks)?1:count($location_blocks);
         for($i = 0; $i < $length; $i++)
         {
-            $grower_avg_mites[$i] = $grower_total_mites[$i]/$number_of_grower_blocks;
-            $location_avg_mites[$i] = $location_total_mites[$i]/$number_of_location_blocks;
+            $grower_avg_mites[$i] = round($grower_total_mites[$i]/$number_of_grower_blocks, 2);
+            $location_avg_mites[$i] = round($location_total_mites[$i]/$number_of_location_blocks, 2);
         }
         return array('grower_avg' => $grower_avg_mites, 'location_avg' => $location_avg_mites);
     }
@@ -342,7 +337,7 @@ class GraphController extends SimbApiController {
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
     	$VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
-    	$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'min'=> 0,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
     	$VAR['series'] = $serial;
         $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
     	echo CJSON::encode($VAR);
