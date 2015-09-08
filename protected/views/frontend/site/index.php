@@ -6,6 +6,8 @@ Yii::app()->clientScript->registerScript('index',"
     // Some global params
     var dot = 1;
     var loading = 0;
+    var spray_date_color = '#9cd079';
+    var spray_date_label_color = '#333333';
 	/* define base url */
 	var siteUrl = document.URL; 
 	var months = new Array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
@@ -133,6 +135,25 @@ Yii::app()->clientScript->registerScript('index',"
                                     jgraph.series[i]['pointStart'] = Date.UTC(jgraph.pointStart.year, jgraph.pointStart.month, jgraph.pointStart.day);
                                 }
                                 delete jgraph.pointStart;
+                                if (jgraph.spraydates.length){
+                                    jgraph.xAxis['plotBands'] = [];
+                                    for(var j in jgraph.spraydates){
+                                        var date = jgraph.spraydates[j];
+                                        var plot_obj = {
+                                            from: createDateObj(date),
+                                            to: createDateObj(date, 1),
+                                            color: spray_date_color,
+                                            label: {
+                                                text: 'Spray date',
+                                                'style': {
+                                                    color: spray_date_label_color
+                                                }
+                                            }
+                                        };
+                                        jgraph.xAxis['plotBands'].push(plot_obj);
+                                    }
+                                    delete jgraph.spraydates;
+                                }
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
 					  		}
@@ -195,6 +216,15 @@ Yii::app()->clientScript->registerScript('index',"
         }
     }
     
+    function createDateObj(isoDate, day){
+        var d_parts = isoDate.split('-');
+        if (d_parts.length != 3)
+            return '';
+        if (typeof day == 'undefined')
+            day = 0; 
+        var r_date = new Date(d_parts[0], d_parts[1] - 1, d_parts[2]);
+        return r_date.setTime(r_date.getTime() + (day*24*60*60*1000));
+    }
     
     function drawSeasonGraphLoading(){
         if (loading){
