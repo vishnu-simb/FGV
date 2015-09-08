@@ -66,6 +66,21 @@ class CommonSpray extends BaseSpray
     /**
      * @return Block[]
      */
+    public function getBlock2(){
+    	$sql="SELECT b.id as id,b.name as name,CONCAT (g.name,' - ',p.name,' - ',b.name) AS block_name
+		FROM ".Block::model()->tableName()." b
+    			INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+    			INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
+        WHERE b.is_deleted = 0
+    	ORDER BY g.name";
+    	return new CSqlDataProvider($sql, array(
+    			'pagination'=>false,
+		));
+    }
+    
+    /**
+     * @return Block[]
+     */
     public function getBlockByAttributes($grower_id){
     	return Block::model()->with(array('property'=>array('condition'=>'property.grower_id='.$grower_id)))->findAll();
     }

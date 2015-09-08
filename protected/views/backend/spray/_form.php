@@ -32,7 +32,7 @@
                     <?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))?>
                     <?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
                     <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'ispinner nput-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>
-                    <?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+                    <?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock2()->getData() ,'id','block_name'),array('empty'=>'Select A Block'))?>
                     <?php //echo $form->textFieldControlGroup($modelSpray, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelSpray->getAttributeLabel('creator_id'))); ?>
                 </div>
                 <div class="span12">
