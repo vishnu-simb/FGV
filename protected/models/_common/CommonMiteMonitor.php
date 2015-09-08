@@ -125,15 +125,16 @@ class CommonMiteMonitor extends BaseMiteMonitor
     	if ($date_from && $date_to)
     		$condition .= " AND (mm.date BETWEEN '$date_from' AND '$date_to') ";
     	elseif ($date_from)
-    	$condition .= " AND mm.date >= '$date_from' ";
+    	   $condition .= " AND mm.date >= '$date_from' ";
     	elseif ($date_to)
-    	$condition .= " AND mm.date <= '$date_to' ";
+    	   $condition .= " AND mm.date <= '$date_to' ";
     
-    	$sql="SELECT mm.date AS mm_date,mm.no_days AS mm_no_days,mm.percent_li ,mm.average_li ,m.name AS mite_name ,
+    	$sql="SELECT mm.date AS mm_date,mm.no_days AS mm_no_days,mm.percent_li ,mm.average_li ,m.name AS mite_name , p.location_id, mm.block_id,
 			((SELECT pr.percent_li FROM ".$this->tableName()." pr WHERE pr.date < mm.date AND pr.mite_id = mm.mite_id AND pr.block_id = mm.block_id ORDER BY DATE DESC LIMIT 1) + mm.percent_li)/2 AS mm_average_li 
 		FROM ".$this->tableName()." mm
 		INNER JOIN ".Mite::model()->tableName()." m ON mm.mite_id = m.id
 		INNER JOIN ".Block::model()->tableName()." b ON mm.block_id = b.id
+        INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
 		".$condition."
 		ORDER BY mm.date DESC";
     	return new CSqlDataProvider($sql, array(

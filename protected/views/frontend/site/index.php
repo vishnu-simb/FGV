@@ -124,7 +124,7 @@ Yii::app()->clientScript->registerScript('index',"
         var season = $('#season').html().split(',');
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockTrap?block='+block_id+'&season='+season[0]+'&year='+actualDate.getFullYear(),
+				  url: siteUrl + 'api/graph/getBlockTrap?block='+block_id+'&season='+season[0]+'&year='+actualDate.getFullYear()+'&user='+$('#user_id').val(),
 				  success: function (data)
 				   {
 					  		var jgraph = JSON.parse(data);
@@ -154,7 +154,6 @@ Yii::app()->clientScript->registerScript('index',"
                                     }
                                     delete jgraph.spraydates;
                                 }
-                                console.log(jgraph);
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
 					  		}
@@ -172,7 +171,7 @@ Yii::app()->clientScript->registerScript('index',"
         var season = $('#season').html().split(',');
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockMite?block='+block_id+'&season='+season[0]+'&year='+actualDate.getFullYear(),
+				  url: siteUrl + 'api/graph/getBlockMite?block='+block_id+'&season='+season[0]+'&year='+actualDate.getFullYear()+'&user='+$('#user_id').val(),
 				  success: function (data)
 				   {
 					  		var jgraph = JSON.parse(data);
@@ -325,5 +324,6 @@ Yii::app()->clientScript->registerScript('index',"
 				?>
              </div>
 	   </div>
+       <input type="hidden" id="user_id" value="<?=Yii::app()->user->id?>" />
     </div>
 </div>

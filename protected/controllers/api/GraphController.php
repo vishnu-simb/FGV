@@ -168,6 +168,70 @@ class GraphController extends SimbApiController {
     
     }
     
+    
+    
+    private function getAverageMite($dates, $location_id = ''){
+        $model = new MiteMonitor('search');
+        $dataProvider = $model->getMiteMonitorInRange($dates);
+    	$data = $dataProvider->getData();
+        $mite = Mite::model()->findAll();
+        $keys_arr = array();
+		foreach($mite as $v){
+			$keys_arr[] = $v->name;
+		}
+		$min_time = strtotime($dates['date_from']);
+		$max_time = strtotime($dates['date_to']);
+        $grower_blocks = $grower_total_mites = $grower_avg_mites = $location_blocks = $location_total_mites = $location_avg_mites = array();
+		foreach($keys_arr as $r){
+			$mm = $min_time;
+			$sedat = array();
+			$grower_dd = $location_dd = 0;
+            $index = 0;
+			while($mm < $max_time)
+			{
+				if(date($mm) < date(time())){
+			
+					foreach($data as $val){
+						if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
+						    $value = $val['mm_average_li']*$val['mm_no_days'];
+							$grower_dd += $value;
+                            if (empty($grower_blocks[$val["block_id"]]))
+                                $grower_blocks[$val["block_id"]] = 1;
+                            if ($location_id && $val['location_id'] == $location_id)
+                            {
+                                $location_dd += $value;
+                                if (empty($location_blocks[$val["block_id"]]))
+                                    $location_blocks[$val["block_id"]] = 1;
+                            }
+                                
+						}
+					}
+                    if (!isset($grower_total_mites[$index]))
+                        $grower_total_mites[$index] = $grower_dd;
+                    else
+					    $grower_total_mites[$index] += $grower_dd;
+                        
+                    if (!isset($location_total_mites[$index]))
+                        $location_total_mites[$index] = $location_dd;
+                    else
+					    $location_total_mites[$index] += $location_dd;
+				}
+				$mm = strtotime('+1 day', $mm); // increment for loop
+                $index++;
+			}
+		}
+        $length = count($grower_total_mites);
+        $number_of_grower_blocks = count($grower_blocks);
+        $number_of_location_blocks = count($location_blocks);
+        
+        for($i = 0; $i < $length; $i++)
+        {
+            $grower_avg_mites[$i] = $grower_total_mites[$i]/$number_of_grower_blocks;
+            $location_avg_mites[$i] = $location_total_mites[$i]/$number_of_location_blocks;
+        }
+        return array('grower_avg' => $grower_avg_mites, 'location_avg' => $location_avg_mites);
+    }
+    
     public function actionGetBlockMite(){
     	$VAR = array();
         $season = $_GET['season'];
@@ -258,6 +322,20 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
+        
+        //Get average pest/mite
+        $avg = $this->getAverageMite($dates, $this->block->property->location_id);        
+        $serial[] = array('name'=>'AVG Pests in Location','data'=>$avg['location_avg'],'color'=>'#222222','pointInterval'=> $this->pointInterval);
+        
+        $user_id = $_GET['user'];
+        $is_admin = 0;
+        $user = Users::model()->findByPk($user_id);
+    	if(isset($user)){
+    		$is_admin = $user->type == 'admin';
+    	}
+        if ($is_admin)
+            $serial[] = array('name'=>'AVG Pests of all Grower','data'=>$avg['grower_avg'],'color'=>'#555555','pointInterval'=> $this->pointInterval);
+        
     	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline','zoomType'=>'x');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
         $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
