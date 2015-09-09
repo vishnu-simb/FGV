@@ -141,7 +141,7 @@ Yii::app()->clientScript->registerScript('index',"
                                         var date = jgraph.spraydates[j].date;
                                         var plot_obj = {
                                             from: createDateObj(date),
-                                            to: createDateObj(date),
+                                            to: createDateObj(date, 1),
                                             color: spray_date_color,
                                             label: {
                                                 text: jgraph.spraydates[j].chemical,
