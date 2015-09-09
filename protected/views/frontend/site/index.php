@@ -135,13 +135,13 @@ Yii::app()->clientScript->registerScript('index',"
                                     jgraph.series[i]['pointStart'] = Date.UTC(jgraph.pointStart.year, jgraph.pointStart.month, jgraph.pointStart.day);
                                 }
                                 delete jgraph.pointStart;
-                                if (jgraph.spraydates.length){
+                                if (typeof jgraph.spraydates != 'undefined'){
                                     jgraph.xAxis['plotBands'] = [];
                                     for(var j in jgraph.spraydates){
                                         var date = jgraph.spraydates[j].date;
                                         var plot_obj = {
                                             from: createDateObj(date),
-                                            to: createDateObj(date, 1),
+                                            to: createDateObj(date),
                                             color: spray_date_color,
                                             label: {
                                                 text: jgraph.spraydates[j].chemical,
