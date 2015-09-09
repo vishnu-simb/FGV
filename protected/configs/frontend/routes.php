@@ -9,6 +9,9 @@
 
 return array(
     // Default rules
+    'location/id/<id:\w+>' => 'location/view',
+    'location/update/<id:\w+>' => 'location/update',
+    'location/delete/<id:\w+>' => 'location/delete',
 	'report/grower/<id:\w+>/<year:\w+>' => 'report/grower',
 	'report/pdf/<id:\w+>/<year:\w+>' => 'report/pdf',
     '<controller:\w+>/<id:\d+>' => '<controller>/view',

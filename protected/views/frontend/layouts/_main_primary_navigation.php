@@ -106,12 +106,16 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         'itemOptions' => array(),
                         'items' => array(
 							array(
-									'label' => Yii::t('app', 'Block'),
-									'url' => Yii::app()->baseUrl.'/block',
+									'label' => Yii::t('app', 'Location'),
+									'url' => Yii::app()->baseUrl.'/location',
 							),
 							array(
 									'label' => Yii::t('app', 'Property'),
 									'url' => Yii::app()->baseUrl.'/property',
+							),
+                            array(
+									'label' => Yii::t('app', 'Block'),
+									'url' => Yii::app()->baseUrl.'/block',
 							),
                             array(
 									'label' => Yii::t('app', 'Trap'),
@@ -120,7 +124,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 							array(
 									'label' => Yii::t('app', 'TrapCheck'),
 									'url' => Yii::app()->baseUrl.'/trapCheck',
-							),
+							)
 						),
 
                     ),

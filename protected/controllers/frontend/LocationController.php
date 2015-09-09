@@ -25,7 +25,7 @@ class LocationController extends SimbController
 						'allow',
 						'actions' => array('index', 'logout'),
 						'users' => array('@'),
-						'expression'=>'Yii::app()->user->isAdmin()',
+						'expression'=>'Yii::app()->user->isGrower()',
 				),
 				array(
 						'deny',
@@ -95,6 +95,12 @@ class LocationController extends SimbController
 	public function actionUpdate($id)
 	{
 		$modelLocation = $this->loadModel($id);
+        if ($modelLocation->creator_id != Yii::app()->user->id)
+        {
+            //Grower only can edit his locations
+            Yii::app()->user->setFlash('no_permission', "You have no permissions to edit location \"$modelLocation->name\"");
+            $this->redirect(array('index'));
+        }
 		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Location', $modelLocation->id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -122,9 +128,14 @@ class LocationController extends SimbController
 	public function actionDelete($id)
 	{
 		if (Yii::app()->request->getParam('get','delete')) {
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
+            $modelLocation = $this->loadModel($id);
+		    if ($modelLocation->creator_id != Yii::app()->user->id){
+                //Grower only can delete his locations
+                Yii::app()->user->setFlash('no_permission', "You have no permissions to delete location \"$modelLocation->name\"");
+		    }else{
+                // we only allow deletion via POST request
+    			$modelLocation->delete();
+		    }
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if (!isset($_GET['ajax'])) {
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));

@@ -16,8 +16,14 @@ class CommonLocation extends BaseLocation
 		return array(
 			'properties' => array(self::HAS_MANY, 'Property', 'location_id'),
             'weathers' => array(self::HAS_MANY, 'Weather', 'location_id'),
+            'creator' => array(self::BELONGS_TO, 'Grower', 'creator_id'),
 		);
 	}
+    
+    public function getCreator()
+    {
+        return $this->creator;
+    }
     
     public function getBOM()
     {
@@ -29,6 +35,17 @@ class CommonLocation extends BaseLocation
 		if(!empty($forcast) && $forcast{0} == '*')
 			$forcast = null;
 		return new BOM($observation, $forcast);
+    }
+    
+    function getObservationAndForcast()
+    {
+        if ($this->observation && $this->forcast)
+            return;
+        $bom = new BOM('');
+        if (empty($this->observation))
+            $this->observation = $bom->getObservation($this->name, 1);
+        if (empty($this->forcast))
+            $this->forcast = $bom->getForcast($this->name);
     }
     
     function isSpecial(){

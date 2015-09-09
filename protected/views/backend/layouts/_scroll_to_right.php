@@ -8,7 +8,7 @@
  */
 Yii::app()->clientScript->registerScript(
     'scroll',"
-		$.fn.hasOverflow=function(){var e=this[0];return e.scrollHeight>e.clientHeight||e.scrollWidth>e.clientWidth;}
+		$.fn.hasOverflow=function(){var e=this;return e.scrollHeight>e.clientHeight||e.scrollWidth>e.clientWidth;}
     		
     	jQuery(document).ready(function() {
 
@@ -30,7 +30,7 @@ Yii::app()->clientScript->registerScript(
     		  jQuery(this).addClass('hidden');
     		  jQuery('.left-arrow').removeClass('hidden');
 			});
-            });
+        });
     		
     		"
 );

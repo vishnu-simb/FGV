@@ -5,6 +5,7 @@ class BOM {
 	private $data;
 	private $observation;
 	private $forcast;
+    private $subregions;
 	
 	function __construct($observation, $forcast = null){
 		$this->observation = $observation;
@@ -138,5 +139,160 @@ class BOM {
         }
 		return null;
 	}
+    
+    function getObservation($location, $findSubRegion = 0){
+        if (empty($location))
+            return null;
+        $observation = null;
+        $location = strtolower($location);
+        $first_char = $location{0};
+        $targets = array(
+            'a' => 'IDCJDW0301',
+            'b' => 'IDCJDW0301',
+            'c' => 'IDCJDW0302',
+            'd' => 'IDCJDW0302',
+            'e' => 'IDCJDW0303',
+            'f' => 'IDCJDW0303',
+            'g' => 'IDCJDW0303',
+            'h' => 'IDCJDW0304',
+            'i' => 'IDCJDW0304',
+            'j' => 'IDCJDW0304',
+            'k' => 'IDCJDW0304',
+            'l' => 'IDCJDW0305',
+            'm' => 'IDCJDW0305',
+            'n' => 'IDCJDW0306',
+            'o' => 'IDCJDW0306',
+            'p' => 'IDCJDW0306',
+            'q' => 'IDCJDW0306',
+            'r' => 'IDCJDW0306',
+            's' => 'IDCJDW0307',
+            't' => 'IDCJDW0307',
+            'u' => 'IDCJDW0307',
+            'v' => 'IDCJDW0307',
+            'w' => 'IDCJDW0308',
+            'x' => 'IDCJDW0308',
+            'y' => 'IDCJDW0308',
+            'z' => 'IDCJDW0308'
+        );
+        
+        if (isset($targets[$first_char]))
+        {
+            $url = 'http://www.bom.gov.au/climate/dwo/'. $targets[$first_char] .'.shtml';
+            $http = new Fetch($url);
+    		$data = $http->Get();
+            if($data->getCode() != 200){
+    			throw new Exception('Invalid Location: '.$location);
+    		}
+            $data = $data->getResponse();
+    		$dom = str_get_dom($data);
+            
+            $container = $dom->find('#container', 0);
+            
+            foreach($container->find('.content table.links tbody tr th a') as $link){
+                $inner_text = strtolower($link->innertext());
+                if (strstr($location,$inner_text) || $inner_text == $location || strstr($location, $inner_text))
+                {
+                    $href = $link->getAttribute('href');
+                    $observation = basename($href, ".latest.shtml");
+                    break;
+                }
+    		}
+        }
+        
+        if ($observation == null && $findSubRegion)
+        {
+            $sub_regions = $this->findSubRegions($location);
+            if ($sub_regions)
+            {
+                foreach($sub_regions as $sub_region)
+                {
+                    $observation = $this->getObservation($sub_region);
+                    if ($observation)
+                        break;
+                }
+            }
+        }
+        return $observation;        
+    }
+    
+    function findSubRegions($location)
+    {
+        if (!empty($this->subregions))
+            return $this->subregions;
+        $sub_regions = array();
+        if (!empty($location))
+        {
+            $url = "http://postcodez.com.au/postcodes.cgi";
+            $http = new Fetch($url);
+            $data = $http->post(array(
+                'search_suburb' => $location, 
+                'search_state' => 'vic',
+                'type' => 'search',
+                'x' => '0',
+                'y' => '0'
+            ));
+            if($data->getCode() != 200){
+    			throw new Exception('Invalid Location: '.$location);
+    		}
+            $data = $data->getResponse();
+    		$dom = str_get_dom($data);
+            $results = $dom->find('#content .results div.result');
+            if (!empty($results))
+            {
+                foreach($results as $result){
+                    $sub_region_item = $result->find('p', 2);
+                    $sub_region_text = $sub_region_item->find('a', 0)->innertext();
+                    if (!in_array($sub_region_text, $sub_regions))
+                    {
+                        $sub_regions[] = $sub_region_text;
+                    }
+        		}
+            }
+        }
+        $this->subregions =  empty($sub_regions)?null:$sub_regions;
+        return $this->subregions;
+    }
+    
+    function getForcast($location, $findSubRegion = 0)
+    {
+        if (empty($location))
+            return null;
+        $forcast = null;
+        $location = strtolower($location);
+        $url = 'http://www.bom.gov.au/vic/forecasts/towns.shtml';
+        $http = new Fetch($url);
+		$data = $http->Get();
+        if($data->getCode() != 200){
+			throw new Exception('Invalid Forcast Station: '.$this->forcast);
+		}
+        $data = $data->getResponse();
+		$dom = str_get_dom($data);
+        
+        $container = $dom->find('#container', 0);
+        
+        foreach($container->find('#content .locations tbody tr td a') as $link){
+            $inner_text = strtolower($link->innertext());
+            if (strstr($inner_text, $location) || $inner_text == $location || strstr($location, $inner_text))
+            {
+                $href = $link->getAttribute('href');
+                $forcast = basename($href, ".shtml");
+                break;
+            }
+		}
+        if ($forcast == null && $findSubRegion)
+        {
+            $sub_regions = $this->findSubRegions($location);
+            if ($sub_regions)
+            {
+                foreach($sub_regions as $sub_region)
+                {
+                    $forcast = $this->getForcast($sub_region);
+                    if ($forcast)
+                        break;
+                }
+            }
+        }
+        return $forcast;
+    }
 	
 }

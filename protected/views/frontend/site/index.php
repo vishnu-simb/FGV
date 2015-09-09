@@ -113,6 +113,7 @@ Yii::app()->clientScript->registerScript('index',"
 						}
 		});
 	}
+    var trap_jgraph = '';
 	function drawTrapCheckChart(){
 		var block_id = $('#Block_id').val();
         if (typeof block_id == 'undefined' || !block_id)
@@ -131,6 +132,7 @@ Yii::app()->clientScript->registerScript('index',"
 					  		if(jgraph.chart == false){
 					  			$('#yw0').html('');
 					  		}else{
+                                trap_jgraph = $.extend(true, {}, jgraph);
 					  		    for(var i in jgraph.series){
                                     jgraph.series[i]['pointStart'] = Date.UTC(jgraph.pointStart.year, jgraph.pointStart.month, jgraph.pointStart.day);
                                 }
@@ -140,6 +142,7 @@ Yii::app()->clientScript->registerScript('index',"
                                     for(var j in jgraph.spraydates){
                                         var date = jgraph.spraydates[j].date;
                                         var plot_obj = {
+                                            borderWidth: 10,
                                             from: createDateObj(date),
                                             to: createDateObj(date, 1),
                                             color: spray_date_color,
@@ -223,7 +226,14 @@ Yii::app()->clientScript->registerScript('index',"
         if (typeof day == 'undefined')
             day = 0; 
         var r_date = new Date(d_parts[0], d_parts[1] - 1, d_parts[2]);
-        return r_date.setTime(r_date.getTime() + (day*24*60*60*1000));
+        r_date.setTime(r_date.getTime() + (day*24*60*60*1000));
+        return r_date;
+    }
+    
+    function getAUDateStr(isoDate, day)
+    {
+        var d = createDateObj(isoDate, day);
+        return d.toLocaleDateString('en-GB');
     }
     
     function drawSeasonGraphLoading(){
