@@ -101,13 +101,12 @@ class GraphController extends SimbApiController {
     	$model->unsetAttributes();
     	$dataProvider = $model->getTrapCheckInRange($filter);
     	$data = $dataProvider->getData();
-    	$pest= array();
-    	for($i = 0 ; $i < count($data)  ; $i++ )
-    	{
-    		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
-    	}
+        $pest = Pest::model()->findAll();
+        $keys_arr = array();
+		foreach($pest as $v){
+			$keys_arr[] = $v->name;
+		}
     	$serial = array();
-    	$keys_arr = array_keys($pest);
     	if(!empty($keys_arr)){
             $m = strtotime($dates['date_from']);
     		$e = strtotime($dates['date_to']);;
@@ -117,7 +116,7 @@ class GraphController extends SimbApiController {
     			while($mm < $e)
     			{
     				if(date($mm) < date(time())){
-	    				$dd = null;
+	    				$dd = 0;
 	    				foreach($data as $val){
 	    					
 	    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
