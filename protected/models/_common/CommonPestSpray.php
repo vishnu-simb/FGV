@@ -74,9 +74,24 @@ class CommonPestSpray extends BasePestSpray
 		return $this->isLowPop;
 	}
     
+    private static function setCached($k, $val)
+    {
+        if(!session_id())
+            session_start();
+        $_SESSION[$k] = $val;
+    }
+    
+    private static function getCached($k)
+    {
+        if(!session_id())
+            session_start();
+        return isset($_SESSION[$k])?$_SESSION[$k]:null;
+    }
+    
     function getDate($block, $secondCohort = false, $hasFollowyear = false,$hasUpdate= false){
 		$k = $block->id.'|'.$this->pest_id.'|'.(int)$secondCohort;
         
+        self::$_date = self::getCached('predicted_spraydates');
         if (empty(self::$_date[$k]))
             self::$_date[$k] = array();
 		if(isset(self::$_date[$k][$this->number])){
@@ -152,7 +167,9 @@ class CommonPestSpray extends BasePestSpray
 				//$this->dd > $lastBio &&
 				if($this->dd < $DDsinceBiofix) { //Is $lastDD < NUMBER < $DDsinceBiofix
 					//exit;
-					return self::$_date[$k][$this->number] = $lastDD->getDate();
+					self::$_date[$k][$this->number] = $lastDD->getDate();
+                    self::setCached('predicted_spraydates', $_date);
+                    return self::$_date[$k][$this->number];
 				}
 				
 				//increment and sanity check

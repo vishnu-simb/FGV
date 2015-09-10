@@ -102,9 +102,10 @@ class GraphController extends SimbApiController {
     	$dataProvider = $model->getTrapCheckInRange($filter);
     	$data = $dataProvider->getData();
         $pest = Pest::model()->findAll();
-        $keys_arr = array();
+        $keys_arr = $pests = array();
 		foreach($pest as $v){
 			$keys_arr[] = $v->name;
+            $pests[$v->name] = $v;
 		}
     	$serial = array();
     	if(!empty($keys_arr)){
@@ -123,8 +124,8 @@ class GraphController extends SimbApiController {
 	    						$dd = intval($val["tc_value"]);
 	    					}
 	    				}
-	    				$sedat[] = $dd;
     				}
+                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
@@ -141,6 +142,57 @@ class GraphController extends SimbApiController {
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;
             $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
+            
+            $inverse = array();
+            $data = $this->getSprayData();
+      		foreach($data as $pest=>$vv){
+      			foreach($vv as $spray=>$date){
+      				$inverse[$spray][$pest] = $date;
+      			}
+      		}
+            $pm = $spraydates =array();
+            foreach($inverse as $sprayNo=>$vv){
+        		if($vv){
+        			$number_ordinal = Number::Ordinal($sprayNo);
+        			
+        			foreach($vv as $pest=>$spray){
+        				
+        				if($spray){
+        					$date = $spray->getDate($this->block,false,$year);
+        					$ds = strtotime($date);
+        					if($ds >= time() && !isset($pm[$pest])){
+        						$pm[$pest] = true;
+        					}
+        					if ($ds >= $m && $ds <= $e)
+                                $spraydates["$pest $number_ordinal"] = $ds*1000;
+        					
+        					if($pests[$pest]->hasSecondCohort($this->block->id)){
+        						$date = $spray->getDate($this->block,true,$year);
+        						$ds = strtotime($date);
+        						if($ds >= time() && !isset($pm[$pest.'|2'])){
+        							$pm[$pest.'|2'] = true;
+        						}
+        						if ($ds >= $m && $ds <= $e)
+                                    $spraydates["$pest $number_ordinal (2nd Cohort)"] = $ds*1000;
+        					}
+        				}
+        			}foreach($vv as $pest=>$spray){
+        				if($spray){
+                            $ds = strtotime($spray->getCoverRequired($this->block,false,$year));
+                            if ($ds >= $m && $ds <= $e)
+                                $spraydates["$pest $number_ordinal End"] = $ds*1000;
+        					if($pests[$pest]->hasSecondCohort($this->block->id)){
+        						$ds = strtotime($spray->getCoverRequired($this->block,true,$year));
+        						if ($ds >= $m && $ds <= $e)
+                                    $spraydates["$pest $number_ordinal (2nd Cohort) End"] = $ds*1000;
+        					}
+        				}
+        			}
+        		}
+        	}
+            $VAR['spraydates'] = $spraydates;
+            
+            /*
             $spraydates = Spray::model()->findAllByAttributes(array('block_id'=>$this->block->id));
             $VAR['spraydates'] = array();
             if (!empty($spraydates))
@@ -159,6 +211,7 @@ class GraphController extends SimbApiController {
                     $VAR['spraydates'][$existed[$spray->date]] = array('date'=>$spray->date, 'chemical'=>$chemical);
                 }
             }
+            */
     	}else{
     		$VAR['chart']= $serial;
     	}

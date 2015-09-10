@@ -113,7 +113,6 @@ Yii::app()->clientScript->registerScript('index',"
 						}
 		});
 	}
-    var trap_jgraph = '';
 	function drawTrapCheckChart(){
 		var block_id = $('#Block_id').val();
         if (typeof block_id == 'undefined' || !block_id)
@@ -132,22 +131,22 @@ Yii::app()->clientScript->registerScript('index',"
 					  		if(jgraph.chart == false){
 					  			$('#yw0').html('');
 					  		}else{
-                                trap_jgraph = $.extend(true, {}, jgraph);
 					  		    for(var i in jgraph.series){
                                     jgraph.series[i]['pointStart'] = Date.UTC(jgraph.pointStart.year, jgraph.pointStart.month, jgraph.pointStart.day);
                                 }
                                 delete jgraph.pointStart;
                                 if (typeof jgraph.spraydates != 'undefined'){
                                     jgraph.xAxis['plotBands'] = [];
-                                    for(var j in jgraph.spraydates){
-                                        var date = jgraph.spraydates[j].date;
+                                    for(var index_text in jgraph.spraydates){
+                                        var from_timer = jgraph.spraydates[index_text] - 3*60*60*1000;
+                                        var to_timer = jgraph.spraydates[index_text] + 7*60*60*1000;
+                                        var plot_color = index_text.indexOf('End') !=-1 ?'red':'#5b9bd5';
                                         var plot_obj = {
-                                            borderWidth: 10,
-                                            from: createDateObj(date),
-                                            to: createDateObj(date, 1),
-                                            color: spray_date_color,
+                                            from: from_timer,
+                                            to: to_timer,
+                                            color: plot_color,
                                             label: {
-                                                text: jgraph.spraydates[j].chemical,
+                                                text: index_text,
                                                 'style': {
                                                     color: spray_date_label_color
                                                 }
@@ -156,6 +155,7 @@ Yii::app()->clientScript->registerScript('index',"
                                         jgraph.xAxis['plotBands'].push(plot_obj);
                                     }
                                     delete jgraph.spraydates;
+                                    console.log(jgraph);
                                 }
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
