@@ -137,8 +137,9 @@ class GraphController extends SimbApiController {
     		$VAR['title'] = array('text'=>'Trapping : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
     		$VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-    		$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
-    		$VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
+    		//$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
+    		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;
             $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
