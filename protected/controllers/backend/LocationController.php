@@ -75,7 +75,16 @@ class LocationController extends SimbController
                     $modelLocation->getObservationAndForcast();
                 $modelLocation->creator_id = Yii::app()->user->id;
                 if ($modelLocation->save()) {
-    				$this->redirect(array('view', 'id' => $modelLocation->id));
+                    if(!empty($_POST['auto_populate']) && (empty($modelLocation->observation) || empty($modelLocation->forcast))){
+                        if (empty($modelLocation->observation) && empty($modelLocation->forcast))
+                            Yii::app()->user->setFlash('location_error', "Cannot find correct Observation and Forcast for your location. Please enter them manually.");
+                        else if (empty($modelLocation->observation))
+                            Yii::app()->user->setFlash('location_error', "Cannot find correct Observation for your location. Please enter it manually.");
+        				else if (empty($modelLocation->forcast))
+                            Yii::app()->user->setFlash('location_error', "Cannot find correct Forcast for your location. Please enter it manually.");
+                        $this->redirect(array('update', 'id' => $modelLocation->id));
+                    }
+                    $this->redirect(array('view', 'id' => $modelLocation->id));
     			}
             }else{
                 Yii::app()->user->setFlash('location_error', "This location is existed");
@@ -105,6 +114,15 @@ class LocationController extends SimbController
             if(!empty($_POST['auto_populate']))
                 $modelLocation->getObservationAndForcast();
 			if ($modelLocation->save()) {
+                if(!empty($_POST['auto_populate']) && (empty($modelLocation->observation) || empty($modelLocation->forcast))){
+                    if (empty($modelLocation->observation) && empty($modelLocation->forcast))
+                        Yii::app()->user->setFlash('location_error', "Cannot find correct Observation and Forcast for your location. Please enter them manually.");
+                    else if (empty($modelLocation->observation))
+                        Yii::app()->user->setFlash('location_error', "Cannot find correct Observation for your location. Please enter it manually.");
+    				else if (empty($modelLocation->forcast))
+                        Yii::app()->user->setFlash('location_error', "Cannot find correct Forcast for your location. Please enter it manually.");
+                    $this->redirect(array('update', 'id' => $modelLocation->id));
+                }
 				$this->redirect(array('view', 'id' => $modelLocation->id));
 			}
 		}

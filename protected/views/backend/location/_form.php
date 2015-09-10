@@ -44,7 +44,6 @@ jQuery(document).ready(function() {
 <?php echo $form->errorSummary($modelLocation); ?>
 <?php if(Yii::app()->user->hasFlash('location_error')):?>
 <div class="alert alert-block alert-error" id="location-form_es_">
-    <p>Please fix the following input errors:</p>
     <ul><li><?php echo Yii::app()->user->getFlash('location_error'); ?></li></ul>
 </div>
 <?php endif; ?>
