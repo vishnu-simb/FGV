@@ -27,7 +27,7 @@
                     	 <?php 
                     		if(Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
 
-                    			echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData($modelSpray->getBlockByAttributes(Yii::app()->user->id),'id','name','property.name'), array('class' => 'input-xxlarge'));
+                    			echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData($modelSpray->getBlockByAttributes(Yii::app()->user->id),'id','name','property.name'), array('class' => 'input-xxlarge', 'multiple' => 'multiple', 'style' => 'height: 120px'));
                     		
 							}else{
 

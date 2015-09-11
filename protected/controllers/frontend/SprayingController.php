@@ -104,12 +104,37 @@ class SprayingController extends SimbController
 		$modelSpray = new Spray();
 		$modelSpray->unsetAttributes();  // clear any default values
 		if (isset($_POST['Spray'])) {
-			$modelSpray->attributes = $_POST['Spray'];
-			if ($modelSpray->save()) {
-				// reinit session to store flash
-				Yii::app()->session->open();
-				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$modelSpray->id.' create successfully!'));
-			}
+		    if (!empty($_POST['Spray']['block_id']) && is_array($_POST['Spray']['block_id']))
+            {    
+                $block_ids = $_POST['Spray']['block_id'];
+                unset($_POST['Spray']['block_id']);
+                $inserted_ids = array();
+                foreach($block_ids as $block_id)
+                {
+                    $mSpray = new Spray();
+                    $mSpray->unsetAttributes();
+                    $mSpray->attributes = $_POST['Spray'];
+                    $mSpray->block_id = $block_id;
+                    if ($mSpray->save()) {
+                        $inserted_ids[] = $mSpray->id;
+                    }
+                }
+                if (!empty($inserted_ids))
+                {
+                    // reinit session to store flash
+    				Yii::app()->session->open();
+    				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.implode(',', $inserted_ids).' create successfully!'));
+                }
+            }
+            else
+            {
+                $modelSpray->attributes = $_POST['Spray'];
+    			if ($modelSpray->save()) {
+    				// reinit session to store flash
+    				Yii::app()->session->open();
+    				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$modelSpray->id.' create successfully!'));
+    			}
+            }
 		}
         $grower_id = '';
         if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
