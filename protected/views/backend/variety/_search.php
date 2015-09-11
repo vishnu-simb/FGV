@@ -12,13 +12,14 @@
 
 <div class="search-button-title">
     <?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button btn')); ?>    <?php
-            echo $form->dropDownList($modelVariety, 'rowsPerPage', $modelVariety->rowsPerPageData, array('class'=> 'posts-per-page', 'onchange' => "document.getElementById('".$form->id."').submit();"));
-            ?></div>
+        echo $form->dropDownList($modelVariety, 'rowsPerPage', $modelVariety->rowsPerPageData, array('class'=> 'posts-per-page', 'onchange' => "document.getElementById('".$form->id."').submit();"));
+    ?></div>
 
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
         <div class="span12">    
             <?php echo $form->textFieldControlGroup($modelVariety, 'name', array('maxlength' => 255, 'class' => 'input', 'placeholder' => $modelVariety->getAttributeLabel('name'))); ?>
+            <?php echo $form->dropDownListControlGroup($modelVariety, 'fruit_type', CHtml::listData( $modelVariety->getFruitType() ,'id','name'),array('empty' => 'Select A Fruit Type')); ?>
         </div>
     </div>
     <div class="form-actions">

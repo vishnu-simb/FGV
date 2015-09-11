@@ -30,6 +30,7 @@
             <div class="box-content nopadding">
                 <div class="span6">
                     <?php echo $form->textFieldControlGroup($modelVariety, 'name', array('maxlength' => 255, 'class' => 'input-xlarge', 'placeholder' => $modelVariety->getAttributeLabel('name'))); ?>
+                    <?php echo $form->dropDownListControlGroup($modelVariety, 'fruit_type_id', CHtml::listData( $modelVariety->getFruitType() ,'id','name'),array('empty' => 'Select A Fruit Type')); ?>
                 </div>
                 <div class="span12">
                     <div class="form-actions">
