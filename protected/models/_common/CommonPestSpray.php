@@ -168,7 +168,7 @@ class CommonPestSpray extends BasePestSpray
 				if($this->dd < $DDsinceBiofix) { //Is $lastDD < NUMBER < $DDsinceBiofix
 					//exit;
 					self::$_date[$k][$this->number] = $lastDD->getDate();
-                    self::setCached('predicted_spraydates', $_date);
+                    self::setCached('predicted_spraydates', self::$_date);
                     return self::$_date[$k][$this->number];
 				}
 				

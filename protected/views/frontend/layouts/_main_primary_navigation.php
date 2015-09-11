@@ -105,6 +105,10 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
                         'label' => Yii::t('app', 'Management'),
                         'itemOptions' => array(),
                         'items' => array(
+                            array(
+                                'label' => Yii::t('app', 'Biofix'),
+                                'url' => Yii::app()->baseUrl.'/biofix',
+                            ),
 							array(
 									'label' => Yii::t('app', 'Location'),
 									'url' => Yii::app()->baseUrl.'/location',

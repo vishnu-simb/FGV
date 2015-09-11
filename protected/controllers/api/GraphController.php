@@ -174,7 +174,7 @@ class GraphController extends SimbApiController {
         							$pm[$pest.'|2'] = true;
         						}
         						if ($ds >= $m && $ds <= $e)
-                                    $spraydates["$pest $number_ordinal (2nd Cohort)"] = $ds*1000;
+                                    $spraydates["$pest $number_ordinal<br/>(2nd Cohort)"] = $ds*1000;
         					}
         				}
         			}foreach($vv as $pest=>$spray){
@@ -185,7 +185,7 @@ class GraphController extends SimbApiController {
         					if($pests[$pest]->hasSecondCohort($this->block->id)){
         						$ds = strtotime($spray->getCoverRequired($this->block,true,$year));
         						if ($ds >= $m && $ds <= $e)
-                                    $spraydates["$pest $number_ordinal (2nd Cohort) End"] = $ds*1000;
+                                    $spraydates["$pest $number_ordinal<br/>(2nd Cohort) End"] = $ds*1000;
         					}
         				}
         			}
