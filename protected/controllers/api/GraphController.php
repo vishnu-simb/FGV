@@ -334,8 +334,8 @@ class GraphController extends SimbApiController {
     					}
     					
     				}
-    				$mite_data[] = $dd;
     			}
+                $mite_data[] = $dd;
     			$mm = strtotime('+1 day', $mm); // increment for loop
     		}
     		return $mite_data;

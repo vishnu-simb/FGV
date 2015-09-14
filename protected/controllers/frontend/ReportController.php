@@ -114,10 +114,10 @@ class ReportController extends SimbController
 			$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
             $VAR['xAxis'] = array(
                                 'type' => 'datetime',
-                                'minRange' => 14 * 24 * 3600000 // fourteen days
+                                'maxZoom' => 14 * 24 * 3600000 // fourteen days
                             );
-			$VAR['yAxis'] = array('type' => 'category','title' => '','minRange' => 0.1);
-			$VAR['series'] = $serial;
+    		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
+    		$VAR['series'] = $serial;
 		}
         return $VAR;
 	}
