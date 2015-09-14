@@ -58,12 +58,8 @@ class CommonBlock extends BaseBlock
     	// class name for the relations automatically generated below.
     	$oldValue = parent::relations();
     	return CMap::mergeArray($oldValue,array(
-    			'grower'=>array(
-						self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'
-			 ),
-    			'location'=>array(
-    					self::BELONGS_TO,'Location',array('location_id'=>'id'),'through'=>'property'
-    			),
+			'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=>'property'),
+			'location'=>array(self::BELONGS_TO,'Location',array('location_id'=>'id'),'through'=>'property'),
     	)
     	);
     }
@@ -141,4 +137,14 @@ class CommonBlock extends BaseBlock
     	return Variety::model()->findAll($criteria);
     }
  
+    /**
+     * @return FruitType[]
+     */
+    public function getFruitType(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
+    	return FruitType::model()->findAll($criteria);
+    }
 }
