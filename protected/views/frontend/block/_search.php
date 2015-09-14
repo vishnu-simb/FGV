@@ -22,6 +22,7 @@
         <div class="span6">  
             <?php echo $form->textFieldControlGroup($modelBlock, 'tree_spacing', array('maxlength' => 11, 'class' => 'input', 'placeholder' => $modelBlock->getAttributeLabel('tree_spacing'))); ?>
 			<?php echo $form->textFieldControlGroup($modelBlock, 'row_width', array('class' => 'input', 'placeholder' => $modelBlock->getAttributeLabel('row_width'))); ?>
+            <?php echo $form->dropDownListControlGroup($modelBlock, 'tree_variety', CHtml::listData($modelBlock->getVariety() ,'id','name','fruit_type.name'), array('empty' => 'Select A Variety')); ?>
         </div>
             </div>
     <div class="form-actions">

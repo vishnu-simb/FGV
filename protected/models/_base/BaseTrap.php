@@ -93,13 +93,21 @@ abstract class BaseTrap extends SimbActiveRecord{
 
 	public function search()
     {
+        $attributes = Yii::app()->session['Trap'];
+        $this->location = $attributes['location'];
+        $this->fruit_type = $attributes['fruit_type'];
+        $this->variety = $attributes['variety'];
+        
 		$criteria = new CDbCriteria;
-		$criteria->with=array('property','grower');
+		$criteria->with=array('block','property','grower', 'location','variety','fruit_type');
 		$criteria->compare('id', $this->id);
 		$criteria->compare('pest_id', $this->pest_id);
 		$criteria->compare('block_id', $this->block_id);
 		$criteria->compare('property.id', $this->property);
 		$criteria->compare('grower.id', $this->grower);
+        $criteria->compare('location.id', $this->location);
+        $criteria->compare('fruit_type.id', $this->fruit_type);
+        $criteria->compare('variety.id', $this->variety);
 		$criteria->compare('t.name', $this->name, true);
 		$criteria->compare('creator_id', $this->creator_id, true);
 		$criteria->compare('ordering', $this->ordering);
@@ -108,6 +116,7 @@ abstract class BaseTrap extends SimbActiveRecord{
 		$criteria->compare('status', $this->status);
 		$criteria->compare('is_deleted', $this->is_deleted);
 		$criteria->compare('params', $this->params, true);
+        
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

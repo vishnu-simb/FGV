@@ -13,7 +13,7 @@
  * @property integer $property_id
  * @property string $name
  * @property string $tree_spacing
- * @property string $tree_variety
+ * @property integer $tree_variety
  * @property double $row_width
  * @property string $creator_id
  * @property integer $ordering
@@ -63,6 +63,7 @@ abstract class BaseBlock extends SimbActiveRecord{
     {
 		return array(
 			'property' => array(self::BELONGS_TO, 'Property', 'property_id'),
+            'variety' => array(self::BELONGS_TO, 'Variety', 'tree_variety'),
 			
 		);
 	}

@@ -65,7 +65,7 @@ $('.search-form-ext form').submit(function(){
 		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelBlock, 'name', CHtml::listData($modelBlock->getBlockByProperty(),'name','name'),array('empty'=>'Select A Block'))),
 		array('name'=>'location','value'=>'$data->location->name','header'=>'Location','filter'=>CHtml::activeDropDownList($modelBlock,'location', CHtml::listData( $modelBlock->getLocation() ,'id','name'),array('empty'=>'Select A Location'))),
 		'tree_spacing',
-		'tree_variety',
+        array('name'=>'variety','value'=>'$data->variety','header'=>'Tree Variety','filter'=>CHtml::activeDropDownList($modelBlock,'tree_variety', CHtml::listData( $modelBlock->getVariety() ,'id','name','fruit_type.name'),array('empty'=>'Select A Variety'))),
 		'row_width',
 		/*
 		'creator_id',

@@ -129,5 +129,16 @@ class CommonBlock extends BaseBlock
 			return $this->model()->findAll();
 		}
 	}
+    
+    /**
+     * @return Variety[]
+     */
+    public function getVariety(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
+    	return Variety::model()->findAll($criteria);
+    }
  
 }

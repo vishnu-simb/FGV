@@ -44,8 +44,11 @@ class CommonTrap extends BaseTrap
     	// class name for the relations automatically generated below.
     	$oldValue = parent::relations();
     	return CMap::mergeArray($oldValue,array(
-    			'property' => array(self::BELONGS_TO,'Property',array('property_id'=>'id'),'through'=> 'block'),
+    			'property' => array(self::HAS_ONE,'Property',array('property_id'=>'id'),'through'=> 'block'),
     			'grower'=>array(self::BELONGS_TO,'Grower',array('grower_id'=>'id'),'through'=> 'property'),
+                'location' => array(self::HAS_ONE,'Location','','on' => '`location`.`id`=`property`.`location_id`'),
+                'variety' => array(self::HAS_ONE,'Variety','','on' => '`variety`.`id`=`block`.`tree_variety`'),
+                'fruit_type' => array(self::HAS_ONE,'FruitType','','on'=>'`fruit_type`.`id`=`variety`.`fruit_type_id`'),
     	)
     	);
     }
@@ -87,6 +90,28 @@ class CommonTrap extends BaseTrap
     }
     
     /**
+     * @return Variety[]
+     */
+    public function getVariety(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
+    	return Variety::model()->findAll($criteria);
+    }
+    
+    /**
+     * @return FruitType[]
+     */
+    public function getFruitType(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
+    	return FruitType::model()->findAll($criteria);
+    }
+    
+    /**
      * @return Grower[]
      */
     public function getGrower(){
@@ -95,6 +120,17 @@ class CommonTrap extends BaseTrap
     	$criteria->params = array(':is_deleted'=>'0');
     	$criteria->order = 'name';
     	return Grower::model()->findAll($criteria);
+    }
+    
+    /**
+     * @return Location[]
+     */
+    public function getLocation(){
+    	$criteria = new CDbCriteria();
+    	$criteria->condition = 'is_deleted=:is_deleted';
+    	$criteria->params = array(':is_deleted'=>'0');
+    	$criteria->order = 'name';
+    	return Location::model()->findAll($criteria);
     }
 	
 	function getTrapByBlock(){

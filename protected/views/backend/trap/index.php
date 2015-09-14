@@ -62,9 +62,12 @@ $('.search-form-ext form').submit(function(){
 		),
 		//array('name'=>'ordering','header'=>'Sequence Number','class' => 'ext.yii-ordering-column.column','filter'=>false),
 		array('name'=>'grower','header'=>'Grower','value'=>'$data->grower->name','filter'=>CHtml::activeDropDownList($modelTrap,'grower', CHtml::listData( $modelTrap->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))),
+        array('name'=>'location','header'=>'Location','value'=>'$data->location->name','filter'=>CHtml::activeDropDownList($modelTrap,'location', CHtml::listData( $modelTrap->getLocation() ,'id','name'),array('empty'=>'Select A Location'))),
 		array('name'=>'property','header'=>'Property','value'=>'$data->property->name','filter'=>CHtml::activeDropDownList($modelTrap,'property', CHtml::listData( $modelTrap->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property'))),
 		array('name'=>'block','value'=>'$data->block->name','filter'=>CHtml::activeDropDownList($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlockByProperty() ,'id','name'),array('empty'=>'Select A Block'))),
-		array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
+		array('name'=>'fruit_type','header'=>'Fruit Type','value'=>'$data->fruit_type','filter'=>CHtml::activeDropDownList($modelTrap,'fruit_type', CHtml::listData( $modelTrap->getFruitType() ,'id','name'),array('empty'=>'Select A Fruit Type'))),
+        array('name'=>'variety','header'=>'Variety','value'=>'$data->variety','filter'=>CHtml::activeDropDownList($modelTrap,'variety', CHtml::listData( $modelTrap->getVariety() ,'id','name', 'fruit_type.name'),array('empty'=>'Select A Variety'))),
+        array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
 		array('name'=>'name','filter'=>CHtml::activeDropDownList($modelTrap,'name', CHtml::listData($modelTrap->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap'))),
 		
 		/*

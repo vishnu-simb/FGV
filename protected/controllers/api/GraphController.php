@@ -370,6 +370,9 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
+        $max_value = max(max($this->Pest_CLID));
+        if ($max_value < 3500)
+            $max_value = 3500;
         
         //Get average pest/mite
         $avg = $this->getAverageMite($dates, $this->block->property->location_id);        
@@ -390,7 +393,7 @@ class GraphController extends SimbApiController {
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
     	$VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
-    	$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'min'=> 0,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
+    	$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'min'=> 0,'max'=>$max_value,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
     	$VAR['series'] = $serial;
         $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
     	echo CJSON::encode($VAR);

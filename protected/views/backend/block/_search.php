@@ -23,6 +23,7 @@
         <div class="span6">     
 			<?php echo $form->dropDownListControlGroup($modelBlock, 'grower', CHtml::listData( $modelBlock->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
 			<?php echo $form->dropDownListControlGroup($modelBlock, 'name', CHtml::listData( $modelBlock->findAll() ,'name','name'),array('empty' => 'Select A Block'))?>
+            <?php echo $form->dropDownListControlGroup($modelBlock, 'tree_variety', CHtml::listData($modelBlock->getVariety() ,'id','name','fruit_type.name'), array('empty' => 'Select A Variety')); ?>
         </div>
             </div>
     <div class="form-actions">

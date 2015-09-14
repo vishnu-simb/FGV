@@ -89,12 +89,15 @@ table.dataTable.dtr-inline.collapsed tbody td:first-child::before, table.dataTab
     top: 35%;
 }
 
+body.ctrap-aindex .table.dataTable select{
+    max-width: 140px;
+}
+
 table.dataTable .filter-container #Users_username,
 table.dataTable .filter-container #Users_type,
 table.dataTable .filter-container #Biofix_date,
 table.dataTable .filter-container #Biofix_second_cohort,
 table.dataTable .filter-container #Block_tree_spacing,
-table.dataTable .filter-container #Block_tree_variety,
 table.dataTable .filter-container #Block_row_width,
 table.dataTable .filter-container #Chemical_pack_qty,
 table.dataTable .filter-container #Chemical_pack_price,

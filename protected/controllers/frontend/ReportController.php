@@ -73,13 +73,12 @@ class ReportController extends SimbController
     	$model->unsetAttributes();
     	$dataProvider = $model->getTrapCheckInRange($filter);
     	$data = $dataProvider->getData();
-        $pest= array();
-    	for($i = 0 ; $i < count($data)  ; $i++ )
-    	{
-    		$pest[$data[$i]['pest_name']] = $data[$i]['pest_name'];
-    	}
     	$serial = array();
-        $keys_arr = array_keys($pest);
+        $pest = Pest::model()->findAll();
+        $keys_arr = array();
+		foreach($pest as $v){
+			$keys_arr[] = $v->name;
+		}
         $min_time = strtotime($filter['date_from']);
    		$max_time = strtotime($filter['date_to']);
         $max_value = 0;
@@ -89,7 +88,7 @@ class ReportController extends SimbController
     			$sedat = array();
     			while($mm <= $max_time)
     			{
-    				$dd = null;
+    				$dd = 0;
     				foreach($data as $val){
     					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
     						$dd = intval($val["tc_value"]);
@@ -112,8 +111,8 @@ class ReportController extends SimbController
 			$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-            $VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
-			$VAR['xAxis'] = array(
+			$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+            $VAR['xAxis'] = array(
                                 'type' => 'datetime',
                                 'minRange' => 14 * 24 * 3600000 // fourteen days
                             );
@@ -173,8 +172,8 @@ class ReportController extends SimbController
 							$dd = ($val['mm_average_li']*$val['mm_no_days'])+$dd;
 						}
 					}
-					$sedat[] = $dd;
 				}
+                $sedat[] = $dd;
 				$mm = strtotime('+1 day', $mm); // increment for loop
 			}
 			$PEST($sedat,$r,$min_time); // Merge CLID data on PESTS
@@ -182,13 +181,17 @@ class ReportController extends SimbController
 		
 		}
 		$serial[] = $this->Pest_CLID;
+        $max_value = max(max($this->Pest_CLID));
+        if ($max_value < 3500)
+            $max_value = 3500;
+        
 		$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
 		$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 		$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
 		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
 		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
 		$VAR['xAxis'] =  array('type' => 'datetime','minRange' => 14 * 24 * 3600000); // fourteen days 
-		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => 3500,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
+		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => $max_value,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
 		$VAR['series'] = $serial;
 		return $VAR;
 	}
