@@ -14,10 +14,10 @@ CREATE TABLE `fgv_fruit_type` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `variety_name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-INSERT INTO `fgv_variety`(`id`,`name`) VALUES('1','Apple'),('2','Pears'),('3','Stone Fruit');
+INSERT INTO `fgv_fruit_type`(`id`,`name`) VALUES('1','Apple'),('2','Pears'),('3','Stone Fruit');
 
 
 ALTER TABLE `fgv_variety` ADD `fruit_type_id` INT(10) AFTER `name`;
 UPDATE `fgv_variety` SET `fruit_type_id` = 1 WHERE id <= 13;
 UPDATE `fgv_variety` SET `fruit_type_id` = 2 WHERE id > 13;
-INSERT INTO `fgv_variety`(`name`,`fruit_type_id`) VALUES('Apricots',3),VALUES('Plums',3),VALUES('Nectarines',3),VALUES('Peaches',3);
+INSERT INTO `fgv_variety`(`name`,`fruit_type_id`) VALUES('Apricots',3),('Plums',3),('Nectarines',3),('Peaches',3);
