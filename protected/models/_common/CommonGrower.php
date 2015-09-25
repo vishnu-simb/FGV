@@ -99,6 +99,14 @@ class CommonGrower extends BaseGrower
         return $this->byname()->findAll();
     }
     
+    /**
+     * @return Grower[]
+     */
+    public function findAllActive()
+    {
+        return $this->byname()->findAll("enabled='yes'");
+    }
+    
     function getProperties(){
     	return Property::model()->findAll('grower_id='.$this->id);
     }

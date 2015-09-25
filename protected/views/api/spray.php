@@ -70,14 +70,14 @@
 						$date = $spray->getDate($VAR['block'],true,$VAR['hasFollowYear']);
 						$ds = strtotime($date);
 						if($ds >= time() && !isset($pm[$pest.'|2'])){
-							echo '<span class="new"';
+							echo '<span style="color:red;" class="new"';
 							if(!$second_cohort && $pest == 'Codling Moth'){
 								echo ' doublewidth"';
 							}
 							echo '">';
 							$pm[$pest.'|2'] = true;
 						}else{
-							echo '<span';
+							echo '<span  style="color:red;"';
 							if(!$second_cohort && $pest == 'Codling Moth'){
 								echo ' class="doublewidth"';
 							}
@@ -132,10 +132,10 @@
 					}
 					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
 						$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],true,$VAR['hasFollowYear']));
-						echo '</span><span>';
+						echo '</span><span style="color:red;">';
 						if($d){
 							if (date('Y', $ds) < $VAR['hasFollowYear'])
-                                echo "<span class='previous_year'>$d</span>";
+                                echo "<span style='color:red;' class='previous_year'>$d</span>";
                             else
     						    echo $d;
 						}else{

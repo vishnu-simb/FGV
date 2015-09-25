@@ -42,7 +42,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <br />
-                <h4>Spray dates report and Season graphs</h4>
+                <h4>Spray dates report and graphs</h4>
                 <input type="hidden" id="Grower_id" value="<?=Yii::app()->user->id?>" />
         	    <?php echo $form->dropDownList($modelBlock, 'id', CHtml::listData($modelBlock->getBlockByGrowerId(Yii::app()->user->id),'id','name','property.name'), array('class' => 'growerable input-xlarge'))?>
     	    <?php else:?>
@@ -62,12 +62,12 @@
         						</tbody>
     						</table>
     					</div>
-                        <?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->byname()->findAll() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'select2-me clickable input-xlarge'))?>
+                        <?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->byname()->findAllActive() ,'id','name'), array('prompt'=>'Grower Reports','class' => 'select2-me clickable input-xlarge'))?>
     				</div>
                     <div class="clearfix"></div>
                     <br />
-                    <h4>Spray dates report and Season graphs</h4>
-           	   	    <?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->byname()->findAll() ,'id','name'), 
+                    <h4>Spray dates report and graphs</h4>
+           	   	    <?php echo $form->dropDownList($modelGrower, 'id', CHtml::listData($modelGrower->byname()->findAllActive() ,'id','name'), 
             				array(
     							'class' => 'select2-me input-xlarge',
     							'ajax' => array(

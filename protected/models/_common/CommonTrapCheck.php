@@ -146,6 +146,38 @@ class CommonTrapCheck extends BaseTrapCheck
 		));
     }
     
+    /**
+     * This function is used to get data for Graphs
+	 * @static
+	 * @return CActiveDataProvider
+	 */
+    public function getTrapCheckInRangeByLocation($filter){
+        $location_id = isset($filter['location_id'])?$filter['location_id']:'';
+        $date_from = isset($filter['date_from'])?$filter['date_from']:'';
+        $date_to = isset($filter['date_to'])?$filter['date_to']:'';
+        
+        $condition = "WHERE p.location_id ='$location_id'";
+		if ($date_from && $date_to)
+            $condition .= " AND (tc.date BETWEEN '$date_from' AND '$date_to') ";
+        elseif ($date_from)
+            $condition .= " AND tc.date >= '$date_from' ";
+        elseif ($date_to)
+            $condition .= " AND tc.date <= '$date_to' ";
+            
+        $sql="SELECT tc.date AS tc_date,SUM(tc.value) as tc_value,pt.name AS pest_name
+		FROM ".$this->tableName()." tc
+		INNER JOIN ".Trap::model()->tableName()." t ON tc.trap_id = t.id
+		INNER JOIN ".Pest::model()->tableName()." pt ON t.pest_id = pt.id
+		INNER JOIN ".Block::model()->tableName()." b ON t.block_id = b.id
+        INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+		".$condition." 
+        GROUP BY pt.name,tc.date
+		ORDER BY tc.date DESC";
+		return new CSqlDataProvider($sql, array(
+			'pagination'=>false,
+		));
+    }
+    
     function getTrapByBlock(){
 		
 		if(isset($this->block) && !empty($this->block)){

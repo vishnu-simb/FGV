@@ -91,7 +91,7 @@ class ReportController extends SimbController
     				$dd = 0;
     				foreach($data as $val){
     					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
-    						$dd = intval($val["tc_value"]);
+    						$dd += intval($val["tc_value"]);
                             if ($max_value < $dd)
                                 $max_value = $dd;
     					}
@@ -162,11 +162,11 @@ class ReportController extends SimbController
 		foreach($keys_arr as $r){
 			$mm = $min_time;
 			$sedat = array();
-			$dd = 0;
+			
 			while($mm < $max_time)
 			{
+                $dd = 0;
 				if(date($mm) < date(time())){
-			
 					foreach($data as $val){
 						if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
 							$dd = ($val['mm_average_li']*$val['mm_no_days'])+$dd;

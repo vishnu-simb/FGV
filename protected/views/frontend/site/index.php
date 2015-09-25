@@ -12,7 +12,7 @@ Yii::app()->clientScript->registerScript('index',"
 	var siteUrl = document.URL; 
 	var months = new Array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 	var reportYear = new Date('01 January,'+$('#yearPicker').html()); // convert to actual date
-    var actualDate = new Date();
+    var graphYear = new Date('01 January,'+$('#graphYear').html());
 	loadBlock(); // load default block by grower
 	//loadSprayTable();
 	/* load current graph block */
@@ -45,41 +45,29 @@ Yii::app()->clientScript->registerScript('index',"
 		loadSprayTable();
 		drawMiteMonitoringChart();
 	});
-	/*
-	 * season selected on dashboard
+    /*
+	 * year select graphs
 	 */
 	$('.fc-button-prev').click(function(){
-	    var season = $('#season').html();
-        if (season.indexOf('Early') != -1){
-            $('#season').html('Late, March to July '+actualDate.getFullYear());
-        }else if(season.indexOf('Mid') != -1){
-            actualDate.setFullYear(actualDate.getFullYear() - 1);
-            $('#season').html('Early, August to November '+actualDate.getFullYear());
-        }else if(season.indexOf('Late') != -1){
-            var pre_year = parseInt(actualDate.getFullYear())-1;
-            $('#season').html('Mid, December '+ pre_year +' to February '+actualDate.getFullYear());
-        }
+		graphYear.setYear(graphYear.getFullYear() -1);
+		$('#graphYear').html(graphYear.getFullYear());
 		$('#yw0').html('');
         loading = 1;
 		drawTrapCheckChart();
 		drawMiteMonitoringChart();
 	});
 	$('.fc-button-next').click(function(){
-	    var season = $('#season').html();
-        if (season.indexOf('Early') != -1){
-            var pre_year = actualDate.getFullYear();
-            actualDate.setFullYear(pre_year + 1);
-            $('#season').html('Mid, December '+ pre_year +' to February '+actualDate.getFullYear());
-        }else if(season.indexOf('Mid') != -1){
-            $('#season').html('Late, March to July '+actualDate.getFullYear());
-        }else if(season.indexOf('Late') != -1){
-            $('#season').html('Early, August to November '+actualDate.getFullYear());
-        }
-		$('#yw0').html('');
-        loading = 1;
-		drawTrapCheckChart();
-		drawMiteMonitoringChart();
+		var cur = new Date();
+		if(graphYear.getFullYear() <= cur.getFullYear()-1){
+			var next = graphYear.setYear(graphYear.getFullYear() +1);
+			$('#graphYear').html(graphYear.getFullYear());
+			$('#yw0').html('');
+            loading = 1;
+    		drawTrapCheckChart();
+    		drawMiteMonitoringChart();
+		}
 	});
+    
 	/*
 	 * year select reports
 	 */
@@ -121,10 +109,9 @@ Yii::app()->clientScript->registerScript('index',"
             return;
         }
         $('.month-graphs').show();
-        var season = $('#season').html().split(',');
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockTrap?block='+block_id+'&season='+season[0]+'&year='+actualDate.getFullYear()+'&user='+$('#user_id').val(),
+				  url: siteUrl + 'api/graph/getBlockTrap?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val(),
 				  success: function (data)
 				   {
 					  		var jgraph = JSON.parse(data);
@@ -155,7 +142,6 @@ Yii::app()->clientScript->registerScript('index',"
                                         jgraph.xAxis['plotBands'].push(plot_obj);
                                     }
                                     delete jgraph.spraydates;
-                                    console.log(jgraph);
                                 }
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
@@ -171,10 +157,9 @@ Yii::app()->clientScript->registerScript('index',"
             return;
         }
         $('.month-graphs').show();
-        var season = $('#season').html().split(',');
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockMite?block='+block_id+'&season='+season[0]+'&year='+actualDate.getFullYear()+'&user='+$('#user_id').val(),
+				  url: siteUrl + 'api/graph/getBlockMite?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val(),
 				  success: function (data)
 				   {
 					  		var jgraph = JSON.parse(data);
@@ -270,7 +255,7 @@ Yii::app()->clientScript->registerScript('index',"
 		</div>
 		<div class="box month-graphs">
 			<div class="box-title">
-				<h3><i class="icon-calendar"></i>Season Graph</h3>
+				<h3><i class="icon-calendar"></i>Graphs</h3>
 			</div>
 			<div class="box-content nopadding">
 				<div class="calendar fc">
@@ -279,17 +264,7 @@ Yii::app()->clientScript->registerScript('index',"
 					</td><td class="fc-header-center">
 					<span class="fc-button fc-button-prev fc-state-default fc-corner-left fc-corner-right">
 					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
-					<?php
-                        $month = date('n');
-                        $year = date('Y');
-                        $season = "Early, August to November $year";
-                        if (in_array($month, array(12, 1, 2)))
-                            $season = "Mid, December ". ($year-1). "to February $year";
-                        else if(in_array($month, array(3, 4, 5, 6, 7)))
-                            $season = "Late, March to June $year";
-                            
-                    ?>
-                    <span class="fc-header-title"><h2><span id="season"><?=$season?></span></h2></span>
+					<span class="fc-header-title"><h2><span id="graphYear"><?=date('Y')?></span></h2></span>
 					<span class="fc-button fc-button-next fc-state-default fc-corner-left fc-corner-right">
 					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr></tbody></table>
 				</div>

@@ -11,6 +11,19 @@ class CommonLocation extends BaseLocation
         return parent::model($className);
     }
     
+    /**
+     * scope of yii
+     * @return array
+     * @see scope of yii
+     */
+    public function scopes(){
+    	return array(
+    			'byname'=>array(
+    					'order'=>'name'
+    			)
+    	);
+    }
+    
     public function relations()
     {
 		return array(
