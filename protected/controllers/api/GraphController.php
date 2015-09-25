@@ -240,10 +240,10 @@ class GraphController extends SimbApiController {
 		foreach($keys_arr as $r){
 			$mm = $min_time;
 			$sedat = array();
-			$grower_dd = $location_dd = 0;
             $index = 0;
 			while($mm < $max_time)
 			{
+                $grower_dd = $location_dd = 0;
 				if(date($mm) < date(time())){
 			
 					foreach($data as $val){
