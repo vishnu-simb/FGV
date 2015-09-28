@@ -256,9 +256,9 @@ class GraphController extends SimbApiController {
 			$mm = $min_time;
 			$sedat = array();
             $index = 0;
+            $grower_dd = $location_dd = 0;
 			while($mm < $max_time)
 			{
-                $grower_dd = $location_dd = 0;
 				if(date($mm) < date(time())){
 			
 					foreach($data as $val){
@@ -337,9 +337,9 @@ class GraphController extends SimbApiController {
     	foreach($keys_arr as $r){
     		$mm = $m;
     		$sedat = array();
+            $dd = 0;
     		while($mm < $e)
     		{	
-                $dd = 0;
     			if(date($mm) < date(time())){
                     foreach($data as $val){
     					if($val["mite_name"]==$r){ // get cumulative data with pest
@@ -494,10 +494,10 @@ class GraphController extends SimbApiController {
     	foreach($keys_arr as $r){
     		$mm = $m;
     		$sedat = array();
+            $dd = 0;
     		while($mm < $e)
     		{	
     			if(date($mm) < date(time())){
-    				$dd = 0;
                     foreach($data as $val){
     					if($val["mite_name"]==$r){ // get cumulative data with pest
     						if($val["mm_date"]==date("Y-m-d", $mm)){

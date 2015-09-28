@@ -162,10 +162,9 @@ class ReportController extends SimbController
 		foreach($keys_arr as $r){
 			$mm = $min_time;
 			$sedat = array();
-			
+			$dd = 0;
 			while($mm < $max_time)
 			{
-                $dd = 0;
 				if(date($mm) < date(time())){
 					foreach($data as $val){
 						if($val["mm_date"]==date("Y-m-d", $mm) && $val["mite_name"]==$r){
