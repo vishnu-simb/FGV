@@ -4,6 +4,7 @@ class GraphController extends SimbApiController {
 
 	protected $block;
     protected $location;
+    protected $location_names = '';
 	
 	private $Pest_CLID = array();
     private $pointInterval = 86400000; // 1 days
@@ -17,11 +18,25 @@ class GraphController extends SimbApiController {
     			return $this->actionError();
     		}
         }
-        else if(isset($_GET['location']))
+        else if(isset($_POST['location']))
         {
-            $this->location = Location::model()->findByPk($_GET['location']);
-            if ($this->location === null) {
+            $this->location = $_POST['location'];
+            
+            if (empty($this->location)) {
                 return $this->actionError();
+            }
+            if (is_array($this->location))
+            {
+                foreach($this->location as $location_id)
+                {
+                    $l = Location::model()->findByPk($location_id);
+                    if ($l)
+                    {
+                        $this->location_names[] = $l->name;
+                    }
+                }
+                if (count($this->location) == 1)
+                    $this->location = $this->location[0];
             }
         }
 	}
@@ -376,13 +391,13 @@ class GraphController extends SimbApiController {
     
     public function actionGetLocationTrap(){
     	$VAR = array();
-        $year = $_GET['year'];
+        $year = $_POST['year'];
         $dates = array(
             'date_from' => $year.'-01-01',
             'date_to' => $year.'-12-31'
         );
         $filter = $dates;
-        $filter['location_id'] = $this->location->id;
+        $filter['location_id'] = $this->location;
         
     	$model = new TrapCheck('search');
     	$model->unsetAttributes();
@@ -421,7 +436,7 @@ class GraphController extends SimbApiController {
     	}
     	if(!empty($serial)){
     		$VAR['chart'] = array('renderTo'=>'yw0','type'=>'spline','zoomType'=>'x');
-    		$VAR['title'] = array('text'=>'Trapping : '.$this->location->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+    		$VAR['title'] = array('text'=>'Trapping: '. implode(',',$this->location_names) .' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
     		$VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		//$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
@@ -440,13 +455,13 @@ class GraphController extends SimbApiController {
     
     public function actionGetLocationMite(){
     	$VAR = array();
-        $year = $_GET['year'];
+        $year = $_POST['year'];
         $dates = array(
             'date_from' => $year.'-01-01',
             'date_to' => $year.'-12-31'
         );
         $filter = $dates;
-        $filter['location_id'] = $this->location->id;
+        $filter['location_id'] = $this->location;
     	$model = new MiteMonitor('search');
     	$model->unsetAttributes();
     	$dataProvider = $model->getMiteMonitorInRangeByLocation($filter);
@@ -504,13 +519,14 @@ class GraphController extends SimbApiController {
             $max_value = 3500;
         
         //Get average pest/mite
-        $avg = $this->getAverageMite($dates, $this->location->id);        
-        $serial[] = array('name'=>'AVG Pests in Location','data'=>$avg['location_avg'],'color'=>'#87CEFA','pointInterval'=> $this->pointInterval);
+        $avg = $this->getAverageMite($dates, is_array($this->location)?'':$this->location);     
+        if (!is_array($this->location))   
+            $serial[] = array('name'=>'AVG Pests in Location','data'=>$avg['location_avg'],'color'=>'#87CEFA','pointInterval'=> $this->pointInterval);
         $serial[] = array('name'=>'AVG Pests of all Grower','data'=>$avg['grower_avg'],'color'=>'#0000FF','pointInterval'=> $this->pointInterval);
         
             
     	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline','zoomType'=>'x');
-    	$VAR['title'] = array('text'=>'Monitoring : '.$this->location->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+    	$VAR['title'] = array('text'=>'Monitoring: '. implode(',',$this->location_names) .' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
         $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     	$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));

@@ -156,7 +156,10 @@ class CommonTrapCheck extends BaseTrapCheck
         $date_from = isset($filter['date_from'])?$filter['date_from']:'';
         $date_to = isset($filter['date_to'])?$filter['date_to']:'';
         
-        $condition = "WHERE p.location_id ='$location_id'";
+        if (is_array($location_id))
+            $condition = "WHERE p.location_id IN ('".implode("','", $location_id)."')";
+        else
+    	    $condition = "WHERE p.location_id = '$location_id'";
 		if ($date_from && $date_to)
             $condition .= " AND (tc.date BETWEEN '$date_from' AND '$date_to') ";
         elseif ($date_from)

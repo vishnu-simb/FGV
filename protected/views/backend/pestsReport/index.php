@@ -10,14 +10,20 @@ Yii::app()->clientScript->registerScript('index',"
 	var siteUrl = document.location.origin + '/';
 	var graphYear = new Date('01 January,'+$('#graphYear').html());
     
-	$('#Location_id').change(function(){
-		var location_id = $(this).val();
+	$('.search-button').click(function(e){
+	    e.preventDefault();
+		var location_id = $('#Location_id').val();
 		if(location_id)
         {
+            $('.report-results').show();
     		$('#yw0').html('');
             loading = 1;
     		drawTrapCheckChart();
     		drawMiteMonitoringChart();
+        }
+        else
+        {
+            $('.report-results').hide();
         }
 	});
     /*
@@ -51,8 +57,9 @@ Yii::app()->clientScript->registerScript('index',"
         }
         
 		$.ajax({
-		  type: 'GET',
-		  url: siteUrl + 'api/graph/getLocationTrap?location='+location_id+'&year='+graphYear.getFullYear(),
+		  type: 'POST',
+		  url: siteUrl + 'api/graph/getLocationTrap',
+          data: {location: location_id, year: graphYear.getFullYear()},
 		  success: function (data)
 		   {
 		  		var jgraph = JSON.parse(data);
@@ -77,8 +84,9 @@ Yii::app()->clientScript->registerScript('index',"
             return;
         }
 		$.ajax({
-			  type: 'GET',
-			  url: siteUrl + 'api/graph/getLocationMite?location='+location_id+'&year='+graphYear.getFullYear(),
+			  type: 'POST',
+			  url: siteUrl + 'api/graph/getLocationMite',
+              data: {location: location_id, year: graphYear.getFullYear()},
 			  success: function (data)
 			   {
 				  		var jgraph = JSON.parse(data);
@@ -124,15 +132,15 @@ Yii::app()->clientScript->registerScript('index',"
     }
     
     $('#yw0').html('');
-    loading = 1;
 	drawTrapCheckChart();
 	drawMiteMonitoringChart();
+    drawSeasonGraphLoading();
 ");
 ?>
 <div class="row-fluid">
     <?php $this->renderPartial('_form',array('modelLocation' => $modelLocation)); ?>
 </div>
-<div class="row-fluid report-results">
+<div class="row-fluid report-results" style="display: none;">
 	<div class="span12">
 		<div class="box month-graphs">
 			<div class="box-content nopadding">

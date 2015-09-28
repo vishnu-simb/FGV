@@ -21,8 +21,10 @@
     <div class="box-content nopadding">
         <div class="span12">
             <div style="float:left;width: 100%;">
-                <h4>Location</h4>
-       	   	    <?php echo $form->dropDownList($modelLocation, 'id', CHtml::listData($modelLocation->byname()->findAll() ,'id','name'),array('class' => 'select2-me input-xlarge'));?>
+                <h4>Locations</h4>
+                <p style="font-size: 90%;font-style: italic;">You can select multiple locations</p>
+       	   	    <?php echo $form->dropDownList($modelLocation, 'id', CHtml::listData($modelLocation->byname()->findAll() ,'id','name'),array('class' => 'select2-me input-xxlarge', 'multiple' => 'multiple'));?>
+                <a href="#" class="search-button btn">Apply</a>
             </div>
 		</div>
     </div>
