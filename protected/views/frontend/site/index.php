@@ -136,7 +136,10 @@ Yii::app()->clientScript->registerScript('index',"
                                                 text: index_text,
                                                 'style': {
                                                     color: spray_date_label_color
-                                                }
+                                                },
+                                                rotation: -90,
+                                                textAlign: 'left',
+                                                verticalAlign: 'middle'
                                             }
                                         };
                                         jgraph.xAxis['plotBands'].push(plot_obj);
