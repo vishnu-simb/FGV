@@ -145,8 +145,8 @@ class GraphController extends SimbApiController {
 	    						$dd += intval($val["tc_value"]);
 	    					}
 	    				}
-                        $sedat[] = $dd;
     				}
+                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
@@ -427,8 +427,8 @@ class GraphController extends SimbApiController {
 	    						$dd = intval($val["tc_value"]);
 	    					}
 	    				}
-                        $sedat[] = $dd;
     				}
+                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
