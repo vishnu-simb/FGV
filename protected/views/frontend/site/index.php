@@ -12,7 +12,7 @@ Yii::app()->clientScript->registerScript('index',"
 	var siteUrl = document.URL; 
 	var months = new Array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 	var reportYear = new Date('01 January,'+$('#yearPicker').html()); // convert to actual date
-    var graphYear = new Date('01 January,'+$('#graphYear').html());
+    var graphYear = new Date('01 January,'+$('#graphYear').val());
 	loadBlock(); // load default block by grower
 	//loadSprayTable();
 	/* load current graph block */
@@ -50,7 +50,9 @@ Yii::app()->clientScript->registerScript('index',"
 	 */
 	$('.fc-button-prev').click(function(){
 		graphYear.setYear(graphYear.getFullYear() -1);
-		$('#graphYear').html(graphYear.getFullYear());
+        var year = graphYear.getFullYear();
+		$('#graphYear').val(year);
+        $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
 		$('#yw0').html('');
         loading = 1;
 		drawTrapCheckChart();
@@ -58,9 +60,11 @@ Yii::app()->clientScript->registerScript('index',"
 	});
 	$('.fc-button-next').click(function(){
 		var cur = new Date();
-		if(graphYear.getFullYear() <= cur.getFullYear()-1){
+		if(graphYear.getFullYear() <= cur.getFullYear()){
 			var next = graphYear.setYear(graphYear.getFullYear() +1);
-			$('#graphYear').html(graphYear.getFullYear());
+			var year = graphYear.getFullYear();
+		    $('#graphYear').val(year);
+            $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
 			$('#yw0').html('');
             loading = 1;
     		drawTrapCheckChart();
@@ -267,7 +271,15 @@ Yii::app()->clientScript->registerScript('index',"
 					</td><td class="fc-header-center">
 					<span class="fc-button fc-button-prev fc-state-default fc-corner-left fc-corner-right">
 					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
-					<span class="fc-header-title"><h2><span id="graphYear"><?=date('Y')?></span></h2></span>
+					<span class="fc-header-title"><h2><span id="graphYearLabel"><?php
+                        $m = date('m');
+                        $y = date('Y');
+                        if ($m > 8)
+                            echo "Aug $y - July ". ($y + 1);
+                        else
+                            echo "Aug ". ($y-1). " - July $y";
+                    ?></span></h2></span>
+                    <input type="hidden" id="graphYear" value="<?=$m>8?$y+1:$y?>" />
 					<span class="fc-button fc-button-next fc-state-default fc-corner-left fc-corner-right">
 					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr></tbody></table>
 				</div>

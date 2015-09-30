@@ -99,15 +99,22 @@ class GraphController extends SimbApiController {
     	}
     	return $sprayDates;
     }
+    
+    private function _get_filter_dates($year = '')
+    {
+        /* From August to July */
+        $dates = array(
+            'date_from' => ($year-1).'-08-01',
+            'date_to' => $year.'-07-31'
+        );
+        return $dates;
+    }
 	
 
     public function actionGetBlockTrap(){
     	$VAR = array();
         $year = $_GET['year'];
-        $dates = array(
-            'date_from' => $year.'-01-01',
-            'date_to' => $year.'-12-31'
-        );
+        $dates = $this->_get_filter_dates($year);
         $filter = $dates;
         $filter['block_id'] = $this->block->id;
         
@@ -138,8 +145,8 @@ class GraphController extends SimbApiController {
 	    						$dd += intval($val["tc_value"]);
 	    					}
 	    				}
+                        $sedat[] = $dd;
     				}
-                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
@@ -297,10 +304,7 @@ class GraphController extends SimbApiController {
     public function actionGetBlockMite(){
     	$VAR = array();
         $year = $_GET['year'];
-        $dates = array(
-            'date_from' => $year.'-01-01',
-            'date_to' => $year.'-12-31'
-        );
+        $dates = $this->_get_filter_dates($year);
         $filter = $dates;
         $filter['block_id'] = $this->block->id;
     	$model = new MiteMonitor('search');
@@ -392,10 +396,7 @@ class GraphController extends SimbApiController {
     public function actionGetLocationTrap(){
     	$VAR = array();
         $year = $_POST['year'];
-        $dates = array(
-            'date_from' => $year.'-01-01',
-            'date_to' => $year.'-12-31'
-        );
+        $dates = $this->_get_filter_dates($year);
         $filter = $dates;
         $filter['location_id'] = $this->location;
         
@@ -426,8 +427,8 @@ class GraphController extends SimbApiController {
 	    						$dd = intval($val["tc_value"]);
 	    					}
 	    				}
+                        $sedat[] = $dd;
     				}
-                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
@@ -456,10 +457,7 @@ class GraphController extends SimbApiController {
     public function actionGetLocationMite(){
     	$VAR = array();
         $year = $_POST['year'];
-        $dates = array(
-            'date_from' => $year.'-01-01',
-            'date_to' => $year.'-12-31'
-        );
+        $dates = $this->_get_filter_dates($year);
         $filter = $dates;
         $filter['location_id'] = $this->location;
     	$model = new MiteMonitor('search');

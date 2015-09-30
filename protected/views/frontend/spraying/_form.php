@@ -31,11 +31,11 @@
                     		
 							}else{
 
-                    			echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData($modelSpray->getBlock() ,'id','name','property.name'), array('class' => 'input-xxlarge'));
+                    			echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData($modelSpray->getBlock() ,'id','name','property.name'), array('class' => 'input-xxlarge', 'multiple' => 'multiple', 'style' => 'height: 120px'));
                     		}
                     	  ?>
                              
-                          <?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('class' => 'input-xxlarge'))?>
+                          <?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('class' => 'input-xxlarge', 'multiple' => 'multiple', 'style' => 'height: 120px'))?>
                     						
                           <?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input-xxlarge datepick', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
 

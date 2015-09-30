@@ -104,36 +104,38 @@ class SprayingController extends SimbController
 		$modelSpray = new Spray();
 		$modelSpray->unsetAttributes();  // clear any default values
 		if (isset($_POST['Spray'])) {
-		    if (!empty($_POST['Spray']['block_id']) && is_array($_POST['Spray']['block_id']))
-            {    
-                $block_ids = $_POST['Spray']['block_id'];
-                unset($_POST['Spray']['block_id']);
-                $inserted_ids = array();
-                foreach($block_ids as $block_id)
+		    $block_ids = $_POST['Spray']['block_id'];
+            if (empty($block_ids))
+                throw new CHttpException(400, 'Please selcet the spraying blocks.');
+            
+            $chemical_ids = $_POST['Spray']['chemical_id'];
+            if (empty($chemical_ids))
+                throw new CHttpException(400, 'Please selcet the spraying chemical.');
+                
+            unset($_POST['Spray']['block_id']);
+            unset($_POST['Spray']['chemical_id']);
+            
+            $inserted_ids = array();
+            foreach($block_ids as $block_id)
+            {
+                
+                foreach($chemical_ids as $c_id)
                 {
                     $mSpray = new Spray();
                     $mSpray->unsetAttributes();
                     $mSpray->attributes = $_POST['Spray'];
                     $mSpray->block_id = $block_id;
+                    $mSpray->chemical_id = $c_id;
                     if ($mSpray->save()) {
                         $inserted_ids[] = $mSpray->id;
                     }
                 }
-                if (!empty($inserted_ids))
-                {
-                    // reinit session to store flash
-    				Yii::app()->session->open();
-    				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.implode(',', $inserted_ids).' create successfully!'));
-                }
             }
-            else
+            if (!empty($inserted_ids))
             {
-                $modelSpray->attributes = $_POST['Spray'];
-    			if ($modelSpray->save()) {
-    				// reinit session to store flash
-    				Yii::app()->session->open();
-    				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.$modelSpray->id.' create successfully!'));
-    			}
+                // reinit session to store flash
+				Yii::app()->session->open();
+				Yii::app()->user->setFlash('success', Yii::t('app', 'Spray ID: #'.implode(',', $inserted_ids).' create successfully!'));
             }
 		}
         $grower_id = '';
