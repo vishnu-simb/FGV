@@ -131,7 +131,7 @@ class GraphController extends SimbApiController {
     	$serial = array();
     	if(!empty($keys_arr)){
             $m = strtotime($dates['date_from']);
-    		$e = strtotime($dates['date_to']);;
+    		$e = strtotime($dates['date_to']);
     		foreach($keys_arr as $r){
     			$mm = $m;
     			$sedat = array();
@@ -145,8 +145,8 @@ class GraphController extends SimbApiController {
 	    						$dd += intval($val["tc_value"]);
 	    					}
 	    				}
+                        $sedat[] = $dd;
     				}
-                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
@@ -160,7 +160,7 @@ class GraphController extends SimbApiController {
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		//$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
     		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
-            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
+            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom, 'max' => strtotime($dates['date_to'])*1000);
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;
             $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
@@ -419,16 +419,16 @@ class GraphController extends SimbApiController {
     			$sedat = array();
     			while($mm < $e)
     			{
-		            $dd = 0;
     				if(date($mm) < date(time())){
+    				    $dd = 0;
 	    				foreach($data as $val){
 	    					
 	    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
 	    						$dd = intval($val["tc_value"]);
 	    					}
 	    				}
+                        $sedat[] = $dd;
     				}
-                    $sedat[] = $dd;
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
     			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
@@ -442,7 +442,7 @@ class GraphController extends SimbApiController {
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		//$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
     		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
-            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom);
+            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom, 'max' => strtotime($dates['date_to'])*1000);
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;
             $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
