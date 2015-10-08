@@ -33,8 +33,6 @@
                     <?php echo $form->textFieldControlGroup($modelBlock, 'name', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('name'))); ?>
                     <?php echo $form->textFieldControlGroup($modelBlock, 'tree_spacing', array('maxlength' => 11, 'class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('tree_spacing'))); ?>
 					<?php echo $form->dropDownListControlGroup($modelBlock, 'tree_variety', CHtml::listData($modelBlock->getVariety() ,'id','name','fruit_type.name'), array('empty' => 'Select variety or enter new variety', 'class' => 'input-xlarge')); ?>
-                    <?php echo $form->textFieldControlGroup($modelBlock, 'row_width', array('class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('row_width'))); ?>
-                    <?php echo $form->dropDownListControlGroup($modelBlock, 'tree_variety', CHtml::listData($modelBlock->getVariety() ,'id','name','fruit_type.name'), array('empty' => 'Select variety or enter new variety', 'class' => 'input-xlarge')); ?>
                     <div class="control-group" id="new_variety_group">
                         <label class="control-label">-- New Variety</label>
                         <div class="controls">
@@ -42,6 +40,7 @@
                             <input type="text" id="Block_new_variety" name="Block[new_variety]" placeholder="New Variety" class="input-xlarge"/>
                         </div>
                     </div>
+                    <?php echo $form->textFieldControlGroup($modelBlock, 'row_width', array('class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('row_width'))); ?>
                     <?php echo $form->inlineRadioButtonListControlGroup($modelBlock,'_addTrap', array('yes'=>'Yes','no'=>'No'))?>
                 </div>
                 <div class="span12">

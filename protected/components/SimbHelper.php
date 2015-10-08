@@ -63,4 +63,30 @@ class DateHelper
     	$time = strtotime($date);
     	return date('d-M-Y',$time);
     }
+    
+    static function dateOutputCurrentSeason($date){
+    	if(empty($date) || $date == '0000-00-00'){
+    		return null;
+    	}
+        
+        /* From August to July */
+        $year = date('Y');
+        $m = date('m');
+        if ($m >= 8)
+        {
+            $start_t = strtotime($year.'-08-01 00:00:00');
+            $end_t = strtotime(($year+1).'-07-31 23:59:59');
+        }
+        else
+        {
+            $start_t = strtotime(($year-1).'-08-01 00:00:00');
+            $end_t = strtotime($year.'-07-31 23:59:59');
+        }
+        
+        
+    	$time = strtotime($date);
+        if ($start_t <= $time && $time <= $end_t)
+    	   return date('d-M-Y',$time);
+        return null;
+    }
 } 
