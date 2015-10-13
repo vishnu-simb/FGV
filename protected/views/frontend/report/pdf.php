@@ -101,7 +101,7 @@ foreach($VARS['blocks'] as $block){
 						$tb = true;
 						echo '<b>';
 					}
-					echo DateHelper::dateOutput($s->sprayDate);
+					echo DateHelper::dateOutputCurrentSeason($s->sprayDate, $VARS['hasFollowYear']);
 					if($tb)
 						echo '</b>';
 				}
@@ -115,7 +115,7 @@ foreach($VARS['blocks'] as $block){
 			foreach($ss as $s){
 				echo '<td>';
 				if($s instanceof SprayResult)
-					echo DateHelper::dateOutput($s->coverUntil);
+					echo DateHelper::dateOutputCurrentSeason($s->coverUntil, $VARS['hasFollowYear']);
 				echo '</td>';
 			}
 		}

@@ -64,13 +64,14 @@ class DateHelper
     	return date('d-M-Y',$time);
     }
     
-    static function dateOutputCurrentSeason($date){
+    static function dateOutputCurrentSeason($date, $year = ''){
     	if(empty($date) || $date == '0000-00-00'){
     		return null;
     	}
         
         /* From August to July */
-        $year = date('Y');
+        if (empty($year))
+            $year = date('Y');
         $m = date('m');
         if ($m >= 8)
         {

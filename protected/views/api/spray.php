@@ -50,7 +50,7 @@
 						}
 						echo '>';
 					}
-					$d = DateHelper::dateOutput($date);
+					$d = DateHelper::dateOutputCurrentSeason($date,$VAR['hasFollowYear']);
 					if($d){
                         if (date('Y', $ds) < $VAR['hasFollowYear'])
                             echo "<span class='previous_year'>$d</span>";
@@ -77,13 +77,16 @@
 							echo '">';
 							$pm[$pest.'|2'] = true;
 						}else{
-							echo '<span  style="color:red;"';
+							if (DateHelper::dateOutputCurrentSeason($date,$VAR['hasFollowYear']))
+								echo '<span  style="color:red;"';
+							else
+								echo '<span ';
 							if(!$second_cohort && $pest == 'Codling Moth'){
 								echo ' class="doublewidth"';
 							}
 							echo '>';
 						}
-						$d = DateHelper::dateOutput($date);
+						$d = DateHelper::dateOutputCurrentSeason($date,$VAR['hasFollowYear']);
 						if($d){
 							if (date('Y', $ds) < $VAR['hasFollowYear'])
                                 echo "<span class='previous_year'>$d</span>";
@@ -121,7 +124,7 @@
 				}
 				echo '>';
 				if($spray){
-					$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],false,$VAR['hasFollowYear']));
+					$d = DateHelper::dateOutputCurrentSeason($spray->getCoverRequired($VAR['block'],false,$VAR['hasFollowYear']),$VAR['hasFollowYear']);
 					if($d){
 						if (date('Y', $ds) < $VAR['hasFollowYear'])
                             echo "<span class='previous_year'>$d</span>";
@@ -131,14 +134,15 @@
 						echo ' - ';
 					}
 					if($VAR['pests'][$pest]->hasSecondCohort($VAR['block']->id)){
-						$d = DateHelper::dateOutput($spray->getCoverRequired($VAR['block'],true,$VAR['hasFollowYear']));
-						echo '</span><span style="color:red;">';
+						$d = DateHelper::dateOutputCurrentSeason($spray->getCoverRequired($VAR['block'],true,$VAR['hasFollowYear']),$VAR['hasFollowYear']);
 						if($d){
+							echo '</span><span style="color:red;">';
 							if (date('Y', $ds) < $VAR['hasFollowYear'])
                                 echo "<span style='color:red;' class='previous_year'>$d</span>";
                             else
     						    echo $d;
 						}else{
+							echo '</span><span>';
 							echo ' - ';
 						}
 					}
