@@ -132,6 +132,10 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 							array(
 									'label' => Yii::t('app', 'TrapCheck'),
 									'url' => Yii::app()->baseUrl.'/trapCheck',
+							),
+                            array(
+									'label' => Yii::t('app', 'Pests Report by Region'),
+									'url' => Yii::app()->baseUrl.'/pestsReport',
 							)
 						),
 

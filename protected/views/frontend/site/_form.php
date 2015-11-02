@@ -38,7 +38,11 @@
         					</tbody>
     					</table>
                     </div>
-                    <?php echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
+                    <?php // echo $form->dropDownList($modelGrower, 'name', CHtml::listData($modelGrower->findAllPk(Yii::app()->user->id) ,'id','name'), array('prompt'=>'Grower Reports','class' => 'clickable input-xlarge'))?>
+                    <select class="clickable input-xlarge" name="Grower[name]" id="Grower_name">
+                        <option value="">One Block Report</option>
+                        <option value="<?=Yii::app()->user->id?>">Report for All Blocks</option>
+                    </select>
                 </div>
                 <div class="clearfix"></div>
                 <br />
