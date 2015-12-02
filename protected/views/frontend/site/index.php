@@ -22,8 +22,10 @@ Yii::app()->clientScript->registerScript('index',"
 	$('.clickable').change(function(){ 
 		var url = 'report/grower/'+$(this).val()+'/'+$('#yearPicker').html();
 		if(url.length){
-		window.open(url,'_blank');
-		$('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
+            myWin = window.open(siteUrl+url,'_blank');
+            if (myWin == undefined) 
+                window.location  = siteUrl+url;
+            $('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
 		}
 	});
 	$('.blockable').change(function(){
