@@ -203,6 +203,20 @@ $bootstrap = Yii::app()->bootstrap;
                         </div>
 
                     </div>
+                    <div class="mobile-submenu">
+                        <?php
+    
+                        $this->widget(
+                            'zii.widgets.CMenu',
+                            array(
+                                'items' => $this->menu,
+                                'htmlOptions' => array('class' => 'subnav-menu'),
+                                'submenuHtmlOptions' => array('class' => 'dropdown-menu'),
+                            )
+                        );
+                
+                        ?>
+                    </div>
 					<?php $this->renderPartial('//layouts/_message_main') ?>
                     <?php
                     $this->widget('zii.widgets.CBreadcrumbs', array(

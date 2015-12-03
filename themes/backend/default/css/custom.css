@@ -133,6 +133,34 @@ table.dataTable .filter-container #TrapCheck_value{
     width: 30px;
 }
 
+.mobile-submenu{
+    display: none;
+}
+    .mobile-submenu ul{
+        list-style: none;
+        margin: 0;
+    }
+        .mobile-submenu ul a{
+            background: #368ee0;
+            color: #fff;
+            text-shadow: none;
+            border: 0 none;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 5px 9px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 0;
+            vertical-align: middle;
+            text-align: center;
+            text-decoration: none;
+        }
+            .mobile-submenu ul a:hover{
+                background: #1e74c5;
+            }
+
 @media (max-width: 1024px) {
     .form-horizontal.form-search-advanced .span6 .control-label{
         width: 80px;
@@ -157,6 +185,9 @@ table.dataTable .filter-container #TrapCheck_value{
     }
     .form-horizontal.form-search-advanced .span6 .controls{
         margin-left: 140px;
+    }
+    .mobile-submenu{
+        display: block;
     }
 }
 

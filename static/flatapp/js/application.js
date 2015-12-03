@@ -199,14 +199,20 @@ function getNav(current){
 }
 
 function createSubNav(){
+    
     if($(".mobile-nav").length == 0){
         var original = $("#navigation .main-nav");
         // loop
         var current = original;
         getNav(current);
-        $("#navigation").append(nav);
+        $("#navigation").append(nav);console.log(nav);
         $("#navigation > ul").last().addClass("mobile-nav");
-
+        $(".mobile-nav > li > a").each(function(){
+            var el = $(this);
+            if(el.next().length !== 0){
+                el.append('<span style="margin: 10px 5px;border-top: 4px solid #fff;" class="caret"></span>');
+            }
+        });
         $(".mobile-nav > li > a").click(function(e){
             var el = $(this);
             $("#navigation").getNiceScroll().resize().show();
@@ -214,6 +220,7 @@ function createSubNav(){
                 e.preventDefault();
 
                 var sub = el.next();
+                console.log(sub);
                 el.parents(".mobile-nav").find(".open").not(sub).each(function(){
                     var t = $(this);
                     t.removeClass("open");
