@@ -12,4 +12,4 @@ $this->breadcrumbs = array(
 
 ?>
 
-<?php $this->renderPartial('_form', array('modelSpray'=>$modelSpray)); ?>
+<?php $this->renderPartial('_form', array('modelSpray'=>$modelSpray, 'isUpdate' => 1)); ?>

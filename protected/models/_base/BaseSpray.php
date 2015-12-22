@@ -14,6 +14,7 @@
  * @property string $date
  * @property integer $quantity
  * @property integer $block_id
+ * @property string $spray_status
  * @property string $creator_id
  * @property integer $ordering
  * @property string $created_at
@@ -44,13 +45,13 @@ abstract class BaseSpray extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('chemical_id, date, quantity, block_id', 'required','except' => 'search'),
+			array('chemical_id, date, quantity, block_id, spray_status', 'required','except' => 'search'),
 			array('quantity, block_id, ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
 			array('chemical_id', 'length', 'max'=>10),
 			array('creator_id', 'length', 'max'=>20),
 			array('created_at, updated_at, params', 'safe'),
 			array('creator_id, ordering, created_at, updated_at, status, is_deleted, params', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, property,grower,chemical_id, date, quantity, block_id, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
+			array('id, property,grower,chemical_id, date, quantity, block_id, spray_status, creator_id, ordering, created_at, updated_at, status, is_deleted, params, rowsPerPage', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +77,7 @@ abstract class BaseSpray extends SimbActiveRecord{
 			'date' => Yii::t('app', 'Date'),
 			'quantity' => Yii::t('app', 'Quantity'),
 			'block_id' => Yii::t('app', 'Block'),
+            'spray_status' => Yii::t('app', 'Spray Status'),            
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),
@@ -95,6 +97,7 @@ abstract class BaseSpray extends SimbActiveRecord{
 		$criteria->compare('date', $this->date, true);
 		$criteria->compare('quantity', $this->quantity);
 		$criteria->compare('block_id', $this->block_id);
+        $criteria->compare('spray_status', $this->spray_status);        
 		$criteria->compare('property.id',$this->property);
 		$criteria->compare('grower.id',$this->grower);
 		$criteria->compare('creator_id', $this->creator_id, true);

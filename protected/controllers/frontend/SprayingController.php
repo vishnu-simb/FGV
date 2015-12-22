@@ -111,7 +111,7 @@ class SprayingController extends SimbController
             $chemical_ids = $_POST['Spray']['chemical_id'];
             if (empty($chemical_ids))
                 throw new CHttpException(400, 'Please selcet the spraying chemical.');
-                
+            
             unset($_POST['Spray']['block_id']);
             unset($_POST['Spray']['chemical_id']);
             
