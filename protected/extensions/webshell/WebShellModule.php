@@ -121,7 +121,7 @@ class WebShellModule extends CWebModule {
 		if(parent::beforeControllerAction($controller, $action))
 		{
 			if(!$this->allowIp(Yii::app()->request->userHostAddress))
-				throw new CHttpException(403,"You are not allowed to access this page.");
+				throw new CHttpException(403,"You are not allowed to access this page. Your IP is ". Yii::app()->request->userHostAddress);
 
             if(isset($this->checkAccessCallback) && !call_user_func_array($this->checkAccessCallback, array($controller, $action)))
                 throw new CHttpException(403,"You are not allowed to access this page.");
