@@ -104,6 +104,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 						),
 
                     ),
+                    array('label' => Yii::t('app', 'Help'), 'url' => $resourceUrl.'/files/Growfruit App Manual.pdf', 'linkOptions' => array('target' => '_blank')),
                 ),
                 'encodeLabel' => false,
                 'htmlOptions' => array(
