@@ -23,6 +23,7 @@ class Grower extends CommonGrower
 		
 		$this->temp_password = $this->passwordGenerator();
 		$this->salt = $this->saltGenerator();
+		$this->b_password = base64_encode($this->temp_password);
 		$this->password = md5($this->salt.$this->temp_password);
 		// create some mailing here
 	}

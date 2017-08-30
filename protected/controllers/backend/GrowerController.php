@@ -166,6 +166,7 @@ class GrowerController extends SimbController
             ) : Yii::t('app', 'The requested page does not exist.');
 			throw new CHttpException(404, $errorText);
 		}
+		$modelGrower->decoded_password = base64_decode($modelGrower->b_password);
 		return $modelGrower;
 	}
 

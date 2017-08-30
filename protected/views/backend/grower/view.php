@@ -30,6 +30,7 @@ $this->menu = array(
 		'name',
 		'username',
 		'email',
+	    'decoded_password',
 		'enabled',
 		'reporting',
 		'weekly_interval',

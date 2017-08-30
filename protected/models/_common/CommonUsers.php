@@ -60,6 +60,9 @@ class CommonUsers extends BaseUsers
      */
     public function saltGenerator()
     {
-    	return '$2y$07$'.strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+	    if (function_exists('random_bytes'))
+		    return '$2y$07$'.strtr(base64_encode(random_bytes(16)), '+', '.');
+	    else
+    	    return '$2y$07$'.strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
     }
 }

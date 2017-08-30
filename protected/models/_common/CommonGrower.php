@@ -4,7 +4,8 @@ Yii::import('application.models._base.BaseGrower');
 
 class CommonGrower extends BaseGrower
 {
-	
+	var $decoded_password = '';
+
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -12,9 +13,14 @@ class CommonGrower extends BaseGrower
     
     public function rules()
     {
-    	return CMap::mergeArray(parent::rules(),array(
-    		)
-    	);
+    	return CMap::mergeArray(parent::rules(),array());
+    }
+
+    public function attributeLabels()
+    {
+    	$att_labels= parent::attributeLabels();
+	    $att_labels['decoded_password'] = Yii::t('app', 'Password');
+	    return $att_labels;
     }
     
     /**
@@ -37,10 +43,12 @@ class CommonGrower extends BaseGrower
     			$this->created_at = date($format);
     			$this->salt = $this->saltGenerator();
     			$this->password = md5($this->salt.$this->password);
+			    $this->b_password = base64_encode($this->password);
     			$this->creator_id = 0;
     			$this->ordering = 0;
     		}else{
     			if(!empty($this->password)){
+				    $this->b_password = base64_encode($this->password);
     				$this->password = $this->hashPassword($this->password);
     			}else{
     				unset($this->password);
@@ -76,7 +84,10 @@ class CommonGrower extends BaseGrower
      */
     public function saltGenerator($lengh = 8)
     {
-    	return substr('$2y$07$'.strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'), 0, $lengh);
+	    if (function_exists('random_bytes'))
+	    	return substr('$2y$07$'.strtr(base64_encode(random_bytes(16)), '+', '.'), 0, $lengh);
+	    else
+    	    return substr('$2y$07$'.strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.'), 0, $lengh);
     }
     
     /**
@@ -85,7 +96,10 @@ class CommonGrower extends BaseGrower
      */
     public function passwordGenerator()
     {
-    	return strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+	    if (function_exists('random_bytes'))
+		    return strtr(base64_encode(random_bytes(16)), '+', '.');
+	    else
+    	    return strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
     }
     
     /**
@@ -129,5 +143,5 @@ class CommonGrower extends BaseGrower
     public function getByName($name){
     	return self::model()->find('LOWER(name) = :name', array('name' => strtolower($name)));
     }
- 
+
 }
