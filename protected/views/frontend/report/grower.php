@@ -218,11 +218,36 @@
 		border: 1px solid #bbb;
 		box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 		padding: 20px;
+		max-width: 100%;
 	}
 	
 	div#print-footer {
 		position: static; 
 		text-align: center;
+	}
+	@media (max-width: 767px) {
+		body {
+			margin: 20px auto;
+			padding: 0;
+		}
+		.report-content {
+			display: block;
+			padding: 5px;
+		}
+		.block{
+			padding: 0;
+		}
+		.block table{
+			table-layout: fixed;
+		}
+	    .block table tr.head th{
+		    font-size: 12px;
+	    }
+	}
+	@media (max-width: 767px) {
+		.block table tr.head th{
+			font-size: 9px;
+		}
 	}
 	</style>
 <?php

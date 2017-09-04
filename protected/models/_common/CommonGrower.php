@@ -43,7 +43,7 @@ class CommonGrower extends BaseGrower
     			$this->created_at = date($format);
     			$this->salt = $this->saltGenerator();
 			    $this->b_password = base64_encode($this->password);
-    			$this->password = md5($this->salt.$this->password
+    			$this->password = md5($this->salt.$this->password);
     			$this->creator_id = 0;
     			$this->ordering = 0;
     		}else{

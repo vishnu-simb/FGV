@@ -41,28 +41,31 @@ class ReportController extends SimbController
 		);
 	}
     
-    private function getDateRange(){
+    private function getDateRange($year = ''){
         $data = array();
-        $data['date_from'] = strtotime(date('Y').'-08-01');
+	    if (empty($year))
+		    $year = date('Y');
+        $data['date_from'] = strtotime(($year-1).'-09-01');
 		if(time() < $data['date_from']){
 			$data['date_from'] = strtotime('-1 year',$data['date_from']);
 		}
-		$data['date_to'] = strtotime('+9 months',$data['date_from']);
-		
+		$data['date_to'] = strtotime('+7 months',$data['date_from']);
+	    /*
 		$short = false;
 		if($data['date_to'] > time()){
 			$data['date_to'] = time();
 			$data['date_from'] = strtotime('-3 months',$data['date_to']);
 			$short = true;
 		}
-		
+		*/
 		$data['date_from'] = date('Y-m-d',$data['date_from']);
 		$data['date_to'] = date('Y-m-d',$data['date_to']);
         return $data;
     }
     
-    private function getGraph($block, $grower){
-        $data = $this->getDateRange();
+    private function getGraph($block, $grower, $year = ''){
+        $data = $this->getDateRange($year);
+
         $VAR = array();
         $filter = array(
                         'block_id' => $block->id,
@@ -104,26 +107,52 @@ class ReportController extends SimbController
     		
     	}
 		if(!empty($serial)){
-		    $yAxis = array();
-            for($i = 1; $i <= $max_value+1; $i++)
-                $yAxis[] = $i;
 			$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
 			$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
 			$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
             $VAR['xAxis'] = array(
-                                'type' => 'datetime',
-                                'maxZoom' => 14 * 24 * 3600000 // fourteen days
-                            );
-    		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
+                'type' => 'datetime',
+                'maxZoom' => 14 * 24 * 3600000, // fourteen days,
+	            'tickInterval' =>   7 * 24 * 3600 * 1000,
+	            'labels' => array(
+					'format' =>  '{value:%d/%m/%y}',
+		            'rotation' => 90,
+		            'y' => 50,
+		            'align' => 'center'
+				),
+	            'gridLineWidth' => 1,
+	            'plotBands'=>
+		            array(
+			            array(
+				            'from'=>$min_time,
+				            'to'=>'2',
+				            'color'=>'#F5D3F5',
+				            'label'=>array(
+					            'text'=>'Williams pears (1500)',
+					            'style'=>array('color'=>'#606060')
+				            )
+			            )
+		            )
+            );
+    		$VAR['yAxis'] = array(
+    			'title'=>array('text'=>''),
+			    'startOnTick'=>0,
+			    'showFirstLabel'=>0,
+			    'floor'=> 0,
+			    'allowDecimals'=>false,
+			    'minRange' => 0.1,
+			    'max' => $max_value+1>4?$max_value+1:4,
+			    'tickInterval' => $max_value>5?intval($max_value/5):1
+		    );
     		$VAR['series'] = $serial;
 		}
         return $VAR;
 	}
 	
-	private function getMite($block, $grower){
-		$data = $this->getDateRange();
+	private function getMite($block, $grower, $year = ''){
+		$data = $this->getDateRange($year);
 		$VAR = array();
 		$filter = array(
 				'block_id' => $block->id,
@@ -189,8 +218,56 @@ class ReportController extends SimbController
 		$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
 		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
 		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
-		$VAR['xAxis'] =  array('type' => 'datetime','minRange' => 14 * 24 * 3600000); // fourteen days 
-		$VAR['yAxis'] = array('title'=>array('text'=>''),'floor'=> 0,'min'=> 0,'max' => $max_value,'minorGridLineWidth'=> 0,'gridLineWidth'=> 0,'alternateGridColor'=> null,'plotBands'=>array(array('from'=>'1500','to'=>'1700','color'=>'#F5D3F5','label'=>array('text'=>'Williams pears (1500)','style'=>array('color'=>'#606060'))),array('from'=>'2500','to'=>'2700','color'=>'#F5D3F5','label'=>array('text'=>'Pakham pears (2500)','style'=>array('color'=>'#606060'))),array('from'=>'3500','to'=>'3700','color'=>'#F5D3F5','label'=>array('text'=>'Apples (3500)','style'=>array('color'=>'#606060')))));
+		$VAR['xAxis'] =  array(
+			'type' => 'datetime',
+			'minRange' => 14 * 24 * 3600000,
+			'tickInterval' =>   7 * 24 * 3600 * 1000,
+			'labels' => array(
+				'format' =>  '{value:%d/%m/%y}',
+				'rotation' => 90,
+				'y' => 50,
+				'align' => 'center'
+			),
+		); // fourteen days
+		$VAR['yAxis'] = array(
+			'title'=>array('text'=>''),
+			'floor'=> 0,
+			'min'=> 0,
+			'max' => $max_value,
+			'minorGridLineWidth'=> 0,
+			'gridLineWidth'=> 0,
+			'alternateGridColor'=> null,
+			'plotBands'=>
+				array(
+					array(
+						'from'=>'1500',
+						'to'=>'1700',
+						'color'=>'#F5D3F5',
+						'label'=>array(
+							'text'=>'Williams pears (1500)',
+							'style'=>array('color'=>'#606060')
+						)
+					),
+					array(
+						'from'=>'2500',
+						'to'=>'2700',
+						'color'=>'#F5D3F5',
+						'label'=>array(
+							'text'=>'Pakham pears (2500)',
+							'style'=>array('color'=>'#606060')
+						)
+					),
+					array(
+						'from'=>'3500',
+						'to'=>'3700',
+						'color'=>'#F5D3F5',
+						'label'=>array(
+							'text'=>'Apples (3500)',
+							'style'=>array('color'=>'#606060')
+						)
+					)
+				)
+		);
 		$VAR['series'] = $serial;
 		return $VAR;
 	}
@@ -198,7 +275,7 @@ class ReportController extends SimbController
 	/**
 	 * Manages all models.
 	 */
-	public function actionGrower($id)
+	public function actionGrower($id, $year = '')
 	{
         $grower = $this->loadModel($id);
 		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Report for '. $grower->name);
@@ -210,7 +287,7 @@ class ReportController extends SimbController
 		}
 		
 		$VARS['grower'] = $grower;
-		$VARS['dateRange'] = $this->getDateRange();
+		$VARS['dateRange'] = $this->getDateRange($year);
 		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
 	    $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
@@ -287,10 +364,10 @@ class ReportController extends SimbController
 				$VARS['sprayDates'][$block->id] = $sprayData;
 				
                 if (empty($VARS['graphData'][$block->id]))
-				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower);
+				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower, $year);
                 
                 if (empty($VARS['graphMiteData'][$block->id]))
-                	$VARS['graphMiteData'][$block->id] = $this->getMite($block, $grower);
+                	$VARS['graphMiteData'][$block->id] = $this->getMite($block, $grower, $year);
 				
 			}
 		}

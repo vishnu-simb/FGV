@@ -19,8 +19,9 @@ $clientScript = Yii::app()->clientScript;
     </head>
 
     <body>
-   
+        <div class="report-content">
         <?php echo $content ?>
+        </div>
     </body>
 </html>
  
