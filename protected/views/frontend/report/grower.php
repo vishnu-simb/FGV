@@ -244,9 +244,21 @@
 		    font-size: 12px;
 	    }
 	}
-	@media (max-width: 767px) {
+	@media (max-width: 480px) {
 		.block table tr.head th{
 			font-size: 9px;
+		}
+		div[id^=yw]{
+			position: relative;
+		}
+		div[id^=yw]:after{
+			content: "";
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0);
 		}
 	}
 	</style>
@@ -425,3 +437,9 @@ foreach($VARS['blocks'] as $block){
 <input type="hidden" id="date_from" value="<?=$VARS['dateRange']['date_from']?>" />
 <input type="hidden" id="date_to" value="<?=$VARS['dateRange']['date_to']?>" />
 <div id="print-footer">Created by Fruit Growers Victoria. Report problems to <b>fido@fgv.com.au</b></div>
+<script>
+	$( document ).ready(function(){
+		console.log($('#yw0'));
+		$('#yw0').children().click(function() { return false; });
+	});
+</script>

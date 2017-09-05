@@ -205,7 +205,12 @@ class ReportController extends SimbController
 				$mm = strtotime('+1 day', $mm); // increment for loop
 			}
 			$PEST($sedat,$r,$min_time); // Merge CLID data on PESTS
-			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
+			$serial[] = array_merge(array(
+				'name'=>$r,
+				'pointInterval' => 24 * 3600 * 1000,
+				'pointStart' => $min_time*1000,
+				'clickable' => false
+			),array('data'=>$sedat),array('color'=>Mite::MiteColor($r)));
 		
 		}
 		$serial[] = $this->Pest_CLID;
@@ -213,11 +218,19 @@ class ReportController extends SimbController
         if ($max_value < 3500)
             $max_value = 3500;
         
-		$VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
+		$VAR['chart'] = array('type'=>'spline');
 		$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 		$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
 		$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+		$VAR['plotOptions'] = array(
+			'spline'=>array(
+				'lineWidth'=>4,
+				'states'=>array(
+					'hover'=>array('lineWidth'=> 5)
+				),
+				'marker'=>array('enabled' =>false)
+			)
+		);
 		$VAR['xAxis'] =  array(
 			'type' => 'datetime',
 			'minRange' => 14 * 24 * 3600000,

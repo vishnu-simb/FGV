@@ -27,6 +27,7 @@ class GraphController extends SimbApiController {
             }
             if (is_array($this->location))
             {
+	            $this->location_names = array();
                 foreach($this->location as $location_id)
                 {
                     $l = Location::model()->findByPk($location_id);
