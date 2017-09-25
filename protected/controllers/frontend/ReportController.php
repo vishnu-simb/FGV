@@ -45,11 +45,11 @@ class ReportController extends SimbController
         $data = array();
 	    if (empty($year))
 		    $year = date('Y');
-        $data['date_from'] = strtotime(($year-1).'-09-01');
+        $data['date_from'] = strtotime(($year-1).'-08-01');
 		if(time() < $data['date_from']){
 			$data['date_from'] = strtotime('-1 year',$data['date_from']);
 		}
-		$data['date_to'] = strtotime('+7 months',$data['date_from']);
+		$data['date_to'] = strtotime('+8 months',$data['date_from']);
 	    /*
 		$short = false;
 		if($data['date_to'] > time()){
