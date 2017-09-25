@@ -32,7 +32,7 @@
         					<td class="fc-header-center" style="text-align: left;">
         					<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
         					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
-        					<span class="fc-header-title"><h2><span id="yearPicker"><?=date('Y')?></span></h2></span>
+        					<span class="fc-header-title"><h2><span id="yearPicker"><?= intval(date('m')) >=8 ? date('Y').'-'.date('Y', strtotime('+1 year')) : date('Y', strtotime('-1 year')).'-'.date('Y')?></span></h2></span>
         					<span class="fc-button yr-button-next fc-state-default fc-corner-left fc-corner-right">
         					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr>
         					</tbody>
@@ -60,7 +60,7 @@
         						<td class="fc-header-center" style="text-align: left;">
         						<span class="fc-button yr-button-prev fc-state-default fc-corner-left fc-corner-right">
         						<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-left"></i></span></span></span>
-        						<span class="fc-header-title"><h2><span id="yearPicker"><?=date('Y')?></span></h2></span>
+        						<span class="fc-header-title"><h2><span id="yearPicker"><?= intval(date('m')) >=8 ? date('Y').'-'.date('Y', strtotime('+1 year')) : date('Y', strtotime('-1 year')).'-'.date('Y')?></span></h2></span>
         						<span class="fc-button yr-button-next fc-state-default fc-corner-left fc-corner-right">
         						<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr>
         						</tbody>

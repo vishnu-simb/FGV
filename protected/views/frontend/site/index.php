@@ -8,10 +8,17 @@ Yii::app()->clientScript->registerScript('index',"
     var loading = 0;
     var spray_date_color = '#9cd079';
     var spray_date_label_color = '#333333';
+    var today = new Date();
+    var cur_year = parseInt(today.getFullYear());
+    var cur_month = parseInt(today.getMonth()) + 1;
 	/* define base url */
 	var siteUrl = document.URL; 
 	var months = new Array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-	var reportYear = new Date('01 January,'+$('#yearPicker').html()); // convert to actual date
+	if (cur_month >= 8){
+		var maxYear = reportYear = cur_year + 1;
+	}else{
+		var maxYear = reportYear = cur_year;
+	}
     var graphYear = new Date('01 January,'+$('#graphYear').val());
 	loadBlock(); // load default block by grower
 	//loadSprayTable();
@@ -20,7 +27,7 @@ Yii::app()->clientScript->registerScript('index',"
 	//drawMiteMonitoringChart();
 	/* handle report by GrowerID */
 	$('.clickable').change(function(){ 
-		var url = 'report/grower/'+$(this).val()+'/'+$('#yearPicker').html();
+		var url = 'report/grower/'+$(this).val()+'/'+reportYear;
 		if(url.length){
             myWin = window.open(siteUrl+url,'_blank');
             if (myWin == undefined) 
@@ -78,15 +85,19 @@ Yii::app()->clientScript->registerScript('index',"
 	 * year select reports
 	 */
 	$('.yr-button-prev').click(function(){
-		var prev = reportYear.setYear(reportYear.getFullYear() -1);
-		$('#yearPicker').html(reportYear.getFullYear());
+		reportYear -= 1;
+		var year_html = reportYear - 1;
+		year_html += '-' + reportYear;
+		$('#yearPicker').html(year_html);
 		loadSprayTable();
 	});
 	$('.yr-button-next').click(function(){
 		var cur = new Date();
-		if(reportYear.getFullYear() <= cur.getFullYear()-1){
-			var next = reportYear.setYear(reportYear.getFullYear() +1);
-			$('#yearPicker').html(reportYear.getFullYear());
+		if(reportYear < maxYear){
+			reportYear += 1;
+			var year_html = reportYear - 1;
+			year_html += '-' + reportYear;
+			$('#yearPicker').html(year_html);
 			loadSprayTable();
 		}
 	});
