@@ -301,7 +301,7 @@ class ReportController extends SimbController
 		
 		$VARS['grower'] = $grower;
 		$VARS['dateRange'] = $this->getDateRange($year);
-		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
+		$VARS['hasFollowYear'] = $year?$year-1:false;// Set default report
 	    $max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());

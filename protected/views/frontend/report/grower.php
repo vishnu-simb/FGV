@@ -269,7 +269,7 @@
 ?>
 <table class="header">
 	<tr>
-		<td width="25%" ><h1><?=$VARS['hasFollowYear']?></h1></td>
+		<td width="25%" ><h1><?=$VARS['hasFollowYear'].'-'.($VARS['hasFollowYear']+1)?></h1></td>
 		<td width="50%" style="text-align: center"><h1>CropWatch Report</h1> </td>
 		<td width="25%" style="text-align: right"><?=$VARS['grower']->name?></td>
 	</tr>

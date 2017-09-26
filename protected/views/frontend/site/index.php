@@ -203,7 +203,7 @@ Yii::app()->clientScript->registerScript('index',"
         }
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/HTML?block='+block_id+'&year='+$('#yearPicker').html(),
+				  url: siteUrl + 'api/graph/HTML?block='+block_id+'&year='+(reportYear-1),
 				  success: function (data)
 				   {
 					  $('.spraytable').html(data);
