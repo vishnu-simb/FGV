@@ -8,7 +8,7 @@ class Pessl {
 	private $station;//00001840
 	private $ch;
 	
-	function __construct($username,$password,$station,$ch='22_506'){
+	function __construct($username,$password,$station,$ch='18_506'){
 		$this->username = $username;
 		$this->password = $password;
 		$this->station = $station;

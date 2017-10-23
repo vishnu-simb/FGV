@@ -823,7 +823,7 @@ var $innerblocktags;
 // **********************************
 // **********************************
 
-function mPDF($mode='',$format='A4',$default_font_size=0,$default_font='',$mgl=15,$mgr=15,$mgt=16,$mgb=16,$mgh=9,$mgf=9, $orientation='P') {
+function __construct($mode='',$format='A4',$default_font_size=0,$default_font='',$mgl=15,$mgr=15,$mgt=16,$mgb=16,$mgh=9,$mgf=9, $orientation='P') {
 
 /*-- BACKGROUNDS --*/
 		if (!class_exists('grad', false)) { include(_MPDF_PATH.'classes/grad.php'); }
@@ -1419,7 +1419,7 @@ function _getPageFormat($format) {
 			case 'A': {$format=array(314.65,504.57 );	 break;}		//	'A' format paperback size 111x178mm
 			case 'DEMY': {$format=array(382.68,612.28 );  break;}		//	'Demy' format paperback size 135x216mm
 			case 'ROYAL': {$format=array(433.70,663.30 );  break;}	//	'Royal' format paperback size 153x234mm
-			default: $format = false;
+			//default: $format = false;
 		}
 	return $format;
 }
@@ -12838,7 +12838,7 @@ function WriteHTML($html,$sub=0,$init=true,$close=true) {
 
 	$zproperties = array();
 	if ($sub < 2) { 
-		$this->ReadMetaTags($html); 
+		$this->ReadMetaTags($html);
 
 		// mPDF 5.6.18
 		if (preg_match('/<base[^>]*href=["\']([^"\'>]*)["\']/i', $html, $m)) {
@@ -12872,7 +12872,7 @@ function WriteHTML($html,$sub=0,$init=true,$close=true) {
 
 		}
 	}
-	$properties = $this->cssmgr->MergeCSS('BLOCK','BODY',''); 
+	$properties = $this->cssmgr->MergeCSS('BLOCK','BODY','');
 	if ($zproperties) { $properties = $this->cssmgr->array_merge_recursive_unique($properties,$zproperties); }
 
 	if (isset($properties['DIRECTION']) && $properties['DIRECTION']) {
@@ -12881,7 +12881,7 @@ function WriteHTML($html,$sub=0,$init=true,$close=true) {
 	if (!isset($this->cssmgr->CSS['BODY']['DIRECTION'])) {
 		$this->cssmgr->CSS['BODY']['DIRECTION'] = $this->directionality;   
 	}
-	else { $this->SetDirectionality($this->cssmgr->CSS['BODY']['DIRECTION']); }   
+	else { $this->SetDirectionality($this->cssmgr->CSS['BODY']['DIRECTION']); }
 
 	$this->setCSS($properties,'','BODY'); 
 	$this->blk[0]['InlineProperties'] = $this->saveInlineProperties();
@@ -31995,74 +31995,101 @@ function _colAtoString($cor) {
 	return $s;
 }
 
-function ConvertSize($size=5,$maxsize=0,$fontsize=false,$usefontsize=true){
-// usefontsize - setfalse for e.g. margins - will ignore fontsize for % values
-// Depends of maxsize value to make % work properly. Usually maxsize == pagewidth
-// For text $maxsize = Fontsize
-// Setting e.g. margin % will use maxsize (pagewidth) and em will use fontsize
-  //Identify size (remember: we are using 'mm' units here)
-	$size = trim(strtolower($size));
+	function ConvertSize($size = 5, $maxsize = 0, $fontsize = false, $usefontsize = true)
+	{
+		$scale = 72 / 25.4;
+		// usefontsize - set false for e.g. margins - will ignore fontsize for % values
+		// Depends of maxsize value to make % work properly. Usually maxsize == pagewidth
+		// For text $maxsize = Fontsize
+		// Setting e.g. margin % will use maxsize (pagewidth) and em will use fontsize
+		// Returns values using 'mm' units
+		$size = trim(strtolower($size));
+		$res = preg_match('/^(?P<size>[-0-9.,]+)?(?P<unit>[%a-z-]+)?$/', $size, $parts);
+		if (!$res) {
+			throw new MpdfException(sprintf('Invalid size representation "%s"', $size));
+		}
+		$unit = !empty($parts['unit']) ? $parts['unit'] : null;
+		$size = !empty($parts['size']) ? (float) $parts['size'] : 0.0;
+		switch ($unit) {
+			case 'mm':
+				// do nothing
+				break;
+			case 'cm':
+				$size *= 10;
+				break;
+			case 'pt':
+				$size *= 1 / $scale;
+				break;
+			case 'rem':
+				$size *= ($this->default_font_size / (1 / $scale));
+				break;
+			case '%':
+				if ($fontsize && $usefontsize) {
+					$size *= $fontsize / 100;
+				} else {
+					$size *= $maxsize / 100;
+				}
+				break;
+			case 'in':
+				// mm in an inch
+				$size *= 25.4;
+				break;
+			case 'pc':
+				// PostScript picas
+				$size *= 38.1 / 9;
+				break;
+			case 'ex':
+				// Approximates "ex" as half of font height
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 0.5);
+				break;
+			case 'em':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 1);
+				break;
+			case 'thin':
+				$size = 1 * (25.4 / $this->dpi);
+				break;
+			case 'medium':
+				$size = 3 * (25.4 / $this->dpi);
+				// Commented-out dead code from legacy method
+				// $size *= multiplyFontSize($fontsize, $maxsize, 1);
+				break;
+			case 'thick':
+				$size = 5 * (25.4 / $this->dpi); // 5 pixel width for table borders
+				break;
+			case 'xx-small':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 0.7);
+				break;
+			case 'x-small':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 0.77);
+				break;
+			case 'small':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 0.86);
+				break;
+			case 'large':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 1.2);
+				break;
+			case 'x-large':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 1.5);
+				break;
+			case 'xx-large':
+				$size *= $this->MultiplyFontSize($fontsize, $maxsize, 2);
+				break;
+			case 'px':
+			default:
+				$size *= (25.4 / $this->dpi);
+				break;
+		}
 
-  if ( $size == 'thin' ) $size = 1*(25.4/$this->dpi); //1 pixel width for table borders
-  elseif ( stristr($size,'px') ) $size *= (25.4/$this->dpi); //pixels
-  elseif ( stristr($size,'cm') ) $size *= 10; //centimeters
-  elseif ( stristr($size,'mm') ) $size += 0; //millimeters
-  elseif ( stristr($size,'pt') ) $size *= 25.4/72; //72 pts/inch
-  elseif ( stristr($size,'rem') ) {	// mPDF 5.6.12
-  	$size += 0; //make "0.83rem" become simply "0.83" 
-	$size *= ($this->default_font_size / _MPDFK);
-  }
-  elseif ( stristr($size,'em') ) {
-  	$size += 0; //make "0.83em" become simply "0.83" 
-	if ($fontsize) { $size *= $fontsize; }
-	else { $size *= $maxsize; }
-  }
-  elseif ( stristr($size,'%') ) {
-  	$size += 0; //make "90%" become simply "90" 
-	if ($fontsize && $usefontsize) { $size *= $fontsize/100; }
-	else { $size *= $maxsize/100; }
-  }
-  elseif ( stristr($size,'in') ) $size *= 25.4; //inches 
-  elseif ( stristr($size,'pc') ) $size *= 38.1/9; //PostScript picas 
-  elseif ( stristr($size,'ex') ) {	// Approximates "ex" as half of font height
-  	$size += 0; //make "3.5ex" become simply "3.5" 
-	if ($fontsize) { $size *= $fontsize/2; }
-	else { $size *= $maxsize/2; }
-  }
-  elseif ( $size == 'medium' ) $size = 3*(25.4/$this->dpi); //3 pixel width for table borders
-  elseif ( $size == 'thick' ) $size = 5*(25.4/$this->dpi); //5 pixel width for table borders
-  elseif ($size == 'xx-small') {
-	if ($fontsize) { $size *= $fontsize*0.7; }
-	else { $size *= $maxsize*0.7; }
-  }
-  elseif ($size == 'x-small') {
-	if ($fontsize) { $size *= $fontsize*0.77; }
-	else { $size *= $maxsize*0.77; }
-  }
-  elseif ($size == 'small') {
-	if ($fontsize) { $size *= $fontsize*0.86; }
-	else { $size *= $maxsize*0.86; }
-  }
-  elseif ($size == 'medium') {
-	if ($fontsize) { $size *= $fontsize; }
-	else { $size *= $maxsize; }
-  }
-  elseif ($size == 'large') {
-	if ($fontsize) { $size *= $fontsize*1.2; }
-	else { $size *= $maxsize*1.2; }
-  }
-  elseif ($size == 'x-large') {
-	if ($fontsize) { $size *= $fontsize*1.5; }
-	else { $size *= $maxsize*1.5; }
-  }
-  elseif ($size == 'xx-large') {
-	if ($fontsize) { $size *= $fontsize*2; }
-	else { $size *= $maxsize*2; }
-  }
-  else $size *= (25.4/$this->dpi); //nothing == px
-  
-  return $size;
-}
+		return $size;
+	}
+
+	function MultiplyFontSize($fontsize, $maxsize, $ratio)
+	{
+		if ($fontsize) {
+			return $fontsize * $ratio;
+		}
+		return $maxsize * $ratio;
+	}
 
 
 function lesser_entity_decode($html) {

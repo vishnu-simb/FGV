@@ -12,7 +12,7 @@ var $tbCSSlvl;
 var $listCSSlvl;
 
 
-function cssmgr(&$mpdf) {
+function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 	$this->tablecascadeCSS = array();
 	$this->listcascadeCSS = array();
@@ -317,7 +317,7 @@ function ReadCSS($html) {
 							else { break; }
 						}
 					}
-		   
+
 					if ($tag) {
 						$x = &$this->cascadeCSS; 
 						foreach($tmp AS $tp) { $x = &$x[$tp]; }
@@ -463,7 +463,7 @@ function fixCSS($prop) {
 				$fonttype = preg_replace('/ /','',$fonttype);
 				$v = strtolower(trim($fonttype));
 				if (isset($this->mpdf->fonttrans[$v]) && $this->mpdf->fonttrans[$v]) { $v = $this->mpdf->fonttrans[$v]; }
-				if ((!$this->mpdf->onlyCoreFonts && in_array($v,$this->mpdf->available_unifonts)) || 
+				if ((!$this->mpdf->onlyCoreFonts && in_array($v,$this->mpdf->available_unifonts)) ||
 					in_array($v,array('ccourier','ctimes','chelvetica')) ||
 					($this->mpdf->onlyCoreFonts && in_array($v,array('courier','times','helvetica','arial'))) || 
 					in_array($v, array('sjis','uhc','big5','gb'))) { 
@@ -1073,7 +1073,7 @@ function MergeCSS($inherit,$tag,$attr) {
 	if (isset($attr['CLASS'])) {
 		$classes = preg_split('/\s+/',$attr['CLASS']);
 	}
-	if (!isset($attr['ID'])) { $attr['ID']=''; }
+	if (empty($attr)) { $attr = array();}
 	//===============================================
 /*-- TABLES --*/
 	// Set Inherited properties
