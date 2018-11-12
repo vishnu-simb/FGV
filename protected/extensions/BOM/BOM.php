@@ -222,21 +222,33 @@ class BOM {
         $sub_regions = array();
         if (!empty($location))
         {
-            $url = "http://postcodez.com.au/postcodes.cgi";
+            $url = "https://postcodez.com.au/postcodes.cgi?". http_build_query(array(
+                    'search_suburb' => $location,
+                    'search_state' => 'vic',
+                    'type' => 'search'
+                ));
+
+            // create curl resource
+            $ch = curl_init();
+            // set url
+            curl_setopt($ch, CURLOPT_URL, $url);
+            //return the transfer as a string
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            // $output contains the output string
+            $data = curl_exec($ch);
+
+            /*
             $http = new Fetch($url);
-            $data = $http->post(array(
-                'search_suburb' => $location, 
-                'search_state' => 'vic',
-                'type' => 'search',
-                'x' => '0',
-                'y' => '0'
-            ));
+            $data = $http->get();
+
             if($data->getCode() != 200){
     			throw new Exception('Invalid Location: '.$location);
     		}
             $data = $data->getResponse();
+            */
     		$dom = str_get_dom($data);
             $results = $dom->find('#content .results div.result');
+
             if (!empty($results))
             {
                 foreach($results as $result){
