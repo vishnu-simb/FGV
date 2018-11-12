@@ -381,7 +381,7 @@ foreach($VARS['blocks'] as $block){
 	?>
 </table>
 		
-	<h4>Population Graph</h4>
+	<h4>Moth catching Population Graph</h4>
     <div class="graph">
         <?php
             if (empty($VARS['graphData'][$block->id]))
@@ -391,7 +391,9 @@ foreach($VARS['blocks'] as $block){
 								'options'=>$VARS['graphData'][$block->id]
 						));
         ?>
-        
+    </div>
+    <h4>CLIDS Graph</h4>
+    <div class="graph">
          <?php
             if (empty($VARS['graphMiteData'][$block->id]))
                 echo 'There is no data for Graph.';

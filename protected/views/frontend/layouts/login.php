@@ -60,11 +60,16 @@ $bootstrap = Yii::app()->bootstrap;
         </script>
         <![endif]-->
 
-
         <!-- Favicon -->
-        <link rel="shortcut icon" href="<?= $resourceUrl ?>/img/favicon.png"/>
+        <link rel="shortcut icon" href="<?php echo $resourceUrl ?>/img/favicon.ico"/>
         <!-- Apple devices Homescreen icon -->
-        <link rel="apple-touch-icon-precomposed" href="<?= $resourceUrl ?>/img/apple-touch-icon-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $resourceUrl ?>/img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $resourceUrl ?>/img/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $resourceUrl ?>/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $resourceUrl ?>/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $resourceUrl ?>/img/favicon-16x16.png">
+        <link rel="manifest" href="<?php echo $resourceUrl ?>/img/site.webmanifest">
+        <link rel="mask-icon" href="<?php echo $resourceUrl ?>/img/safari-pinned-tab.svg" color="#5bbad5">
 
     </head>
 
