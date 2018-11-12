@@ -20,6 +20,16 @@ jQuery(document).ready(function() {
             }
         });
     }
+    $('#observation_url').change(function(){
+        var val = $(this).val();
+        if (val.length > 0){
+            var observation_code = val.split('/').pop();
+            observation_code = observation_code.replace('.latest','').replace('.shtml', '');
+            if (observation_code.length){
+                $('#Location_observation').val(observation_code);
+            }
+        }
+    });
 });
 ");
 
@@ -56,6 +66,13 @@ jQuery(document).ready(function() {
             <div class="box-content nopadding">
                 <div class="span6">
                     <?php echo $form->textFieldControlGroup($modelLocation, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('name'))); ?>
+                    <div class="control-group">
+                        <label class="control-label" for="observation_url">Observation helper</label>
+                        <div class="controls">
+                            <span style="font-style: italic; font-size: 90%; margin-bottom: 5px; display: block;">Retrieve observation from url</span>
+                            <input maxlength="100" class="input-xlarge" placeholder="Enter URL" id="observation_url" type="text">
+                        </div>
+                    </div>
                     <?php echo $form->textFieldControlGroup($modelLocation, 'observation', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('observation'))); ?>
                     <?php echo $form->textFieldControlGroup($modelLocation, 'forcast', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelLocation->getAttributeLabel('forcast'))); ?>
 				    <div class="control-group">
