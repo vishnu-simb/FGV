@@ -9,6 +9,7 @@
 
 $clientScript = Yii::app()->clientScript;
 $resourceUrl = $clientScript->staticUrl . '/flatapp';
+$themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
 ?>
 <div id="navigation">
     <div class="container-fluid">
@@ -224,12 +225,12 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
             <div class="dropdown">
                 <a href="#" class='dropdown-toggle' data-toggle="dropdown"><?php echo Yii::app()->user->name ?>
                 <?php
-                    $avatar_url = $resourceUrl. '/img/demo/user-avatar.jpg';
+                    $avatar_url = $themeUrl.'/img/user-avatar.png';
                     $user = Yii::app()->user->isGrower();
                     if ($user && !empty($user->avatar) && file_exists(Yii::app()->basePath.'/../avatars/'.$user->avatar.'_27x27.jpg'))
                         $avatar_url = '/avatars/'.$user->avatar.'_27x27.jpg';
                 ?>
-                    <img src="<?php echo $avatar_url ?>" alt=""/>
+                    <img src="<?php echo $avatar_url ?>" alt="" style="height: 27px;"/>
                 </a>
                 <?php
                 $this->widget(

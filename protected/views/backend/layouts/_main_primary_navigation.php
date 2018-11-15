@@ -9,6 +9,7 @@
 
 $clientScript = Yii::app()->clientScript;
 $resourceUrl = $clientScript->staticUrl . '/flatapp';
+$themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
 ?>
 <div id="navigation">
     <div class="container-fluid">
@@ -179,7 +180,7 @@ $resourceUrl = $clientScript->staticUrl . '/flatapp';
 
             <div class="dropdown">
                 <a href="#" class='dropdown-toggle' data-toggle="dropdown"><?php echo Yii::app()->user->name ?> <img
-                        src="<?php echo $resourceUrl ?>/img/demo/user-avatar.jpg" alt=""></a>
+                        src="<?= $themeUrl ?>/img/user-avatar.png" alt="" style="height: 27px;"></a>
                 <?php
                 $this->widget(
                     'bootstrap.widgets.TbMenu',

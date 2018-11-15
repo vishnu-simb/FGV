@@ -156,7 +156,7 @@ foreach($VARS['blocks'] as $block){
 		<table class="page_footer">
 			<tr>
 				<td style="width: 100%; text-align: right">
-					Created by Fruit Growers Victoria. Report problems to <b>fido@fgv.com.au</b>
+					Created by Fruit Growers Victoria. Report problems to <b>growerservices@fgv.com.au</b>
 				</td>
 			</tr>
 		</table>

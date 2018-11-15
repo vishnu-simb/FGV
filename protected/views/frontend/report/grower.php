@@ -438,7 +438,7 @@ foreach($VARS['blocks'] as $block){
 <input type="hidden" id="grower_id" value="<?=$VARS['grower']->id?>" />
 <input type="hidden" id="date_from" value="<?=$VARS['dateRange']['date_from']?>" />
 <input type="hidden" id="date_to" value="<?=$VARS['dateRange']['date_to']?>" />
-<div id="print-footer">Created by Fruit Growers Victoria. Report problems to <b>fido@fgv.com.au</b></div>
+<div id="print-footer">Created by Fruit Growers Victoria. Report problems to <b>growerservices@fgv.com.au</b></div>
 <script>
 	$( document ).ready(function(){
 		console.log($('#yw0'));

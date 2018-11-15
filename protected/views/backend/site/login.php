@@ -17,7 +17,10 @@ $bootstrap = Yii::app()->bootstrap;
 ?>
 <!--  <h1><a href="index.html"><img src="<?= $themeUrl ?>/img/logo_bwf.jpg" alt="Main Logo" class='retina-ready' width="179" height="55"> BWF </a>
 </h1>-->
-
+<div class="logos" style="text-align: center;">
+    <img src="<?= $themeUrl ?>/img/growfruit.png" alt="Grow fruit Logo" style="height: 70px">&nbsp;
+    <img src="<?= $themeUrl ?>/img/fgvl_logo.png" alt="FGV Logo" style="height: 70px">
+</div>
 <div class="login-body">
     <h2><?= Yii::t('app', 'LOG IN') ?></h2>
 
