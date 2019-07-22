@@ -202,7 +202,15 @@ $bootstrap = Yii::app()->bootstrap;
                         <div class="pull-left">
                             <h1><?php echo $this->pageTitle ?></h1>
                         </div>
-
+                        <?php
+                            if(trim($this->pageTitle) == 'Trapping') {
+                                if (!empty($this->foundGrowerIDs)) {
+                        ?>
+                                    <div class="header-btns"><a target="_blank" href="/trapping/xls/<?=$this->foundGrowerIDs ?>">Export to XLS</a></div>
+                        <?php
+                                }
+                            }
+                        ?>
                     </div>
                     <div class="mobile-submenu">
                         <?php

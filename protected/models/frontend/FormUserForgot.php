@@ -61,7 +61,7 @@ class FormUserForgot extends SimbFormModel
     	$model = $this->checkExistence();
     	if ($model){
     		$model->generateResetpasswordKey(); // generate resetpassword key
-    		if (!$model->save(false)){
+    		if (!$model->save(false, array('resetpassword_key'))){
     			$email = Yii::app()->params['adminEmail'];
     			throw new CHttpException(404,Yii::t("app","Something went wrong please contact administrator @ {$email}"));
     		}

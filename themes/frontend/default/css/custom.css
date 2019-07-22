@@ -78,8 +78,14 @@ select + span.help-inline, textarea + span.help-inline, input[type="text"] + spa
 }
 .right-cell{text-align: right!important;}
 
+#main .page-header{position: relative}
 #main .page-header .pull-left h1{
     line-height: 36px;
+}
+#main .page-header .header-btns{
+    position: absolute;
+    left: 50%;
+    top: 30px;
 }
 
 

@@ -2,7 +2,7 @@
 
 class TrappingController extends SimbController
 {
-	
+	public $foundGrowerIDs = '';
 	/**
 	 * @return array action filters
 	 */
@@ -258,14 +258,20 @@ class TrappingController extends SimbController
 		$modelTrapCheck = new TrapCheck();
 		$modelGrower = new Grower();
 		$modelGrower->unsetAttributes();  // clear any default values
-		$search = false;
+        $search = false;
         if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
         {
             $modelGrower->id = Yii::app()->user->id;
 			$search = true;
+            $this->foundGrowerIDs = Yii::app()->user->id;
         }else if (isset($_GET['Grower'])) {
 			$modelGrower->attributes = $_GET['Grower'];
-			$search = true;
+            $search = true;
+            $ids = array();
+            foreach($modelGrower->search()->getData() as $grower){
+                $ids[] = $grower->id;
+            }
+            $this->foundGrowerIDs = implode($ids,",");
 		}
 		if(isset($_POST['Traps'])){
 			try{
@@ -295,6 +301,65 @@ class TrappingController extends SimbController
 				'search' => $search,
 		));
 	}
+
+    public function actionXls()
+    {
+        $growerIDs = explode(',', $_GET['ids']);
+        if(!empty($growerIDs)){
+            $columns = array(' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z');
+            spl_autoload_unregister(array('YiiBase', 'autoload'));
+            require_once Yii::app()->basePath . '/vendors/PHPExcel/PHPExcel.php';
+            spl_autoload_register(array('YiiBase', 'autoload'));
+            $objPHPExcel = new PHPExcel();
+            // Set document properties
+            $objPHPExcel->getProperties()->setCreator("Fruit Growers Victoria")
+                ->setLastModifiedBy("Fruit Growers Victoria")
+                ->setTitle("Trapping Export Document")
+                ->setSubject("Trapping Export Document")
+                ->setDescription("Trapping export document")
+                ->setKeywords("office 2007 openxml php customer export")
+                ->setCategory("Trapping export");
+
+            $header_text = array('Grower','Property','Block','Pest','Trap','Date','Value');
+            $number_of_columns = count($header_text);
+
+            for($col_index = 1; $col_index <= $number_of_columns; $col_index++)
+                $objPHPExcel->getActiveSheet()->getColumnDimension($columns[$col_index])->setAutoSize(true);
+
+            $col_index = 1;
+            foreach($header_text as $header)
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].'1', $header);
+
+
+            $row_index = 2;
+            $modelTrapCheck = new TrapCheck();
+            foreach($growerIDs as $growerId){
+                $recentTrappings = $modelTrapCheck->getRecentTrappings($growerId);
+                foreach($recentTrappings->getData() as $record){
+                    $col_index = 1;
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['grower_name']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['property_name']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['block_name']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['pest_name']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['trap_name']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['date']);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index++, $record['trap_check_number']);
+                    //echo implode(", ", $record).'<br/>';
+                }
+            }
+
+            // Rename worksheet
+            $objPHPExcel->getActiveSheet()->setTitle('Trapping export - '. date('Ymd'));
+
+
+            // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+            $objPHPExcel->setActiveSheetIndex(0);
+
+            $filename = "TrappingExport_". date('Ymd');
+            $this->_export($objPHPExcel, $filename);
+        }
+
+    }
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -339,5 +404,31 @@ class TrappingController extends SimbController
 				),
 		);
 	}
+
+	protected function _export($objPHPExcel, $filename)
+    {
+        $folderPath = Yii::app()->basePath. '/export/';
+        if (!is_dir($folderPath))
+            mkdir($folderPath);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $filePath = $folderPath. $filename. '.xlsx';
+        $objWriter->save($filePath);
+        if (file_exists($filePath))
+        {
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+            header('Cache-Control: max-age=0');
+            // If you're serving to IE 9, then the following may be needed
+            header('Cache-Control: max-age=1');
+
+            // If you're serving to IE over SSL, then the following may be needed
+            header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+            header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+            header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+            header ('Pragma: public'); // HTTP/1.0
+            readfile($filePath);
+            Yii::app()->end();
+        }
+    }
 	
 }
