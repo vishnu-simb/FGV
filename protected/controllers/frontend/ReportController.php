@@ -288,7 +288,7 @@ class ReportController extends SimbController
 	/**
 	 * Manages all models.
 	 */
-	public function actionGrower($id, $year = '')
+	public function actionGrower($id, $year = '', $block_id = '')
 	{
         $grower = $this->loadModel($id);
 		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Report for '. $grower->name);
@@ -334,6 +334,8 @@ class ReportController extends SimbController
 			$blocks = $property->getBlocks();
 
 			foreach($blocks as $block){
+			    if($block_id && $block->id != $block_id)
+			        continue;
 				$VARS['blocks'][] = $block;
 				//$VARS['sprayDates'][$block->getId()] = $sprayDates;
 				
@@ -378,14 +380,16 @@ class ReportController extends SimbController
 				
                 if (empty($VARS['graphData'][$block->id]))
 				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower, $year);
-                
+
+                /* 2019-07-22 CLIDS Graph
                 if (empty($VARS['graphMiteData'][$block->id]))
                 	$VARS['graphMiteData'][$block->id] = $this->getMite($block, $grower, $year);
+                */
 				
 			}
 		}
         //$VARS['email'] = $this->email;
-        $VARS['link'] = Yii::app()->baseUrl. '/report/grower/'.$grower->id;
+        $VARS['link'] = Yii::app()->baseUrl. '/report/grower/'.$grower->id.($year?"/$year":'').($block_id?"/$block_id":'');
 		$this->render('grower', array(
                 'VARS' => $VARS
 		));

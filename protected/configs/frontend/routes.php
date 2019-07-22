@@ -13,6 +13,7 @@ return array(
     'location/update/<id:\w+>' => 'location/update',
     'location/delete/<id:\w+>' => 'location/delete',
 	'report/grower/<id:\w+>/<year:\w+>' => 'report/grower',
+    'report/grower/<id:\w+>/<year:\w+>/<block_id:\w+>' => 'report/grower',
 	'report/pdf/<id:\w+>/<year:\w+>' => 'report/pdf',
     '<controller:\w+>/<id:\d+>' => '<controller>/view',
     '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',

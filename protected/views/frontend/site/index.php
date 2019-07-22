@@ -27,13 +27,25 @@ Yii::app()->clientScript->registerScript('index',"
 	//drawMiteMonitoringChart();
 	/* handle report by GrowerID */
 	$('.clickable').change(function(){ 
-		var url = 'report/grower/'+$(this).val()+'/'+reportYear;
-		if(url.length){
-            myWin = window.open(siteUrl+url,'_blank');
-            if (myWin == undefined) 
-                window.location  = siteUrl+url;
-            $('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
-		}
+	    if($(this).hasClass('grower-name')){
+            var url = 'report/grower/'+$(this).val()+'/'+reportYear;
+            if(url.length){
+                myWin = window.open(siteUrl+url,'_blank');
+                if (myWin == undefined) 
+                    window.location  = siteUrl+url;
+                $('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
+            }
+	    }else if($(this).hasClass('blockable')){
+	        var grower_name = $('#Grower_name').val();
+	        var url = 'report/grower/'+grower_name+'/'+reportYear+'/'+$(this).val();
+	        console.log(url);
+            if(url.length){
+                myWin = window.open(siteUrl+url,'_blank');
+                if (myWin == undefined) 
+                    window.location  = siteUrl+url;
+                $('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
+            }
+	    }
 	});
 	$('.blockable').change(function(){
 		var t = $('#Block_id').find('option[value=\"'+$('#Block_id').val()+'\"]');
