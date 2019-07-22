@@ -392,6 +392,7 @@ foreach($VARS['blocks'] as $block){
 						));
         ?>
     </div>
+    <?php /* 2019-07-22 CLIDS Graph
     <h4>CLIDS Graph</h4>
     <div class="graph">
          <?php
@@ -403,6 +404,7 @@ foreach($VARS['blocks'] as $block){
 						));
         ?>
     </div>
+    */ ?>
 
 	<h4>Spray Logs</h4>
 	<table>
