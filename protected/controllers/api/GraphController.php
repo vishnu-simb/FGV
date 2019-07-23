@@ -134,23 +134,32 @@ class GraphController extends SimbApiController {
             $m = strtotime($dates['date_from']);
     		$e = strtotime($dates['date_to']);
     		foreach($keys_arr as $r){
+    		    $has_trap = 0;
     			$mm = $m;
     			$sedat = array();
     			while($mm < $e)
     			{
     				if(date($mm) < date(time())){
 	    				$dd = 0;
+	    				$has_record = 0;
 	    				foreach($data as $val){
 	    					
 	    					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+                                $has_record = 1;
 	    						$dd += intval($val["tc_value"]);
 	    					}
 	    				}
-                        $sedat[] = $dd;
+	    				if($has_record){
+                            $sedat[] = array('y' => $dd, 'color' => darken_color(Pest::PestColor($r)));
+                            $has_trap = 1;
+                        }else{
+                            $sedat[] = $dd;
+                        }
     				}
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
+    			if($has_trap)
+    			    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
     		}
     
     	}
@@ -160,7 +169,7 @@ class GraphController extends SimbApiController {
     		$VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
     		//$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
-    		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+    		$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4));
             $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom, 'max' => strtotime($dates['date_to'])*1000);
     		$VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
     		$VAR['series'] = $serial;

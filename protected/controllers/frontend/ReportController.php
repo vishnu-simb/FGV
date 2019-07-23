@@ -87,22 +87,31 @@ class ReportController extends SimbController
         $max_value = 0;
     	if(!empty($keys_arr)){
     		foreach($keys_arr as $r){
+                $has_trap = 0;
     			$mm = $min_time;
     			$sedat = array();
     			while($mm <= $max_time)
     			{
     				$dd = 0;
+                    $has_record = 0;
     				foreach($data as $val){
     					if($val["tc_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+                            $has_record = 1;
     						$dd += intval($val["tc_value"]);
                             if ($max_value < $dd)
                                 $max_value = $dd;
     					}
     				}
-					$sedat[] = $dd;
+                    if($has_record){
+                        $sedat[] = array('y' => $dd, 'color' => darken_color(Pest::PestColor($r)));
+                        $has_trap = 1;
+                    }else{
+                        $sedat[] = $dd;
+                    }
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			$serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
+                if($has_trap)
+    			    $serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
     		}
     		
     	}
@@ -111,7 +120,7 @@ class ReportController extends SimbController
 			$VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
 			$VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-			$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>false)));
+			$VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4));
             $VAR['xAxis'] = array(
                 'type' => 'datetime',
                 'maxZoom' => 14 * 24 * 3600000, // fourteen days,
