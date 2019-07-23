@@ -36,6 +36,8 @@ Yii::app()->clientScript->registerScript('index',"
                 $('.clickable').removeAttr('selected').val('').eq(1).attr('selected','selected');
             }
 	    }else if($(this).hasClass('blockable')){
+	        if($(this).val() == -1)
+	            return;
 	        var grower_name = $('#Grower_name').val();
 	        var url = 'report/grower/'+grower_name+'/'+reportYear+'/'+$(this).val();
 	        console.log(url);

@@ -78,12 +78,12 @@
                                         'data'=>array('grower_id'=>'js:this.value', 'show_all' => 1),
                                         'success'=> 'function(data) { 
     		                                 $("#Block_id_for_report").empty();
-    		                                 $("#Block_id_for_report").append(data + "<option value=\"\">ALL BLOCKS</option>");
+    		                                 $("#Block_id_for_report").append("<option value=\"-1\"> - Select Block</option><option value=\"\">ALL BLOCKS</option>" + data);
     		                                 $("#Block_id_for_report").trigger("liszt:updated");
     							  		} ',)
                                 )
                             );?>
-                            <?php echo $form->dropDownList($modelBlock, 'id', array('' => ' - Select Block'), array('class' => 'blockable clickable select2-me input-xlarge', 'id' => 'Block_id_for_report')); ?>
+                            <?php echo $form->dropDownList($modelBlock, 'id', array('-1' => ' - Select Block'), array('class' => 'blockable clickable select2-me input-xlarge', 'id' => 'Block_id_for_report')); ?>
                         </div>
                         <div class="clearfix"></div>
                         <br />
