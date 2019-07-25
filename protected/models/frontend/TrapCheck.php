@@ -32,7 +32,15 @@ class TrapCheck extends CommonTrapCheck
 	
 	}
 
-	public function getRecentTrappings($growerId){
+	public function getRecentTrappings($growerId, $dateFrom = '', $dateTo = ''){
+        $whereStr = '';
+	    if($dateFrom && $dateTo){
+	        $whereStr = " AND tc.date >= '$dateFrom' AND tc.date <= '$dateTo' ";
+        }elseif($dateFrom){
+            $whereStr = " AND tc.date >= '$dateFrom' ";
+        }elseif($dateTo){
+            $whereStr = " AND tc.date <= '$dateTo' ";
+        }
         $sql="SELECT g.name as grower_name, p.name as property_name, b.name as block_name, pt.name as pest_name, t.name as trap_name, tc.date, tc.value as trap_check_number
 		FROM ".$this->tableName()." tc
 		INNER JOIN ".Trap::model()->tableName()." t ON tc.trap_id = t.id
@@ -40,8 +48,9 @@ class TrapCheck extends CommonTrapCheck
 		INNER JOIN ".Block::model()->tableName()." b ON t.block_id = b.id
 		INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
 		INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id 
-		WHERE g.id = $growerId 
+		WHERE g.id = $growerId $whereStr
 		ORDER BY g.name, p.name, b.name, pt.name, t.name ASC, tc.date DESC";
-        return new CSqlDataProvider($sql);
+        return Yii::app()->db->createCommand($sql)->queryAll();
+        //return new CSqlDataProvider($sql);
     }
 }

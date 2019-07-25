@@ -80,6 +80,24 @@ class DateHelper
     	   return date('d-M-Y',$time);
         return null;
     }
+    static function convertToIsoDate($input, $input_format = '')
+    {
+        if (empty($input))
+            return null;
+        if(empty($input_format))
+        {
+            $d = explode('/', $input);
+            if (count($d) != 3)
+                return null;
+            return $d[2].'-'.$d[1].'-'.$d[0];
+        }
+        else
+        {
+            $myDateTime = DateTime::createFromFormat($input_format, $input);
+            return $myDateTime->format('Y-m-d');
+        }
+        return null;
+    }
 }
 
 function darken_color($rgb, $darker=2) {

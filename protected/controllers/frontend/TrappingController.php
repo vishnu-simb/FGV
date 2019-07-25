@@ -2,7 +2,6 @@
 
 class TrappingController extends SimbController
 {
-	public $foundGrowerIDs = '';
 	/**
 	 * @return array action filters
 	 */
@@ -263,7 +262,7 @@ class TrappingController extends SimbController
         {
             $modelGrower->id = Yii::app()->user->id;
 			$search = true;
-            $this->foundGrowerIDs = Yii::app()->user->id;
+            $foundGrowerIDs = Yii::app()->user->id;
         }else if (isset($_GET['Grower'])) {
 			$modelGrower->attributes = $_GET['Grower'];
             $search = true;
@@ -271,7 +270,7 @@ class TrappingController extends SimbController
             foreach($modelGrower->search()->getData() as $grower){
                 $ids[] = $grower->id;
             }
-            $this->foundGrowerIDs = implode($ids,",");
+            $foundGrowerIDs = implode($ids,",");
 		}
 		if(isset($_POST['Traps'])){
 			try{
@@ -299,13 +298,20 @@ class TrappingController extends SimbController
 				'dataProvider' => $modelTrapCheck->SearchRecentTrapings(),
 				'modelGrower' => $modelGrower,
 				'search' => $search,
+                'foundGrowerIDs' => $foundGrowerIDs
 		));
 	}
 
     public function actionXls()
     {
-        $growerIDs = explode(',', $_GET['ids']);
+        $growerIDs = explode(',', $_POST['ids']);
         if(!empty($growerIDs)){
+            $date_from = $date_to = '';
+            $dates = explode(' - ', $_POST['dates']);
+            if(!empty($dates) && !empty($dates[0])){
+                $date_from = DateHelper::convertToIsoDate($dates[0], 'd/m/y');
+                $date_to = DateHelper::convertToIsoDate($dates[1], 'd/m/y');
+            }
             $columns = array(' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z');
             spl_autoload_unregister(array('YiiBase', 'autoload'));
             require_once Yii::app()->basePath . '/vendors/PHPExcel/PHPExcel.php';
@@ -330,13 +336,14 @@ class TrappingController extends SimbController
             foreach($header_text as $header)
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].'1', $header);
 
-
+            $growerName = '';
             $row_index = 2;
             $modelTrapCheck = new TrapCheck();
             foreach($growerIDs as $growerId){
-                $recentTrappings = $modelTrapCheck->getRecentTrappings($growerId);
-                foreach($recentTrappings->getData() as $record){
+                $recentTrappings = $modelTrapCheck->getRecentTrappings($growerId, $date_from, $date_to);
+                foreach($recentTrappings as $record){
                     $col_index = 1;
+                    $growerName = $record['grower_name'];
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['grower_name']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['property_name']);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['block_name']);
@@ -354,8 +361,10 @@ class TrappingController extends SimbController
 
             // Set active sheet index to the first sheet, so Excel opens this as the first sheet
             $objPHPExcel->setActiveSheetIndex(0);
-
-            $filename = "TrappingExport_". date('Ymd');
+            if(count($growerIDs) == 1 && $growerName)
+                $filename = "TrappingExport_".$growerName."_". date('Ymd');
+            else
+                $filename = "TrappingExport_". date('Ymd');
             $this->_export($objPHPExcel, $filename);
         }
 
