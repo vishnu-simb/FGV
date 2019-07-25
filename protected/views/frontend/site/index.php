@@ -39,7 +39,7 @@ Yii::app()->clientScript->registerScript('index',"
 	        if($(this).val() == -1)
 	            return;
 	        var grower_name = $('#Grower_name').val();
-	        var url = 'report/grower/'+grower_name+'/'+reportYear+'/'+$(this).val();
+	        var url = 'report/grower/'+grower_name+'/'+reportYear+'/'+($(this).val()!='/'?$(this).val():'');
 	        console.log(url);
             if(url.length){
                 myWin = window.open(siteUrl+url,'_blank');
