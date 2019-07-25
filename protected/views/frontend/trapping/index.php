@@ -1,7 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScript('trapping',"
     $('.trapping-daterangepick').daterangepicker(
-        {format: 'DD/MM/YYYY'}
+        {format: 'DD/MM/YY'}
     );
 ");
 

@@ -298,7 +298,7 @@ class TrappingController extends SimbController
 				'dataProvider' => $modelTrapCheck->SearchRecentTrapings(),
 				'modelGrower' => $modelGrower,
 				'search' => $search,
-                'foundGrowerIDs' => $foundGrowerIDs
+                'foundGrowerIDs' => !empty($foundGrowerIDs)?$foundGrowerIDs:null
 		));
 	}
 
@@ -362,7 +362,7 @@ class TrappingController extends SimbController
             // Set active sheet index to the first sheet, so Excel opens this as the first sheet
             $objPHPExcel->setActiveSheetIndex(0);
             if(count($growerIDs) == 1 && $growerName)
-                $filename = "TrappingExport_".$growerName."_". date('Ymd');
+                $filename = "TrappingExport_".str_replace(' ', '_', $growerName)."_". date('Ymd');
             else
                 $filename = "TrappingExport_". date('Ymd');
             $this->_export($objPHPExcel, $filename);
