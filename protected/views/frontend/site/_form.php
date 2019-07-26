@@ -102,6 +102,7 @@
     										 if(typeof g.html() != "undefined")
     										 $("h1").html(g.html()+": "+t.html());
     										 $("#yw0").html("");
+    										 $("#s2id_Block_id a.select2-choice span").html(t.html());
     										 drawTrapCheckChart();
     										 loadSprayTable();
     										 drawMiteMonitoringChart();

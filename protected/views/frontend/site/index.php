@@ -115,6 +115,16 @@ Yii::app()->clientScript->registerScript('index',"
 			loadSprayTable();
 		}
 	});
+	$('.toggleMitemonitoring').click(function(){
+	    if($('.mitemonitoring-graph').hasClass('hidden-phone')){
+	        $('#yw1').html('<h4 style=\"text-align:center;\">Loading..</h4>');
+	        drawMiteMonitoringChart();
+	        $('.toggleMitemonitoring').html('Hide Mite Monitoring Graph');
+	    }else{
+	        $('.toggleMitemonitoring').html('Show Mite Monitoring Graph');
+	    }
+		$('.mitemonitoring-graph').toggleClass('hidden-phone');
+	});
 	function loadBlock(){
 	    loading = 1;
 		$.ajax({
@@ -311,7 +321,7 @@ Yii::app()->clientScript->registerScript('index',"
 					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr></tbody></table>
 				</div>
 			</div>
-			<div id="graph" class="trapchecking-graph">
+			<div id="trapchecking-graph" class="trapchecking-graph">
 			<?php
 					$this->Widget('ext.highcharts.HighchartsWidget', array(
 							'options'=>array(
@@ -331,8 +341,8 @@ Yii::app()->clientScript->registerScript('index',"
 			</div>
 		</div>
 		<div class="box month-graphs">
-			<div class="box-title"></div>
-			<div id="graph" class="mitemonitoring-graph">
+            <div class="hidden-desktop" style="text-align: center;"><button style="color: white;" class="toggleMitemonitoring btn btn-warning">Show Mite Monitoring Graph</button></div>
+			<div id="mitemonitoring-graph" class="mitemonitoring-graph hidden-phone">
 			<?php
 					$this->Widget('ext.highcharts.HighchartsWidget', array(
 							'options'=>array(
