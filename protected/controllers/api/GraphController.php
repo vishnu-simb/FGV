@@ -175,7 +175,7 @@ class GraphController extends SimbApiController {
     				}
     				$mm = strtotime('+1 day', $mm); // increment for loop
     			}
-    			if($has_trap)
+    			if($has_trap || 1)
     			    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
     		}
     
@@ -387,9 +387,13 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
-        $max_value = max(max($this->Pest_CLID));
-        if ($max_value < 3500)
+    	if(!empty(max($this->Pest_CLID))){
+            $max_value = max(max($this->Pest_CLID));
+            if ($max_value < 3500)
+                $max_value = 3500;
+        }else
             $max_value = 3500;
+
         
         //Get average pest/mite
         $avg = $this->getAverageMite($dates, $this->block->property->location_id);        
@@ -538,8 +542,11 @@ class GraphController extends SimbApiController {
     		
     	}
     	$serial[] = $this->Pest_CLID;
-        $max_value = max(max($this->Pest_CLID));
-        if ($max_value < 3500)
+        if(!empty(max($this->Pest_CLID))){
+            $max_value = max(max($this->Pest_CLID));
+            if ($max_value < 3500)
+                $max_value = 3500;
+        }else
             $max_value = 3500;
         
         //Get average pest/mite
