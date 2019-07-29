@@ -206,6 +206,25 @@ table.dataTable .filter-container #TrapCheck_value{
     }
 }
 
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 2){
+    /* For iPad Pro only */
+    .visible-tablet {
+        display: inherit !important;
+    }
+    .hidden-tablet {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)  {
+    .visible-tablet {
+        display: inherit !important;
+    }
+    .hidden-tablet {
+        display: none !important;
+    }
+}
+
 @media (max-width: 1024px) {
     .form-horizontal.form-search-advanced .span6 .control-label{
         width: 80px;
