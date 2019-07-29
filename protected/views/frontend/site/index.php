@@ -77,6 +77,7 @@ Yii::app()->clientScript->registerScript('index',"
 		$('#graphYear').val(year);
         $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
 		$('#yw0').html('');
+		$('#graphMonth').val('');
         loading = 1;
 		drawTrapCheckChart();
 		drawMiteMonitoringChart();
@@ -89,10 +90,17 @@ Yii::app()->clientScript->registerScript('index',"
 		    $('#graphYear').val(year);
             $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
 			$('#yw0').html('');
+			$('#graphMonth').val('');
             loading = 1;
     		drawTrapCheckChart();
     		drawMiteMonitoringChart();
 		}
+	});
+	
+	$('#graphMonth').change(function(){
+	    loading = 1;
+		drawTrapCheckChart();
+		drawMiteMonitoringChart();
 	});
     
 	/*
@@ -152,7 +160,7 @@ Yii::app()->clientScript->registerScript('index',"
         $('.month-graphs').show();
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockTrap?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val(),
+				  url: siteUrl + 'api/graph/getBlockTrap?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val()+'&month='+$('#graphMonth').val(),
 				  success: function (data)
 				   {
 					  		var jgraph = JSON.parse(data);
@@ -203,7 +211,7 @@ Yii::app()->clientScript->registerScript('index',"
         $('.month-graphs').show();
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockMite?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val(),
+				  url: siteUrl + 'api/graph/getBlockMite?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val()+'&month='+$('#graphMonth').val(),
 				  success: function (data)
 				   {
 					  		var jgraph = JSON.parse(data);
@@ -318,7 +326,24 @@ Yii::app()->clientScript->registerScript('index',"
                     ?></span></h2></span>
                     <input type="hidden" id="graphYear" value="<?=$m>8?$y+1:$y?>" />
 					<span class="fc-button fc-button-next fc-state-default fc-corner-left fc-corner-right">
-					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span></td><td class="fc-header-right"></td></tr></tbody></table>
+					<span class="fc-button-inner"><span class="fc-button-content"><i class="icon-chevron-right"></i></span></span></span>
+                    <br/>
+                    <select class="select2-me input-xlarge" id="graphMonth">
+                        <option value="">- All Months</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                    </select>
+                    </td><td class="fc-header-right"></td></tr></tbody></table>
 				</div>
 			</div>
 			<div id="trapchecking-graph" class="trapchecking-graph">

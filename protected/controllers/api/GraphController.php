@@ -104,10 +104,27 @@ class GraphController extends SimbApiController {
     private function _get_filter_dates($year = '')
     {
         /* From August to July */
-        $dates = array(
-            'date_from' => ($year-1).'-08-01',
-            'date_to' => $year.'-07-31'
-        );
+        if(!empty($_GET['month'])){
+            $m = intval($_GET['month']);
+            if($m >= 8 && $m <= 12){
+                $strDate = ($year-1)."-$m-01";
+                $dates = array(
+                    'date_from' => date('Y-m-01', strtotime($strDate)),
+                    'date_to' => date('Y-m-t', strtotime($strDate))
+                );
+            }else{
+                $strDate = "$year-$m-01";
+                $dates = array(
+                    'date_from' => date('Y-m-01', strtotime($strDate)),
+                    'date_to' => date('Y-m-t', strtotime($strDate))
+                );
+            }
+        }else{
+            $dates = array(
+                'date_from' => ($year-1).'-08-01',
+                'date_to' => $year.'-07-31'
+            );
+        }
         return $dates;
     }
 	
@@ -182,13 +199,11 @@ class GraphController extends SimbApiController {
       				$inverse[$spray][$pest] = $date;
       			}
       		}
-            $pm = $spraydates =array();
+            $pm = $spraydates = array();
             foreach($inverse as $sprayNo=>$vv){
         		if($vv){
         			$number_ordinal = Number::Ordinal($sprayNo);
-        			
         			foreach($vv as $pest=>$spray){
-        				
         				if($spray){
         					$date = $spray->getDate($this->block,false,$year);
         					$ds = strtotime($date);
@@ -208,7 +223,8 @@ class GraphController extends SimbApiController {
                                     $spraydates["$pest $number_ordinal<br/>(2nd Cohort)"] = $ds*1000;
         					}
         				}
-        			}foreach($vv as $pest=>$spray){
+        			}
+        			foreach($vv as $pest=>$spray){
         				if($spray){
                             $ds = strtotime($spray->getCoverRequired($this->block,false,$year));
                             if ($ds >= $m && $ds <= $e)
