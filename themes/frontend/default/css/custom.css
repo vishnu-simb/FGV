@@ -198,20 +198,20 @@ table.dataTable .filter-container #TrapCheck_value{
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
     /* For landscape layouts only */
-    .visible-tablet {
+    .visible-tablet, visible-phone {
         display: inherit !important;
     }
-    .hidden-tablet {
+    .hidden-tablet, hidden-phone {
         display: none !important;
     }
 }
 
 @media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 2){
     /* For iPad Pro only */
-    .visible-tablet {
+    .visible-tablet, visible-phone {
         display: inherit !important;
     }
-    .hidden-tablet {
+    .hidden-tablet, hidden-phone {
         display: none !important;
     }
 }

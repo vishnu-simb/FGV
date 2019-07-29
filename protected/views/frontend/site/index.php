@@ -124,14 +124,14 @@ Yii::app()->clientScript->registerScript('index',"
 		}
 	});
 	$('.toggleMitemonitoring').click(function(){
-	    if($('.mitemonitoring-graph').hasClass('hidden-phone')){
+	    if($('.mitemonitoring-graph').hasClass('hidden-tablet')){
 	        $('#yw1').html('<h4 style=\"text-align:center;\">Loading..</h4>');
 	        drawMiteMonitoringChart();
 	        $('.toggleMitemonitoring').html('Hide Mite Monitoring Graph');
 	    }else{
 	        $('.toggleMitemonitoring').html('Show Mite Monitoring Graph');
 	    }
-		$('.mitemonitoring-graph').toggleClass('hidden-tablet');
+		$('.mitemonitoring-graph').toggleClass('hidden-tablet').toggleClass('hidden-phone');
 	});
 	function loadBlock(){
 	    loading = 1;
@@ -366,8 +366,8 @@ Yii::app()->clientScript->registerScript('index',"
 			</div>
 		</div>
 		<div class="box month-graphs">
-            <div class="visible-tablet" style="text-align: center;"><button style="color: white;" class="toggleMitemonitoring btn btn-warning">Show Mite Monitoring Graph</button></div>
-			<div id="mitemonitoring-graph" class="mitemonitoring-graph hidden-tablet">
+            <div class="visible-tablet visible-phone" style="text-align: center;"><button style="color: white;" class="toggleMitemonitoring btn btn-warning">Show Mite Monitoring Graph</button></div>
+			<div id="mitemonitoring-graph" class="mitemonitoring-graph hidden-tablet hidden-phone">
 			<?php
 					$this->Widget('ext.highcharts.HighchartsWidget', array(
 							'options'=>array(
@@ -389,3 +389,4 @@ Yii::app()->clientScript->registerScript('index',"
        <input type="hidden" id="user_id" value="<?=Yii::app()->user->id?>" />
     </div>
 </div>
+<div class="row-fluid"><div class="span12"></div></div>
