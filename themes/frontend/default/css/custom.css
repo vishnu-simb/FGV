@@ -196,6 +196,16 @@ table.dataTable .filter-container #TrapCheck_value{
                 background: #1e74c5;
             }
 
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    /* For landscape layouts only */
+    .visible-tablet {
+        display: inherit !important;
+    }
+    .hidden-tablet {
+        display: none !important;
+    }
+}
+
 @media (max-width: 1024px) {
     .form-horizontal.form-search-advanced .span6 .control-label{
         width: 80px;

@@ -84,7 +84,7 @@ $bootstrap = Yii::app()->bootstrap;
         $clientScript->registerCssFile($resourceUrl . '/css/themes.css');
 
         // Css of the theme
-        $clientScript->registerCssFile($themeUrl . '/css/custom.css');
+        $clientScript->registerCssFile($themeUrl . '/css/custom.css?v=20190729');
 
         // Register JS
         // Jquery

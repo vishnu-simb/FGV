@@ -123,7 +123,7 @@ Yii::app()->clientScript->registerScript('index',"
 	    }else{
 	        $('.toggleMitemonitoring').html('Show Mite Monitoring Graph');
 	    }
-		$('.mitemonitoring-graph').toggleClass('hidden-phone');
+		$('.mitemonitoring-graph').toggleClass('hidden-tablet');
 	});
 	function loadBlock(){
 	    loading = 1;
@@ -341,8 +341,8 @@ Yii::app()->clientScript->registerScript('index',"
 			</div>
 		</div>
 		<div class="box month-graphs">
-            <div class="hidden-desktop" style="text-align: center;"><button style="color: white;" class="toggleMitemonitoring btn btn-warning">Show Mite Monitoring Graph</button></div>
-			<div id="mitemonitoring-graph" class="mitemonitoring-graph hidden-phone">
+            <div class="visible-tablet" style="text-align: center;"><button style="color: white;" class="toggleMitemonitoring btn btn-warning">Show Mite Monitoring Graph</button></div>
+			<div id="mitemonitoring-graph" class="mitemonitoring-graph hidden-tablet">
 			<?php
 					$this->Widget('ext.highcharts.HighchartsWidget', array(
 							'options'=>array(
