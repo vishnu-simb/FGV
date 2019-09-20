@@ -416,9 +416,10 @@ foreach($VARS['blocks'] as $block){
 		</tr>
 		<?php 
 		$total_cost = 0;
-		if ($block->getSprays())
+		$spray_records = $block->getSprays($VARS['hasFollowYear']+1);
+		if ($spray_records)
         {
-            foreach($block->getSprays() as $spray){
+            foreach($spray_records as $spray){
     			echo '<tr><td>'.DateHelper::dateOutput($spray->date).'</td>';
     			echo '<td>'.$spray->chemical->name.'</td>';
     			echo '<td>'.$spray->quantity.'</td>';
