@@ -29,6 +29,6 @@ class Block extends CommonBlock
 	function getSprays($year = null){
 	    if(empty($year))
             $year = date('Y');
-		return Spray::model()->with(array('property'=>array('condition'=>'block_id = '.$this->id.' AND ((YEAR(date) = '.$year.' AND MONTH(date) < 6) OR (YEAR(date) = '.($year-1).' AND MONTH(date) >= 6))')))->findAll();
+		return Spray::model()->with(array('property'=>array('condition'=>'block_id = '.$this->id.' AND ((YEAR(date) = '.$year.' AND MONTH(date) < 8) OR (YEAR(date) = '.($year-1).' AND MONTH(date) >= 8))')))->findAll();
 	}
 }
