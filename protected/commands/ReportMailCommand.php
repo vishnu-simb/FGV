@@ -34,7 +34,7 @@ class ReportMailCommand extends SimbConsoleCommand
             if($do_report && count($grower->getBlock())) {
   		        /* HTTP request failed! HTTP/1.1 406 Not Acceptable fixed*/
   		        $curl_handle=curl_init();
-                curl_setopt($curl_handle, CURLOPT_URL,'http://growfruit.fgv.com.au/report/pdf/'.$grower->id.'/'.date("Y"));
+                curl_setopt($curl_handle, CURLOPT_URL,'http://growfruit.com.au/report/pdf/'.$grower->id.'/'.date("Y"));
                 curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
                 curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
                 $html = curl_exec($curl_handle);
