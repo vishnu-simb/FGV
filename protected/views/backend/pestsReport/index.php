@@ -33,7 +33,7 @@ Yii::app()->clientScript->registerScript('index',"
 		graphYear.setYear(graphYear.getFullYear() -1);
 		var year = graphYear.getFullYear();
 		$('#graphYear').val(year);
-        $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
+        $('#graphYearLabel').html('July ' + (year-1) + ' - Jun ' + year);
 		$('#yw0').html('');
         loading = 1;
 		drawTrapCheckChart();
@@ -45,7 +45,7 @@ Yii::app()->clientScript->registerScript('index',"
 			var next = graphYear.setYear(graphYear.getFullYear() +1);
 			var year = graphYear.getFullYear();
 		    $('#graphYear').val(year);
-            $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
+            $('#graphYearLabel').html('July ' + (year-1) + ' - Jun ' + year);
 			$('#yw0').html('');
             loading = 1;
     		drawTrapCheckChart();
@@ -158,9 +158,9 @@ Yii::app()->clientScript->registerScript('index',"
                         $m = date('m');
                         $y = date('Y');
                         if ($m > 8)
-                            echo "Aug $y - July ". ($y + 1);
+                            echo "July $y - June ". ($y + 1);
                         else
-                            echo "Aug ". ($y-1). " - July $y";
+                            echo "July ". ($y-1). " - June $y";
                     ?></span></h2></span>
                     <input type="hidden" id="graphYear" value="<?=$m>8?$y+1:$y?>" />
 					<span class="fc-button fc-button-next fc-state-default fc-corner-left fc-corner-right">

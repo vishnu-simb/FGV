@@ -75,7 +75,7 @@ Yii::app()->clientScript->registerScript('index',"
 		graphYear.setYear(graphYear.getFullYear() -1);
         var year = graphYear.getFullYear();
 		$('#graphYear').val(year);
-        $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
+        $('#graphYearLabel').html('July ' + (year-1) + ' - Jun ' + year);
 		$('#yw0').html('');
 		$('#graphMonth').val('');
         loading = 1;
@@ -88,7 +88,7 @@ Yii::app()->clientScript->registerScript('index',"
 			var next = graphYear.setYear(graphYear.getFullYear() +1);
 			var year = graphYear.getFullYear();
 		    $('#graphYear').val(year);
-            $('#graphYearLabel').html('Aug ' + (year-1) + ' - July ' + year);
+            $('#graphYearLabel').html('July ' + (year-1) + ' - Jun ' + year);
 			$('#yw0').html('');
 			$('#graphMonth').val('');
             loading = 1;
@@ -327,9 +327,9 @@ Yii::app()->clientScript->registerScript('index',"
                         $m = date('m');
                         $y = date('Y');
                         if ($m > 8)
-                            echo "Aug $y - July ". ($y + 1);
+                            echo "July $y - Jun ". ($y + 1);
                         else
-                            echo "Aug ". ($y-1). " - July $y";
+                            echo "July ". ($y-1). " - Jun $y";
                     ?></span></h2></span>
                     <input type="hidden" id="graphYear" value="<?=$m>8?$y+1:$y?>" />
 					<span class="fc-button fc-button-next fc-state-default fc-corner-left fc-corner-right">
@@ -337,6 +337,7 @@ Yii::app()->clientScript->registerScript('index',"
                     <br/>
                     <select class="select2-me input-xlarge" id="graphMonth">
                         <option value="">- All Months</option>
+                        <option value="7">July</option>
                         <option value="8">August</option>
                         <option value="9">September</option>
                         <option value="10">October</option>
@@ -348,7 +349,6 @@ Yii::app()->clientScript->registerScript('index',"
                         <option value="4">April</option>
                         <option value="5">May</option>
                         <option value="6">June</option>
-                        <option value="7">July</option>
                     </select>
                     </td><td class="fc-header-right"></td></tr></tbody></table>
 				</div>

@@ -106,7 +106,7 @@ class GraphController extends SimbApiController {
         /* From August to July */
         if(!empty($_GET['month'])){
             $m = intval($_GET['month']);
-            if($m >= 8 && $m <= 12){
+            if($m >= 7 && $m <= 12){
                 $strDate = ($year-1)."-$m-01";
                 $dates = array(
                     'date_from' => date('Y-m-01', strtotime($strDate)),
@@ -121,8 +121,8 @@ class GraphController extends SimbApiController {
             }
         }else{
             $dates = array(
-                'date_from' => ($year-1).'-08-01',
-                'date_to' => $year.'-07-31'
+                'date_from' => ($year-1).'-07-01',
+                'date_to' => $year.'-06-30'
             );
         }
         return $dates;

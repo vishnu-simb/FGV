@@ -45,7 +45,7 @@ class ReportController extends SimbController
         $data = array();
 	    if (empty($year))
 		    $year = date('Y');
-        $data['date_from'] = strtotime(($year-1).'-08-01');
+        $data['date_from'] = strtotime(($year-1).'-07-01');
 		if(time() < $data['date_from']){
 			$data['date_from'] = strtotime('-1 year',$data['date_from']);
 		}
