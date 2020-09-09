@@ -195,6 +195,13 @@ Yii::app()->clientScript->registerScript('index',"
                                     }
                                     delete jgraph.spraydates;
                                 }
+                                jgraph.tooltip.formatter = function(){
+                                    var d = new Date(this.x);
+                                    return this.points.reduce(function (s, point) {
+                                        return s + (point.y > 0?'<br/><span style=color:' + point.point.color + '>\u25CF</span> ' + point.series.name + ': <b>' + point.y + '</b>':'');
+                                    }, d.toLocaleDateString('en-GB', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}));
+                                }
+                                
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
 					  		}
