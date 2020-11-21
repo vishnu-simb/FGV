@@ -159,6 +159,103 @@ class ReportController extends SimbController
 		}
         return $VAR;
 	}
+
+    private function getElectronicGraph($block, $grower, $year = ''){
+        $data = $this->getDateRange($year);
+
+        $VAR = array();
+        $filter = array(
+            'block_id' => $block->id,
+            'date_from' => $data['date_from'],
+            'date_to' => $data['date_to']
+        );
+        $model = new TrapCheck('search');
+        $model->unsetAttributes();
+        $dataProvider = $model->getTrapCheckInRange($filter);
+        $data = $dataProvider->getData();
+        $serial = array();
+        $pest = Pest::model()->findAll();
+        $keys_arr = array();
+        foreach($pest as $v){
+            $keys_arr[] = $v->name;
+        }
+        $min_time = strtotime($filter['date_from']);
+        $max_time = strtotime($filter['date_to']);
+        $max_value = 0;
+        if(!empty($keys_arr)){
+            foreach($keys_arr as $r){
+                $has_trap = 0;
+                $mm = $min_time;
+                $sedat = array();
+                while($mm <= $max_time)
+                {
+                    $dd = 0;
+                    $has_record = 0;
+                    foreach($data as $val){
+                        if($val["em_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+                            $has_record = 1;
+                            $dd += intval($val["tc_value"]);
+                            if ($max_value < $dd)
+                                $max_value = $dd;
+                        }
+                    }
+                    if($has_record){
+                        $sedat[] = array('y' => $dd, 'color' => darken_color(Pest::PestColor($r)));
+                        $has_trap = 1;
+                    }else{
+                        $sedat[] = $dd;
+                    }
+                    $mm = strtotime('+1 day', $mm); // increment for loop
+                }
+                if($has_trap)
+                    $serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
+            }
+
+        }
+        if(!empty($serial)){
+            $VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
+            $VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
+            $VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
+            $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+            $VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4));
+            $VAR['xAxis'] = array(
+                'type' => 'datetime',
+                'maxZoom' => 14 * 24 * 3600000, // fourteen days,
+                'tickInterval' =>   7 * 24 * 3600 * 1000,
+                'labels' => array(
+                    'format' =>  '{value:%d/%m/%y}',
+                    'rotation' => 90,
+                    'y' => 50,
+                    'align' => 'center'
+                ),
+                'gridLineWidth' => 1,
+                'plotBands'=>
+                    array(
+                        array(
+                            'from'=>$min_time,
+                            'to'=>'2',
+                            'color'=>'#F5D3F5',
+                            'label'=>array(
+                                'text'=>'Williams pears (1500)',
+                                'style'=>array('color'=>'#606060')
+                            )
+                        )
+                    )
+            );
+            $VAR['yAxis'] = array(
+                'title'=>array('text'=>''),
+                'startOnTick'=>0,
+                'showFirstLabel'=>0,
+                'floor'=> 0,
+                'allowDecimals'=>false,
+                'minRange' => 0.1,
+                'max' => $max_value+1>4?$max_value+1:4,
+                'tickInterval' => $max_value>5?intval($max_value/5):1
+            );
+            $VAR['series'] = $serial;
+        }
+        return $VAR;
+    }
 	
 	private function getMite($block, $grower, $year = ''){
 		$data = $this->getDateRange($year);

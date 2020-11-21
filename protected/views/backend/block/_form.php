@@ -29,10 +29,10 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-					<?php echo $form->dropDownListControlGroup($modelBlock, 'property_id', CHtml::listData( $modelBlock->getProperty() ,'id','name'),array('empty' => 'Select A Property'))?>
+					<?php echo $form->dropDownListControlGroup($modelBlock, 'property_id', CHtml::listData( $modelBlock->getProperty() ,'id','name'),array('empty' => 'Select A Property', 'class' => 'input-xlarge select2-minw'))?>
                     <?php echo $form->textFieldControlGroup($modelBlock, 'name', array('maxlength' => 45, 'class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('name'))); ?>
                     <?php echo $form->textFieldControlGroup($modelBlock, 'tree_spacing', array('maxlength' => 11, 'class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('tree_spacing'))); ?>
-					<?php echo $form->dropDownListControlGroup($modelBlock, 'tree_variety', CHtml::listData($modelBlock->getVariety() ,'id','name','fruit_type.name'), array('empty' => 'Select A Variety', 'class' => 'input-xlarge')); ?>
+					<?php echo $form->dropDownListControlGroup($modelBlock, 'tree_variety', CHtml::listData($modelBlock->getVariety() ,'id','name','fruit_type.name'), array('empty' => 'Select A Variety', 'class' => 'input-xlarge select2-minw')); ?>
                     <?php echo $form->textFieldControlGroup($modelBlock, 'row_width', array('class' => 'input-xlarge', 'placeholder' => $modelBlock->getAttributeLabel('row_width'))); ?>
                 </div>
                 <div class="span12">

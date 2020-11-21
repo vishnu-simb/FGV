@@ -133,6 +133,16 @@ table.dataTable .filter-container #TrapCheck_value{
     width: 30px;
 }
 
+input.spinner{
+    margin-left: 0;
+}
+.spinner.input-xlarge{
+    width: 243px;
+}
+.spinner.input-xxlarge{
+    width: 507px;
+}
+
 .mobile-submenu{
     display: none;
 }
@@ -188,6 +198,13 @@ table.dataTable .filter-container #TrapCheck_value{
     }
     .mobile-submenu{
         display: block;
+    }
+}
+
+@media (max-width: 767px) {
+    .select2-container{width: 100% !important;}
+    .spinner.input-xlarge, .spinner.input-xxlarge{
+        width: 100%;
     }
 }
 

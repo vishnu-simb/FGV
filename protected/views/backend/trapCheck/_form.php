@@ -29,8 +29,8 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-                    <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'),array('empty'=>'Select A Trap'))?>
-                    <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-medium datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
+                    <?php echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'),array('empty'=>'Select A Trap', 'class' => 'input-xlarge select2-minw'))?>
+                    <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xlarge datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>
                     <?php echo $form->textFieldControlGroup($modelTrapCheck, 'value', array('class' => 'input-xlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('value'))); ?>
                     <?php echo $form->textAreaControlGroup($modelTrapCheck, 'comment', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelTrapCheck->getAttributeLabel('comment'))); ?>
                     <?php //echo $form->textFieldControlGroup($modelTrapCheck, 'creator_id', array('maxlength' => 20, 'class' => 'input-xlarge', 'placeholder' => $modelTrapCheck->getAttributeLabel('creator_id'))); ?>

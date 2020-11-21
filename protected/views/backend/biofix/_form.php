@@ -29,8 +29,8 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'))?>
-                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block'))?>
+                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'),array('class' => 'select2-minw'))?>
+                    <?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block', 'class' => 'select2-minw'))?>
                     <?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
                     <?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'))?>
  				</div>

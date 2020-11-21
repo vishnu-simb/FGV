@@ -181,8 +181,9 @@ $(document).ready(function() {
 			defaultTime: 'current',
 			minuteStep: 1,
 			disableFocus: true,
-			template: 'dropdown'
-		});
+			template: 'dropdown',
+            showMeridian: false
+        });
 	}
 	// colorpicker
 	if($('.colorpick').length > 0){
@@ -210,6 +211,18 @@ $(document).ready(function() {
 	if($(".select2-me").length > 0){
 		$(".select2-me").select2();
 	}
+    if($(".select2-full-width").length > 0){
+        $(".select2-full-width").select2({width: '100%'});
+    }
+    if($(".select2-minw").not('.input-xlarge, .input-xxlarge').length > 0){
+        $(".select2-minw").select2({width: '220px'});
+    }
+    if($(".select2-minw.input-xlarge").length > 0){
+        $(".select2-minw.input-xlarge").select2({width: '283px'});
+    }
+    if($(".select2-minw.input-xxlarge").length > 0){
+        $(".select2-minw.input-xxlarge").select2({width: '543px'});
+    }
 
 	// multi-select
 	if($('.multiselect').length > 0)

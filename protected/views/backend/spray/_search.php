@@ -15,14 +15,14 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
         <div class="span6">    
-			<?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical'))?>
-			<?php echo $form->dropDownListControlGroup($modelSpray, 'property', CHtml::listData( $modelSpray->getProperty() ,'id','name'),array('empty'=>'Select A Property'))?>
+			<?php echo $form->dropDownListControlGroup($modelSpray, 'chemical_id', CHtml::listData( $modelSpray->getChemical() ,'id','name'),array('empty'=>'Select A Chemical', 'class' => 'select2-minw'))?>
+			<?php echo $form->dropDownListControlGroup($modelSpray, 'property', CHtml::listData( $modelSpray->getProperty() ,'id','name'),array('empty'=>'Select A Property', 'class' => 'select2-minw'))?>
 			<?php echo $form->textFieldControlGroup($modelSpray, 'date', array('class' => 'input datepick', 'placeholder' => $modelSpray->getAttributeLabel('date'))); ?>
         </div>	
         <div class="span6">    
             <?php echo $form->textFieldControlGroup($modelSpray, 'quantity', array('class' => 'input', 'placeholder' => $modelSpray->getAttributeLabel('quantity'))); ?>   
-            <?php echo $form->dropDownListControlGroup($modelSpray, 'grower', CHtml::listData( $modelSpray->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))?>
-			<?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+            <?php echo $form->dropDownListControlGroup($modelSpray, 'grower', CHtml::listData( $modelSpray->getGrower() ,'id','name'),array('empty'=>'Select A Grower', 'class' => 'select2-minw'))?>
+			<?php echo $form->dropDownListControlGroup($modelSpray, 'block_id', CHtml::listData( $modelSpray->getBlock() ,'id','name'),array('empty'=>'Select A Block', 'class' => 'select2-minw'))?>
         </div>
     </div>
     <div class="form-actions">

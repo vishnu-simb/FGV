@@ -27,6 +27,7 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                 	array('label' => Yii::t('app', 'Trapping'), 'url' => Yii::app()->baseUrl.'/trapping'),
                 	array('label' => Yii::t('app', 'Spraying'), 'url' => Yii::app()->baseUrl.'/spraying'),
                 	array('label' => Yii::t('app', 'Mite Monitoring'), 'url' => Yii::app()->baseUrl.'/monitoring'),
+                    array('label' => Yii::t('app', 'Electronic Monitoring'), 'url' => Yii::app()->baseUrl.'/electronic'),
                     array(
                     	'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
                         'label' => Yii::t('app', 'Administration'),
@@ -69,11 +70,14 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                         			'label' => Yii::t('app', 'Mite'),
                         			'url' => Yii::app()->baseUrl.'/backend/mite',
                         	),
-                        		
                         	array(
                         			'label' => Yii::t('app', 'Mite Monitor'),
                         			'url' => Yii::app()->baseUrl.'/backend/monitoring',
                         	),
+                            array(
+                                'label' => Yii::t('app', 'Electronic Monitor'),
+                                'url' => Yii::app()->baseUrl.'/backend/electronic',
+                            ),
 							array(
 									'label' => Yii::t('app', 'Property'),
 									'url' => Yii::app()->baseUrl.'/backend/property',

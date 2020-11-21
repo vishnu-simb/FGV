@@ -16,11 +16,11 @@
     <div class="box-content nopadding">
         <div class="span6">     
             <?php echo $form->dropDownListControlGroup($modelBiofix, 'pest_id', CHtml::listData( $modelBiofix->getPest() ,'id','name'),array('empty' => 'Select A Pest'))?>
-			<?php echo $form->dropDownListControlGroup($modelBiofix, 'grower', CHtml::listData( $modelBiofix->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
-			<?php echo $form->dropDownListControlGroup($modelBiofix, 'property', CHtml::listData( $modelBiofix->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property'))?>
+			<?php echo $form->dropDownListControlGroup($modelBiofix, 'grower', CHtml::listData( $modelBiofix->getGrower() ,'id','name'),array('empty' => 'Select A Grower', 'class' => 'select2-minw'))?>
+			<?php echo $form->dropDownListControlGroup($modelBiofix, 'property', CHtml::listData( $modelBiofix->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property', 'class' => 'select2-minw'))?>
         </div>
         <div class="span6">     
-			<?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlockByProperty() ,'id','name'),array('empty' => 'Select A Block'))?>
+			<?php echo $form->dropDownListControlGroup($modelBiofix, 'block_id', CHtml::listData( $modelBiofix->getBlockByProperty() ,'id','name'),array('empty' => 'Select A Block', 'class' => 'select2-minw'))?>
 			<?php echo $form->textFieldControlGroup($modelBiofix, 'date', array('class' => 'input datepick', 'placeholder' => $modelBiofix->getAttributeLabel('date'))); ?>
             <?php echo $form->dropDownListControlGroup($modelBiofix, 'second_cohort', array('yes'=>'Yes','no'=>'No'),array('empty' => 'Select A Second Cohort'))?>
         </div>

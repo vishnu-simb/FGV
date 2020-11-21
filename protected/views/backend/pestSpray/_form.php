@@ -29,9 +29,9 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-					<?php echo $form->dropDownListControlGroup($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty' => 'Select A Pest'))?>
+					<?php echo $form->dropDownListControlGroup($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty' => 'Select A Pest', 'class' => 'input-xlarge select2-minw'))?>
                     <?php echo $form->textFieldControlGroup($modelPestSpray, 'number', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('number'))); ?>
-					<?php echo $form->dropDownListControlGroup($modelPestSpray, 'grower_id', CHtml::listData( $modelPestSpray->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
+					<?php echo $form->dropDownListControlGroup($modelPestSpray, 'grower_id', CHtml::listData( $modelPestSpray->getGrower() ,'id','name'),array('empty' => 'Select A Grower', 'class' => 'input-xlarge select2-minw'))?>
                     <?php echo $form->textFieldControlGroup($modelPestSpray, 'dd', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('dd'))); ?>
                     <?php echo $form->textFieldControlGroup($modelPestSpray, 'every', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('every'))); ?>
                     <?php echo $form->textFieldControlGroup($modelPestSpray, 'lowpop_dd', array('class' => 'input-xlarge', 'placeholder' => $modelPestSpray->getAttributeLabel('lowpop_dd'))); ?>

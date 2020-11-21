@@ -15,8 +15,8 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
         <div class="span6">    
-			<?php echo $form->dropDownListControlGroup($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty' => 'Select A Pest'))?>
-			<?php echo $form->dropDownListControlGroup($modelPestSpray, 'grower_id', CHtml::listData( $modelPestSpray->getGrower() ,'id','name'),array('empty' => 'Select A Grower'))?>
+			<?php echo $form->dropDownListControlGroup($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty' => 'Select A Pest', 'class' => 'select2-minw'))?>
+			<?php echo $form->dropDownListControlGroup($modelPestSpray, 'grower_id', CHtml::listData( $modelPestSpray->getGrower() ,'id','name'),array('empty' => 'Select A Grower', 'class' => 'select2-minw'))?>
             <?php echo $form->textFieldControlGroup($modelPestSpray, 'number', array('class' => 'input', 'placeholder' => $modelPestSpray->getAttributeLabel('number'))); ?>
             <?php echo $form->textFieldControlGroup($modelPestSpray, 'dd', array('class' => 'input', 'placeholder' => $modelPestSpray->getAttributeLabel('dd'))); ?>
         </div>

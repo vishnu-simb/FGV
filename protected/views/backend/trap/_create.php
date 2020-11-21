@@ -29,8 +29,8 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-                    <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))?>
-                    <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block'))?>
+                    <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'input-xlarge select2-minw'))?>
+                    <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block', 'class' => 'input-xlarge select2-minw'))?>
                     <?php echo $form->textFieldControlGroup($modelTrap, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('name'))); ?>
 					<?php echo $form->textFieldControlGroup($modelTrap, 'ordering', array('class' => 'input-xlarge', 'placeholder' => $modelTrap->getAttributeLabel('ordering'))); ?>
 					<?php echo $form->inlineRadioButtonListControlGroup($modelTrap,'_addMoreTrap', array('yes'=>'Yes','no'=>'No'))?>

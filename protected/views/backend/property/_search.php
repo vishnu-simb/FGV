@@ -14,10 +14,12 @@
             ?></div>
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
-        <div class="span12">    
-			<?php echo $form->dropDownListControlGroup($modelProperty, 'grower_id', CHtml::listData( $modelProperty->getGrower() ,'id','name'),array('empty'=>'Select A Grower'))?>
-            <?php echo $form->dropDownListControlGroup($modelProperty, 'location_id', CHtml::listData( $modelProperty->getLocation() ,'id','name'),array('empty'=>'Select A Location'))?>
-            <?php echo $form->dropDownListControlGroup($modelProperty, 'name',CHtml::listData( $modelProperty->findAll() ,'name','name'),array('empty'=>'Select A Property')); ?>
+        <div class="span6">
+			<?php echo $form->dropDownListControlGroup($modelProperty, 'grower_id', CHtml::listData( $modelProperty->getGrower() ,'id','name'),array('empty'=>'Select A Grower', 'class' => 'select2-minw'))?>
+            <?php echo $form->dropDownListControlGroup($modelProperty, 'location_id', CHtml::listData( $modelProperty->getLocation() ,'id','name'),array('empty'=>'Select A Location', 'class' => 'select2-minw'))?>
+        </div>
+        <div class="span6">
+            <?php echo $form->dropDownListControlGroup($modelProperty, 'name',CHtml::listData( $modelProperty->findAll() ,'name','name'),array('empty'=>'Select A Property', 'class' => 'select2-minw')); ?>
         </div>
     </div>
     <div class="form-actions">

@@ -60,7 +60,7 @@ $('.search-form-ext form').submit(function(){
 					'class' => 'c-button',
 			),
 		),
-		 array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty'=>'Select A Pest'))),
+		 array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelPestSpray, 'pest_id', CHtml::listData( $modelPestSpray->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'select2-full-width'))),
 		 array('name'=>'grower'),
 		'number',
 		'dd',

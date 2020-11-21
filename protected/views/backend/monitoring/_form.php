@@ -29,8 +29,8 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-					<?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'mite_id', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite'))?>
-					<?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'block_id', CHtml::listData( $modelMiteMonitor->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+					<?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'mite_id', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite', 'class' => 'input-xlarge select2-minw'))?>
+					<?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'block_id', CHtml::listData( $modelMiteMonitor->getBlock() ,'id','name'),array('empty'=>'Select A Block', 'class' => 'input-xlarge select2-minw'))?>
                     <?php echo $form->textFieldControlGroup($modelMiteMonitor, 'date', array('class' => 'input-xlarge', 'placeholder' => $modelMiteMonitor->getAttributeLabel('date'))); ?>
                     <?php echo $form->textFieldControlGroup($modelMiteMonitor, 'percent_li', array('class' => 'input-xlarge', 'placeholder' => $modelMiteMonitor->getAttributeLabel('percent_li'))); ?>
                     <?php //echo $form->textFieldControlGroup($modelMiteMonitor, 'average_li', array('class' => 'input-xlarge', 'placeholder' => $modelMiteMonitor->getAttributeLabel('average_li'))); ?>

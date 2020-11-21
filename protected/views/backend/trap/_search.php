@@ -15,13 +15,13 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
         <div class="span6">     
-            <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest'))?>
-		    <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock()->getData() ,'id','name'),array('empty'=>'Select A Block'))?>
-            <?php echo $form->dropDownListControlGroup($modelTrap, 'name',CHtml::listData( $modelTrap->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap')); ?>
+            <?php echo $form->dropDownListControlGroup($modelTrap, 'pest_id', CHtml::listData( $modelTrap->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'select2-minw'))?>
+		    <?php echo $form->dropDownListControlGroup($modelTrap, 'block_id', CHtml::listData( $modelTrap->getBlock()->getData() ,'id','name'),array('empty'=>'Select A Block', 'class' => 'select2-minw'))?>
+            <?php echo $form->dropDownListControlGroup($modelTrap, 'name',CHtml::listData( $modelTrap->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap', 'class' => 'select2-minw')); ?>
         </div>  
         <div class="span6">    
-			<?php echo $form->dropDownListControlGroup($modelTrap, 'property', CHtml::listData( $modelTrap->getProperty() ,'id','name'),array('empty'=>'Select A Block'))?>
-            <?php echo $form->dropDownListControlGroup($modelTrap, 'grower', CHtml::listData( $modelTrap->getGrower() ,'id','name'),array('empty'=>'Select A Block'))?>
+			<?php echo $form->dropDownListControlGroup($modelTrap, 'property', CHtml::listData( $modelTrap->getProperty() ,'id','name'),array('empty'=>'Select A Property', 'class' => 'select2-minw'))?>
+            <?php echo $form->dropDownListControlGroup($modelTrap, 'grower', CHtml::listData( $modelTrap->getGrower() ,'id','name'),array('empty'=>'Select A Grower', 'class' => 'select2-minw'))?>
         </div>
     </div>
     <div class="form-actions">

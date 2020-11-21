@@ -123,9 +123,19 @@ Yii::app()->clientScript->registerScript('index',"
 			loadSprayTable();
 		}
 	});
+	$('.toggleElectronicmonitoring').click(function(){
+	    if($('.electronicmonitoring-graph').hasClass('hidden-tablet')){
+	        $('#yw1').html('<h4 style=\"text-align:center;\">Loading..</h4>');
+	        drawElectronicMonitoringChart();
+	        $('.toggleElectronicmonitoring').html('Hide Electronic Monitoring Graph');
+	    }else{
+	        $('.toggleElectronicmonitoring').html('Show Electronic Monitoring Graph');
+	    }
+		$('.electronicmonitoring-graph').toggleClass('hidden-tablet').toggleClass('hidden-phone');
+	});
 	$('.toggleMitemonitoring').click(function(){
 	    if($('.mitemonitoring-graph').hasClass('hidden-tablet')){
-	        $('#yw1').html('<h4 style=\"text-align:center;\">Loading..</h4>');
+	        $('#yw2').html('<h4 style=\"text-align:center;\">Loading..</h4>');
 	        drawMiteMonitoringChart();
 	        $('.toggleMitemonitoring').html('Hide Mite Monitoring Graph');
 	    }else{
@@ -205,6 +215,38 @@ Yii::app()->clientScript->registerScript('index',"
 					  			Highcharts.setOptions([]); 
 						  		var chart = new Highcharts.Chart(jgraph);
 					  		}
+				   }
+		});
+		drawElectronicMonitoringChart();
+	}
+	function drawElectronicMonitoringChart(){
+	    var block_id = $('#Block_id').val();
+        if (typeof block_id == 'undefined' || !block_id)
+        {
+            $('.month-graphs').hide();
+            return;
+        }
+        $('.month-graphs').show();
+		$.ajax({
+				  type: 'GET',
+				  url: siteUrl + 'api/graph/getBlockElectronic?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val()+'&month='+$('#graphMonth').val(),
+				  success: function (data)
+				   {
+				            var jgraph = JSON.parse(data);
+					  		for(var i in jgraph.series){
+                                jgraph.series[i]['pointStart'] = Date.UTC(jgraph.pointStart.year, jgraph.pointStart.month, jgraph.pointStart.day);
+                            }
+                            delete jgraph.pointStart;
+                            jgraph.tooltip.formatter = function(){
+                                var d = new Date(this.x);
+                                return this.points.reduce(function (s, point) {
+                                    return s + (point.y > 0?'<br/><span style=color:' + point.point.color + '>\u25CF</span> ' + point.series.name + ': <b>' + point.y + '</b>':'');
+                                }, d.toLocaleDateString('en-GB', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}));
+                            }
+                            
+                            Highcharts.setOptions([]); 
+                            var chart = new Highcharts.Chart(jgraph);
+					  		loading = 0;
 				   }
 		});
 	}
@@ -372,6 +414,28 @@ Yii::app()->clientScript->registerScript('index',"
 				?>
 			</div>
 		</div>
+        <div class="box month-graphs">
+            <div class="visible-tablet visible-phone" style="text-align: center;"><button style="color: white;" class="toggleElectronicmonitoring btn btn-warning">Show Electronic Monitoring Graph</button></div>
+            <div id="electronicmonitoring-graph" class="electronicmonitoring-graph hidden-tablet hidden-phone">
+                <?php
+                $this->Widget('ext.highcharts.HighchartsWidget', array(
+                    'options'=>array(
+                        'title' => array('text' => ''),
+                        'xAxis' => array(
+                            'categories' => array()
+                        ),
+                        'yAxis' => array(
+                            'title' => array('text' => '')
+                        ),
+                        'series' => array(
+                            array(),
+                        )
+                    )
+                ));
+                ?>
+            </div>
+        </div>
+        <br/>
 		<div class="box month-graphs">
             <div class="visible-tablet visible-phone" style="text-align: center;"><button style="color: white;" class="toggleMitemonitoring btn btn-warning">Show Mite Monitoring Graph</button></div>
 			<div id="mitemonitoring-graph" class="mitemonitoring-graph hidden-tablet hidden-phone">

@@ -15,8 +15,8 @@
 <div class="search-form-ext" style="display:none">
     <div class="box-content nopadding">
         <div class="span6">      
-            <?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'mite_id', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite'))?>
-			<?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'block_id', CHtml::listData( $modelMiteMonitor->getBlock() ,'id','name'),array('empty'=>'Select A Block'))?>
+            <?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'mite_id', CHtml::listData( $modelMiteMonitor->getMite() ,'id','name'),array('empty'=>'Select A Mite', 'class' => 'select2-minw'))?>
+			<?php echo $form->dropDownListControlGroup($modelMiteMonitor, 'block_id', CHtml::listData( $modelMiteMonitor->getBlock() ,'id','name'),array('empty'=>'Select A Block', 'class' => 'select2-minw'))?>
             <?php echo $form->textFieldControlGroup($modelMiteMonitor, 'date', array('class' => 'input', 'placeholder' => $modelMiteMonitor->getAttributeLabel('date'))); ?>
         </div>
         <div class="span6">      

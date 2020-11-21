@@ -27,6 +27,7 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                 	array('label' => Yii::t('app', 'Trapping'), 'url' => '/trapping'),
                 	array('label' => Yii::t('app', 'Spraying'), 'url' => '/spraying'),
                 	array('label' => Yii::t('app', 'Mite Monitoring'), 'url' => '/monitoring'),
+                    array('label' => Yii::t('app', 'Electronic Monitoring'), 'url' => '/electronic'),
                     array(
                     	'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
                         'label' => Yii::t('app', 'Administration'),
@@ -36,74 +37,75 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                                 'label' => Yii::t('app', 'Users'),
                                 'url' => Yii::app()->baseUrl.'/users',
                             ),
-                        		
                             array(
                                 'label' => Yii::t('app', 'Biofix'),
                                 'url' => Yii::app()->baseUrl.'/biofix',
                             ),
 							array(
-									'label' => Yii::t('app', 'Block'),
-									'url' => Yii::app()->baseUrl.'/block',
+                                'label' => Yii::t('app', 'Block'),
+                                'url' => Yii::app()->baseUrl.'/block',
 							),
 							array(
-									'label' => Yii::t('app', 'Chemical'),
-									'url' => Yii::app()->baseUrl.'/chemical',
+                                'label' => Yii::t('app', 'Chemical'),
+                                'url' => Yii::app()->baseUrl.'/chemical',
 							),
 							array(
-									'label' => Yii::t('app', 'Grower'),
-									'url' => Yii::app()->baseUrl.'/grower',
+                                'label' => Yii::t('app', 'Grower'),
+                                'url' => Yii::app()->baseUrl.'/grower',
 							),
 							array(
-									'label' => Yii::t('app', 'Location'),
-									'url' => Yii::app()->baseUrl.'/location',
+                                'label' => Yii::t('app', 'Location'),
+                                'url' => Yii::app()->baseUrl.'/location',
 							),
 							array(
-									'label' => Yii::t('app', 'Pest'),
-									'url' => Yii::app()->baseUrl.'/pest',
+                                'label' => Yii::t('app', 'Pest'),
+                                'url' => Yii::app()->baseUrl.'/pest',
 							),
 							array(
-									'label' => Yii::t('app', 'PestSpray'),
-									'url' => Yii::app()->baseUrl.'/pestSpray',
+                                'label' => Yii::t('app', 'PestSpray'),
+                                'url' => Yii::app()->baseUrl.'/pestSpray',
 							),
                         	array(
-                        			'label' => Yii::t('app', 'Mite'),
-                        			'url' => Yii::app()->baseUrl.'/mite',
-                        		),
-                        	array(
-                        				'label' => Yii::t('app', 'Mite Monitor'),
-                        				'url' => Yii::app()->baseUrl.'/monitoring',
+                                'label' => Yii::t('app', 'Mite'),
+                                'url' => Yii::app()->baseUrl.'/mite',
                         	),
-                        		 
+                        	array(
+                                'label' => Yii::t('app', 'Mite Monitor'),
+                                'url' => Yii::app()->baseUrl.'/monitoring',
+                        	),
+                            array(
+                                'label' => Yii::t('app', 'Electronic Monitor'),
+                                'url' => Yii::app()->baseUrl.'/electronic',
+                            ),
 							array(
-									'label' => Yii::t('app', 'Property'),
-									'url' => Yii::app()->baseUrl.'/property',
+                                'label' => Yii::t('app', 'Property'),
+                                'url' => Yii::app()->baseUrl.'/property',
 							),
 							array(
-									'label' => Yii::t('app', 'Sizing'),
-									'url' => Yii::app()->baseUrl.'/sizing',
+                                'label' => Yii::t('app', 'Sizing'),
+                                'url' => Yii::app()->baseUrl.'/sizing',
 							),
 							array(
-									'label' => Yii::t('app', 'Spray'),
-									'url' => Yii::app()->baseUrl.'/spray',
+                                'label' => Yii::t('app', 'Spray'),
+                                'url' => Yii::app()->baseUrl.'/spray',
 							),
 							array(
-									'label' => Yii::t('app', 'Trap'),
-									'url' => Yii::app()->baseUrl.'/trap',
+                                'label' => Yii::t('app', 'Trap'),
+                                'url' => Yii::app()->baseUrl.'/trap',
 							),
 							array(
-									'label' => Yii::t('app', 'TrapCheck'),
-									'url' => Yii::app()->baseUrl.'/trapCheck',
+                                'label' => Yii::t('app', 'TrapCheck'),
+                                'url' => Yii::app()->baseUrl.'/trapCheck',
 							),
 							array(
-									'label' => Yii::t('app', 'Variety'),
-									'url' => Yii::app()->baseUrl.'/variety',
+                                'label' => Yii::t('app', 'Variety'),
+                                'url' => Yii::app()->baseUrl.'/variety',
 							),
                             array(
-									'label' => Yii::t('app', 'Pests Report by Region'),
-									'url' => Yii::app()->baseUrl.'/pestsReport',
+                                'label' => Yii::t('app', 'Pests Report by Region'),
+                                'url' => Yii::app()->baseUrl.'/pestsReport',
 							),
 						),
-
                     ),
                     array('label' => Yii::t('app', 'Help'), 'url' => $resourceUrl.'/files/Growfruit App Manual.pdf', 'linkOptions' => array('target' => '_blank')),
                 ),

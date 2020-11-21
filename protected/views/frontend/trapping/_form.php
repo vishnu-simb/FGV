@@ -27,9 +27,9 @@
                       
                     	  <?php 
                             if (Yii::app()->user->getState('role') !== Users::USER_TYPE_GROWER)
-                                echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'), array('class' => 'input-xxlarge'));
+                                echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrap()->getData() ,'id','trap_name'), array('class' => 'input-xxlarge select2-minw'));
                             else
-                                echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrapByGrower() ,'id','name'), array('class' => 'input-xxlarge'))
+                                echo $form->dropDownListControlGroup($modelTrapCheck, 'trap_id', CHtml::listData( $modelTrapCheck->getTrapByGrower() ,'id','name'), array('class' => 'input-xxlarge select2-minw'))
                           ?>
     					  
                           <?php echo $form->textFieldControlGroup($modelTrapCheck, 'date', array('class' => 'input-xxlarge datepick', 'placeholder' => $modelTrapCheck->getAttributeLabel('date'))); ?>

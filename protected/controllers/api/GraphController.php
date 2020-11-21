@@ -267,8 +267,76 @@ class GraphController extends SimbApiController {
     	Yii::app()->end();
     
     }
-    
-    
+
+    public function actionGetBlockElectronic(){
+        $VAR = array();
+        $year = $_GET['year'];
+        $dates = $this->_get_filter_dates($year);
+        $filter = $dates;
+        $filter['block_id'] = $this->block->id;
+
+        $model = new ElectronicMonitor('search');
+        $model->unsetAttributes();
+        $dataProvider = $model->getElectronicMonitorInRange($filter);
+        $data = $dataProvider->getData();
+        $pest = Pest::model()->findAll();
+        $keys_arr = $pests = array();
+        foreach($pest as $v){
+            $keys_arr[] = $v->name;
+            $pests[$v->name] = $v;
+        }
+        $serial = array();
+        if(!empty($keys_arr)){
+            $m = strtotime($dates['date_from']);
+            $e = strtotime($dates['date_to']);
+            foreach($keys_arr as $r){
+                $has_trap = 0;
+                $mm = $m;
+                $sedat = array();
+                while($mm < $e)
+                {
+                    if(date($mm) < date(time())){
+                        $dd = 0;
+                        $has_record = 0;
+                        foreach($data as $val){
+
+                            if($val["em_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+                                $has_record = 1;
+                                $dd += intval($val["em_value"]);
+                            }
+                        }
+                        if($has_record){
+                            $sedat[] = array('y' => $dd, 'color' => darken_color(Pest::PestColor($r)));
+                            $has_trap = 1;
+                        }else{
+                            $sedat[] = $dd;
+                        }
+                    }
+                    $mm = strtotime('+1 day', $mm); // increment for loop
+                }
+                if($has_trap || 1)
+                    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
+            }
+
+        }
+        if(!empty($serial)){
+            $VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline','zoomType'=>'x');
+            $VAR['title'] = array('text'=>'Electronic Monitors : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+            $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
+            $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+            //$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
+            $VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4));
+            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> $this->maxZoom, 'max' => strtotime($dates['date_to'])*1000);
+            $VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
+            $VAR['series'] = $serial;
+            $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
+        }else{
+            $VAR['chart']= $serial;
+        }
+        echo CJSON::encode($VAR);
+        Yii::app()->end();
+
+    }
     
     private function getAverageMite($dates, $location_id = ''){
         $model = new MiteMonitor('search');
@@ -408,7 +476,7 @@ class GraphController extends SimbApiController {
         if ($is_admin)
             $serial[] = array('name'=>'AVG Pests of all Grower','data'=>$avg['grower_avg'],'color'=>'#0000FF','pointInterval'=> $this->pointInterval);
         
-    	$VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline','zoomType'=>'x');
+    	$VAR['chart'] = array('renderTo'=>'yw2','type'=>'spline','zoomType'=>'x');
     	$VAR['title'] = array('text'=>'Monitoring : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
         $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
     	$VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
