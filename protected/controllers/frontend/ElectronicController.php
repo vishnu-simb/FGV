@@ -169,6 +169,7 @@ class ElectronicController extends SimbController
     {
         $growerIDs = explode(',', $_POST['ids']);
         if(!empty($growerIDs)){
+            $growerId = $growerIDs[0];
             $date_from = $date_to = '';
             $dates = explode(' - ', $_POST['dates']);
             if(!empty($dates) && !empty($dates[0])){
@@ -189,41 +190,95 @@ class ElectronicController extends SimbController
                 ->setKeywords("office 2007 openxml php customer export")
                 ->setCategory("Electronic Monitors export");
 
-            $header_text = array('Grower','Property','Block','Pest','Trap','Date','Value');
-            $number_of_columns = count($header_text);
+            $objPHPExcel->getActiveSheet();
+            $objPHPExcel->removeSheetByIndex(0);
 
-            for($col_index = 1; $col_index <= $number_of_columns; $col_index++)
-                $objPHPExcel->getActiveSheet()->getColumnDimension($columns[$col_index])->setAutoSize(true);
+            $objWorkSheet = $objPHPExcel->createSheet();
+
+            $header1 = array('', '');
+
+            $pest = Pest::model()->findAll();
+            $pest_names = array();
+            $counter = 1;
+            foreach($pest as $v){
+                $pest_names[$v->id] = $v->name;
+                $header1[] = $counter++;
+            }
+
+            $header1 = array_merge($header1, array('Traps', "Action\nRequired", 'Action Taken', 'Comment', 'Sign'));
+            $row_index = 1;
+            $objWorkSheet->fromArray($header1, NULL, 'A'.$row_index++);
 
             $col_index = 1;
-            foreach($header_text as $header)
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].'1', $header);
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Date');
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Time');
+            foreach($pest_names as $pest_name) {
+                $objWorkSheet->setCellValue($columns[$col_index].$row_index, $pest_name);
+                $objWorkSheet->getStyle($columns[$col_index].$row_index)->getAlignment()->setTextRotation(90);
+                $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+                $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("5");
+                $col_index++;
+            }
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Traps */
+
+            $objWorkSheet->getStyle($columns[$col_index].($row_index-1))->getAlignment()->setWrapText(true);
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Yes/No'); /* Action Required */
+
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Taken */
+
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
+            $objWorkSheet->setCellValue($columns[$col_index].$row_index, "If pests are seen, seek\nto indentify and then\ncheck if they are a pest\n,of convern for export\nIf not, mark"); /* Comment */
+            $objWorkSheet->getStyle($columns[$col_index++].$row_index)->getAlignment()->setWrapText(true);
+
+            $objWorkSheet->setCellValue($columns[$col_index].$row_index, ''); /* Sign */
+
+            $objWorkSheet->getStyle("A1:".$columns[$col_index].$row_index)->applyFromArray(array(
+                'alignment' => array(
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                )
+            ));
 
             $growerName = '';
-            $row_index = 2;
             $modelElectronic = new ElectronicMonitor();
-            foreach($growerIDs as $growerId){
-                $recentTrappings = $modelElectronic->getRecentElectronicMonitors($growerId, $date_from, $date_to);
-                foreach($recentTrappings as $record){
-                    $col_index = 1;
-                    $growerName = $record['grower_name'];
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['grower_name']);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['property_name']);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['block_name']);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['pest_name']);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['trap_name']);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index, $record['date']);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($columns[$col_index++].$row_index++, $record['monitoring_number']);
-                    //echo implode(", ", $record).'<br/>';
+            $recentRecords = $modelElectronic->getRecentElectronicMonitors($growerId, $date_from, $date_to);
+            $date_pests = array();
+            foreach ($recentRecords as $record) {
+                $growerName = $record['grower_name'];
+                $_key = strtotime($record['date']. ' '. $record['time']);
+                if (empty($date_pests[$_key]))
+                    $date_pests[$_key] = array();
+                $date_pests[$_key][$record['pest_id']] = $record['monitoring_number'];
+            }
+            ksort($date_pests);
+
+            foreach ($date_pests as $dtm => $value_array) {
+                $row_index++;
+                $objWorkSheet->setCellValue('A'.$row_index, date('d/m/Y', $dtm));
+                $objWorkSheet->setCellValue('B'.$row_index, date('H:i', $dtm));
+
+                $col_index = 3;
+                foreach ($pest_names as $pest_id => $pest_name) {
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, !empty($value_array[$pest_id])?number_format($value_array[$pest_id]):0);
                 }
             }
 
+            $objWorkSheet->getStyle("A1:".$columns[count($header1)].$row_index)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+            /*
+            for ($i = 'A'; $i !=  $objWorkSheet->getHighestColumn(); $i++) {
+                $objWorkSheet->getColumnDimension($i)->setAutoSize(TRUE);
+            }
+            $objWorkSheet->getColumnDimension($i)->setAutoSize(TRUE);
+            */
+
             // Rename worksheet
-            $objPHPExcel->getActiveSheet()->setTitle('Electronic Monitors export - '. date('Ymd'));
+            $objWorkSheet->setTitle('Electronic Monitors - '. date('Ymd'));
 
-
-            // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-            $objPHPExcel->setActiveSheetIndex(0);
             if(count($growerIDs) == 1 && $growerName)
                 $filename = "ElectronicMonitorsExport_".str_replace(' ', '_', $growerName)."_". date('Ymd');
             else

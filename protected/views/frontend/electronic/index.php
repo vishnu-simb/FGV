@@ -28,7 +28,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
         <div class="row-fluid">
             <div class="span12">
                 <h4>Export to XLS</h4>
-                <form class="form-horizontal form-search-advanced form-validate" id="export-xls" action="/trapping/xls" method="post" novalidate="novalidate">
+                <form class="form-horizontal form-search-advanced form-validate" id="export-xls" action="/electronic/xls" method="post" novalidate="novalidate">
                     <div class="control-group">
                         <label for="textfield" class="control-label">Date range</label>
                         <div class="controls">
