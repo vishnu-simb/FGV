@@ -26,7 +26,7 @@ class ElectronicMonitor extends CommonElectronicMonitor
 		INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
 		INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
 		LEFT JOIN ".Trap::model()->tableName()." t ON em.trap_id = t.id 
-		$condition ORDER BY em.date, em.time DESC";
+		$condition ORDER BY em.date DESC, em.time DESC";
 		return new CSqlDataProvider($sql, array(
 	
 		));
