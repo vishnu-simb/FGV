@@ -27,7 +27,7 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                 	array('label' => Yii::t('app', 'Trapping'), 'url' => '/trapping'),
                 	array('label' => Yii::t('app', 'Spraying'), 'url' => '/spraying'),
                 	array('label' => Yii::t('app', 'Mite Monitoring'), 'url' => '/monitoring'),
-                    array('label' => Yii::t('app', 'Electronic Monitoring'), 'url' => '/electronic'),
+                    array('label' => Yii::t('app', 'Crop Monitoring'), 'url' => '/crop'),
                     array(
                     	'visible' => Yii::app()->user->getState('role') == Users::USER_TYPE_ADMIN,
                         'label' => Yii::t('app', 'Administration'),
@@ -57,6 +57,10 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                                 'label' => Yii::t('app', 'Location'),
                                 'url' => Yii::app()->baseUrl.'/location',
 							),
+                            array(
+                                'label' => Yii::t('app', 'Crop Pest'),
+                                'url' => Yii::app()->baseUrl.'/cropPest',
+                            ),
 							array(
                                 'label' => Yii::t('app', 'Pest'),
                                 'url' => Yii::app()->baseUrl.'/pest',
@@ -74,8 +78,8 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
                                 'url' => Yii::app()->baseUrl.'/monitoring',
                         	),
                             array(
-                                'label' => Yii::t('app', 'Electronic Monitor'),
-                                'url' => Yii::app()->baseUrl.'/electronic',
+                                'label' => Yii::t('app', 'Crop Monitor'),
+                                'url' => Yii::app()->baseUrl.'/crop',
                             ),
 							array(
                                 'label' => Yii::t('app', 'Property'),

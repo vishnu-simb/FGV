@@ -1,8 +1,8 @@
 <?php
 
-Yii::import('application.models._common.CommonElectronicMonitor');
+Yii::import('application.models._common.CommonCropMonitor');
 
-class ElectronicMonitor extends CommonElectronicMonitor
+class CropMonitor extends CommonCropMonitor
 {
 	public static function model($className=__CLASS__)
     {
@@ -14,14 +14,14 @@ class ElectronicMonitor extends CommonElectronicMonitor
 	 * @static
 	 * @return CActiveDataProvider
 	 */
-	public function SearchRecentElectronicMonitors(){
+	public function SearchRecentCropMonitors(){
 		$condition="";
 		if( Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
 				$condition = "WHERE g.id =".Yii::app()->user->id."";
 		}
 		$sql="SELECT em.id as monitoring_id, em.date, em.time, em.value as monitoring_number,CONCAT (g.name,' - ',b.name,' : ',pt.name) AS monitoring_name, t.name as trap_name
 		FROM ".$this->tableName()." em
-		INNER JOIN ".Pest::model()->tableName()." pt ON em.pest_id = pt.id
+		INNER JOIN ".CropPest::model()->tableName()." pt ON em.pest_id = pt.id
 		INNER JOIN ".Block::model()->tableName()." b ON em.block_id = b.id
 		INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
 		INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
@@ -33,7 +33,7 @@ class ElectronicMonitor extends CommonElectronicMonitor
 	
 	}
 
-	public function getRecentElectronicMonitors($growerId, $dateFrom = '', $dateTo = ''){
+	public function getRecentCropMonitors($growerId, $dateFrom = '', $dateTo = ''){
         $whereStr = '';
 	    if($dateFrom && $dateTo){
 	        $whereStr = " AND em.date >= '$dateFrom' AND em.date <= '$dateTo' ";
@@ -44,7 +44,7 @@ class ElectronicMonitor extends CommonElectronicMonitor
         }
         $sql="SELECT g.name as grower_name, p.name as property_name, b.name as block_name, pt.name as pest_name, em.date, em.time, t.name as trap_name, em.value as monitoring_number, em.pest_id
 		FROM ".$this->tableName()." em
-		INNER JOIN ".Pest::model()->tableName()." pt ON em.pest_id = pt.id
+		INNER JOIN ".CropPest::model()->tableName()." pt ON em.pest_id = pt.id
 		INNER JOIN ".Block::model()->tableName()." b ON em.block_id = b.id
 		INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
 		INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id 

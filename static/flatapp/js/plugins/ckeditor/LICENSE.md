@@ -814,8 +814,8 @@ Version 1.1
      combination of the Original Code and Modifications, in each case
      including portions thereof.
 
-     1.4. "Electronic Distribution Mechanism" means a mechanism generally
-     accepted in the software development community for the electronic
+     1.4. "Crop Distribution Mechanism" means a mechanism generally
+     accepted in the software development community for the crop
      transfer of data.
 
      1.5. "Executable" means Covered Code in any form other than Source
@@ -954,14 +954,14 @@ Version 1.1
      Any Modification which You create or to which You contribute must be
      made available in Source Code form under the terms of this License
      either on the same media as an Executable version or via an accepted
-     Electronic Distribution Mechanism to anyone to whom you made an
-     Executable version available; and if made available via Electronic
+     Crop Distribution Mechanism to anyone to whom you made an
+     Executable version available; and if made available via Crop
      Distribution Mechanism, must remain available for at least twelve (12)
      months after the date it initially became available, or at least six
      (6) months after a subsequent version of that particular Modification
      has been made available to such recipients. You are responsible for
      ensuring that the Source Code version remains available even if the
-     Electronic Distribution Mechanism is maintained by a third party.
+     Crop Distribution Mechanism is maintained by a third party.
 
      3.3. Description of Modifications.
      You must cause all Covered Code to which You contribute to contain a

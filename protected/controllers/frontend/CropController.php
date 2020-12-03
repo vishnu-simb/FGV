@@ -1,6 +1,6 @@
 <?php
 
-class ElectronicController extends SimbController
+class CropController extends SimbController
 {
 	/**
 	 * @return array action filters
@@ -42,30 +42,30 @@ class ElectronicController extends SimbController
 	 */
 	public function actionUpdate($id)
 	{
-		$modelElectronic = $this->loadModel($id);
-		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Electronic Monitor record', $modelElectronic->id);
+		$modelCrop = $this->loadModel($id);
+		$this->pageTitle = sprintf(Yii::t('app', 'Update %s ID: #%s'), 'Crop Monitor record', $modelCrop->id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($modelElectronic);
+		// $this->performAjaxValidation($modelCrop);
 
-		if (isset($_POST['ElectronicMonitor'])) {
-			$modelElectronic->attributes=$_POST['ElectronicMonitor'];
+		if (isset($_POST['CropMonitor'])) {
+			$modelCrop->attributes=$_POST['CropMonitor'];
 			try{
-				if ($modelElectronic->save()) {
+				if ($modelCrop->save()) {
 					Yii::app()->session->open();
 					Yii::app()->user->setFlash('success', Yii::t('app', 'The system has saved your data successfully !'));
 					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 				}
 			}catch(Exception $e) {
-				$modelElectronic->addError(null, Yii::t('app', 'Record has already been taken same block'));
+				$modelCrop->addError(null, Yii::t('app', 'Record has already been taken same block'));
 			}
 		}
         if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
         {
-            $modelElectronic->grower = Yii::app()->user->id;
+            $modelCrop->grower = Yii::app()->user->id;
         }
 		$this->render('update', array(
-			'modelElectronic' => $modelElectronic,
+			'modelCrop' => $modelCrop,
 		));
 	}
 	
@@ -90,7 +90,7 @@ class ElectronicController extends SimbController
 			$errorText = YII_DEBUG ? sprintf(
 					Yii::t('app', 'The Delete Request for ID %s in %s is not working correctly.'),
 					$id,
-					'Electronic Monitor records'
+					'Crop Monitor records'
 			) : Yii::t('app', 'Invalid request. Please do not repeat this request again.');
 			throw new CHttpException(400, $errorText);
 		}
@@ -102,8 +102,8 @@ class ElectronicController extends SimbController
 	 */
 	public function actionIndex()
 	{
-		$this->pageTitle = sprintf(Yii::t('app', 'Electronic Monitors %s'), '');
-		$modelElectronic = new ElectronicMonitor();
+		$this->pageTitle = sprintf(Yii::t('app', 'Crop Monitors %s'), '');
+		$modelCrop = new CropMonitor();
 		$modelGrower = new Grower();
 		$modelGrower->unsetAttributes();  // clear any default values
         $search = false;
@@ -121,11 +121,10 @@ class ElectronicController extends SimbController
             }
             $foundGrowerIDs = implode($ids,",");
 		}
-        if(isset($_POST['Pests'])){
+        if(isset($_POST['CropPests'])){
             try{
-                foreach ($_POST['Pests'] as $block_id => $data){ // save multiple records
+                foreach ($_POST['CropPests'] as $block_id => $data){ // save multiple records
                     if($data){
-
                         $success = false;
                         foreach ($data as $pest_id => $value) {
                             if ($value === '') continue;
@@ -134,31 +133,34 @@ class ElectronicController extends SimbController
                                 'pest_id' => $pest_id,
                                 'value' => $value,
                                 'date' => !empty($_POST['date']) ? $_POST['date'] : gmdate('Y-m-d'),
-                                'time' => !empty($_POST['time']) ? $_POST['time'].':00' : gmdate('H:i:00')
+                                'time' => !empty($_POST['time']) ? $_POST['time'].':00' : gmdate('H:i:00'),
+                                'comment' => !empty($_POST['Comments'][$block_id])?$_POST['Comments'][$block_id]:'',
+                                'duration' => !empty($_POST['duration']) ? $_POST['duration'] : ''
                             );
-                            $saveElectronicMonitor = new ElectronicMonitor();
-                            $saveElectronicMonitor->attributes = $save;
-                            if($saveElectronicMonitor->save()){
+                            $saveCropMonitor = new CropMonitor();
+                            $saveCropMonitor->attributes = $save;
+                            if($saveCropMonitor->save()){
                                 $success = true;
                             }
                         }
                         if ($success) {
                             Yii::app()->session->open();
-                            Yii::app()->user->setFlash('success', Yii::t('app', 'Electronic Monitor records are added successfully !'));
+                            Yii::app()->user->setFlash('success', Yii::t('app', 'Crop Monitor records are added successfully !'));
                         }
                     }
                 }
             }catch (Exception $e) {
+                var_dump($e);die;
                 Yii::app()->session->open();
-                Yii::app()->user->setFlash('error', Yii::t('app', 'Electronic Monitor records have already been taken same block !'));
+                Yii::app()->user->setFlash('error', Yii::t('app', 'Crop Monitor records have already been taken same block !'));
             }
             // reinit session to store flash
 
 
         }
 		$this->render('index', array(
-				'modelElectronic' => $modelElectronic,
-				'dataProvider' => $modelElectronic->SearchRecentElectronicMonitors(),
+				'modelCrop' => $modelCrop,
+				'dataProvider' => $modelCrop->SearchRecentCropMonitors(),
 				'modelGrower' => $modelGrower,
 				'search' => $search,
                 'foundGrowerIDs' => !empty($foundGrowerIDs)?$foundGrowerIDs:null
@@ -184,11 +186,11 @@ class ElectronicController extends SimbController
             // Set document properties
             $objPHPExcel->getProperties()->setCreator("Fruit Growers Victoria")
                 ->setLastModifiedBy("Fruit Growers Victoria")
-                ->setTitle("Electronic Monitors Export Document")
-                ->setSubject("Electronic Monitors Export Document")
-                ->setDescription("Electronic Monitors export document")
+                ->setTitle("Crop Monitors Export Document")
+                ->setSubject("Crop Monitors Export Document")
+                ->setDescription("Crop Monitors export document")
                 ->setKeywords("office 2007 openxml php customer export")
-                ->setCategory("Electronic Monitors export");
+                ->setCategory("Crop Monitors export");
 
             $objPHPExcel->getActiveSheet();
             $objPHPExcel->removeSheetByIndex(0);
@@ -197,7 +199,7 @@ class ElectronicController extends SimbController
 
             $header1 = array('', '');
 
-            $pest = Pest::model()->findAll();
+            $pest = CropPest::model()->findAll();
             $pest_names = array();
             $counter = 1;
             foreach($pest as $v){
@@ -244,8 +246,8 @@ class ElectronicController extends SimbController
             ));
 
             $growerName = '';
-            $modelElectronic = new ElectronicMonitor();
-            $recentRecords = $modelElectronic->getRecentElectronicMonitors($growerId, $date_from, $date_to);
+            $modelCrop = new CropMonitor();
+            $recentRecords = $modelCrop->getRecentCropMonitors($growerId, $date_from, $date_to);
             $date_pests = array();
             foreach ($recentRecords as $record) {
                 $growerName = $record['grower_name'];
@@ -277,12 +279,12 @@ class ElectronicController extends SimbController
             */
 
             // Rename worksheet
-            $objWorkSheet->setTitle('Electronic Monitors - '. date('Ymd'));
+            $objWorkSheet->setTitle('Crop Monitors - '. date('Ymd'));
 
             if(count($growerIDs) == 1 && $growerName)
-                $filename = "ElectronicMonitorsExport_".str_replace(' ', '_', $growerName)."_". date('Ymd');
+                $filename = "CropMonitorsExport_".str_replace(' ', '_', $growerName)."_". date('Ymd');
             else
-                $filename = "ElectronicMonitorsExport_". date('Ymd');
+                $filename = "CropMonitorsExport_". date('Ymd');
             $this->_export($objPHPExcel, $filename);
         }
 
@@ -292,31 +294,31 @@ class ElectronicController extends SimbController
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return ElectronicMonitor the loaded model
+	 * @return CropMonitor the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$modelElectronic = ElectronicMonitor::model()->findByPk($id);
-		if ($modelElectronic === null) {
+		$modelCrop = CropMonitor::model()->findByPk($id);
+		if ($modelCrop === null) {
 			$errorText = YII_DEBUG ? sprintf(
 					Yii::t('app', 'The ID %s does not exist in %s.'),
 					$id,
-					'ElectronicMonitor'
+					'CropMonitor'
 			) : Yii::t('app', 'The requested page does not exist.');
 			throw new CHttpException(404, $errorText);
 		}
-		return $modelElectronic;
+		return $modelCrop;
 	}
 	
 	/**
 	 * Performs the AJAX validation.
-	 * @param ElectronicMonitor $modelElectronic the model to be validated
+	 * @param CropMonitor $modelCrop the model to be validated
 	 */
-	protected function performAjaxValidation($modelElectronic)
+	protected function performAjaxValidation($modelCrop)
 	{
-		if (isset($_POST['ajax']) && $_POST['ajax'] === 'electronic-monitoring-form') {
-			echo CActiveForm::validate($modelElectronic);
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'crop-monitoring-form') {
+			echo CActiveForm::validate($modelCrop);
 			Yii::app()->end();
 		}
 	}
@@ -326,7 +328,7 @@ class ElectronicController extends SimbController
 		return array(
 				'order' => array(
 						'class' => 'ext.yii-ordering-column.actionBlock', // sort by group block_id
-						'modelClass' => 'ElectronicMonitor',
+						'modelClass' => 'CropMonitor',
 						'pkName'  => 'ordering',
 				),
 		);

@@ -160,7 +160,7 @@ class ReportController extends SimbController
         return $VAR;
 	}
 
-    private function getElectronicGraph($block, $grower, $year = ''){
+    private function getCropGraph($block, $grower, $year = ''){
         $data = $this->getDateRange($year);
 
         $VAR = array();

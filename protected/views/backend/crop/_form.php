@@ -1,6 +1,6 @@
 <?php
-/* @var $this ElectronicController */
-/* @var $modelElectronic ElectronicMonitor */
+/* @var $this CropController */
+/* @var $modelCrop CropMonitor */
 /* @var $form TbActiveForm */
 ?>
 <div class="alert alert-info">
@@ -20,7 +20,7 @@
                     'validateOnSubmit'=>true,
                 ),
             )); ?>
-<?php echo $form->errorSummary($modelElectronic); ?>
+<?php echo $form->errorSummary($modelCrop); ?>
 <div class="row-fluid">
     <div class="span12">
         <div class="box box-bordered">
@@ -29,16 +29,16 @@
             </div>
             <div class="box-content nopadding">
                 <div class="span6">
-                    <?php echo $form->dropDownListControlGroup($modelElectronic, 'pest_id', CHtml::listData( $modelElectronic->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'input-xlarge select2-minw'))?>
-                    <?php echo $form->dropDownListControlGroup($modelElectronic, 'block_id', CHtml::listData( $modelElectronic->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block', 'class' => 'input-xlarge select2-minw'))?>
-                    <?php echo $form->dropDownListControlGroup($modelElectronic, 'trap_id', CHtml::listData( $modelElectronic->getTrap()->getData() ,'id','trap_name'),array('empty'=>'Select A Trap', 'class' => 'input-xlarge select2-minw'))?>
-                    <?php echo $form->textFieldControlGroup($modelElectronic, 'date', array('class' => 'input-xlarge datepick', 'placeholder' => $modelElectronic->getAttributeLabel('date'))); ?>
-                    <?php echo $form->textFieldControlGroup($modelElectronic, 'value', array('class' => 'input-xlarge', 'placeholder' => $modelElectronic->getAttributeLabel('value'))); ?>
-                    <?php echo $form->textAreaControlGroup($modelElectronic, 'comment', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelElectronic->getAttributeLabel('comment'))); ?>
+                    <?php echo $form->dropDownListControlGroup($modelCrop, 'pest_id', CHtml::listData( $modelCrop->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'input-xlarge select2-minw'))?>
+                    <?php echo $form->dropDownListControlGroup($modelCrop, 'block_id', CHtml::listData( $modelCrop->getBlock()->getData() ,'id','block_name'),array('empty'=>'Select A Block', 'class' => 'input-xlarge select2-minw'))?>
+                    <?php echo $form->dropDownListControlGroup($modelCrop, 'trap_id', CHtml::listData( $modelCrop->getTrap()->getData() ,'id','trap_name'),array('empty'=>'Select A Trap', 'class' => 'input-xlarge select2-minw'))?>
+                    <?php echo $form->textFieldControlGroup($modelCrop, 'date', array('class' => 'input-xlarge datepick', 'placeholder' => $modelCrop->getAttributeLabel('date'))); ?>
+                    <?php echo $form->textFieldControlGroup($modelCrop, 'value', array('class' => 'input-xlarge', 'placeholder' => $modelCrop->getAttributeLabel('value'))); ?>
+                    <?php echo $form->textAreaControlGroup($modelCrop, 'comment', array( 'rows' => 6, 'class' => 'input-block-level', 'placeholder' => $modelCrop->getAttributeLabel('comment'))); ?>
                 </div>
                 <div class="span12">
                     <div class="form-actions">
-                        <?php echo TbHtml::submitButton($modelElectronic->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'),array(
+                        <?php echo TbHtml::submitButton($modelCrop->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'),array(
                             'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
                         )); ?>
                     </div>

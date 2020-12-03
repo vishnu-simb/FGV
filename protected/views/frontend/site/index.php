@@ -123,15 +123,15 @@ Yii::app()->clientScript->registerScript('index',"
 			loadSprayTable();
 		}
 	});
-	$('.toggleElectronicmonitoring').click(function(){
-	    if($('.electronicmonitoring-graph').hasClass('hidden-tablet')){
+	$('.toggleCropmonitoring').click(function(){
+	    if($('.cropmonitoring-graph').hasClass('hidden-tablet')){
 	        $('#yw1').html('<h4 style=\"text-align:center;\">Loading..</h4>');
-	        drawElectronicMonitoringChart();
-	        $('.toggleElectronicmonitoring').html('Hide Electronic Monitoring Graph');
+	        drawCropMonitoringChart();
+	        $('.toggleCropmonitoring').html('Hide Crop Monitoring Graph');
 	    }else{
-	        $('.toggleElectronicmonitoring').html('Show Electronic Monitoring Graph');
+	        $('.toggleCropmonitoring').html('Show Crop Monitoring Graph');
 	    }
-		$('.electronicmonitoring-graph').toggleClass('hidden-tablet').toggleClass('hidden-phone');
+		$('.cropmonitoring-graph').toggleClass('hidden-tablet').toggleClass('hidden-phone');
 	});
 	$('.toggleMitemonitoring').click(function(){
 	    if($('.mitemonitoring-graph').hasClass('hidden-tablet')){
@@ -217,9 +217,9 @@ Yii::app()->clientScript->registerScript('index',"
 					  		}
 				   }
 		});
-		drawElectronicMonitoringChart();
+		drawCropMonitoringChart();
 	}
-	function drawElectronicMonitoringChart(){
+	function drawCropMonitoringChart(){
 	    var block_id = $('#Block_id').val();
         if (typeof block_id == 'undefined' || !block_id)
         {
@@ -229,7 +229,7 @@ Yii::app()->clientScript->registerScript('index',"
         $('.month-graphs').show();
 		$.ajax({
 				  type: 'GET',
-				  url: siteUrl + 'api/graph/getBlockElectronic?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val()+'&month='+$('#graphMonth').val(),
+				  url: siteUrl + 'api/graph/getBlockCrop?block='+block_id+'&year='+graphYear.getFullYear()+'&user='+$('#user_id').val()+'&month='+$('#graphMonth').val(),
 				  success: function (data)
 				   {
 				            var jgraph = JSON.parse(data);
@@ -415,8 +415,8 @@ Yii::app()->clientScript->registerScript('index',"
 			</div>
 		</div>
         <div class="box month-graphs">
-            <div class="visible-tablet visible-phone" style="text-align: center;"><button style="color: white;" class="toggleElectronicmonitoring btn btn-warning">Show Electronic Monitoring Graph</button></div>
-            <div id="electronicmonitoring-graph" class="electronicmonitoring-graph hidden-tablet hidden-phone">
+            <div class="visible-tablet visible-phone" style="text-align: center;"><button style="color: white;" class="toggleCropmonitoring btn btn-warning">Show Crop Monitoring Graph</button></div>
+            <div id="cropmonitoring-graph" class="cropmonitoring-graph hidden-tablet hidden-phone">
                 <?php
                 $this->Widget('ext.highcharts.HighchartsWidget', array(
                     'options'=>array(

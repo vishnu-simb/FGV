@@ -1,10 +1,10 @@
 <?php
-/* @var $this ElectronicController */
-/* @var $modelElectronic ElectronicMonitor */
+/* @var $this CropController */
+/* @var $modelCrop CropMonitor */
 
 
 $this->breadcrumbs=array(
-	'Electronic Monitoring' => array('index'),
+	'Crop Monitoring' => array('index'),
 	Yii::t('app', 'Manage'),
 );
 
@@ -37,14 +37,14 @@ $('.search-form-ext form').submit(function(){
         <div class="box">
 
             <?php $this->renderPartial('_search',array(
-                'modelElectronic' => $modelElectronic,
+                'modelCrop' => $modelCrop,
             )); ?>
 
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
 	'id' => 'trap-check-grid',
-	'dataProvider' => $modelElectronic->search(),
-	'filter' => $modelElectronic,
+	'dataProvider' => $modelCrop->search(),
+	'filter' => $modelCrop,
     'filterCssClass' => 'thefilter',
     'ajaxUpdate' => false,
     'itemsCssClass' => 'dataTable simple-table dt-responsive table-hover table-nomargin table-striped table-bordered dataTable-columnfilter',
@@ -60,11 +60,11 @@ $('.search-form-ext form').submit(function(){
 					'class' => 'c-button',
 			),
 		),
-		array('name'=>'grower','value'=>'$data->grower->name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelElectronic,'grower', CHtml::listData( $modelElectronic->getGrower() ,'id','name'),array('empty'=>'Select A Grower', 'class' => 'select2-full-width'))),
-		array('name'=>'property','value'=>'$data->property->name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelElectronic,'property', CHtml::listData( $modelElectronic->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property', 'class' => 'select2-full-width'))),
-		array('name'=>'block','value'=>'$data->block->name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelElectronic,'block', CHtml::listData( $modelElectronic->getBlockByProperty() ,'id','name'),array('empty'=>'Select A Block', 'class' => 'select2-full-width'))),
-        array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelElectronic, 'pest_id', CHtml::listData( $modelElectronic->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'select2-full-width'))),
-		array('name'=>'trap','value'=>'$data->trap?$data->trap->name:""','header'=>'Trap','filter'=>CHtml::activeDropDownList($modelElectronic, 'trap', CHtml::listData($modelElectronic->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap', 'class' => 'select2-full-width'))),
+		array('name'=>'grower','value'=>'$data->grower->name','header'=>'Grower','filter'=>CHtml::activeDropDownList($modelCrop,'grower', CHtml::listData( $modelCrop->getGrower() ,'id','name'),array('empty'=>'Select A Grower', 'class' => 'select2-full-width'))),
+		array('name'=>'property','value'=>'$data->property->name','header'=>'Property','filter'=>CHtml::activeDropDownList($modelCrop,'property', CHtml::listData( $modelCrop->getPropertyByGrower() ,'id','name'),array('empty'=>'Select A Property', 'class' => 'select2-full-width'))),
+		array('name'=>'block','value'=>'$data->block->name','header'=>'Block','filter'=>CHtml::activeDropDownList($modelCrop,'block', CHtml::listData( $modelCrop->getBlockByProperty() ,'id','name'),array('empty'=>'Select A Block', 'class' => 'select2-full-width'))),
+        array('name'=>'pest','value'=>'$data->pest->name','filter'=>CHtml::activeDropDownList($modelCrop, 'pest_id', CHtml::listData( $modelCrop->getPest() ,'id','name'),array('empty'=>'Select A Pest', 'class' => 'select2-full-width'))),
+		array('name'=>'trap','value'=>'$data->trap?$data->trap->name:""','header'=>'Trap','filter'=>CHtml::activeDropDownList($modelCrop, 'trap', CHtml::listData($modelCrop->getTrapByBlock() ,'name','name'),array('empty'=>'Select A Trap', 'class' => 'select2-full-width'))),
 		'date',
 		'value',
 		'comment'

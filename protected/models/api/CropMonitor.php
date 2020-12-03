@@ -1,8 +1,8 @@
 <?php
 
-Yii::import('application.models._common.CommonElectronicMonitor');
+Yii::import('application.models._common.CommonCropMonitor');
 
-class ElectronicMonitor extends CommonElectronicMonitor
+class CropMonitor extends CommonCropMonitor
 {
 	
 	public $block_id;
@@ -30,6 +30,6 @@ class ElectronicMonitor extends CommonElectronicMonitor
                     'date_from' => $this->date .'-01',
                     'date_to' => date('Y-m-t',strtotime($this->date))
                     );
-		return $this->getElectronicMonitorInRange($filter);
+		return $this->getCropMonitorInRange($filter);
 	}
 }

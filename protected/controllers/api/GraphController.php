@@ -268,18 +268,18 @@ class GraphController extends SimbApiController {
     
     }
 
-    public function actionGetBlockElectronic(){
+    public function actionGetBlockCrop(){
         $VAR = array();
         $year = $_GET['year'];
         $dates = $this->_get_filter_dates($year);
         $filter = $dates;
         $filter['block_id'] = $this->block->id;
 
-        $model = new ElectronicMonitor('search');
+        $model = new CropMonitor('search');
         $model->unsetAttributes();
-        $dataProvider = $model->getElectronicMonitorInRange($filter);
+        $dataProvider = $model->getCropMonitorInRange($filter);
         $data = $dataProvider->getData();
-        $pest = Pest::model()->findAll();
+        $pest = CropPest::model()->findAll();
         $keys_arr = $pests = array();
         foreach($pest as $v){
             $keys_arr[] = $v->name;
@@ -306,7 +306,7 @@ class GraphController extends SimbApiController {
                             }
                         }
                         if($has_record){
-                            $sedat[] = array('y' => $dd, 'color' => darken_color(Pest::PestColor($r)));
+                            $sedat[] = array('y' => $dd, 'color' => darken_color(CropPest::CropPestColor($r)));
                             $has_trap = 1;
                         }else{
                             $sedat[] = $dd;
@@ -315,13 +315,13 @@ class GraphController extends SimbApiController {
                     $mm = strtotime('+1 day', $mm); // increment for loop
                 }
                 if($has_trap || 1)
-                    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>Pest::PestColor($r),'pointInterval'=> $this->pointInterval);
+                    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>CropPest::CropPestColor($r),'pointInterval'=> $this->pointInterval);
             }
 
         }
         if(!empty($serial)){
             $VAR['chart'] = array('renderTo'=>'yw1','type'=>'spline','zoomType'=>'x');
-            $VAR['title'] = array('text'=>'Electronic Monitors : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+            $VAR['title'] = array('text'=>'Crop Monitors : '.$this->block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
             $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
             //$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));

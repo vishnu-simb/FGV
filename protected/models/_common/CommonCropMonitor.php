@@ -6,9 +6,9 @@
  * @property Grower $grower
  */
 
-Yii::import('application.models._base.BaseElectronicMonitor');
+Yii::import('application.models._base.BaseCropMonitor');
 
-class CommonElectronicMonitor extends BaseElectronicMonitor
+class CommonCropMonitor extends BaseCropMonitor
 {
     public static function model($className = __CLASS__)
     {
@@ -25,9 +25,9 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
     {
 
         return array(
-            'alias' => 'electronic_monitor',
-            'condition' => 'electronic_monitor.is_deleted=0',
-            'order' => 'electronic_monitor.id DESC'
+            'alias' => 'crop_monitor',
+            'condition' => 'crop_monitor.is_deleted=0',
+            'order' => 'crop_monitor.id DESC'
         );
     }
 
@@ -40,8 +40,8 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
     public function scopes()
     {
         return array(
-            'alias' => 'electronic_monitor',
-            'condition' => 'electronic_monitor.is_deleted=0',
+            'alias' => 'crop_monitor',
+            'condition' => 'crop_monitor.is_deleted=0',
         );
 
     }
@@ -51,7 +51,7 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
         $oldValue = parent::attributeLabels();
         return CMap::mergeArray($oldValue, array(
             'block.name' => Yii::t('app', 'Block'),
-            'pest.name' => Yii::t('app', 'Pest'),
+            'pest.name' => Yii::t('app', 'Crop Pest'),
             'trap.name' => Yii::t('app', 'Trap'),
         ));
     }
@@ -134,7 +134,7 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
         $criteria->condition = 'is_deleted=:is_deleted';
         $criteria->params = array(':is_deleted'=>'0');
         $criteria->order = 'name';
-        return Pest::model()->findAll($criteria);
+        return CropPest::model()->findAll($criteria);
     }
 
     /**
@@ -142,7 +142,7 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
      * @static
      * @return CActiveDataProvider
      */
-    public function getElectronicMonitorInRange($filter)
+    public function getCropMonitorInRange($filter)
     {
         $block_id = isset($filter['block_id']) ? $filter['block_id'] : '';
         $date_from = isset($filter['date_from']) ? $filter['date_from'] : '';
@@ -158,7 +158,7 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
 
         $sql = "SELECT em.date AS em_date,em.value as em_value,pt.name AS pest_name
 		FROM " . $this->tableName() . " em
-		INNER JOIN " . Pest::model()->tableName() . " pt ON em.pest_id = pt.id
+		INNER JOIN " . CropPest::model()->tableName() . " pt ON em.pest_id = pt.id
 		INNER JOIN " . Block::model()->tableName() . " b ON em.block_id = b.id
 		" . $condition . " 
 		ORDER BY em.date DESC";
@@ -172,7 +172,7 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
      * @static
      * @return CActiveDataProvider
      */
-    public function getElectronicMonitorInRangeByLocation($filter)
+    public function getCropMonitorInRangeByLocation($filter)
     {
         $location_id = isset($filter['location_id']) ? $filter['location_id'] : '';
         $date_from = isset($filter['date_from']) ? $filter['date_from'] : '';
@@ -191,7 +191,7 @@ class CommonElectronicMonitor extends BaseElectronicMonitor
 
         $sql = "SELECT em.date AS em_date,SUM(em.value) as em_value,pt.name AS pest_name
 		FROM " . $this->tableName() . " em
-		INNER JOIN " . Pest::model()->tableName() . " pt ON em.pest_id = pt.id
+		INNER JOIN " . CropPest::model()->tableName() . " pt ON em.pest_id = pt.id
 		INNER JOIN " . Block::model()->tableName() . " b ON em.block_id = b.id
         INNER JOIN " . Property::model()->tableName() . " p ON b.property_id = p.id
 		" . $condition . " 

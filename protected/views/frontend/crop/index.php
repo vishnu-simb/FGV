@@ -1,6 +1,6 @@
 <?php
 Yii::app()->clientScript->registerScript('trapping',"
-    $('.electronic-daterangepick').daterangepicker(
+    $('.crop-daterangepick').daterangepicker(
         {format: 'DD/MM/YY'}
     );
 ");
@@ -28,11 +28,11 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
         <div class="row-fluid">
             <div class="span12">
                 <h4>Export to XLS</h4>
-                <form class="form-horizontal form-search-advanced form-validate" id="export-xls" action="/electronic/xls" method="post" novalidate="novalidate">
+                <form class="form-horizontal form-search-advanced form-validate" id="export-xls" action="/crop/xls" method="post" novalidate="novalidate">
                     <div class="control-group">
                         <label for="textfield" class="control-label">Date range</label>
                         <div class="controls">
-                            <input type="text" name="dates" id="dates" class="input-large electronic-daterangepick" value="<?=date('d/m/y', strtotime('-1 month'))?> - <?=date('d/m/y')?>">
+                            <input type="text" name="dates" id="dates" class="input-large crop-daterangepick" value="<?=date('d/m/y', strtotime('-1 month'))?> - <?=date('d/m/y')?>">
                         </div>
                     </div>
                     <input type="hidden" name="ids" value="<?=$foundGrowerIDs ?>" />
@@ -43,7 +43,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
     <?php endif; ?>
     <div class="row-fluid">
         <div class="span12">
-            <h4>New Electronic Monitor Record</h4>
+            <h4>New Crop Monitor Record</h4>
             <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'action' => Yii::app()->createUrl($this->route),
                 'method' => 'post',
@@ -54,6 +54,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                 <div class="bootstrap-timepicker" style="display: inline-block;">
                     <?php echo TbHtml::textField('time',gmdate('H:i'), array('class' => 'timepick', 'placeholder' => gmdate('H:i'))); ?>
                 </div>
+                <?php echo TbHtml::textField('duration','', array('placeholder' => 'Duration in minutes'));?>
                 <?php
                 $dataPests = $modelGrower->getPestsDataProvider();
                 foreach($modelGrower->search()->getData() as $grower){
@@ -64,7 +65,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                             echo '<div class="box box-small box-custom box-bordered">
                 						  <div class="box-title"><h3>'.$block->name.'</h3></div>';
                             $this->widget('bootstrap.widgets.TbGridView', array(
-                                'id' => 'pests-grid',
+                                'id' => 'crop-pests-grid',
                                 'dataProvider' =>  $dataPests,
                                 //'filter' => false,
                                 'ajaxUpdate' => false,
@@ -74,11 +75,12 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                                 'columns' => array(
                                     array('name'=>'name','header'=>''),
                                     array('name'=>'','value'=>function($data)use($block){
-                                        echo '<input type="text" name="Pests['.$block->id.']['.$data['id'].']" class="spinner" style="width: 30px;" />';
+                                        echo '<input type="text" name="CropPests['.$block->id.']['.$data['id'].']" class="spinner" style="width: 30px;" />';
                                     },'header'=>'','htmlOptions' => array('class' => 'right-cell'))
                                 ),
                             ));
                             echo '</div>';
+                            echo TbHtml::textField('Comments['.$block->id.']','', array('style' => 'width: 100%;', 'placeholder' => 'Comment for "'.$block->name.'"'));
                         }
                     }
                 }
@@ -96,7 +98,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                 <div class="box-title">
                     <h3>
                         <i class="icon-table"></i>
-                        Latest Electronic Monitoring
+                        Latest Crop Monitoring
                     </h3>
 
                 </div>
@@ -119,8 +121,8 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                                     <?php echo $lastest['monitoring_number'] ;?>
                                 </td>
                                 <td style="text-align: right;width: 65px">
-                                    <a href="<?php echo Yii::app()->baseUrl."/electronic/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>
-                                    <a href="<?php echo Yii::app()->baseUrl."/electronic/delete/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-remove"></i></a>
+                                    <a href="<?php echo Yii::app()->baseUrl."/crop/update/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Edit <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-edit"></i></a>
+                                    <a href="<?php echo Yii::app()->baseUrl."/crop/delete/".$lastest['monitoring_id'] ?>" rel="tooltip" class="btn" data-original-title="Delete <?php echo $lastest['monitoring_name'] ; ?>"><i class="icon-remove"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach;?>

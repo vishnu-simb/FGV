@@ -12,4 +12,4 @@ $this->breadcrumbs = array(
 
 ?>
 
-<?php $this->renderPartial('_form', array('modelElectronic'=>$modelElectronic)); ?>
+<?php $this->renderPartial('_form', array('modelCrop'=>$modelCrop)); ?>
