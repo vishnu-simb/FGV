@@ -160,99 +160,67 @@ class ReportController extends SimbController
         return $VAR;
 	}
 
-    private function getCropGraph($block, $grower, $year = ''){
-        $data = $this->getDateRange($year);
+    private function getCropPestGraph($block, $grower, $year = ''){
+        $filter = $this->getDateRange($year);
+        $filter['block_id'] = $block->id;
 
-        $VAR = array();
-        $filter = array(
-            'block_id' => $block->id,
-            'date_from' => $data['date_from'],
-            'date_to' => $data['date_to']
-        );
-        $model = new TrapCheck('search');
+        $model = new CropMonitor('search');
         $model->unsetAttributes();
-        $dataProvider = $model->getTrapCheckInRange($filter);
+        $dataProvider = $model->getCropMonitorInRange($filter);
         $data = $dataProvider->getData();
-        $serial = array();
-        $pest = Pest::model()->findAll();
-        $keys_arr = array();
+        $pest = CropPest::model()->findAll();
+        $keys_arr = $pests = array();
         foreach($pest as $v){
             $keys_arr[] = $v->name;
+            $pests[$v->name] = $v;
         }
-        $min_time = strtotime($filter['date_from']);
-        $max_time = strtotime($filter['date_to']);
-        $max_value = 0;
+        $serial = array();
         if(!empty($keys_arr)){
+            $m = strtotime($filter['date_from']);
+            $e = strtotime($filter['date_to']);
             foreach($keys_arr as $r){
                 $has_trap = 0;
-                $mm = $min_time;
+                $mm = $m;
                 $sedat = array();
-                while($mm <= $max_time)
+                while($mm < $e)
                 {
-                    $dd = 0;
-                    $has_record = 0;
-                    foreach($data as $val){
-                        if($val["em_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
-                            $has_record = 1;
-                            $dd += intval($val["tc_value"]);
-                            if ($max_value < $dd)
-                                $max_value = $dd;
+                    if(date($mm) < date(time())){
+                        $dd = 0;
+                        $has_record = 0;
+                        foreach($data as $val){
+
+                            if($val["em_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
+                                $has_record = 1;
+                                $dd += intval($val["em_value"]);
+                            }
                         }
-                    }
-                    if($has_record){
-                        $sedat[] = array('y' => $dd, 'color' => darken_color(Pest::PestColor($r)));
-                        $has_trap = 1;
-                    }else{
-                        $sedat[] = $dd;
+                        if($has_record){
+                            $sedat[] = array('y' => $dd, 'color' => darken_color(CropPest::CropPestColor($r)));
+                            $has_trap = 1;
+                        }else{
+                            $sedat[] = $dd;
+                        }
                     }
                     $mm = strtotime('+1 day', $mm); // increment for loop
                 }
-                if($has_trap)
-                    $serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $min_time*1000),array('data'=>$sedat),array('color'=>Pest::PestColor($r)));
+                if($has_trap || 1)
+                    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>CropPest::CropPestColor($r),'pointInterval'=> 24 * 3600 * 1000);
             }
 
         }
         if(!empty($serial)){
-            $VAR['chart'] = array('zoomType' => 'x','type'=>'spline');
-            $VAR['title'] = array('text'=> $grower->name. ' between '. date('d M, Y', $min_time) . ' and '. date('d M, Y', $max_time));
-            $VAR['subtitle'] = array('text' => 'Click and drag in the plot area to zoom in');
+            $VAR['chart'] = array('type'=>'spline','zoomType'=>'x');
+            $VAR['title'] = array('text'=>'Crop Monitors : '.$block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
+            $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
+            //$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
             $VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4));
-            $VAR['xAxis'] = array(
-                'type' => 'datetime',
-                'maxZoom' => 14 * 24 * 3600000, // fourteen days,
-                'tickInterval' =>   7 * 24 * 3600 * 1000,
-                'labels' => array(
-                    'format' =>  '{value:%d/%m/%y}',
-                    'rotation' => 90,
-                    'y' => 50,
-                    'align' => 'center'
-                ),
-                'gridLineWidth' => 1,
-                'plotBands'=>
-                    array(
-                        array(
-                            'from'=>$min_time,
-                            'to'=>'2',
-                            'color'=>'#F5D3F5',
-                            'label'=>array(
-                                'text'=>'Williams pears (1500)',
-                                'style'=>array('color'=>'#606060')
-                            )
-                        )
-                    )
-            );
-            $VAR['yAxis'] = array(
-                'title'=>array('text'=>''),
-                'startOnTick'=>0,
-                'showFirstLabel'=>0,
-                'floor'=> 0,
-                'allowDecimals'=>false,
-                'minRange' => 0.1,
-                'max' => $max_value+1>4?$max_value+1:4,
-                'tickInterval' => $max_value>5?intval($max_value/5):1
-            );
+            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> 14 * 24 * 3600000, 'max' => strtotime($filter['date_to'])*1000);
+            $VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
             $VAR['series'] = $serial;
+            $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
+        }else{
+            $VAR['chart']= $serial;
         }
         return $VAR;
     }
@@ -486,6 +454,9 @@ class ReportController extends SimbController
 				
                 if (empty($VARS['graphData'][$block->id]))
 				    $VARS['graphData'][$block->id] = $this->getGraph($block, $grower, $year);
+
+                if (empty($VARS['cropPestGraphData'][$block->id]))
+                    $VARS['cropPestGraphData'][$block->id] = $this->getCropPestGraph($block, $grower, $year);
 
                 /* 2019-07-22 CLIDS Graph
                 if (empty($VARS['graphMiteData'][$block->id]))

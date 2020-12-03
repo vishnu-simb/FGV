@@ -405,7 +405,17 @@ foreach($VARS['blocks'] as $block){
         ?>
     </div>
     */ ?>
-
+    <h4>Crop Pests Monitoring Graph</h4>
+    <div class="graph">
+        <?php
+        if (empty($VARS['cropPestGraphData'][$block->id]))
+            echo 'There is no data for Graph.';
+        else
+            $this->Widget('ext.highcharts.HighchartsWidget', array(
+                'options'=>$VARS['cropPestGraphData'][$block->id]
+            ));
+        ?>
+    </div>
 	<h4>Spray Logs</h4>
 	<table>
 		<tr class="head">

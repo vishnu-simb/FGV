@@ -197,7 +197,7 @@ class CropController extends SimbController
 
             $objWorkSheet = $objPHPExcel->createSheet();
 
-            $header1 = array('', '', '');
+            $header1 = array('Block Name', '', '');
 
             $pest = CropPest::model()->findAll();
             $pest_names = array();
@@ -208,6 +208,8 @@ class CropController extends SimbController
             }
 
             $growerName = '';
+            $durations = array();
+            $comments = array();
             $modelCrop = new CropMonitor();
             $recentRecords = $modelCrop->getRecentCropMonitors($growerId, $date_from, $date_to);
             $date_pests = array();
@@ -219,18 +221,25 @@ class CropController extends SimbController
                 if (empty($date_pests[$record['block_name']][$_key]))
                     $date_pests[$record['block_name']][$_key] = array();
                 $date_pests[$record['block_name']][$_key][$record['pest_id']] = $record['monitoring_number'];
+
+                if (empty($comments[$record['block_name']]))
+                    $comments[$record['block_name']] = array();
+                $comments[$record['block_name']][$_key] = $record['comment'];
+
+                if (empty($durations[$_key]))
+                    $durations[$_key] = $record['duration']?($record['duration'] . ' minutes'):'';
             }
 
             $row_index = 1;
             $objWorkSheet->setCellValue('A'.$row_index++, 'Grower: ' . $growerName);
 
-            $header1 = array_merge($header1, array('Traps', "Action\nRequired", 'Action Taken', 'Comment', 'Sign'));
+            $header1 = array_merge($header1, array("Action\nRequired", 'Action Taken', 'Comment', 'Duration', 'Sign'));
             $objWorkSheet->fromArray($header1, NULL, 'A'.$row_index++);
 
             $col_index = 1;
             $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
             $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Block Name');
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Block Name */
 
             $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
             $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
@@ -244,7 +253,6 @@ class CropController extends SimbController
                 $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("5");
                 $col_index++;
             }
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Traps */
 
             $objWorkSheet->getStyle($columns[$col_index].($row_index-1))->getAlignment()->setWrapText(true);
             $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Yes/No'); /* Action Required */
@@ -257,6 +265,10 @@ class CropController extends SimbController
             $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
             $objWorkSheet->setCellValue($columns[$col_index].$row_index, "If pests are seen, seek\nto indentify and then\ncheck if they are a pest\n,of convern for export\nIf not, mark"); /* Comment */
             $objWorkSheet->getStyle($columns[$col_index++].$row_index)->getAlignment()->setWrapText(true);
+
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Duration */
 
             $objWorkSheet->setCellValue($columns[$col_index].$row_index, ''); /* Sign */
 
@@ -286,6 +298,10 @@ class CropController extends SimbController
                     foreach ($pest_names as $pest_id => $pest_name) {
                         $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, !empty($value_array[$pest_id]) ? number_format($value_array[$pest_id]) : 0);
                     }
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Required */
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Taken */
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $block_name?$comments[$block_name][$dtm]:''); /* Comment on same line with block name */
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $durations[$dtm]); /* Same duration for each date time */
                 }
             }
 

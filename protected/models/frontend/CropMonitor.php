@@ -42,7 +42,7 @@ class CropMonitor extends CommonCropMonitor
         }elseif($dateTo){
             $whereStr = " AND em.date <= '$dateTo' ";
         }
-        $sql="SELECT g.name as grower_name, p.name as property_name, b.name as block_name, pt.name as pest_name, em.date, em.time, t.name as trap_name, em.value as monitoring_number, em.pest_id
+        $sql="SELECT g.name as grower_name, p.name as property_name, b.name as block_name, pt.name as pest_name, em.date, em.time, t.name as trap_name, em.value as monitoring_number, em.pest_id, em.comment, em.duration
 		FROM ".$this->tableName()." em
 		INNER JOIN ".CropPest::model()->tableName()." pt ON em.pest_id = pt.id
 		INNER JOIN ".Block::model()->tableName()." b ON em.block_id = b.id
