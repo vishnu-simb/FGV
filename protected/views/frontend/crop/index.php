@@ -80,7 +80,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                                 ),
                             ));
                             echo '</div>';
-                            echo TbHtml::textField('Comments['.$block->id.']','', array('style' => 'width: 100%;', 'placeholder' => 'Comment for "'.$block->name.'"'));
+                            echo TbHtml::textArea('Comments['.$block->id.']','', array('style' => 'width: 90%; margin-bottom: 30px;', 'placeholder' => 'Comment for "'.$block->name.'"'));
                         }
                     }
                 }
