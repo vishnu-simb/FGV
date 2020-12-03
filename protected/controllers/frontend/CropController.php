@@ -197,7 +197,7 @@ class CropController extends SimbController
 
             $objWorkSheet = $objPHPExcel->createSheet();
 
-            $header1 = array('', '');
+            $header1 = array('', '', '');
 
             $pest = CropPest::model()->findAll();
             $pest_names = array();
@@ -207,14 +207,35 @@ class CropController extends SimbController
                 $header1[] = $counter++;
             }
 
-            $header1 = array_merge($header1, array('Traps', "Action\nRequired", 'Action Taken', 'Comment', 'Sign'));
+            $growerName = '';
+            $modelCrop = new CropMonitor();
+            $recentRecords = $modelCrop->getRecentCropMonitors($growerId, $date_from, $date_to);
+            $date_pests = array();
+            foreach ($recentRecords as $record) {
+                $growerName = $record['grower_name'];
+                $_key = strtotime($record['date']. ' '. $record['time']);
+                if (empty($date_pests[$record['block_name']]))
+                    $date_pests[$record['block_name']] = array();
+                if (empty($date_pests[$record['block_name']][$_key]))
+                    $date_pests[$record['block_name']][$_key] = array();
+                $date_pests[$record['block_name']][$_key][$record['pest_id']] = $record['monitoring_number'];
+            }
+
             $row_index = 1;
+            $objWorkSheet->setCellValue('A'.$row_index++, 'Grower: ' . $growerName);
+
+            $header1 = array_merge($header1, array('Traps', "Action\nRequired", 'Action Taken', 'Comment', 'Sign'));
             $objWorkSheet->fromArray($header1, NULL, 'A'.$row_index++);
 
             $col_index = 1;
             $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
+            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Block Name');
+
+            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
             $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
             $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Date');
+
             $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Time');
             foreach($pest_names as $pest_name) {
                 $objWorkSheet->setCellValue($columns[$col_index].$row_index, $pest_name);
@@ -245,31 +266,30 @@ class CropController extends SimbController
                 )
             ));
 
-            $growerName = '';
-            $modelCrop = new CropMonitor();
-            $recentRecords = $modelCrop->getRecentCropMonitors($growerId, $date_from, $date_to);
-            $date_pests = array();
-            foreach ($recentRecords as $record) {
-                $growerName = $record['grower_name'];
-                $_key = strtotime($record['date']. ' '. $record['time']);
-                if (empty($date_pests[$_key]))
-                    $date_pests[$_key] = array();
-                $date_pests[$_key][$record['pest_id']] = $record['monitoring_number'];
-            }
             ksort($date_pests);
+            foreach($date_pests as $block_name => $block_value_array)
+                ksort($date_pests[$block_name]);
 
-            foreach ($date_pests as $dtm => $value_array) {
-                $row_index++;
-                $objWorkSheet->setCellValue('A'.$row_index, date('d/m/Y', $dtm));
-                $objWorkSheet->setCellValue('B'.$row_index, date('H:i', $dtm));
-
-                $col_index = 3;
-                foreach ($pest_names as $pest_id => $pest_name) {
-                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, !empty($value_array[$pest_id])?number_format($value_array[$pest_id]):0);
+            foreach ($date_pests as $block_name => $block_value_array) {
+                $print_block_name = 0;
+                foreach ($block_value_array as $dtm => $value_array) {
+                    $row_index++;
+                    if ($print_block_name) {
+                        $block_name = '';
+                    } else {
+                        $print_block_name = 1;
+                    }
+                    $col_index = 1;
+                    $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, $block_name);
+                    $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('d/m/Y', $dtm));
+                    $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('H:i', $dtm));
+                    foreach ($pest_names as $pest_id => $pest_name) {
+                        $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, !empty($value_array[$pest_id]) ? number_format($value_array[$pest_id]) : 0);
+                    }
                 }
             }
 
-            $objWorkSheet->getStyle("A1:".$columns[count($header1)].$row_index)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+            $objWorkSheet->getStyle("A2:".$columns[count($header1)].$row_index)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
             /*
             for ($i = 'A'; $i !=  $objWorkSheet->getHighestColumn(); $i++) {

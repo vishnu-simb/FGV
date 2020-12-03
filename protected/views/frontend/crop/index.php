@@ -75,7 +75,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                                 'columns' => array(
                                     array('name'=>'name','header'=>''),
                                     array('name'=>'','value'=>function($data)use($block){
-                                        echo '<input type="text" name="CropPests['.$block->id.']['.$data['id'].']" class="spinner" style="width: 30px;" />';
+                                        echo '<input type="text" name="CropPests['.$block->id.']['.$data['id'].']" class="spinner" style="width: 30px;" value="0" />';
                                     },'header'=>'','htmlOptions' => array('class' => 'right-cell'))
                                 ),
                             ));
