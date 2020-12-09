@@ -18,7 +18,9 @@ class Grower extends CommonGrower
 
     function getPestsDataProvider(){
         $sql="SELECT * FROM ".CropPest::model()->tableName()." ORDER BY ordering";
-        return new CSqlDataProvider($sql, array());
+        return new CSqlDataProvider($sql, array(
+            'pagination'=>false,
+        ));
     }
 	
 	/**

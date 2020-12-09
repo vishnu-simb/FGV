@@ -208,8 +208,6 @@ class CropController extends SimbController
             }
 
             $growerName = '';
-            $durations = array();
-            $comments = array();
             $modelCrop = new CropMonitor();
             $recentRecords = $modelCrop->getRecentCropMonitors($growerId, $date_from, $date_to);
             $date_pests = array();
@@ -220,14 +218,7 @@ class CropController extends SimbController
                     $date_pests[$record['block_name']] = array();
                 if (empty($date_pests[$record['block_name']][$_key]))
                     $date_pests[$record['block_name']][$_key] = array();
-                $date_pests[$record['block_name']][$_key][$record['pest_id']] = $record['monitoring_number'];
-
-                if (empty($comments[$record['block_name']]))
-                    $comments[$record['block_name']] = array();
-                $comments[$record['block_name']][$_key] = $record['comment'];
-
-                if (empty($durations[$_key]))
-                    $durations[$_key] = $record['duration']?($record['duration'] . ' minutes'):'';
+                $date_pests[$record['block_name']][$_key][$record['pest_id']] = $record;
             }
 
             $row_index = 1;
@@ -285,10 +276,12 @@ class CropController extends SimbController
             foreach ($date_pests as $block_name => $block_value_array) {
                 $print_block_name = 0;
                 foreach ($block_value_array as $dtm => $value_array) {
+                    $_record = reset($value_array);
                     $row_index++;
                     if ($print_block_name) {
                         $block_name = '';
                     } else {
+                        $block_name = trim($_record['block_name']);
                         $print_block_name = 1;
                     }
                     $col_index = 1;
@@ -296,12 +289,12 @@ class CropController extends SimbController
                     $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('d/m/Y', $dtm));
                     $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('H:i', $dtm));
                     foreach ($pest_names as $pest_id => $pest_name) {
-                        $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, !empty($value_array[$pest_id]) ? number_format($value_array[$pest_id]) : 0);
+                        $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, !empty($value_array[$pest_id]) ? number_format($value_array[$pest_id]['monitoring_number']) : 0);
                     }
                     $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Required */
                     $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Taken */
-                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $block_name?$comments[$block_name][$dtm]:''); /* Comment on same line with block name */
-                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $durations[$dtm]); /* Same duration for each date time */
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, trim($_record['comment'])); /* Comment on same line with block name */
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $_record['duration']?$_record['duration']. ' minutes':''); /* Same duration for each date time */
                 }
             }
 

@@ -175,6 +175,7 @@ class ReportController extends SimbController
             $pests[$v->name] = $v;
         }
         $serial = array();
+        $max_value = 0;
         if(!empty($keys_arr)){
             $m = strtotime($filter['date_from']);
             $e = strtotime($filter['date_to']);
@@ -188,10 +189,11 @@ class ReportController extends SimbController
                         $dd = 0;
                         $has_record = 0;
                         foreach($data as $val){
-
                             if($val["em_date"]==date("Y-m-d", $mm) && $val["pest_name"]==$r){
                                 $has_record = 1;
                                 $dd += intval($val["em_value"]);
+                                if ($max_value < $dd)
+                                    $max_value = $dd;
                             }
                         }
                         if($has_record){
@@ -203,8 +205,7 @@ class ReportController extends SimbController
                     }
                     $mm = strtotime('+1 day', $mm); // increment for loop
                 }
-                if($has_trap || 1)
-                    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>CropPest::CropPestColor($r),'pointInterval'=> 24 * 3600 * 1000);
+                $serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $m*1000),array('data'=>$sedat),array('color'=>CropPest::CropPestColor($r)));
             }
 
         }
@@ -213,12 +214,30 @@ class ReportController extends SimbController
             $VAR['title'] = array('text'=>'Crop Monitors : '.$block->name.' between '.date("d/m/Y", $m).' and '.date("d/m/Y", $e));
             $VAR['subtitle'] = array('text'=>'Click and drag in the plot area to zoom in');
             $VAR['tooltip'] = array('shared'=>true,'crosshairs'=>true);
-            //$VAR['plotOptions'] = array('series'=>array('connectNulls'=> true),'spline'=>array('lineWidth'=>4,'states'=>array('hover'=>array('lineWidth'=> 5)),'marker'=>array('enabled' =>true)));
             $VAR['plotOptions'] = array('spline'=>array('lineWidth'=>4));
-            $VAR['xAxis'] = array('type'=>'datetime','maxZoom'=> 14 * 24 * 3600000, 'max' => strtotime($filter['date_to'])*1000);
-            $VAR['yAxis'] = array('title'=>array('text'=>''),'startOnTick'=>0,'showFirstLabel'=>0,'floor'=> 0,'allowDecimals'=>false,'minRange' => 0.1);
+            $VAR['xAxis'] = array(
+                'type' => 'datetime',
+                'maxZoom' => 14 * 24 * 3600000, // fourteen days,
+                'tickInterval' =>   7 * 24 * 3600 * 1000,
+                'labels' => array(
+                    'format' =>  '{value:%d/%m/%y}',
+                    'rotation' => 90,
+                    'y' => 50,
+                    'align' => 'center'
+                ),
+                'gridLineWidth' => 1
+            );
+            $VAR['yAxis'] = array(
+                'title'=>array('text'=>''),
+                'startOnTick'=>0,
+                'showFirstLabel'=>0,
+                'floor'=> 0,
+                'allowDecimals'=>false,
+                'minRange' => 0.1,
+                'max' => $max_value+1>4?$max_value+1:4,
+                'tickInterval' => $max_value>5?intval($max_value/5):1
+            );
             $VAR['series'] = $serial;
-            $VAR['pointStart'] = array('year'=>date('Y',$m), 'month'=>date('n',$m)-1, 'day'=>date('d',$m) );
         }else{
             $VAR['chart']= $serial;
         }
