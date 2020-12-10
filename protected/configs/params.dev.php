@@ -36,4 +36,5 @@ return array(
 				'port'=>'26',
 	),
 	'emailSignature' => 'Growfruit',
+    'defaultFruitTypeId' => 1 /* Apple */
 );
