@@ -144,4 +144,30 @@ class CommonGrower extends BaseGrower
     	return self::model()->find('LOWER(name) = :name', array('name' => strtolower($name)));
     }
 
+
+
+    function getPestsDataProvider($fruit_type_id = ''){
+        $sql="SELECT * FROM ".CropPest::model()->tableName().($fruit_type_id?" WHERE fruit_type_id = '$fruit_type_id'":"")." ORDER BY ordering";
+        return new CSqlDataProvider($sql, array(
+            'pagination'=>false,
+        ));
+    }
+
+    public function getBlockByGrower(){
+        $where = '';
+        if ($this->id)
+            $where = " WHERE g.id = $this->id ";
+        $sql="SELECT b.id as id,b.name as name,CONCAT (g.name,' - ',p.name,' - ',b.name) AS block_name, v.fruit_type_id, ft.name as fruit_type
+		FROM ".Block::model()->tableName()." b
+    			INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
+    			INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
+		        LEFT JOIN ".Variety::model()->tableName()." v ON v.id = b.tree_variety 
+		        LEFT JOIN ".FruitType::model()->tableName()." ft ON ft.id = v.fruit_type_id 
+        $where   
+    	ORDER BY g.name";
+        return new CSqlDataProvider($sql, array(
+            'pagination'=>false,
+        ));
+    }
+
 }

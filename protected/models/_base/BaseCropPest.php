@@ -13,6 +13,7 @@
  * @property string $name
  * @property string $calculate
  * @property string $color
+ * @property integer $fruit_type_id
  * @property string $creator_id
  * @property integer $ordering
  * @property string $created_at
@@ -43,8 +44,8 @@ abstract class BaseCropPest extends SimbActiveRecord{
 	public function rules()
     {
 		return array(
-			array('name, calculate, color', 'required','except' => 'search'),
-			array('ordering, status, is_deleted', 'numerical', 'integerOnly'=>true),
+			array('name, calculate, fruit_type_id, color', 'required','except' => 'search'),
+			array('ordering, status, is_deleted, fruit_type_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('calculate', 'length', 'max'=>3),
 			array('creator_id', 'length', 'max'=>20),
@@ -59,6 +60,7 @@ abstract class BaseCropPest extends SimbActiveRecord{
 		return array(
 			'biofixes' => array(self::HAS_MANY, 'Biofix', 'id'),
 			'traps' => array(self::HAS_MANY, 'Trap', 'pest_id'),
+            'fruit_type' => array(self::BELONGS_TO, 'FruitType', 'fruit_type_id'),
 		);
 	}
 
@@ -75,6 +77,7 @@ abstract class BaseCropPest extends SimbActiveRecord{
 			'name' => Yii::t('app', 'Name'),
 			'calculate' => Yii::t('app', 'Enable Calculations'),
 			'color' => Yii::t('app', 'Color'),
+            'fruit_type_id' => Yii::t('app', 'Fruit Type'),
 			'creator_id' => Yii::t('app', 'Creator'),
 			'ordering' => Yii::t('app', 'Ordering'),
 			'created_at' => Yii::t('app', 'Created At'),
@@ -92,6 +95,7 @@ abstract class BaseCropPest extends SimbActiveRecord{
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('name', $this->name, true);
 		$criteria->compare('calculate', $this->calculate, true);
+        $criteria->compare('fruit_type_id', $this->fruit_type_id, true);
 		$criteria->compare('creator_id', $this->creator_id, true);
 		$criteria->compare('ordering', $this->ordering);
 		$criteria->compare('created_at', $this->created_at, true);

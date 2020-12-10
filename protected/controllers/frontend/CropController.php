@@ -172,6 +172,9 @@ class CropController extends SimbController
         $growerIDs = explode(',', $_POST['ids']);
         if(!empty($growerIDs)){
             $growerId = $growerIDs[0];
+            $grower = Grower::model()->findByPk($growerId);
+            if (!$grower)
+                die('Invalid grower ID.');
             $date_from = $date_to = '';
             $dates = explode(' - ', $_POST['dates']);
             if(!empty($dates) && !empty($dates[0])){
@@ -194,126 +197,103 @@ class CropController extends SimbController
 
             $objPHPExcel->getActiveSheet();
             $objPHPExcel->removeSheetByIndex(0);
-
-            $objWorkSheet = $objPHPExcel->createSheet();
-
-            $header1 = array('Block Name', '', '');
-
-            $pest = CropPest::model()->findAll();
-            $pest_names = array();
-            $counter = 1;
-            foreach($pest as $v){
-                $pest_names[$v->id] = $v->name;
-                $header1[] = $counter++;
-            }
-
-            $growerName = '';
             $modelCrop = new CropMonitor();
-            $recentRecords = $modelCrop->getRecentCropMonitors($growerId, $date_from, $date_to);
-            $date_pests = array();
-            foreach ($recentRecords as $record) {
-                $growerName = $record['grower_name'];
-                $_key = strtotime($record['date']. ' '. $record['time']);
-                if (empty($date_pests[$record['block_name']]))
-                    $date_pests[$record['block_name']] = array();
-                if (empty($date_pests[$record['block_name']][$_key]))
-                    $date_pests[$record['block_name']][$_key] = array();
-                $date_pests[$record['block_name']][$_key][$record['pest_id']] = $record;
-            }
 
-            $row_index = 1;
-            $objWorkSheet->setCellValue('A'.$row_index++, 'Grower: ' . $growerName);
+            $dataProvider = $grower->getBlockByGrower();
+            $blocks = $dataProvider->getData();
+            if ($blocks) {
+                foreach ($blocks as $_block) {
+                    $objWorkSheet = $objPHPExcel->createSheet();
 
-            $header1 = array_merge($header1, array("Action\nRequired", 'Action Taken', 'Comment', 'Duration', 'Sign'));
-            $objWorkSheet->fromArray($header1, NULL, 'A'.$row_index++);
+                    $dateProvider = $grower->getPestsDataProvider($_block['fruit_type_id']?$_block['fruit_type_id']:Yii::app()->params['defaultFruitTypeId']);
+                    $pest = $dateProvider->getData();
 
-            $col_index = 1;
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Block Name */
+                    $pest_names = array();
+                    $counter = 1;
 
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Date');
-
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Time');
-            foreach($pest_names as $pest_name) {
-                $objWorkSheet->setCellValue($columns[$col_index].$row_index, $pest_name);
-                $objWorkSheet->getStyle($columns[$col_index].$row_index)->getAlignment()->setTextRotation(90);
-                $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
-                $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("5");
-                $col_index++;
-            }
-
-            $objWorkSheet->getStyle($columns[$col_index].($row_index-1))->getAlignment()->setWrapText(true);
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Yes/No'); /* Action Required */
-
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Taken */
-
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
-            $objWorkSheet->setCellValue($columns[$col_index].$row_index, "If pests are seen, seek\nto indentify and then\ncheck if they are a pest\n,of convern for export\nIf not, mark"); /* Comment */
-            $objWorkSheet->getStyle($columns[$col_index++].$row_index)->getAlignment()->setWrapText(true);
-
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
-            $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
-            $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Duration */
-
-            $objWorkSheet->setCellValue($columns[$col_index].$row_index, ''); /* Sign */
-
-            $objWorkSheet->getStyle("A1:".$columns[$col_index].$row_index)->applyFromArray(array(
-                'alignment' => array(
-                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-                )
-            ));
-
-            ksort($date_pests);
-            foreach($date_pests as $block_name => $block_value_array)
-                ksort($date_pests[$block_name]);
-
-            foreach ($date_pests as $block_name => $block_value_array) {
-                $print_block_name = 0;
-                foreach ($block_value_array as $dtm => $value_array) {
-                    $_record = reset($value_array);
-                    $row_index++;
-                    if ($print_block_name) {
-                        $block_name = '';
-                    } else {
-                        $block_name = trim($_record['block_name']);
-                        $print_block_name = 1;
+                    $header1 = array('', '');
+                    foreach($pest as $v){
+                        $pest_names[$v['id']] = $v['name'];
+                        $header1[] = $counter++;
                     }
+
+                    $row_index = 1;
+                    $objWorkSheet->setCellValue('A'.$row_index++, 'Grower: ' . $grower->name);
+                    $objWorkSheet->setCellValue('A'.$row_index++, 'Block: ' . $_block['name']. ($_block['fruit_type']?' (Fruit: '.$_block['fruit_type']. ')':' (Fruit: Apple)'));
+
+                    $recentRecords = $modelCrop->getRecentCropMonitors($_block['id'], $date_from, $date_to);
+                    $date_pests = array();
+                    foreach ($recentRecords as $record) {
+                        $_key = strtotime($record['date']. ' '. $record['time']);
+                        if (empty($date_pests[$_key]))
+                            $date_pests[$_key] = array();
+                        $date_pests[$_key][$record['pest_id']] = $record;
+                    }
+
+                    $header1 = array_merge($header1, array("Action\nRequired", 'Action Taken', 'Comment', 'Duration', 'Sign'));
+                    $objWorkSheet->fromArray($header1, NULL, 'A'.$row_index++);
+
                     $col_index = 1;
-                    $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, $block_name);
-                    $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('d/m/Y', $dtm));
-                    $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('H:i', $dtm));
-                    foreach ($pest_names as $pest_id => $pest_name) {
-                        $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, !empty($value_array[$pest_id]) ? number_format($value_array[$pest_id]['monitoring_number']) : 0);
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Date');
+
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Time');
+                    foreach($pest_names as $pest_name) {
+                        $objWorkSheet->setCellValue($columns[$col_index].$row_index, $pest_name);
+                        $objWorkSheet->getStyle($columns[$col_index].$row_index)->getAlignment()->setTextRotation(90);
+                        $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+                        $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("5");
+                        $col_index++;
                     }
-                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Required */
+
+                    $objWorkSheet->getStyle($columns[$col_index].($row_index-1))->getAlignment()->setWrapText(true);
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, 'Yes/No'); /* Action Required */
+
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
                     $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Taken */
-                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, trim($_record['comment'])); /* Comment on same line with block name */
-                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $_record['duration']?$_record['duration']. ' minutes':''); /* Same duration for each date time */
+
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("20");
+                    $objWorkSheet->setCellValue($columns[$col_index].$row_index, "If pests are seen, seek\nto indentify and then\ncheck if they are a pest\n,of convern for export\nIf not, mark"); /* Comment */
+                    $objWorkSheet->getStyle($columns[$col_index++].$row_index)->getAlignment()->setWrapText(true);
+
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setAutoSize(false);
+                    $objWorkSheet->getColumnDimension($columns[$col_index])->setWidth("12");
+                    $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Duration */
+
+                    $objWorkSheet->setCellValue($columns[$col_index].$row_index, ''); /* Sign */
+
+                    $objWorkSheet->getStyle("A3:".$columns[$col_index].$row_index)->applyFromArray(array(
+                        'alignment' => array(
+                            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        )
+                    ));
+
+                    ksort($date_pests);
+
+                    foreach ($date_pests as $dtm => $value_array) {
+                        $_record = reset($value_array);
+                        $row_index++;
+                        $col_index = 1;
+                        $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('d/m/Y', $dtm));
+                        $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, date('H:i', $dtm));
+                        foreach ($pest_names as $pest_id => $pest_name) {
+                            $objWorkSheet->setCellValue($columns[$col_index++] . $row_index, !empty($value_array[$pest_id]) ? number_format($value_array[$pest_id]['monitoring_number']) : 0);
+                        }
+                        $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Required */
+                        $objWorkSheet->setCellValue($columns[$col_index++].$row_index, ''); /* Action Taken */
+                        $objWorkSheet->setCellValue($columns[$col_index++].$row_index, trim($_record['comment'])); /* Comment on same line with block name */
+                        $objWorkSheet->setCellValue($columns[$col_index++].$row_index, $_record['duration']?$_record['duration']. ' minutes':''); /* Same duration for each date time */
+                    }
+
+                    $objWorkSheet->getStyle("A3:".$columns[count($header1)].$row_index)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+                    $objWorkSheet->setTitle(substr($_block['name'], 0, 30));
                 }
             }
-
-            $objWorkSheet->getStyle("A2:".$columns[count($header1)].$row_index)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-
-            /*
-            for ($i = 'A'; $i !=  $objWorkSheet->getHighestColumn(); $i++) {
-                $objWorkSheet->getColumnDimension($i)->setAutoSize(TRUE);
-            }
-            $objWorkSheet->getColumnDimension($i)->setAutoSize(TRUE);
-            */
-
-            // Rename worksheet
-            $objWorkSheet->setTitle('Crop Monitors - '. date('Ymd'));
-
-            if(count($growerIDs) == 1 && $growerName)
-                $filename = "CropMonitorsExport_".str_replace(' ', '_', $growerName)."_". date('Ymd');
-            else
-                $filename = "CropMonitorsExport_". date('Ymd');
+            $objPHPExcel->setActiveSheetIndex(0);
+            $filename = "CropMonitorsExport_".str_replace(' ', '_', $grower->name)."_". date('Ymd');
             $this->_export($objPHPExcel, $filename);
         }
 

@@ -60,7 +60,15 @@ $themeUrl = is_object(Yii::app()->theme) ? Yii::app()->theme->baseUrl : '';
 							),
                             array(
                                 'label' => Yii::t('app', 'Crop Pest'),
-                                'url' => Yii::app()->baseUrl.'/backend/cropPest',
+                                'url' => Yii::app()->baseUrl.'/backend/cropPest?CropPest[fruit_type_id]=1',
+                            ),
+                            array(
+                                'label' => Yii::t('app', 'Cherry Crop Pest'),
+                                'url' => Yii::app()->baseUrl.'/backend/cropPest?CropPest[fruit_type_id]=4',
+                            ),
+                            array(
+                                'label' => Yii::t('app', 'Stone Fruit Crop Pest'),
+                                'url' => Yii::app()->baseUrl.'/backend/cropPest?CropPest[fruit_type_id]=3',
                             ),
 							array(
 									'label' => Yii::t('app', 'Pest'),

@@ -69,6 +69,15 @@ class BlockController extends SimbController
 
 		if (isset($_POST['Block'])) {
 			$modelBlock->attributes = $_POST['Block'];
+            if (empty($modelBlock->tree_variety) && !empty($_POST['Block']['new_variety']))
+            {
+                $modelVariety = new Variety;
+                $modelVariety->fruit_type_id = $_POST['Block']['fruit_type'];
+                $modelVariety->name = $_POST['Block']['new_variety'];
+                if ($modelVariety->save())
+                    $modelBlock->tree_variety = $modelVariety->id;
+                unset($modelBlock->fruit_type);
+            }
 			if ($modelBlock->save()) {
 				if($_POST['Block']['_addTrap'] == 'yes'){ // _addTrap enabled
 					$this->redirect(array('trap/create', 'Trap[block_id]' => $modelBlock->id));

@@ -15,13 +15,6 @@ class Grower extends CommonGrower
 	function getProperties(){
 		return Property::model()->findAll('grower_id='.$this->id);
 	}
-
-    function getPestsDataProvider(){
-        $sql="SELECT * FROM ".CropPest::model()->tableName()." ORDER BY ordering";
-        return new CSqlDataProvider($sql, array(
-            'pagination'=>false,
-        ));
-    }
 	
 	/**
 	 * reset password

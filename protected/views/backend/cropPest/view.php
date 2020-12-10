@@ -28,6 +28,7 @@ $this->menu = array(
     'attributes' => array(
 		'id',
 		'name',
-		'color'
+		'color',
+        'fruit_type'
 	),
 )); ?>

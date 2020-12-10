@@ -56,14 +56,13 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                 </div>
                 <?php echo TbHtml::textField('duration','', array('placeholder' => 'Duration in minutes'));?>
                 <?php
-                $dataPests = $modelGrower->getPestsDataProvider();
                 foreach($modelGrower->search()->getData() as $grower){
                     foreach($grower->getProperties() as $property){
                         echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
-
                         foreach($property->getBlocks() as $block){
+                            $dataPests = $modelGrower->getPestsDataProvider($block->tree_variety?$block->fruit_type->id:Yii::app()->params['defaultFruitTypeId']);
                             echo '<div class="box box-small box-custom box-bordered">
-                						  <div class="box-title"><h3>'.$block->name.'</h3></div>';
+                						  <div class="box-title"><h3>'.$block->name. ($block->tree_variety?' (Fruit: '.$block->fruit_type. ')':' (Fruit: Apple)'). '</h3></div>';
                             $this->widget('bootstrap.widgets.TbGridView', array(
                                 'id' => 'crop-pests-grid',
                                 'dataProvider' =>  $dataPests,
@@ -72,6 +71,7 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                                 'enablePagination'=>true,
                                 'itemsCssClass' => 'table-hover table-nomargin table-striped',
                                 'summaryText' => false,
+                                'emptyText' => 'No pests found.',
                                 'columns' => array(
                                     array('name'=>'name','header'=>''),
                                     array('name'=>'','value'=>function($data)use($block){

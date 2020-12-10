@@ -38,6 +38,7 @@ $this->menu = array(
                     'class' => 'bootstrap.widgets.TbButtonColumn',
                 ),
                 'name',
+                array('name'=>'fruit_type','filter'=>CHtml::activeDropDownList($modelCropPest, 'fruit_type_id', CHtml::listData($modelCropPest->getFruitType(),'id','name'),array('empty'=>'Select Fruit Type', 'class' => 'select2-full-width'))),
                 array('name'=>'color','value'=>function($data){
                     echo '<div style="background:'.$data['color'].'">&nbsp&nbsp&nbsp&nbsp</div>';
                 },'header'=>'Color','filter'=>false,)

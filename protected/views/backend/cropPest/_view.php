@@ -13,35 +13,7 @@
 	<?php echo CHtml::encode($data->name); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('creator_id')); ?>:</b>
-	<?php echo CHtml::encode($data->creator_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('ordering')); ?>:</b>
-	<?php echo CHtml::encode($data->ordering); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('created_at')); ?>:</b>
-	<?php echo CHtml::encode($data->created_at); ?>
-	<br />
-
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('updated_at')); ?>:</b>
-	<?php echo CHtml::encode($data->updated_at); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode($data->status); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('is_deleted')); ?>:</b>
-	<?php echo CHtml::encode($data->is_deleted); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('params')); ?>:</b>
-	<?php echo CHtml::encode($data->params); ?>
-	<br />
-
-	*/ ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fruit_type_id')); ?>:</b>
+	<?php echo CHtml::encode($data->fruit_type); ?>
 
 </div>

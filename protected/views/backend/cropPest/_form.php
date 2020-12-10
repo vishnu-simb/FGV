@@ -30,7 +30,8 @@
             <div class="box-content nopadding">
                 <div class="span6">
                     <?php echo $form->textFieldControlGroup($modelCropPest, 'name', array('maxlength' => 100, 'class' => 'input-xlarge', 'placeholder' => $modelCropPest->getAttributeLabel('name'))); ?>
-                    <?php echo $form->textFieldControlGroup($modelCropPest, 'color', array('maxlength' => 100, 'class' => 'input-medium colorpick', 'placeholder' => $modelCropPest->getAttributeLabel('color'))); ?>
+                    <?php echo $form->textFieldControlGroup($modelCropPest, 'color', array('maxlength' => 100, 'class' => 'input-xlarge colorpick', 'placeholder' => $modelCropPest->getAttributeLabel('color'))); ?>
+                    <?php echo $form->dropDownListControlGroup($modelCropPest, 'fruit_type_id', CHtml::listData( $modelCropPest->getFruitType() ,'id','name'),array('class' => 'input-xlarge select2-minw')); ?>
 				</div>
                 <div class="span12">
                     <div class="form-actions">
