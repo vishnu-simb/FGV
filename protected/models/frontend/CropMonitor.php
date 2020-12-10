@@ -17,7 +17,7 @@ class CropMonitor extends CommonCropMonitor
 	public function SearchRecentCropMonitors(){
 		$condition="";
 		if( Yii::app()->user->getState('role') == Users::USER_TYPE_GROWER){
-				$condition = "WHERE g.id =".Yii::app()->user->id."";
+				$condition = " AND g.id =".Yii::app()->user->id."";
 		}
 		$sql="SELECT em.id as monitoring_id, em.date, em.time, em.value as monitoring_number,CONCAT (g.name,' - ',b.name,' : ',pt.name) AS monitoring_name, t.name as trap_name
 		FROM ".$this->tableName()." em
@@ -26,9 +26,11 @@ class CropMonitor extends CommonCropMonitor
 		INNER JOIN ".Property::model()->tableName()." p ON b.property_id = p.id
 		INNER JOIN ".Grower::model()->tableName()." g ON p.grower_id = g.id  
 		LEFT JOIN ".Trap::model()->tableName()." t ON em.trap_id = t.id 
-		$condition ORDER BY em.date DESC, em.time DESC";
+		WHERE em.value > 0 $condition ORDER BY em.date DESC, em.time DESC";
 		return new CSqlDataProvider($sql, array(
-	
+            'pagination' => array(
+                'pageSize' => $this->rowsPerPage,
+            )
 		));
 	
 	}
