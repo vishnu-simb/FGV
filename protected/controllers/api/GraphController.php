@@ -281,6 +281,10 @@ class GraphController extends SimbApiController {
         $data = $dataProvider->getData();
         $block_fruit_type = $this->block->tree_variety?$this->block->variety->fruit_type_id:Yii::app()->params['defaultFruitTypeId'];
         $pest = CropPest::model()->findAllByAttributes(array('fruit_type_id'=>$block_fruit_type));
+        if (empty($pest) && $block_fruit_type == 2) {
+            /* Apples and Pearls will use same series of crop pest */
+            $pest = CropPest::model()->findAllByAttributes(array('fruit_type_id'=>1));
+        }
         $keys_arr = $pests = array();
         foreach($pest as $v){
             $keys_arr[] = $v->name;
@@ -291,7 +295,6 @@ class GraphController extends SimbApiController {
             $m = strtotime($dates['date_from']);
             $e = strtotime($dates['date_to']);
             foreach($keys_arr as $r){
-                $has_trap = 0;
                 $mm = $m;
                 $sedat = array();
                 while($mm < $e)
@@ -308,15 +311,13 @@ class GraphController extends SimbApiController {
                         }
                         if($has_record){
                             $sedat[] = array('y' => $dd, 'color' => darken_color(CropPest::CropPestColor($r)));
-                            $has_trap = 1;
                         }else{
                             $sedat[] = $dd;
                         }
                     }
                     $mm = strtotime('+1 day', $mm); // increment for loop
                 }
-                if($has_trap || 1)
-                    $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>CropPest::CropPestColor($r),'pointInterval'=> $this->pointInterval);
+                $serial[] = array('name'=>$r,'data'=>$sedat,'color'=>CropPest::CropPestColor($r),'pointInterval'=> $this->pointInterval);
             }
 
         }

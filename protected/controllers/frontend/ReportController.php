@@ -163,7 +163,7 @@ class ReportController extends SimbController
     private function getCropPestGraph($block, $grower, $year = ''){
         $filter = $this->getDateRange($year);
         $filter['block_id'] = $block->id;
-
+        $VAR = array();
         $model = new CropMonitor('search');
         $model->unsetAttributes();
         $dataProvider = $model->getCropMonitorInRange($filter);
@@ -181,7 +181,7 @@ class ReportController extends SimbController
             $m = strtotime($filter['date_from']);
             $e = strtotime($filter['date_to']);
             foreach($keys_arr as $r){
-                $has_trap = 0;
+                $has_data = 0;
                 $mm = $m;
                 $sedat = array();
                 while($mm < $e)
@@ -199,14 +199,15 @@ class ReportController extends SimbController
                         }
                         if($has_record){
                             $sedat[] = array('y' => $dd, 'color' => darken_color(CropPest::CropPestColor($r)));
-                            $has_trap = 1;
+                            $has_data = 1;
                         }else{
                             $sedat[] = $dd;
                         }
                     }
                     $mm = strtotime('+1 day', $mm); // increment for loop
                 }
-                $serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $m*1000),array('data'=>$sedat),array('color'=>CropPest::CropPestColor($r)));
+                if ($has_data)
+                    $serial[] = array_merge(array('name'=>$r,'pointInterval' => 24 * 3600 * 1000,'pointStart' => $m*1000),array('data'=>$sedat),array('color'=>CropPest::CropPestColor($r)));
             }
 
         }
@@ -239,8 +240,6 @@ class ReportController extends SimbController
                 'tickInterval' => $max_value>5?intval($max_value/5):1
             );
             $VAR['series'] = $serial;
-        }else{
-            $VAR['chart']= $serial;
         }
         return $VAR;
     }
@@ -387,7 +386,7 @@ class ReportController extends SimbController
         $grower = $this->loadModel($id);
 		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Report for '. $grower->name);
         $VARS = array();
-		$VARS['blocks'] = $VARS['sprayDates'] = $VAR['graphData'] = array();
+		$VARS['blocks'] = $VARS['sprayDates'] = $VAR['graphData'] = $VAR['cropPestGraphData'] = array();
 		
 		if(!($grower instanceof Grower)){
 			throw new Exception('Invalid Request (Grower)');
