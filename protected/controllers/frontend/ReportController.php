@@ -494,7 +494,7 @@ class ReportController extends SimbController
 	/**
 	 * Manages all models.
 	 */
-	public function actionPdf($id)
+	public function actionPdf($id, $year = '')
 	{
 		$grower = $this->loadModel($id);
 		$this->pageTitle = sprintf(Yii::t('app', '%s'), 'Report for '. $grower->name);
@@ -506,8 +506,8 @@ class ReportController extends SimbController
 		}
 	
 		$VARS['grower'] = $grower;
-		$VARS['dateRange'] = $this->getDateRange();
-		$VARS['hasFollowYear'] = isset($_GET['year'])?$_GET['year']:false;// Set default report
+		$VARS['dateRange'] = $this->getDateRange($year);
+		$VARS['hasFollowYear'] = $year?$year-1:false;// Set default report
 		$max_spray_count = 0;
 		foreach(Pest::model()->findAll() as $pest){
 			$max_spray_count = max($max_spray_count,$pest->getSprayCount());
