@@ -289,7 +289,7 @@ class CropController extends SimbController
                     }
 
                     $objWorkSheet->getStyle("A3:".$columns[count($header1)].$row_index)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-                    $objWorkSheet->setTitle(substr($_block['name'], 0, 30));
+                    $objWorkSheet->setTitle(substr(str_replace('/', '_', $_block['name']), 0, 30));
                 }
             }
             $objPHPExcel->setActiveSheetIndex(0);
