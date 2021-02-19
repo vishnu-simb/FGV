@@ -60,9 +60,9 @@ if (Yii::app()->user->getState('role') === Users::USER_TYPE_GROWER)
                     foreach($grower->getProperties() as $property){
                         echo '<h2><b>'.$grower->name.':</b> '.$property->name.'</h2>';
                         foreach($property->getBlocks() as $block){
-                            $dataPests = $modelGrower->getPestsDataProvider($block->tree_variety?$block->fruit_type->id:Yii::app()->params['defaultFruitTypeId']);
+                            $dataPests = $modelGrower->getPestsDataProvider($block->tree_variety && !empty($block->fruit_type)?$block->fruit_type->id:Yii::app()->params['defaultFruitTypeId']);
                             echo '<div class="box box-small box-custom box-bordered">
-                						  <div class="box-title"><h3>'.$block->name. ($block->tree_variety?' (Fruit: '.$block->fruit_type. ')':' (Fruit: Apple)'). '</h3></div>';
+                						  <div class="box-title"><h3>'.$block->name. ($block->tree_variety && !empty($block->fruit_type)?' (Fruit: '.$block->fruit_type. ')':' (Fruit: Apple)'). '</h3></div>';
                             $this->widget('bootstrap.widgets.TbGridView', array(
                                 'id' => 'crop-pests-grid',
                                 'dataProvider' =>  $dataPests,

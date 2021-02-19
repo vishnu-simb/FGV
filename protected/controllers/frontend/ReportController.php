@@ -168,7 +168,7 @@ class ReportController extends SimbController
         $model->unsetAttributes();
         $dataProvider = $model->getCropMonitorInRange($filter);
         $data = $dataProvider->getData();
-        $block_fruit_type = $block->tree_variety?$block->fruit_type->id:Yii::app()->params['defaultFruitTypeId'];
+        $block_fruit_type = $block->tree_variety && !empty($block->fruit_type)?$block->fruit_type->id:Yii::app()->params['defaultFruitTypeId'];
         $pest = CropPest::model()->findAllByAttributes(array('fruit_type_id'=>$block_fruit_type));
         $keys_arr = $pests = array();
         foreach($pest as $v){

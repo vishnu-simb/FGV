@@ -58,7 +58,7 @@ $('.search-form-ext form').submit(function(){
 		'class' => 'bootstrap.widgets.TbButtonColumn',
 		),
 		'name',
-        array('name'=>'fruit_type','value'=>'$data->fruit_type->name','filter'=>CHtml::activeDropDownList($modelVariety, 'fruit_type', CHtml::listData( $modelVariety->getFruitType() ,'id','name'),array('empty'=>'Select A Fruit Type'))),
+        array('name'=>'fruit_type','value'=>!empty($data->fruit_type)?$data->fruit_type->name:'','filter'=>CHtml::activeDropDownList($modelVariety, 'fruit_type', CHtml::listData( $modelVariety->getFruitType() ,'id','name'),array('empty'=>'Select A Fruit Type'))),
 		/*
 		'creator_id',
 		'ordering',
