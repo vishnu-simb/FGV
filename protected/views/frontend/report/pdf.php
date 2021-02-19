@@ -157,6 +157,7 @@ foreach($VARS['blocks'] as $block){
 		<table class="page_footer">
 			<tr>
 				<td style="width: 100%; text-align: right">
+                    Please click on this link <a href="<?=$VARS['grower_link']?>"><?=$VARS['grower_link']?></a> to view the full report.<br/>
 					Created by Fruit Growers Victoria. Report problems to <b>growerservices@fgv.com.au</b>
 				</td>
 			</tr>

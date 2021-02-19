@@ -586,6 +586,7 @@ class ReportController extends SimbController
 		}
 		//$VARS['email'] = $this->email;
 		$VARS['link'] = Yii::app()->baseUrl. '/report/pdf/'.$grower->id;
+        $VARS['grower_link'] = Yii::app()->createAbsoluteUrl('report/grower/'.$grower->id.($year?"/$year":''));
 		$this->render('pdf', array(
 				'VARS' => $VARS
 		));
